@@ -1,47 +1,87 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page
+    class="window-heightwindow-width row justify-center items-center"
+    style="background-color: #be272c"
+  >
+    <div class="absolute-center">
+      <q-card-section>
+        <q-form class="">
+          <!-- LogoPicture -->
+          <div class="row justify-center q-pa-xl q-gutter-xl">
+            <q-avatar square size="6rem">
+              <img src="../assets/mbaling-logo-vertical.svg" />
+            </q-avatar>
+          </div>
+
+          <!-- UserName&PasswordInput -->
+          <div class="q-gutter-sd" style="max-width: 300px">
+            <q-input
+              dark
+              dense
+              input-class="text-center"
+              color="white"
+              v-model="username"
+              type="username"
+              placeholder="username"
+            >
+            </q-input>
+
+            <q-input
+              dark
+              dense
+              color="white"
+              input-class="text-center"
+              v-model="password"
+              type="password"
+              placeholder="password"
+            >
+            </q-input>
+          </div>
+
+          <!-- LoginButton -->
+          <div class="row justify-center q-pa-md q-gutter-sm">
+            <q-btn
+              :ripple="false"
+              unelevated
+              dense
+              rounded
+              no-caps
+              class="text-red text-bold"
+              style="height: 1.5rem; width: 6rem; font-size: small"
+              color="white"
+              label="log-in"
+              @click="loginUser()"
+            />
+          </div>
+        </q-form>
+      </q-card-section>
+    </div>
   </q-page>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ClassComponent.vue';
-import { Vue, Options } from 'vue-class-component'
-
-@Options({
-  components: { ExampleComponent }
-})
-export default class PageIndex extends Vue {
-  todos: Todo[] = [
-    {
-      id: 1,
-      content: 'ct1'
+import { ref } from "vue";
+export default {
+  name: "Login",
+  setup() {
+    return {
+      username: ref(""),
+      password: ref(""),
+    };
+  },
+  methods: {
+    async loginUser() {
+      if (this.username == "user" && this.password == "password") {
+        await this.$router.replace("/s/home");
+      } else {
+        this.$q.notify({
+          color: "secondary",
+          textColor: "primary",
+          position: "top",
+          message: "Incorrect username or password.",
+        });
+      }
     },
-    {
-      id: 2,
-      content: 'ct2'
-    },
-    {
-      id: 3,
-      content: 'ct3'
-    },
-    {
-      id: 4,
-      content: 'ct4'
-    },
-    {
-      id: 5,
-      content: 'ct5'
-    }
-  ];
-  meta: Meta = {
-    totalCount: 1200
-  };
+  },
 };
 </script>
