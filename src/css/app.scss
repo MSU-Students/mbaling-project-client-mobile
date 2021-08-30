@@ -83,3 +83,51 @@
   }
   
   /* All system css style goes here */
+  .profile_bg {
+    background: #be282d;
+  }
+  
+  .info-username {
+    font-size: small;
+    line-height: 0.85rem;
+  }
+  .info-fullname {
+    font-size: large;
+    margin: 4px;
+    line-height: 0.85rem;
+  }
+  .info-other {
+    font-size: smaller;
+    line-height: 0.85rem;
+    text-align: center;
+  }
+  
+  // BOOKMARK TAB
+  
+  .view-more{
+      color: grey;
+      text-align-last: right;
+      text-align: right;
+      font-size: x-small;
+  }
+  
+  .application-image{
+      aspect-ratio: 10;
+      height: 50%;
+  }
+  
+  .button-options{
+      padding: 1px;
+      width: 100%;
+      color: #BE282D;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+  }
+  
+  //Application Tab
+  
+  
+  .button-apply{  
+      text-align: right;
+  }
