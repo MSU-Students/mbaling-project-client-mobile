@@ -1,40 +1,45 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated class="bg-white text-black">
-      <q-toolbar>
-        <q-img src="~src\assets\mbaling-logo-horizontal.svg" style="width:8rem"/>
-      </q-toolbar>
+  <q-layout view="hHh lpR fFf">
+    <q-header elevated class="bg-white q-px-md q-py-sm" style="height: 3rem">
+      <q-toolbar-title>
+        <q-img
+          src="~assets/mbaling-logo-horizontal.svg"
+          style="max-width: 8rem"
+        />
+      </q-toolbar-title>
     </q-header>
 
-    <q-page-container class="defaultfont">
+    <q-page-container>
       <router-view />
     </q-page-container>
 
-    <q-footer elevated style="height:3rem">
-        <q-btn-group spread style="height:3rem">
-          <q-btn :ripple="false" color="primary" to="/s/home" size="1.25rem">
-            <i class="mbi-home"></i>
-          </q-btn>
-          <q-btn :ripple="false" color="primary"  to="/search" size="1.25rem">
-            <i class="mbi-search"></i>
-          </q-btn>
-          <q-btn :ripple="false" color="primary"  to="/inbox" size="1.25rem">
-          <i class="mbi-inbox"></i>
-          </q-btn>
-          <q-btn :ripple="false" color="primary"  to="/s/account" size="1.25rem">
-          <i class="mbi-account"></i>
-          </q-btn>
-        </q-btn-group>
+    <q-footer class="bg-primary text-white">
+      <q-btn-group flat spread style="height: 3rem">
+        <q-btn :ripple="false" size="1.25rem" @click="() => $router.replace('/s/home')">
+          <i :class="btnHome"></i>
+        </q-btn>
+        <q-btn :ripple="false" size="1.25rem" @click="() => $router.replace('/search')">
+          <i :class="btnSearch"></i>
+        </q-btn>
+        <q-btn :ripple="false" size="1.25rem" @click="() => $router.replace('/inbox')">
+          <i :class="btnInbox"></i>
+        </q-btn>
+        <q-btn :ripple="false" size="1.25rem" @click="() => $router.replace('/s/account')">
+          <i :class="btnAccount"></i>
+        </q-btn>
+      </q-btn-group>
     </q-footer>
   </q-layout>
 </template>
 
 <script lang="ts">
-export default {
-  data() {
-    return {
-      tab: "mails",
-    }
-  },
-};
+import { Vue } from "vue-class-component";
+
+export default class MainLayout extends Vue {
+  btnHome = "mbi-home";
+  btnSearch = "mbi-search";
+  btnInbox = "mbi-inbox";
+  btnAccount = "mbi-account";
+  isStudent = true;
+}
 </script>
