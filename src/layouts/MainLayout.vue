@@ -15,16 +15,32 @@
 
     <q-footer class="bg-primary text-white">
       <q-btn-group flat spread style="height: 3rem">
-        <q-btn :ripple="false" size="1.25rem" @click="() => $router.replace('/s/home')">
+        <q-btn
+          :ripple="false"
+          size="lg"
+          @click="() => $router.replace('/s/home')"
+        >
           <i :class="btnHome"></i>
         </q-btn>
-        <q-btn :ripple="false" size="1.25rem" @click="() => $router.replace('/search')">
+        <q-btn
+          :ripple="false"
+          size="lg"
+          @click="() => $router.replace('/search')"
+        >
           <i :class="btnSearch"></i>
         </q-btn>
-        <q-btn :ripple="false" size="1.25rem" @click="() => $router.replace('/inbox')">
+        <q-btn
+          :ripple="false"
+          size="lg"
+          @click="() => $router.replace('/inbox')"
+        >
           <i :class="btnInbox"></i>
         </q-btn>
-        <q-btn :ripple="false" size="1.25rem" @click="() => $router.replace('/s/account')">
+        <q-btn
+          :ripple="false"
+          size="lg"
+          @click="() => $router.replace('/s/account')"
+        >
           <i :class="btnAccount"></i>
         </q-btn>
       </q-btn-group>
