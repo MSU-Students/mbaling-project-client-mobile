@@ -56,6 +56,5 @@ export default class MainLayout extends Vue {
   btnSearch = "mbi-search";
   btnInbox = "mbi-inbox";
   btnAccount = "mbi-account";
-  isStudent = true;
 }
 </script>
