@@ -51,7 +51,7 @@
     content: "\e908";
   }
   
-  /* Default font style */
+/* Default font style */
   @font-face {
     font-family: Metropolis-Regular;
     src: url(./fonts/metropolis-regular.woff2);
@@ -82,25 +82,17 @@
     font-family: "Metropolis-Light";
   }
   
-  /* All system css style goes here */
-  .profile_bg {
-    background: #be282d;
-  }
-  
-  .info-username {
-    font-size: small;
-    line-height: 0.85rem;
-  }
-  .info-fullname {
-    font-size: large;
-    margin: 4px;
-    line-height: 0.85rem;
-  }
-  .info-other {
-    font-size: smaller;
-    line-height: 0.85rem;
-    text-align: center;
-  }
+/* All system css style goes here */
+.info-username {
+  font-size: medium;
+}
+.info-fullname {
+  font-size: large;
+}
+.info-other {
+  font-size: smaller;
+  line-height: 0.85rem;
+}
   
   // BOOKMARK TAB
   
