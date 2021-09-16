@@ -147,7 +147,7 @@ export default {
         degree: "BS Information Technology (Database System)",
         yearAdmit: 2018,
         department: "Department of Information Sciences",
-        college: "College of Information Technology",
+        college: "College of Information and Computing Sciences",
       },
     };
   },

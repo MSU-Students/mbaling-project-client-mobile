@@ -1,83 +1,103 @@
 <template>
-  <q-header style="height:3rem;background-color:transparent">
+  <q-header style="height: 3rem; background-color: transparent">
     <q-toolbar>
-        <q-space/>
-        <q-btn color="black" flat round dense icon="more_vert"> </q-btn>
+      <q-space />
+      <q-btn
+        dense
+        flat
+        :ripple="false"
+        color="black"
+        icon="bi-three-dots-vertical"
+      />
     </q-toolbar>
   </q-header>
 
- <q-toolbar
-    class="text-white profile_bg column items-center justify-center"
-  >
-
-  <!-- PROFILE TOP -->
-    <q-avatar
-      class="q-mb-md q-mt-lg"
-      size="120px"
-      font-size="52px"
-      color="grey"
-      text-color="white"
-      icon="account_circle"
-    />
-    <div class="column items-center justify-center">
-      <p class="info-username">@{{ lProfile.username }}</p>
-
-      <p class="info-fullname defaultfont-bold text-uppercase">{{ lProfile.name }}</p>
-      <p class="info-other">
-        {{lProfile.housing}}<br/>
-        {{lProfile.address1}}, {{lProfile.address2}},<br/>
-        {{lProfile.address3}}, {{lProfile.address4}}
-      </p>
+  <q-page class="defaultfont bg-secondary text-black">
+    <!-- PROFILE SECTION -->
+    <div class="bg-primary flex-center text-center q-pa-md">
+      <q-avatar class="q-mt-md" size="8rem">
+        <img :src="landlord.prfphoto" />
+      </q-avatar>
+      <div class="text-white q-mt-lg">
+        <p class="info-username">{{ landlord.username }}</p>
+        <span class="defaultfont-bold info-fullname text-uppercase">
+          {{ landlord.fullname }}
+        </span>
+        <p class="info-other">
+          {{ landlord.housingName }} <br />
+          {{ landlord.housingAdd1 }}, {{ landlord.housingAdd2 }}, <br />
+          {{ landlord.housingAdd3 }}, {{ landlord.housingAdd4 }}
+        </p>
+      </div>
     </div>
-  </q-toolbar>
-   <q-tabs
-        inline-label
+
+    <!-- POST & APPLICATION TAB -->
+    <div class="q-mt-sm">
+      <q-tabs
         v-model="tab"
         dense
-        color="secondary"
-        class="text-grey"
+        inline-label
+        class="defaultfont-semibold text-grey q-px-md"
+        style="max-height: 2rem"
         active-color="black"
         indicator-color="transparent"
         align="justify"
-        narrow-indicator
       >
-        <q-tab  :ripple="false" icon="bi-pin-angle-fill" name="post" label="POSTS" />
-        <q-tab  :ripple="false" icon='bi-file-text-fill' name="application" label="APPLICATIONS" />
+        <q-tab :ripple="false" name="posts">
+          <p class="row items-center" style="font-size: smaller">
+            <q-icon name="bi-pin-angle-fill" class="q-mr-xs" size="1rem" />
+            POSTS
+          </p>
+        </q-tab>
+        <q-tab :ripple="false" name="applications">
+          <p class="row items-center" style="font-size: smaller">
+            <q-icon
+              name="bi-file-earmark-text-fill"
+              class="q-mr-xs"
+              size="1rem"
+            />
+            APPLICATIONS
+          </p>
+        </q-tab>
       </q-tabs>
-      
-      <hr class="bg-black q-mt-none" style="width:87%"/>
 
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="post">
+      <q-separator inset size="0.1rem" color="black" />
+
+      <q-tab-panels v-model="tab" animated class="bg-transparent">
+        <!-- POST TAB PANEL -->
+        <q-tab-panel name="posts">
           <h6>POSTS</h6>
         </q-tab-panel>
 
-         <q-tab-panel name="application">
+        <!-- APPLICATION TAB PANEL-->
+        <q-tab-panel name="applications">
           <h6>APPLICATIONS</h6>
         </q-tab-panel>
-
       </q-tab-panels>
-  <q-page>
+    </div>
   </q-page>
-
 </template>
 
-<script>
+<script lang="ts">
+import { ref } from "vue";
 export default {
   data() {
     return {
-      lProfile:{
-        username: "pirateking_home",
-        name: "Monkey D. Luffy",
-        housing: "Pirate King Apartment",
-        address1:"0259 5th Street",
-        address2:"Brgy.Dimalna I",
-        address3:"Mindanao State University",
-        address4:"Marawi City"
-
-
+      landlord: {
+        username: "@pirateking_home",
+        prfphoto: "https://cdn.quasar.dev/img/avatar4.jpg",
+        fullname: "Monkey D. Luffy",
+        housingName: "Pirate King Apartment",
+        housingAdd1: "0259 5th Street",
+        housingAdd2: "Brgy. Dimalna II",
+        housingAdd3: "MSU-Marawi",
+        housingAdd4: "Marawi City",
       },
-       tab: "mails",
+    };
+  },
+  setup() {
+    return {
+      tab: ref("mails"),
     };
   },
 };
