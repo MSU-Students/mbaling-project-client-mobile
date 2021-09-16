@@ -1,11 +1,11 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <q-card flat class="bg-transparent text-center">
+    <q-card flat class="bg-transparent text-center" style="width: 12rem">
       <!-- LOGO PICTURE -->
       <div>
         <q-img
           src="~assets/mbaling-logo-vertical.svg"
-          style="max-width: 6rem"
+          style="width: 6rem"
         />
       </div>
       <!-- USERNAME & PASSWORD INPUT -->
