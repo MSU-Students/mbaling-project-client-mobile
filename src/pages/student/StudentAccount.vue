@@ -66,40 +66,106 @@
       <q-tab-panels v-model="tab" animated class="bg-transparent">
         <!-- BOOKMARK TAB PANEL -->
         <q-tab-panel name="bookmarks">
-          <q-card flat bordered>
-            <q-item>
-              <q-item-section avatar>
-                <q-avatar icon="account_circle" />
-              </q-item-section>
+          <q-list class="q-mt-sm">
+            <q-list v-for="post in posts" :key="post.date" class="bg-white">
+              <q-item class="q-pt-md">
+                <q-item-section avatar top>
+                  <q-avatar size="xl">
+                    <img :src="post.prfphoto" />
+                  </q-avatar>
+                </q-item-section>
 
-              <q-item-section class="post-user">
-                <div><q-item-label>Hello Raian </q-item-label></div>
-                <div>
-                  <q-item-label caption>
-                    Muammar's Boarding House
+                <q-item-section top>
+                  <q-item-label
+                    lines="1"
+                    class="defaultfont-semibold"
+                    style="font-size: medium"
+                  >
+                    {{ post.fullname }}
                   </q-item-label>
-                </div>
-                <q-item-label caption> 3 days ago </q-item-label>
-              </q-item-section>
-            </q-item>
+                  <q-item-label lines="1" style="font-size: small">
+                    {{ post.housingName }}
+                  </q-item-label>
+                  <span class="text-grey" style="font-size: xx-small">
+                    {{ post.date }}
+                  </span>
+                </q-item-section>
 
-            <q-separator />
-            <q-img src="~src\assets\post-picture-a002.jpg" class="card-post" />
-            <q-card-section>
-              <div>Family/Couple size Apartment room</div>
-              <div>6,500 PHP monthly</div>
-              <div class="view-more">•View more</div>
-              <hr class="bg-red-14" />
-              <q-toolbar>
-                <div class="button-options" style="font-size: 20px">
-                  <q-icon name="bi-heart" />
-                  <q-icon class="q-ml-xs" name="bi-bookmark" />
-                  <q-icon class="q-ml-xs" name="bi-chat-right" />
-                  <div class="view-more">44 likes • 1 bookmarks</div>
+                <q-item-section side top>
+                  <q-btn
+                    dense
+                    flat
+                    :ripple="false"
+                    class="text-black"
+                    icon="bi-three-dots"
+                  />
+                </q-item-section>
+              </q-item>
+
+              <div class="q-my-xs">
+                <q-img :src="post.photo" />
+              </div>
+
+              <q-item>
+                <q-item-section class="defaultfont-medium">
+                  <q-item-label lines="1" style="font-size: small">
+                    {{ post.title }}
+                  </q-item-label>
+                  <q-item-label style="font-size: small">
+                    {{ post.fee }} PHP monthly
+                  </q-item-label>
+                  <span
+                    class="text-bold cursor-pointer"
+                    style="font-size: x-small; text-align: right"
+                  >
+                    +View more
+                  </span>
+                </q-item-section>
+              </q-item>
+              <q-separator inset color="primary" />
+
+              <q-item>
+                <div class="row">
+                  <q-btn
+                    flat
+                    round
+                    :ripple="false"
+                    color="primary"
+                    size="sm"
+                    icon="bi-heart"
+                  />
+                  <q-btn
+                    flat
+                    round
+                    :ripple="false"
+                    color="primary"
+                    size="sm"
+                    icon="bi-chat-right"
+                  />
+                  <q-btn
+                    flat
+                    round
+                    :ripple="false"
+                    color="primary"
+                    size="sm"
+                    icon="bi-bookmark-fill"
+                  />
                 </div>
-              </q-toolbar>
-            </q-card-section>
-          </q-card>
+                <q-space />
+                <span
+                  class="
+                    defaultfont-medium
+                    absolute-bottom-right
+                    q-pr-md q-pb-md
+                  "
+                  style="font-size: x-small"
+                >
+                  {{ post.likes }} Likes • {{ post.bookmarks }} Bookmarks
+                </span>
+              </q-item>
+              <q-separator size="0.5rem" color="secondary" />
+            </q-list>
+          </q-list>
         </q-tab-panel>
 
         <!-- APPLICATION TAB PANEL-->
@@ -148,6 +214,20 @@ export default {
         department: "Department of Information Sciences",
         college: "College of Information and Computing Sciences",
       },
+      posts: [
+        {
+          date: 1631096539262,
+          fullname: "Azshara Highborne",
+          housingName: "Zin-Azshari Boarding House",
+          prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
+          title:
+            "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
+          fee: "1,200",
+          likes: 44,
+          bookmarks: 1,
+          photo: "https://cdn.quasar.dev/img/parallax1.jpg",
+        },
+      ]
     };
   },
   setup() {
