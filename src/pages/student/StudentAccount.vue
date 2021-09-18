@@ -39,26 +39,25 @@
         dense
         inline-label
         class="defaultfont-semibold text-grey q-px-md"
-        style="max-height: 2rem"
         active-color="black"
         indicator-color="transparent"
         align="justify"
       >
         <q-tab :ripple="false" name="bookmarks">
-          <p class="row items-center" style="font-size: smaller">
-            <q-icon name="bi-bookmark-fill" class="q-mr-xs" size="1rem" />
+          <span class="row items-center" style="font-size: smaller">
+            <q-icon name="bi-bookmark-fill" class="q-mr-xs" size="xs" />
             BOOKMARK
-          </p>
+          </span>
         </q-tab>
         <q-tab :ripple="false" name="applications">
-          <p class="row items-center" style="font-size: smaller">
+          <span class="row items-center" style="font-size: smaller">
             <q-icon
               name="bi-file-earmark-text-fill"
               class="q-mr-xs"
-              size="1rem"
+              size="xs"
             />
             APPLICATIONS
-          </p>
+          </span>
         </q-tab>
       </q-tabs>
 
