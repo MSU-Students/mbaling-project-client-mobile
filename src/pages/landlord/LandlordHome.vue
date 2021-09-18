@@ -78,14 +78,6 @@
               size="sm"
               icon="bi-chat-right"
             />
-            <q-btn
-              flat
-              round
-              :ripple="false"
-              color="primary"
-              size="sm"
-              icon="bi-bookmark"
-            />
           </div>
           <q-space />
           <span
