@@ -227,7 +227,7 @@ export default {
           bookmarks: 1,
           photo: "https://cdn.quasar.dev/img/parallax1.jpg",
         },
-      ]
+      ],
     };
   },
   setup() {

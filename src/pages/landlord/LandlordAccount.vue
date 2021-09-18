@@ -66,93 +66,97 @@
         <!-- POST TAB PANEL -->
         <q-tab-panel name="posts">
           <q-list class="q-mt-sm">
-      <q-list v-for="post in posts" :key="post.date" class="bg-white">
-        <q-item class="q-pt-md">
-          <q-item-section avatar top>
-            <q-avatar size="xl">
-              <img :src="post.prfphoto" />
-            </q-avatar>
-          </q-item-section>
+            <q-list v-for="post in posts" :key="post.date" class="bg-white">
+              <q-item class="q-pt-md">
+                <q-item-section avatar top>
+                  <q-avatar size="xl">
+                    <img :src="post.prfphoto" />
+                  </q-avatar>
+                </q-item-section>
 
-          <q-item-section top>
-            <q-item-label
-              lines="1"
-              class="defaultfont-semibold"
-              style="font-size: medium"
-            >
-              {{ post.fullname }}
-            </q-item-label>
-            <q-item-label lines="1" style="font-size: small">
-              {{ post.housingName }}
-            </q-item-label>
-            <span class="text-grey" style="font-size: xx-small">
-              {{ post.date }}
-            </span>
-          </q-item-section>
+                <q-item-section top>
+                  <q-item-label
+                    lines="1"
+                    class="defaultfont-semibold"
+                    style="font-size: medium"
+                  >
+                    {{ post.fullname }}
+                  </q-item-label>
+                  <q-item-label lines="1" style="font-size: small">
+                    {{ post.housingName }}
+                  </q-item-label>
+                  <span class="text-grey" style="font-size: xx-small">
+                    {{ post.date }}
+                  </span>
+                </q-item-section>
 
-          <q-item-section side top>
-            <q-btn
-              dense
-              flat
-              :ripple="false"
-              class="text-black"
-              icon="bi-three-dots"
-            />
-          </q-item-section>
-        </q-item>
+                <q-item-section side top>
+                  <q-btn
+                    dense
+                    flat
+                    :ripple="false"
+                    class="text-black"
+                    icon="bi-three-dots"
+                  />
+                </q-item-section>
+              </q-item>
 
-        <div class="q-my-xs">
-          <q-img :src="post.photo" />
-        </div>
+              <div class="q-my-xs">
+                <q-img :src="post.photo" />
+              </div>
 
-        <q-item>
-          <q-item-section class="defaultfont-medium">
-            <q-item-label lines="1" style="font-size: small">
-              {{ post.title }}
-            </q-item-label>
-            <q-item-label style="font-size: small">
-              {{ post.fee }} PHP monthly
-            </q-item-label>
-            <span
-              class="text-bold cursor-pointer"
-              style="font-size: x-small; text-align: right"
-            >
-              +View more
-            </span>
-          </q-item-section>
-        </q-item>
-        <q-separator inset color="primary" />
+              <q-item>
+                <q-item-section class="defaultfont-medium">
+                  <q-item-label lines="1" style="font-size: small">
+                    {{ post.title }}
+                  </q-item-label>
+                  <q-item-label style="font-size: small">
+                    {{ post.fee }} PHP monthly
+                  </q-item-label>
+                  <span
+                    class="text-bold cursor-pointer"
+                    style="font-size: x-small; text-align: right"
+                  >
+                    +View more
+                  </span>
+                </q-item-section>
+              </q-item>
+              <q-separator inset color="primary" />
 
-        <q-item>
-          <div class="row">
-            <q-btn
-              flat
-              round
-              :ripple="false"
-              color="primary"
-              size="sm"
-              icon="bi-heart"
-            />
-            <q-btn
-              flat
-              round
-              :ripple="false"
-              color="primary"
-              size="sm"
-              icon="bi-pencil-square"
-            />
-          </div>
-          <q-space />
-          <span
-            class="defaultfont-medium absolute-bottom-right q-pr-md q-pb-md"
-            style="font-size: x-small"
-          >
-            {{ post.likes }} Likes • {{ post.bookmarks }} Bookmarks
-          </span>
-        </q-item>
-        <q-separator size="0.5rem" color="secondary" />
-      </q-list>
-    </q-list>
+              <q-item>
+                <div class="row">
+                  <q-btn
+                    flat
+                    round
+                    :ripple="false"
+                    color="primary"
+                    size="sm"
+                    icon="bi-heart"
+                  />
+                  <q-btn
+                    flat
+                    round
+                    :ripple="false"
+                    color="primary"
+                    size="sm"
+                    icon="bi-pencil-square"
+                  />
+                </div>
+                <q-space />
+                <span
+                  class="
+                    defaultfont-medium
+                    absolute-bottom-right
+                    q-pr-md q-pb-md
+                  "
+                  style="font-size: x-small"
+                >
+                  {{ post.likes }} Likes • {{ post.bookmarks }} Bookmarks
+                </span>
+              </q-item>
+              <q-separator size="0.5rem" color="secondary" />
+            </q-list>
+          </q-list>
         </q-tab-panel>
 
         <!-- APPLICATION TAB PANEL-->
@@ -192,7 +196,7 @@ export default {
           bookmarks: 4,
           photo: "https://cdn.quasar.dev/img/parallax2.jpg",
         },
-      ]
+      ],
     };
   },
   setup() {
@@ -204,7 +208,7 @@ export default {
 </script>
 
 <style lang="sass">
-  .card-post
-    .q-img
-      min-width: 100px
+.card-post
+  .q-img
+    min-width: 100px
 </style>
