@@ -16,7 +16,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'inbox', component: () => import('pages/Inbox.vue') },
       { path: 's/account', component: () => import('pages/student/StudentAccount.vue') },
       { path: 'l/account', component: () => import('pages/landlord/LandlordAccount.vue') },
-      { path: '/post', component: () => import('pages/landlord/LandlordAccount.vue') }
+      { path: '/post', component: () => import('pages/landlord/PostForm.vue') }
     ]
   },
 
