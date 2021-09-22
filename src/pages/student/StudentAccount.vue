@@ -172,9 +172,9 @@
         <q-tab-panel name="applications">
           <q-card flat bordered>
             <q-item class="bg-white">
-              <q-item-section thumbnail class="q-ml-none">
+              <!-- <q-item-section thumbnail class="q-ml-none">
                 <img src="~src\assets\post-picture-a002.jpg" />
-              </q-item-section>
+              </q-item-section> -->
 
               <q-item-section>
                 <div><q-item-label>Hello Raian</q-item-label></div>

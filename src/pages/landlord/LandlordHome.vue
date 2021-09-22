@@ -90,6 +90,10 @@
         <q-separator size="0.5rem" color="secondary" />
       </q-list>
     </q-list>
+
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn fab icon="bi-pin-angle" color="primary" to="/post" />
+    </q-page-sticky>
   </q-page>
 </template>
 
