@@ -2,9 +2,16 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-white q-px-md q-py-sm" style="height: 3rem">
 
+      <q-toolbar-title>
+        <q-img
+          src="~assets/mbaling-logo-horizontal.svg"
+          style="max-width: 8rem"
+        />
+      </q-toolbar-title>
+
       <q-btn 
-        class="absolute-right q-pr-md"
         v-if="$route.fullPath.includes('/inbox')"
+        class="absolute-right q-pr-md"
         @click="$router.go(-1)"
         :ripple="false"
         color="black"
@@ -13,13 +20,7 @@
         dense
         flat
         />
-
-      <q-toolbar-title>
-        <q-img
-          src="~assets/mbaling-logo-horizontal.svg"
-          style="max-width: 8rem"
-        />
-      </q-toolbar-title>
+        
     </q-header>
 
     <q-page-container>
