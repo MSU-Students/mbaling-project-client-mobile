@@ -1,6 +1,19 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-white q-px-md q-py-sm" style="height: 3rem">
+
+      <q-btn 
+        class="absolute-right q-pr-md"
+        v-if="$route.fullPath.includes('/inbox')"
+        @click="$router.go(-1)"
+        :ripple="false"
+        color="black"
+        icon="send"
+        rounded
+        dense
+        flat
+        />
+
       <q-toolbar-title>
         <q-img
           src="~assets/mbaling-logo-horizontal.svg"
