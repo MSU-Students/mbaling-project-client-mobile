@@ -1,6 +1,5 @@
 <template>
-<q-header></q-header>
     <q-page>
-
+        <h5>CHAT PAGE</h5>
     </q-page>
 </template>
