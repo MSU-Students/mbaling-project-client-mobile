@@ -9,9 +9,14 @@
       </q-toolbar-title>
     </q-header>
 
-    <div class="q-pa-md column col justify-end">
-    <q-chat-message name="me" :text="['hey, how are you?']" sent />
-    <q-chat-message name="Jane" :text="['doing fine, how r you?']" />
+   <div class="q-pa-md column col justify-end">
+      <q-chat-message
+      v-for="message in messages"
+        :key="message.text"
+        :name="message.from"
+        :text="[message.text]"
+        :sent="message.from == 'me' ? true : false"
+      />
     </div>
 
     <q-footer class="bg-white">
@@ -28,7 +33,7 @@
            dense>
 
             <template v-slot:append>
-              <q-icon name="send" />
+              <q-icon name="send" @click="sendMessage" />
             </template>
 
             <template v-slot:after>
@@ -42,3 +47,36 @@
  
   </q-page>
 </template>
+
+<script>
+export default {
+  data(){
+    return{
+      newMessage: '',
+      messages: [
+        {
+          text: 'Hey Dodol, how r u mf',
+          from: 'me'
+        },
+        {
+          text: 'yow mf im f fine boi',
+          from: 'them'
+        },
+        {
+          text: 'stfu u bastard i only do the cursing word',
+          from: 'me'
+        },
+      ]
+    }
+  },
+  methods:{
+    sendMessage(){
+      this.messages.push({
+        text: this.newMessage,
+        from: 'me'
+      })
+      this.newMessage = ''
+    }
+  }
+}
+</script>
