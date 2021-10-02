@@ -8,13 +8,15 @@
         />
       </q-toolbar-title>
     </q-header>
-
+<!-- :color="user.online ? 'light-green-5' : 'grey-4'"> -->
    <div class="q-pa-md column col justify-end">
       <q-chat-message
-      v-for="message in messages"
+        v-for="message in messages"
+        :text-color="message.from == 'me' ? 'white' : 'black'"
         :key="message.text"
         :name="message.from"
         :text="[message.text]"
+        :bg-color="message.from == 'me' ? 'primary' : 'white'"
         :sent="message.from == 'me' ? true : false"
       />
     </div>
