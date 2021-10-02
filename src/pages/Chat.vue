@@ -57,15 +57,15 @@ export default {
       newMessage: '',
       messages: [
         {
-          text: 'Hey Dodol, how r u mf',
+          text: 'Hey Dodol, how r u boi',
           from: 'me'
         },
         {
-          text: 'yow mf im f fine boi',
+          text: 'yow im fine boi',
           from: 'them'
         },
         {
-          text: 'stfu u bastard i only do the cursing word',
+          text: 'im just to chill',
           from: 'me'
         },
       ]
