@@ -2,10 +2,7 @@
     <q-page class="flex column">
     <q-header elevated class="bg-white q-px-md q-py-sm" style="height: 3rem">
       <q-toolbar-title>
-        <q-img
-          src="~assets/mbaling-logo-horizontal.svg"
-          style="max-width: 8rem"
-        />
+        
       </q-toolbar-title>
     </q-header>
 <!-- :color="user.online ? 'light-green-5' : 'grey-4'"> -->
@@ -14,7 +11,6 @@
         v-for="message in messages"
         :text-color="message.from == 'me' ? 'white' : 'black'"
         :key="message.text"
-        :name="message.from"
         :text="[message.text]"
         :bg-color="message.from == 'me' ? 'primary' : 'white'"
         :sent="message.from == 'me' ? true : false"
