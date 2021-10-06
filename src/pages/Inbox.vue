@@ -10,7 +10,7 @@
 
         <q-item-section>
           <q-item-label>{{ contact.name }}</q-item-label>
-          <q-item-label caption lines="1">{{ contact.email }}</q-item-label>
+          <q-item-label caption lines="1">{{ contact.text }}</q-item-label>
         </q-item-section>
 
       </q-item>
@@ -28,21 +28,26 @@ export default {
             id: 1,
             name: 'Ruddy Jedrzej',
             email: 'rjedrzej0@discuz.net',
+            text: 'Hey Dodol, how r u boi',
+            date: 'June 19',
             prfphoto: "https://cdn.quasar.dev/img/avatar4.jpg",
           }, {
             id: 2,
             name: 'Mallorie Alessandrini',
             email: 'malessandrini1@marketwatch.com',
-             prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
+            text: 'Hey Babe whacha doin..',
+            prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
           }, {
             id: 3,
             name: 'Elisabetta Wicklen',
             email: 'ewicklen2@microsoft.com',
+            text: 'anda so kantonn!!',
              prfphoto: "https://cdn.quasar.dev/img/avatar3.jpg",
           }, {
             id: 4,
             name: 'Seka Fawdrey',
             email: 'sfawdrey3@wired.com',
+            text: 'Antae tao sa college>',
              prfphoto: "https://cdn.quasar.dev/img/avatar1.jpg",
           } ]
             
