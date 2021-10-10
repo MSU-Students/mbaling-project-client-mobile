@@ -16,14 +16,14 @@ const routes: RouteRecordRaw[] = [
       { path: 'inbox', component: () => import('pages/Inbox.vue') },
       { path: 's/account', component: () => import('pages/student/StudentAccount.vue') },
       { path: 'l/account', component: () => import('pages/landlord/LandlordAccount.vue') },
-      { path: '/post', component: () => import('pages/landlord/PostForm.vue') }
     ]
   },
 
   {
     path: '/',
     component: () => import('layouts/ChatLayout.vue'),
-    children: [{ path: '/chat', component: () => import('pages/Chat.vue') }],
+    children: [{ path: '/chat', component: () => import('pages/Chat.vue') },
+               { path: '/post', component: () => import('pages/landlord/PostForm.vue') },],
   },
 
   // Always leave this as last one,
