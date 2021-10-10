@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div
-      class="bg-grey-4 q-mt-md landscape"
+      class="bg-secondary q-mt-md landscape"
       style="max-width: 100%; max-height: 100%"
     >
       <q-img
@@ -11,13 +11,14 @@
       />
     </div>
 
-    <div class="q-mt-xs">
+    <div class="q-mt-xs q-px-lg">
       <q-btn-group outline spread>
         <q-btn
+          class="text-subtitle2"
           flat
           color="primary"
-          label="Upload Picture"
-          icon="image"
+          label="Upload"
+          icon="bi-image"
           @click="choosepicture"
         />
         <input
@@ -27,43 +28,70 @@
           type="file"
           @input="onSelectFile"
         />
-        <q-btn flat color="primary" label="Capture" icon="camera" />
+        <q-btn flat color="primary" label="Capture" icon="bi-camera" />
       </q-btn-group>
     </div>
 
     <div>
       <q-input 
-      autogrow
-      class="q-mx-md" 
+      class="q-ma-md " 
+      filled
+      dense
+      autogrow     
       v-model="title" 
-      label="Title" />
+      label="Title"/>
 
+      <div class="row">
       <q-input 
+      filled
+      dense
       class="q-mx-md"
       prefix="₱" 
       v-model="fee" 
+      style="width:50%"
       label="Fee" />
 
-      <div class="q-pa-md" style="max-width:100%">
+      <q-checkbox dense v-model="negotiableBox" label="Negotiable" color="primary" />
+
+      </div>
+      <div class="column q-pl-lg q-ma-sm">
+       <q-checkbox 
+       class="q-mb-sm" 
+       dense 
+       v-model="pkBox" 
+       label="Private Kitchen" 
+       color="primary" />
+
+        <q-checkbox 
+        dense 
+        v-model="pcBox" 
+        label="Private CR" 
+        color="primary" />
+      </div>
+      
         <q-input
+         class="q-pa-md"
           v-model="description"
           filled
           type="textarea"
           label="Description"
         />
-      </div>
     </div>
-
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn label="post" icon-right="send" color="primary" />
-    </q-page-sticky>
   </q-page>
 </template>
 
 <script>
+import { ref } from 'vue'
 export default {
   name: "",
 
+ setup () {
+    return {
+      negotiableBox: ref(false),
+      pkBox: ref(false),
+      pcBox: ref(false),
+    }
+  },
   data() {
     return {
       title: "",
