@@ -12,7 +12,6 @@
       <q-btn 
         v-if="$route.fullPath.includes('/inbox')"
         class="absolute-right q-pr-md"
-        @click="$router.go(-1)"
         :ripple="false"
         color="black"
         icon="send"
