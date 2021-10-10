@@ -1,19 +1,6 @@
 <template>
     <q-page class="flex column">
-    <q-header elevated class="bg-white" style="height: 3rem">
-      <q-toolbar >
-         <q-avatar> <q-img src="https://cdn.quasar.dev/img/avatar2.jpg" class="chat-avatar"/> </q-avatar>
-         <q-toolbar-title class="text-black text-subtitle2">Azshara Highborne</q-toolbar-title>
 
-          <q-btn 
-          class="q-pr-none"
-          color="black"
-          flat
-          icon="arrow_back" 
-          :ripple="false"         
-         @click="() => $router.replace('/inbox')"/>
-      </q-toolbar>
-    </q-header>
     <q-card flat bordered class="q-mt-md">
             <q-item class="bg-white">
               <q-item-section thumbnail class="q-ml-none">
