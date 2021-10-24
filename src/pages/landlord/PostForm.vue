@@ -1,14 +1,29 @@
 <template>
   <q-page>
     <div
-      class="bg-secondary q-mt-md landscape"
+      class=" q-mt-md landscape"
       style="max-width: 100%; max-height: 100%"
     >
-      <q-img
+    <q-carousel
+      class="bg-secondary"
+      animated
+      v-model="slide"
+      navigation
+      infinite
+      style="max-width: 100%; max-height: 100%"
+    >
+      <q-carousel-slide 
+      v-for="(image, index) in images" 
+      :key="image"
+      :name="index" 
+      :img-src="image"
+      />
+    </q-carousel>
+      <!-- <q-img
         :src="imageData"
         class=""
         style="max-width: 100%; max-height: 100%"
-      />
+      /> -->
     </div>
 
     <div class="q-mt-xs q-px-lg">
@@ -23,10 +38,11 @@
         />
         <input
           hidden
+          multiple
           class="file-input"
           ref="fileInput"
           type="file"
-          @input="onSelectFile"
+          @change="onFileChange"
         />
         <q-btn flat color="primary" label="Capture" icon="bi-camera" />
       </q-btn-group>
@@ -90,6 +106,7 @@ export default {
       negotiableBox: ref(false),
       pkBox: ref(false),
       pcBox: ref(false),
+      slide: ref(1)
     }
   },
   data() {
@@ -97,27 +114,34 @@ export default {
       title: "",
       fee: "",
       description: "",
-      imageData: null,
+      images: [],
     };
   },
   methods: {
-    onSelectFile() {
+    onFileChange(e) {
       const input = this.$refs.fileInput;
       const files = input.files;
-      this.FileImage = files[0];
-      if (files && files[0]) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.imageData = e.target.result;
-        };
-        reader.readAsDataURL(files[0]);
-        this.$emit("input", files[0]);
+      if (!files.length) return;
+      this.createImage(files);
+    },
+    createImage(files) {
+      var vm = this;
+      for (var index = 0; index < files.length; index++) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          const imageUrl = event.target.result;
+           vm.images.push(imageUrl);
+        }
+        reader.readAsDataURL(files[index]);
       }
     },
-    choosepicture() {
+    removeImage(index) {
+      this.images.splice(index, 1)
+    },
+     choosepicture() {
       this.$refs.fileInput.click();
     },
-  },
+  }
 };
 </script>
 
