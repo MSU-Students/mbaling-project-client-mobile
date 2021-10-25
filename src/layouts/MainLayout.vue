@@ -8,17 +8,6 @@
           style="max-width: 8rem"
         />
       </q-toolbar-title>
-
-      <q-btn 
-        v-if="$route.fullPath.includes('/inbox')"
-        class="absolute-right q-pr-md"
-        :ripple="false"
-        color="black"
-        icon="send"
-        rounded
-        dense
-        flat
-        />
         
     </q-header>
 
