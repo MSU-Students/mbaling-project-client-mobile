@@ -1,4 +1,16 @@
 <template>
+<q-header style="height: 3rem; background-color: transparent">
+    <q-toolbar>
+      <q-space />
+      <q-btn
+        dense
+        flat
+        :ripple="false"
+        color="black"
+        icon="send"
+      />
+    </q-toolbar>
+  </q-header>
   <q-page>
  <q-list >
       <q-item v-for="contact in contacts" :key="contact.id" to="/chat" class="q-my-sm" clickable v-ripple>

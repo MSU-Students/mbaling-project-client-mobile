@@ -4,7 +4,18 @@
       class=" q-mt-md landscape"
       style="max-width: 100%; max-height: 100%"
     >
+     <q-icon
+     v-if="!images[0]"
+      class="post-icon"
+      size="5rem"
+      color="grey"
+      name="bi-image"
+    />
+
+    
     <q-carousel
+    v-else
+      arrows
       class="bg-secondary"
       animated
       v-model="slide"
@@ -12,6 +23,7 @@
       infinite
       style="max-width: 100%; max-height: 100%"
     >
+
       <q-carousel-slide 
       v-for="(image, index) in images" 
       :key="image"
@@ -19,6 +31,11 @@
       :img-src="image"
       />
     </q-carousel>
+
+    
+
+
+    
       <!-- <q-img
         :src="imageData"
         class=""
@@ -155,5 +172,10 @@ img {
   max-height: 100%;
   overflow: hidden;
   object-fit: contain;
+}
+.post-icon{
+  margin-left: 40%;
+  margin-top: 20%;
+
 }
 </style>
