@@ -1,41 +1,54 @@
 <template>
-  <q-page>
-    <div
-      class=" q-mt-md landscape"
-      style="max-width: 100%; max-height: 100%"
-    >
-     <q-icon
-     v-if="!images[0]"
-      class="post-icon"
-      size="5rem"
-      color="grey"
-      name="bi-image"
-    />
-
-    
-    <q-carousel
-    v-else
-      arrows
-      class="bg-secondary"
-      animated
-      v-model="slide"
-      navigation
-      infinite
-      style="max-width: 100%; max-height: 100%"
-    >
-
-      <q-carousel-slide 
-      v-for="(image, index) in images" 
-      :key="image"
-      :name="index" 
-      :img-src="image"
+  <q-header style="height: 3rem; background-color: transparent">
+    <q-toolbar>
+      <q-btn
+        class="q-px-none"
+        color="black"
+        flat
+        icon="bi-arrow-left-short"
+        :ripple="false"
+        @click="$router.go(-1)"
       />
-    </q-carousel>
+      <q-space />
+      <q-btn
+        class="q-mr-sm"
+        size="sm"
+        unelevated
+        :ripple="false"
+        color="primary"
+        label="post"
+      />
+    </q-toolbar>
+  </q-header>
 
-    
+  <q-page>
+    <div class="q-mt-md landscape" style="max-width: 100%; max-height: 100%">
+      <q-icon
+        v-if="!images[0]"
+        class="post-icon"
+        size="5rem"
+        color="grey"
+        name="bi-image"
+      />
 
+      <q-carousel
+        v-else
+        arrows
+        class="bg-secondary"
+        animated
+        v-model="slide"
+        navigation
+        infinite
+        style="max-width: 100%; max-height: 100%"
+      >
+        <q-carousel-slide
+          v-for="(image, index) in images"
+          :key="image"
+          :name="index"
+          :img-src="image"
+        />
+      </q-carousel>
 
-    
       <!-- <q-img
         :src="imageData"
         class=""
@@ -66,65 +79,68 @@
     </div>
 
     <div>
-      <q-input 
-      class="q-ma-md " 
-      filled
-      dense
-      autogrow     
-      v-model="title" 
-      label="Title"/>
+      <q-input
+        class="q-ma-md"
+        filled
+        dense
+        autogrow
+        v-model="title"
+        label="Title"
+      />
 
       <div class="row">
-      <q-input 
-      filled
-      dense
-      class="q-mx-md"
-      prefix="₱" 
-      v-model="fee" 
-      style="width:50%"
-      label="Fee" />
+        <q-input
+          filled
+          dense
+          class="q-mx-md"
+          prefix="₱"
+          v-model="fee"
+          style="width: 50%"
+          label="Fee"
+        />
 
-      <q-checkbox dense v-model="negotiableBox" label="Negotiable" color="primary" />
-
+        <q-checkbox
+          dense
+          v-model="negotiableBox"
+          label="Negotiable"
+          color="primary"
+        />
       </div>
       <div class="column q-pl-lg q-ma-sm">
-       <q-checkbox 
-       class="q-mb-sm" 
-       dense 
-       v-model="pkBox" 
-       label="Private Kitchen" 
-       color="primary" />
-
-        <q-checkbox 
-        dense 
-        v-model="pcBox" 
-        label="Private CR" 
-        color="primary" />
-      </div>
-      
-        <q-input
-         class="q-pa-md"
-          v-model="description"
-          filled
-          type="textarea"
-          label="Description"
+        <q-checkbox
+          class="q-mb-sm"
+          dense
+          v-model="pkBox"
+          label="Private Kitchen"
+          color="primary"
         />
+
+        <q-checkbox dense v-model="pcBox" label="Private CR" color="primary" />
+      </div>
+
+      <q-input
+        class="q-pa-md"
+        v-model="description"
+        filled
+        type="textarea"
+        label="Description"
+      />
     </div>
   </q-page>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref } from "vue";
 export default {
   name: "",
 
- setup () {
+  setup() {
     return {
       negotiableBox: ref(false),
       pkBox: ref(false),
       pcBox: ref(false),
-      slide: ref(1)
-    }
+      slide: ref(1),
+    };
   },
   data() {
     return {
@@ -145,20 +161,20 @@ export default {
       var vm = this;
       for (var index = 0; index < files.length; index++) {
         var reader = new FileReader();
-        reader.onload = function(event) {
+        reader.onload = function (event) {
           const imageUrl = event.target.result;
-           vm.images.push(imageUrl);
-        }
+          vm.images.push(imageUrl);
+        };
         reader.readAsDataURL(files[index]);
       }
     },
     removeImage(index) {
-      this.images.splice(index, 1)
+      this.images.splice(index, 1);
     },
-     choosepicture() {
+    choosepicture() {
       this.$refs.fileInput.click();
     },
-  }
+  },
 };
 </script>
 
@@ -173,9 +189,8 @@ img {
   overflow: hidden;
   object-fit: contain;
 }
-.post-icon{
+.post-icon {
   margin-left: 40%;
   margin-top: 20%;
-
 }
 </style>

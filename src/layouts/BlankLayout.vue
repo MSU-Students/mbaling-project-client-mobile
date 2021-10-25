@@ -1,7 +1,14 @@
 <template>
-  <q-layout class="bg-grey-3" view="hHh lpR fFf">
+  <q-layout view="hHh lpR fFf">
+    <q-header elevated class="bg-white q-px-md q-py-sm" style="height: 3rem"></q-header>
 
-     <q-header elevated class="bg-white" style="height: 3rem">
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+
+  </q-layout>
+
+     <!-- <q-header elevated class="bg-white" style="height: 3rem">
       <q-toolbar >
          <q-avatar v-if="$route.fullPath.includes('/chat')"> 
             <q-img src="https://cdn.quasar.dev/img/avatar2.jpg" class="chat-avatar"/> 
@@ -35,6 +42,5 @@
       <router-view />
     </q-page-container>
 
-    
-  </q-layout>
+  </q-layout> -->
 </template>
