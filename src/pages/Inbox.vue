@@ -12,6 +12,9 @@
     </q-toolbar>
   </q-header>
   <q-page>
+
+    <!-- Inbox DashBoard -->
+    <q-scroll-area style="height: 38rem; max-width: 100%;">
  <q-list >
       <q-item v-for="contact in contacts" :key="contact.id" to="/chat" class="q-my-sm" clickable v-ripple>
         <q-item-section avatar>
@@ -27,6 +30,7 @@
 
       </q-item>
     </q-list>
+    </q-scroll-area>
 
   </q-page>
 </template>
