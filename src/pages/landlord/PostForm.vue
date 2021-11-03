@@ -5,7 +5,7 @@
         class="q-px-none"
         color="black"
         flat
-        icon="bi-arrow-left-short"
+        icon="bi-arrow-left"
         :ripple="false"
         @click="$router.go(-1)"
       />
@@ -21,16 +21,16 @@
     </q-toolbar>
   </q-header>
 
-  <q-page>
-    <div class="q-mt-md landscape" style="max-width: 100%; max-height: 100%">
-      <q-icon
+  <q-page class="defaultfont text-black">
+    <!-- POST PHOTO SECTION -->
+    <div class="bg-secondary" style="height: 20rem">
+      <div
         v-if="!images[0]"
-        class="post-icon"
-        size="5rem"
-        color="grey"
-        name="bi-image"
-      />
-
+        class="bg-transparent row items-center justify-evenly"
+        style="height: 20rem"
+      >
+        <q-icon size="xl" color="grey" name="bi-image" />
+      </div>
       <q-carousel
         v-else
         arrows
@@ -48,19 +48,15 @@
           :img-src="image"
         />
       </q-carousel>
-
-      <!-- <q-img
-        :src="imageData"
-        class=""
-        style="max-width: 100%; max-height: 100%"
-      /> -->
     </div>
 
-    <div class="q-mt-xs q-px-lg">
-      <q-btn-group outline spread>
+    <!-- UPLOAD AND CAMERA BUTTONS -->
+    <div class="q-mt-sm q-mb-lg q-px-lg">
+      <q-btn-group flat spread>
         <q-btn
-          class="text-subtitle2"
           flat
+          size="sm"
+          class="defaultfont-bold"
           color="primary"
           label="Upload"
           icon="bi-image"
@@ -74,31 +70,37 @@
           type="file"
           @change="onFileChange"
         />
-        <q-btn flat color="primary" label="Capture" icon="bi-camera" />
+        <q-btn
+          flat
+          size="sm"
+          class="defaultfont-bold"
+          color="primary"
+          label="Capture"
+          icon="bi-camera"
+        />
       </q-btn-group>
     </div>
 
-    <div>
+    <!-- INPUT FIELDS -->
+    <div class="q-mx-md">
       <q-input
-        class="q-ma-md"
+        class="q-my-sm"
         filled
         dense
         autogrow
         v-model="title"
-        label="Title"
+        placeholder="Title"
       />
 
-      <div class="row">
+      <div class="row q-my-sm">
         <q-input
+          class="q-mr-md"
           filled
           dense
-          class="q-mx-md"
-          prefix="₱"
           v-model="fee"
           style="width: 50%"
-          label="Fee"
+          placeholder="Fee (MONTHLY)"
         />
-
         <q-checkbox
           dense
           v-model="negotiableBox"
@@ -106,7 +108,8 @@
           color="primary"
         />
       </div>
-      <div class="column q-pl-lg q-ma-sm">
+
+      <div class="column q-pl-lg q-mt-md">
         <q-checkbox
           class="q-mb-sm"
           dense
@@ -114,16 +117,15 @@
           label="Private Kitchen"
           color="primary"
         />
-
         <q-checkbox dense v-model="pcBox" label="Private CR" color="primary" />
       </div>
 
       <q-input
-        class="q-pa-md"
+        class="q-mt-md"
         v-model="description"
         filled
         type="textarea"
-        label="Description"
+        placeholder="Description"
       />
     </div>
   </q-page>
@@ -132,8 +134,6 @@
 <script>
 import { ref } from "vue";
 export default {
-  name: "",
-
   setup() {
     return {
       negotiableBox: ref(false),
@@ -179,18 +179,10 @@ export default {
 </script>
 
 <style>
-.landscape {
-  height: 15rem;
-  width: 23.4rem;
-}
 img {
   max-width: 100%;
   max-height: 100%;
   overflow: hidden;
   object-fit: contain;
-}
-.post-icon {
-  margin-left: 40%;
-  margin-top: 20%;
 }
 </style>
