@@ -1,5 +1,28 @@
 <template>
+<q-header style="height: 3rem; background-color: transparent">
+    <q-toolbar>
+      <q-btn
+        class="q-px-none"
+        color="black"
+        flat
+        icon="bi-arrow-left-short"
+        :ripple="false"
+        @click="$router.go(-1)"
+      />
+    <q-space/>
+      <q-btn
+        class="q-px-none defaultfont-semibold"
+        color="primary"
+        label="post"
+        size="sm"
+        style="width:3rem; font-size: xx-small"
+        :ripple="false"
+      />
+
+    </q-toolbar>
+  </q-header>
   <q-page>
+    <q-scroll-area style="height: 47.5rem; max-width: 23.4rem;">
     <div
       class=" q-mt-md landscape"
       style="max-width: 100%; max-height: 100%"
@@ -109,6 +132,7 @@
           label="Description"
         />
     </div>
+    </q-scroll-area>
   </q-page>
 </template>
 
