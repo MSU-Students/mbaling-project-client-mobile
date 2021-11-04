@@ -27,7 +27,7 @@ import { Vue } from "vue-class-component";
 import { ref } from "vue";
 
 export default class Search extends Vue {
-  var search = ref("");
-  var loadingState = ref(false);
+  search = ref("");
+  loadingState = ref(false);
 }
 </script>
