@@ -2,7 +2,7 @@
   <q-header style="height: 3rem; background-color: transparent" />
 
   <q-page class="defaultfont bg-secondary text-black">
-    <q-list class="q-mt-sm">
+    <q-list class="q-pt-sm">
       <q-list v-for="post in posts" :key="post.date" class="bg-white">
         <q-item class="q-pt-md">
           <q-item-section avatar top>
@@ -90,6 +90,10 @@
         <q-separator size="0.5rem" color="secondary" />
       </q-list>
     </q-list>
+
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn fab icon="bi-pin-angle" color="primary" to="/form" />
+    </q-page-sticky>
   </q-page>
 </template>
 

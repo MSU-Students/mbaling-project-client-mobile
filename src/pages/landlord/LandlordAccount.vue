@@ -65,7 +65,7 @@
       <q-tab-panels v-model="tab" animated class="bg-transparent">
         <!-- POST TAB PANEL -->
         <q-tab-panel name="posts">
-          <q-list class="q-mt-sm">
+          <q-list class="q-pt-sm">
             <q-list v-for="post in posts" :key="post.date" class="bg-white">
               <q-item class="q-pt-md">
                 <q-item-section avatar top>

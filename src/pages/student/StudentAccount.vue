@@ -66,7 +66,7 @@
       <q-tab-panels v-model="tab" animated class="bg-transparent">
         <!-- BOOKMARK TAB PANEL -->
         <q-tab-panel name="bookmarks">
-          <q-list class="q-mt-sm">
+          <q-list class="q-pt-sm">
             <q-list v-for="post in posts" :key="post.date" class="bg-white">
               <q-item class="q-pt-md">
                 <q-item-section avatar top>
@@ -172,8 +172,8 @@
         <q-tab-panel name="applications">
           <q-card flat bordered>
             <q-item class="bg-white">
+
               <q-item-section thumbnail class="q-ml-none">
-                <img src="~src\assets\post-picture-a002.jpg" />
               </q-item-section>
 
               <q-item-section>

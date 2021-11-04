@@ -3,10 +3,7 @@
     <q-card flat class="bg-transparent text-center" style="width: 12rem">
       <!-- LOGO PICTURE -->
       <div>
-        <q-img
-          src="~assets/mbaling-logo-vertical.svg"
-          style="width: 6rem"
-        />
+        <q-img src="~assets/mbaling-logo-vertical.svg" style="width: 6rem" />
       </div>
       <!-- USERNAME & PASSWORD INPUT -->
       <div class="q-mt-xl">
@@ -47,28 +44,49 @@
 </template>
 
 <script lang="ts">
+import { Vue } from "vue-class-component";
 import { ref } from "vue";
-export default {
-  name: "LoginForm",
-  setup() {
-    return {
-      username: ref(""),
-      password: ref(""),
-    };
-  },
-  methods: {
-    async loginUser() {
-      if (this.username == "user" && this.password == "password") {
-        await this.$router.replace("/s/home");
-      } else {
-        this.$q.notify({
-          color: "secondary",
-          textColor: "primary",
-          position: "top",
-          message: "Incorrect username or password.",
-        });
-      }
-    },
-  },
-};
+
+export default class LoginForm extends Vue {
+  username = "";
+  password = "";
+
+  async loginUser() {
+    let user = this.username;
+    let pass = this.password;
+    if (user == "user" && pass == "password") {
+      await this.$router.replace("/s/home");
+    } else {
+      this.$q.notify({
+        color: "secondary",
+        textColor: "primary",
+        position: "top",
+        message: "Incorrect username or password.",
+      });
+    }
+  }
+}
+// export default {
+//   name: "LoginForm",
+//   setup() {
+//     return {
+//       username: ref(""),
+//       password: ref(""),
+//     };
+//   },
+//   methods: {
+//     async loginUser() {
+//       if (this.username == "user" && this.password == "password") {
+//         await this.$router.replace("/s/home");
+//       } else {
+//         this.$q.notify({
+//           color: "secondary",
+//           textColor: "primary",
+//           position: "top",
+//           message: "Incorrect username or password.",
+//         });
+//       }
+//     },
+//   },
+// };
 </script>
