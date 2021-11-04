@@ -7,6 +7,7 @@
   </q-header>
 
   <q-page>
+    <q-scroll-area style="height: 44.7rem; max-width: 23.4rem;">
     <q-list>
       <q-item
         v-for="contact in contacts"
@@ -28,6 +29,7 @@
         </q-item-section>
       </q-item>
     </q-list>
+    </q-scroll-area>
   </q-page>
 </template>
 
