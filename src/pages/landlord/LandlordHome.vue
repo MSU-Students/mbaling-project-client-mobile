@@ -92,7 +92,7 @@
     </q-list>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="bi-pin-angle" color="primary" to="/post" />
+      <q-btn fab icon="bi-pin-angle" color="primary" to="/form" />
     </q-page-sticky>
   </q-page>
 </template>
