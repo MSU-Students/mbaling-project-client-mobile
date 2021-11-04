@@ -15,7 +15,7 @@
         class="q-px-none"
         color="black"
         flat
-        icon="bi-arrow-left-short"
+        icon="bi-arrow-left"
         :ripple="false"
         @click="$router.go(-1)"
       />

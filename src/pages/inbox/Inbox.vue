@@ -6,30 +6,47 @@
     </q-toolbar>
   </q-header>
 
-  <q-page>
-    <q-scroll-area style="height: 44.7rem; max-width: 23.4rem;">
-    <q-list>
-      <q-item
+  <q-page class="defaultfont bg-secondary text-black">
+    <q-list class="q-pt-xs">
+      <q-list
         v-for="contact in contacts"
-        :key="contact.id"
-        to="/chat"
-        class="q-my-sm"
-        clickable
-        v-ripple
+        :key="contact.username"
+        class="bg-white"
       >
-        <q-item-section avatar>
-          <q-avatar size="xl">
-            <img :src="contact.prfphoto" />
-          </q-avatar>
-        </q-item-section>
+        <q-item clickable v-ripple to="/chat">
+          <q-item-section avatar>
+            <q-avatar size="lg">
+              <img :src="contact.prfphoto" />
+            </q-avatar>
+          </q-item-section>
 
-        <q-item-section>
-          <q-item-label>{{ contact.name }}</q-item-label>
-          <q-item-label caption lines="1">{{ contact.text }}</q-item-label>
-        </q-item-section>
-      </q-item>
+          <q-item-section>
+            <q-item-label
+              lines="1"
+              class="defaultfont-semibold"
+              style="font-size: small"
+            >
+              {{ contact.fullname }}
+            </q-item-label>
+            <q-item-label lines="1" style="font-size: smaller">
+              {{ contact.message }}
+            </q-item-label>
+          </q-item-section>
+
+          <q-item-section side>
+            <q-btn
+              dense
+              flat
+              :ripple="false"
+              class="text-black"
+              size="sm"
+              icon="bi-three-dots-vertical"
+            />
+          </q-item-section>
+        </q-item>
+        <q-separator size="0.25rem" color="secondary" />
+      </q-list>
     </q-list>
-    </q-scroll-area>
   </q-page>
 </template>
 
@@ -39,33 +56,28 @@ export default {
     return {
       contacts: [
         {
-          id: 1,
-          name: "Ruddy Jedrzej",
-          email: "rjedrzej0@discuz.net",
-          text: "Hey Dodol, how r u boi",
-          date: "June 19",
-          prfphoto: "https://cdn.quasar.dev/img/avatar4.jpg",
+          username: 1,
+          fullname: "Ruddy Jedrzej",
+          message: "Hey Dodol, how r u boi",
+          prfphoto: "https://cdn.quasar.dev/img/avatar1.jpg",
         },
         {
-          id: 2,
-          name: "Mallorie Alessandrini",
-          email: "malessandrini1@marketwatch.com",
-          text: "Hey Babe whacha doin..",
+          username: 2,
+          fullname: "Mallorie Alessandrini",
+          message: "Hey Babe whacha doin..",
           prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
         },
         {
-          id: 3,
-          name: "Elisabetta Wicklen",
-          email: "ewicklen2@microsoft.com",
-          text: "anda so kantonn!!",
+          username: 3,
+          fullname: "Elisabetta Wicklen",
+          message: "anda so kantonn!!",
           prfphoto: "https://cdn.quasar.dev/img/avatar3.jpg",
         },
         {
-          id: 4,
-          name: "Seka Fawdrey",
-          email: "sfawdrey3@wired.com",
-          text: "Antae tao sa college>",
-          prfphoto: "https://cdn.quasar.dev/img/avatar1.jpg",
+          username: 4,
+          fullname: "Seka Fawdrey",
+          message: "Antae tao sa college>",
+          prfphoto: "https://cdn.quasar.dev/img/avatar4.jpg",
         },
       ],
     };

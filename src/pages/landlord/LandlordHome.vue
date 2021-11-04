@@ -2,7 +2,7 @@
   <q-header style="height: 3rem; background-color: transparent" />
 
   <q-page class="defaultfont bg-secondary text-black">
-    <q-list class="q-mt-sm">
+    <q-list class="q-pt-sm">
       <q-list v-for="post in posts" :key="post.date" class="bg-white">
         <q-item class="q-pt-md">
           <q-item-section avatar top>
