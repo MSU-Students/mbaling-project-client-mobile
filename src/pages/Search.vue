@@ -48,6 +48,8 @@
         </div>
       </q-tab-panel>
     </q-tab-panels>
+
+    <div v-if="searchResult.length == 0 && searchClicked">No result found!</div>
   </q-page>
 </template>
 
@@ -73,6 +75,7 @@ export default class Search extends Vue {
   search = "";
   tabs = "posts";
   loadingState = false;
+  searchClicked = false;
 
   // dummy posts. expected this data will fetch to your local db.
   // i just call the interface here
@@ -115,11 +118,13 @@ export default class Search extends Vue {
         post.housingName.toLowerCase().includes(this.search.toLowerCase())
     );
     this.searchResult = result;
+    this.searchClicked = true;
   }
 
   // to clear search inputs and set search result into default value
   clearSearch() {
     this.searchResult = [];
+    this.searchClicked = false;
   }
 }
 </script>
