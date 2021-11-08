@@ -110,9 +110,9 @@ export default class Search extends Vue {
   searchPosts() {
     const result = this.posts.filter(
       (post) =>
-        post.fullname.includes(this.search) ||
-        post.title.includes(this.search) ||
-        post.housingName.includes(this.search)
+        post.fullname.toLowerCase().includes(this.search.toLowerCase()) ||
+        post.title.toLowerCase().includes(this.search.toLowerCase()) ||
+        post.housingName.toLowerCase().includes(this.search.toLowerCase())
     );
     this.searchResult = result;
   }
