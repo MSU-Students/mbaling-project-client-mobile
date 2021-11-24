@@ -116,6 +116,7 @@
                   <span
                     class="text-bold cursor-pointer"
                     style="font-size: x-small; text-align: right"
+                    @click="this.$router.push('/l/viewMore')"
                   >
                     +View more
                   </span>
