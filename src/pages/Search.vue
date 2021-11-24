@@ -164,7 +164,7 @@
       </q-tab-panel>
     </q-tab-panels>
 
-    <div v-if="searchResult.length == 0 && searchClicked">No result found!</div>
+    <div v-if="searchResult.length == 0 && searchClicked" class="flex flex-center">No result found!</div>
   </q-page>
 </template>
 
