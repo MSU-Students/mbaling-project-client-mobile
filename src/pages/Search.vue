@@ -84,6 +84,7 @@
             <span
               class="text-bold cursor-pointer"
               style="font-size: x-small; text-align: right"
+              @click="this.$router.push('/s/viewMore')"
             >
               +View more
             </span>
@@ -136,6 +137,7 @@
           <q-card
             v-for="(result, index) in searchResult"
             :key="index"
+            @click="this.$router.push('/l/account')"
           >
              <q-item class="q-pt-md">
           <q-item-section avatar top>
