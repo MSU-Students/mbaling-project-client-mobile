@@ -16,8 +16,7 @@ const routes: RouteRecordRaw[] = [
       { path: "inbox", component: () => import("src/pages/inbox/Inbox.vue") },
       { path: "s/account", component: () => import("pages/student/StudentAccount.vue") },
       { path: "l/account", component: () => import("pages/landlord/LandlordAccount.vue") },
-      { path: 's/viewMore', component: () => import('pages/student/StudentPostPage.vue') },
-      { path: 'l/viewMore', component: () => import('pages/landlord/LandlordPostPage.vue') }
+      { path: '/viewMore', component: () => import('pages/PostPage.vue') },
     ],
   },
   {

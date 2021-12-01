@@ -3,7 +3,7 @@
     <q-toolbar>
       <q-space />
       <q-btn
-        v-if="$route.fullPath.includes('/s/viewMore')"
+        v-if="$route.fullPath.includes('/viewMore')"
         dense
         flat
         :ripple="false"

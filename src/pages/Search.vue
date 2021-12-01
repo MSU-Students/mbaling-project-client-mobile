@@ -84,7 +84,7 @@
             <span
               class="text-bold cursor-pointer"
               style="font-size: x-small; text-align: right"
-              @click="this.$router.push('/s/viewMore')"
+              @click="this.$router.push('/viewMore')"
             >
               +View more
             </span>
