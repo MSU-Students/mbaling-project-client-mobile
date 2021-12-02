@@ -3,19 +3,19 @@
     <q-toolbar>
       <q-space />
       <q-btn
-        v-if="$route.fullPath.includes('/viewMore')"
         dense
         flat
         :ripple="false"
+        class="q-mr-sm"
         color="black"
-        icon="arrow_back"
+        icon="bi-arrow-left"
         @click="$router.go(-1)"
       />
       <q-btn dense flat :ripple="false" color="black" icon="bi-three-dots" />
     </q-toolbar>
   </q-header>
 
-  <q-layout class="defaultfont ">
+  <q-layout class="defaultfont">
     <q-page class="defaultfont bg-secondary text-black bg-white">
       <q-list class="q-mt-sm">
         <q-list v-for="post in posts" :key="post.date">
@@ -62,15 +62,15 @@
             >
               <q-carousel-slide
                 :name="1"
-                img-src= "https://cdn.quasar.dev/img/parallax1.jpg"
+                img-src="https://cdn.quasar.dev/img/parallax1.jpg"
               />
               <q-carousel-slide
                 :name="2"
-                img-src= "https://cdn.quasar.dev/img/mountains.jpg"
+                img-src="https://cdn.quasar.dev/img/mountains.jpg"
               />
               <q-carousel-slide
                 :name="3"
-                img-src= "https://cdn.quasar.dev/img/quasar.jpg"
+                img-src="https://cdn.quasar.dev/img/quasar.jpg"
               />
             </q-carousel>
           </div>
@@ -87,9 +87,9 @@
               </q-item-label>
 
               <q-item-label class="q-pa-sm">
-                 <q-checkbox dense disable v-model="val" color="black" />
-                Private Kitchen <br>
-                 <q-checkbox dense disable v-model="val" color="black" />
+                <q-checkbox dense disable v-model="val" color="black" />
+                Private Kitchen <br />
+                <q-checkbox dense disable v-model="val" color="black" />
                 Private CR
               </q-item-label>
 
@@ -101,7 +101,7 @@
                 class="Description-content"
                 style="font-size: small"
               >
-              <pre class="defaultfont Description-content ">
+                <pre class="defaultfont Description-content">
                 Room dimension: 12x10ft
                 Beds: 2 (single bed)
                 rent fee is per person
@@ -117,7 +117,7 @@
           </q-item>
 
           <q-item class="fixed-bottom q-mb-xl bg-white">
-          <q-separator inset color="primary" class="fixed-bottom fixedP"/>
+            <q-separator inset color="primary" class="fixed-bottom fixedP" />
             <div class="row">
               <q-btn
                 flat
@@ -165,7 +165,7 @@ export default {
   data() {
     return {
       slide: ref("style"),
-       val: ref(true),
+      val: ref(true),
       posts: [
         {
           date: 1631096539262,
@@ -206,4 +206,3 @@ export default {
   bottom: 6rem;
 }
 </style>
-
