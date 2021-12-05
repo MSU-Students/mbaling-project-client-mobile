@@ -16,7 +16,6 @@ const routes: RouteRecordRaw[] = [
       { path: "inbox", component: () => import("src/pages/inbox/Inbox.vue") },
       { path: "s/account", component: () => import("pages/student/StudentAccount.vue") },
       { path: "l/account", component: () => import("pages/landlord/LandlordAccount.vue") },
-      { path: '/viewMore', component: () => import('pages/PostPage.vue') },
     ],
   },
   {
@@ -25,6 +24,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: "/chat", component: () => import("pages/inbox/Chatroom.vue") },
       { path: "/form", component: () => import("pages/landlord/PostForm.vue") },
+      { path: '/viewMore', component: () => import('pages/PostPage.vue') },
     ],
   },
 
