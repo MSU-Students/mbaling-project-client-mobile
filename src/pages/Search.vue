@@ -10,6 +10,7 @@
       placeholder="Search"
       :loading="loadingState"
       @clear="clearSearch()"
+      @keyup.enter="searchPosts()"
     >
       <template v-slot:prepend>
         <q-btn flat round size="0.7rem" @click="searchPosts()">
