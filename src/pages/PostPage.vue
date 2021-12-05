@@ -1,6 +1,10 @@
 <template>
   <q-header style="height: 3rem; background-color: transparent">
     <q-toolbar>
+      <q-img
+          src="~assets/mbaling-logo-horizontal.svg"
+          style="max-width: 8rem"
+        />
       <q-space />
       <q-btn
         v-if="$route.fullPath.includes('/viewMore')"
@@ -8,7 +12,7 @@
         flat
         :ripple="false"
         color="black"
-        icon="arrow_back"
+        icon="bi-arrow-left"
         @click="$router.go(-1)"
       />
       <q-btn dense flat :ripple="false" color="black" icon="bi-three-dots" />
@@ -106,19 +110,29 @@
                 Beds: 2 (single bed)
                 rent fee is per person
                 w/ Personal cabinet and shelves
+                w/ 24/7 security camera
 
                 POLICIEs:
-                -Always lock the door when leaving
+                -Observe Cleanliness and personal privacy
+                -Respect other boarders (if you have problems with
+                other boarder, in the manage to settle them)
+                -Always lock the door when leaving your room
+                -The management will not be liable of your stolen
+                properties
                 -No visitors allowed
                 -Curfew is 9pm-5am
                 </pre>
               </q-item-label>
             </q-item-section>
           </q-item>
-
-          <q-item class="fixed-bottom q-mb-xl bg-white">
           <q-separator inset color="primary" class="fixed-bottom fixedP"/>
-            <div class="row">
+        </q-list>
+      </q-list>
+    </q-page>
+  </q-layout>
+  <q-footer class="bg-white text-black q-px-md q-py-sm" style="height: 3rem">
+
+        <div class="row">
               <q-btn
                 flat
                 round
@@ -144,18 +158,13 @@
                 icon="bi-bookmark"
               />
             </div>
-            <q-space />
-            <span
+            <span v-for="post in posts" :key="post.date"
               class="defaultfont-medium absolute-bottom-right q-pr-md q-pb-md"
               style="font-size: x-small"
             >
               {{ post.likes }} Likes • {{ post.bookmarks }} Bookmarks
             </span>
-          </q-item>
-        </q-list>
-      </q-list>
-    </q-page>
-  </q-layout>
+    </q-footer>
 </template>
 
 <script>
@@ -203,7 +212,7 @@ export default {
   font-size: small;
 }
 .fixedP {
-  bottom: 6rem;
+  bottom: 3rem;
 }
 </style>
 
