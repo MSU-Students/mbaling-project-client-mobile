@@ -22,8 +22,9 @@ const routes: RouteRecordRaw[] = [
     path: "/",
     component: () => import("src/layouts/BlankLayout.vue"),
     children: [
-      { path: "/chat", component: () => import("pages/inbox/Chatroom.vue") },
-      { path: "/form", component: () => import("pages/landlord/PostForm.vue") },
+      { path: 'post', component: () => import('pages/Post.vue') },
+      { path: "form", component: () => import("pages/landlord/PostForm.vue") },
+      { path: "chat", component: () => import("pages/inbox/Chatroom.vue") },
     ],
   },
 

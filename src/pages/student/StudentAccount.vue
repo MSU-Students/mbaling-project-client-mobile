@@ -117,6 +117,7 @@
                   <span
                     class="text-bold cursor-pointer"
                     style="font-size: x-small; text-align: right"
+                    @click="this.$router.push('/post')"
                   >
                     +View more
                   </span>

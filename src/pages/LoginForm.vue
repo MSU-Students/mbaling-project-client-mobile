@@ -15,6 +15,7 @@
           v-model="username"
           type="username"
           placeholder="username"
+          @keyup.enter="loginUser()"
         />
         <q-input
           dark
@@ -24,6 +25,7 @@
           v-model="password"
           type="password"
           placeholder="password"
+          @keyup.enter="loginUser()"
         />
         <!-- LOG-IN BUTTON -->
         <q-btn
