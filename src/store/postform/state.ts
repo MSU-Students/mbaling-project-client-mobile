@@ -7,11 +7,18 @@ export interface PostInfo {
   fee: string,
   likes: string,
   bookmarks: string,
-  photo: string,
+  photo: string | string[],
+  description?: {
+    roomDimension: string;
+    bedCapacity: string;
+    cabinetOptions: string;
+    homePolices: string[];
+  }
 }
 
 export interface PostStateInterface {
   posts: PostInfo[];
+  activePost?: PostInfo;
 }
 
 function state(): PostStateInterface {

@@ -17,6 +17,7 @@
         :ripple="false"
         color="primary"
         label="post"
+        @click="onPost()"
       />
     </q-toolbar>
   </q-header>
@@ -88,7 +89,7 @@
         filled
         dense
         autogrow
-        v-model="title"
+        v-model="postForm.title"
         placeholder="Title"
       />
 
@@ -97,7 +98,7 @@
           class="q-mr-md"
           filled
           dense
-          v-model="fee"
+          v-model="postForm.fee"
           style="width: 50%"
           placeholder="Fee (MONTHLY)"
         />
@@ -122,7 +123,7 @@
 
       <q-input
         class="q-mt-md"
-        v-model="description"
+        v-model="postForm"
         filled
         type="textarea"
         placeholder="Description"
@@ -131,51 +132,72 @@
   </q-page>
 </template>
 
-<script>
-import { ref } from "vue";
-export default {
-  setup() {
-    return {
-      negotiableBox: ref(false),
-      pkBox: ref(false),
-      pcBox: ref(false),
-      slide: ref(1),
-    };
-  },
-  data() {
-    return {
-      title: "",
-      fee: "",
-      description: "",
-      images: [],
-    };
-  },
-  methods: {
-    onFileChange(e) {
-      const input = this.$refs.fileInput;
-      const files = input.files;
-      if (!files.length) return;
-      this.createImage(files);
-    },
-    createImage(files) {
-      var vm = this;
+<script lang="ts">
+import { PostInfo } from "src/store/postform/state";
+import { Vue, Options } from "vue-class-component";
+
+@Options({})
+export default class PostForm extends Vue {
+  declare $refs: {
+    fileInput: HTMLInputElement;
+  };
+  postForm: PostInfo = {
+    fullname: "",
+    housingName: "",
+    prfphoto: "",
+    title: "",
+    fee: "",
+    likes: "",
+    bookmarks: "",
+    date: "",
+    photo: [],
+  };
+  negotiableBox = false;
+  pkBox = false;
+  pcBox = false;
+  slide = 1;
+  title = "";
+  fee = "";
+  description = "";
+  images = [];
+
+  onPost() {
+    console.log(this.postForm);
+  }
+
+  onFileChange() {
+    const input = this.$refs.fileInput;
+    const files = input.files;
+    if (files && !files.length) return;
+    this.createImage(files);
+  }
+
+  createImage(files: FileList | null) {
+    let vm = this;
+    let uploadPic: FileReader;
+    if (files) {
       for (var index = 0; index < files.length; index++) {
         var reader = new FileReader();
-        reader.onload = function (event) {
-          const imageUrl = event.target.result;
-          vm.images.push(imageUrl);
+        reader.onload = function (event: Event) {
+          const imageUrl = event.target as FileReader;
+          vm.images.push(imageUrl.result as never);
         };
         reader.readAsDataURL(files[index]);
       }
-    },
-    removeImage(index) {
-      this.images.splice(index, 1);
-    },
-    choosepicture() {
-      this.$refs.fileInput.click();
-    },
-  },
-};
+      this.postForm!.photo = vm.images;
+    } else {
+      throw new Error("No available files");
+    }
+  }
+
+  removeImage(index: number) {
+    this.images.splice(index, 1);
+  }
+
+  choosepicture() {
+    this.$refs.fileInput.click();
+  }
+}
 </script>
 
 <style>
