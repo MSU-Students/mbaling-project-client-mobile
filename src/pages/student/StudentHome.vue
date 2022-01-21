@@ -103,39 +103,31 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: "StudentHome",
-  data() {
-    return {
-      posts: [
-        {
-          date: 1631096539262,
-          fullname: "Azshara Highborne",
-          housingName: "Zin-Azshari Boarding House",
-          prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-          title:
-            "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
-          fee: "1,200",
-          likes: 44,
-          bookmarks: 1,
-          photo: "https://cdn.quasar.dev/img/parallax1.jpg",
-        },
-        {
-          date: 1631096551509,
-          fullname: "Monkey D. Luffy",
-          housingName: "Pirate King Apartment",
-          prfphoto: "https://cdn.quasar.dev/img/avatar4.jpg",
-          title:
-            "Family/Couple size Apartment room w/ Private kitchen and bathroom",
-          fee: "6,500",
-          likes: 32,
-          bookmarks: 4,
-          photo: "https://cdn.quasar.dev/img/parallax2.jpg",
-        },
-      ],
-    };
-  },
-};
+import { PostInfo } from "src/store/postform/state";
+import { Vue, Options } from "vue-class-component";
+import { mapActions, mapState } from "vuex";
+
+@Options({
+  computed: {
+    ...mapState("posts", ["posts"]),
+  }
+})
+
+export default class StudentHome extends Vue {
+  posts!: PostInfo[];
+
+  defaultPost: PostInfo = {
+    date: "",
+    fullname: "",
+    housingName: "",
+    prfphoto: "",
+    title:"",
+    fee: "",
+    likes: "",
+    bookmarks: "",
+    photo: "",
+  };
+}
 </script>
 
 <style scoped></style>
