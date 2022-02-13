@@ -162,7 +162,36 @@
 
         <!-- APPLICATION TAB PANEL-->
         <q-tab-panel name="applications">
-          <h6>APPLICATIONS</h6>
+          <q-list class="q-pt-sm">
+            <q-list v-for="apply in apply" :key="apply.id" class="bg-white">
+              <q-item class="q-py-md">
+                <q-item-section avatar top>
+                  <q-avatar size="xl">
+                    <img :src="apply.prfphoto" />
+                  </q-avatar>
+                </q-item-section>
+
+                <q-item-section top>
+                  <q-item-label
+                    class="defaultfont-semibold"
+                    style="font-size: medium"
+                  >
+                    {{ apply.fullname }}
+                  </q-item-label>
+                  <q-item-label lines="2" style="font-size: small">
+                    {{ apply.title }}
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-separator inset color="primary" />
+
+              <q-card-actions align="around">
+                <q-btn flat :ripple="false"> Accept </q-btn>
+                <q-btn flat :ripple="false"> Cancel </q-btn>
+              </q-card-actions>
+              <q-separator size="0.5rem" color="secondary" />
+            </q-list>
+          </q-list>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -198,6 +227,15 @@ export default {
           photo: "https://cdn.quasar.dev/img/parallax2.jpg",
         },
       ],
+      apply: [
+        {
+          id: 1631096539262,
+          fullname: "Nahed S. Bashier",
+          prfphoto: "https://cdn.quasar.dev/img/boy-avatar.png",
+          title:
+            "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
+        },
+      ],
     };
   },
   setup() {
@@ -208,8 +246,5 @@ export default {
 };
 </script>
 
-<style lang="sass">
-.card-post
-  .q-img
-    min-width: 100px
+<style>
 </style>

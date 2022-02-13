@@ -154,11 +154,7 @@
                 </div>
                 <q-space />
                 <span
-                  class="
-                    defaultfont-medium
-                    absolute-bottom-right
-                    q-pr-md q-pb-md
-                  "
+                  class="defaultfont-medium absolute-bottom-right q-pr-md q-pb-md"
                   style="font-size: x-small"
                 >
                   {{ post.likes }} Likes • {{ post.bookmarks }} Bookmarks
@@ -171,29 +167,35 @@
 
         <!-- APPLICATION TAB PANEL-->
         <q-tab-panel name="applications">
-          <q-card flat bordered>
-            <q-item class="bg-white">
+          <q-list class="q-pt-sm">
+            <q-list v-for="apply in apply" :key="apply.id" class="bg-white">
+              <q-item class="q-py-md">
+                <q-item-section style="max-width: 5.5rem">
+                  <q-img class="apply-img" :src="apply.photo" />
+                </q-item-section>
 
-              <q-item-section thumbnail class="q-ml-none">
-              </q-item-section>
+                <q-item-section top>
+                  <q-item-label
+                    lines="2"
+                    class="defaultfont-semibold"
+                    style="font-size: medium"
+                  >
+                    {{ apply.title }}
+                  </q-item-label>
+                  <q-item-label style="font-size: small">
+                    {{ apply.fee }} PHP monthly
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-separator inset color="primary" />
 
-              <q-item-section>
-                <div><q-item-label>Hello Raian</q-item-label></div>
-                <q-item-label caption class="q-mt-none q-pt-none"
-                  >Muammar's Boarding House
-                </q-item-label>
-                <div class="button-apply">
-                  <q-btn
-                    style="width: 20%"
-                    padding="xs"
-                    size="0.5rem"
-                    color="primary"
-                    label="Apply"
-                  />
-                </div>
-              </q-item-section>
-            </q-item>
-          </q-card>
+              <q-card-actions align="around">
+                <q-btn flat :ripple="false"> Chat </q-btn>
+                <q-btn flat :ripple="false"> Cancel </q-btn>
+              </q-card-actions>
+              <q-separator size="0.5rem" color="secondary" />
+            </q-list>
+          </q-list>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -229,6 +231,15 @@ export default {
           photo: "https://cdn.quasar.dev/img/parallax1.jpg",
         },
       ],
+      apply: [
+        {
+          id: 1631096539262,
+          title:
+            "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
+          fee: "1,200",
+          photo: "https://cdn.quasar.dev/img/parallax1.jpg",
+        },
+      ],
     };
   },
   setup() {
@@ -239,8 +250,8 @@ export default {
 };
 </script>
 
-<style lang="sass">
-.card-post
-  .q-img
-    min-width: 100px
+<style>
+.apply-img {
+  max-width: 5rem;
+}
 </style>

@@ -158,7 +158,7 @@ export default class PostForm extends Vue {
   slide = 1;
   title = "";
   fee = "";
-  description = "";
+  description = ``;
   images = [];
 
   onPost() {

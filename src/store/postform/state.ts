@@ -8,12 +8,7 @@ export interface PostInfo {
   likes: string,
   bookmarks: string,
   photo: string | string[],
-  description?: {
-    roomDimension: string;
-    bedCapacity: string;
-    cabinetOptions: string;
-    homePolices: string[];
-  }
+  description?: string,
 }
 
 export interface PostStateInterface {
@@ -25,7 +20,7 @@ function state(): PostStateInterface {
   return {
     posts: [
       {
-       date: "Aug 32, 2013",
+        date: "Aug 32, 2013",
         fullname: "Azshara Highborne",
         housingName: "Zin-Azshari Boarding House",
         prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
