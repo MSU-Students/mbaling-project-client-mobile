@@ -8,6 +8,7 @@
         :ripple="false"
         color="black"
         icon="bi-three-dots-vertical"
+        to="/setting"
       />
     </q-toolbar>
   </q-header>

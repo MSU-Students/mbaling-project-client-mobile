@@ -1,7 +1,7 @@
 <template>
   <q-header style="height: 3rem; background-color: transparent">
     <q-toolbar>
-      <q-avatar v-if="$route.fullPath.includes('/chat')" size="md">
+      <q-avatar v-if="$route.fullPath.includes('/chat')" class="q-ml-sm" size="md">
         <q-img src="https://cdn.quasar.dev/img/avatar2.jpg" />
       </q-avatar>
       <q-toolbar-title
@@ -12,7 +12,7 @@
         Azshara Highborne
       </q-toolbar-title>
       <q-btn
-        class="q-px-none"
+        class="q-pr-sm"
         color="black"
         flat
         icon="bi-arrow-left"
@@ -23,30 +23,6 @@
   </q-header>
 
   <q-page class="defaultfont bg-secondary flex column">
-    <q-card flat bordered class="q-mt-md">
-      <q-item class="bg-white">
-        <q-item-section thumbnail class="q-ml-none">
-          <img src="https://cdn.quasar.dev/img/parallax1.jpg" class="q-ml-sm" />
-        </q-item-section>
-
-        <q-item-section>
-          <div><q-item-label>Hello Raian</q-item-label></div>
-          <q-item-label caption class="q-mt-none q-pt-none"
-            >Muammar's Boarding House
-          </q-item-label>
-          <div class="button-apply">
-            <q-btn
-              style="width: 20%"
-              padding="xs"
-              size="0.5rem"
-              color="primary"
-              label="Apply"
-            />
-          </div>
-        </q-item-section>
-      </q-item>
-    </q-card>
-
     <q-scroll-area
       class="q-pa-md column col justify-end"
       style="height: 38rem; max-width: 100%"
@@ -91,7 +67,7 @@
                 round
                 dense
                 flat
-                icon="add_circle_outline"
+                icon="bi-plus-circle"
                 @click="show(true)"
               />
             </template>

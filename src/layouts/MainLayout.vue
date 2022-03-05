@@ -22,7 +22,7 @@
           "
           :ripple="false"
           size="lg"
-          @click="() => $router.replace('/s/home')"
+          to="/s/home"
         >
           <i class="mbi-home-filled"></i>
         </q-btn>
@@ -30,7 +30,7 @@
           v-else
           :ripple="false"
           size="lg"
-          @click="() => $router.replace('/s/home')"
+          to="/s/home"
         >
           <i class="mbi-home"></i>
         </q-btn>
@@ -39,7 +39,7 @@
           v-if="$route.fullPath.includes('/search')"
           :ripple="false"
           size="lg"
-          @click="() => $router.replace('/search')"
+          to="/search"
         >
           <i class="mbi-search-filled"></i>
         </q-btn>
@@ -47,7 +47,7 @@
           v-else
           :ripple="false"
           size="lg"
-          @click="() => $router.replace('/search')"
+          to="/search"
         >
           <i class="mbi-search"></i>
         </q-btn>
@@ -56,7 +56,7 @@
           v-if="$route.fullPath.includes('/inbox')"
           :ripple="false"
           size="lg"
-          @click="() => $router.replace('/inbox')"
+          to="/inbox"
         >
           <i class="mbi-inbox-filled"></i>
         </q-btn>
@@ -64,7 +64,7 @@
           v-else
           :ripple="false"
           size="lg"
-          @click="() => $router.replace('/inbox')"
+          to="/inbox"
         >
           <i class="mbi-inbox"></i>
         </q-btn>
@@ -76,7 +76,7 @@
           "
           :ripple="false"
           size="lg"
-          @click="() => $router.replace('/s/account')"
+          to="/s/account"
         >
           <i class="mbi-account-filled"></i>
         </q-btn>
@@ -84,7 +84,7 @@
           v-else
           :ripple="false"
           size="lg"
-          @click="() => $router.replace('/s/account')"
+          to="/s/account"
         >
           <i class="mbi-account"></i>
         </q-btn>

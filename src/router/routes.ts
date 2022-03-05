@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
       { path: "s/home", component: () => import("pages/student/StudentHome.vue") },
       { path: "l/home", component: () => import("pages/landlord/LandlordHome.vue") },
       { path: "search", component: () => import("pages/Search.vue") },
-      { path: "inbox", component: () => import("src/pages/inbox/Inbox.vue") },
+      { path: "inbox", component: () => import("pages/inbox/Inbox.vue") },
       { path: "s/account", component: () => import("pages/student/StudentAccount.vue") },
       { path: "l/account", component: () => import("pages/landlord/LandlordAccount.vue") },
     ],
@@ -25,6 +25,13 @@ const routes: RouteRecordRaw[] = [
       { path: 'post', component: () => import('pages/Post.vue') },
       { path: "form", component: () => import("pages/landlord/PostForm.vue") },
       { path: "chat", component: () => import("pages/inbox/Chatroom.vue") },
+    ],
+  },
+  {
+    path: "/",
+    component: () => import("src/layouts/SettingsLayout.vue"),
+    children: [
+      { path: "setting", component: () => import("pages/setting/Settings.vue") },
     ],
   },
 

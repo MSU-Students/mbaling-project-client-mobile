@@ -2,7 +2,7 @@
   <q-header style="height: 3rem; background-color: transparent">
     <q-toolbar>
       <q-btn
-        class="q-px-none"
+        class="q-pl-sm"
         color="black"
         flat
         icon="bi-arrow-left"
