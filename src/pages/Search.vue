@@ -27,7 +27,6 @@
       <q-tab name="users" label="Users" />
     </q-tabs>
 
-
     <!-- POSTS TAB -->
     <q-tab-panels v-if="searchResult.length > 0" v-model="tabs" animated>
       <q-tab-panel class="q-pa-none q-pt-md" name="posts">
@@ -85,7 +84,7 @@
             <span
               class="text-bold cursor-pointer"
               style="font-size: x-small; text-align: right"
-              @click="this.$router.push('/post')"
+              @click="$router.push('/post')"
             >
               +View more
             </span>
@@ -138,7 +137,7 @@
           <q-card
             v-for="(result, index) in searchResult"
             :key="index"
-            @click="this.$router.push('/l/account')"
+            @click="$router.push('/l/account')"
           >
              <q-item class="q-pt-md">
           <q-item-section avatar top>

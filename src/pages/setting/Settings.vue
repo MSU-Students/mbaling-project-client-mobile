@@ -15,7 +15,7 @@
   <q-page class="defaultfont flex column">
     <q-list class="q-mx-sm">
       <template v-for="(menuItem, index) in menuList" :key="index">
-        <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple>
+        <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple="false">
           <q-item-section  style="max-width: 1.75rem">
             <q-icon :name="menuItem.icon" size="xs"/>
           </q-item-section>
