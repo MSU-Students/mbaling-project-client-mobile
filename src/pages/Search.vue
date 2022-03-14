@@ -1,176 +1,191 @@
 <template>
   <q-header class="bg-white text-black q-pa-md">
     <q-form @submit="searchPosts()">
-    <q-input
-      v-model="search"
-      square
-      filled
-      dense
-      clearable
-      placeholder="Search"
-      :loading="loadingState"
-      @clear="clearSearch()"
-      @keyup.enter="searchPosts()"
-    >
-      <template v-slot:prepend>
-        <q-btn flat round size="0.7rem" @click="searchPosts()">
-          <q-icon size="1.5rem" type="submit" name="search" />
-        </q-btn>
-      </template>
-    </q-input>
+      <q-input
+        v-model="search"
+        square
+        filled
+        dense
+        clearable
+        placeholder="Search"
+        :loading="loadingState"
+        @clear="clearSearch()"
+        @keyup.enter="searchPosts()"
+      >
+        <template v-slot:prepend>
+          <q-btn flat round size="0.7rem" @click="searchPosts()">
+            <q-icon size="1.5rem" type="submit" name="search" />
+          </q-btn>
+        </template>
+      </q-input>
     </q-form>
   </q-header>
 
   <q-page>
-    <q-tabs v-if="searchResult.length > 0" v-model="tabs" class="text-grey-9 full-width">
-      <q-tab name="posts" label="Posts"> </q-tab>
-      <q-tab name="users" label="Users" />
+    <q-tabs
+      v-if="searchResult.length > 0"
+      v-model="tabs"
+      dense
+      inline-label
+      class="defaultfont-semibold text-grey q-px-md"
+      active-color="black"
+      indicator-color="transparent"
+      align="justify"
+    >
+      <q-tab :ripple="false" name="posts" label="Posts" />
+      <q-tab :ripple="false" name="users" label="Users" />
     </q-tabs>
+
+    <q-separator
+      v-if="searchResult.length > 0"
+      inset
+      size="0.1rem"
+      color="black"
+    />
 
     <!-- POSTS TAB -->
     <q-tab-panels v-if="searchResult.length > 0" v-model="tabs" animated>
       <q-tab-panel class="q-pa-none q-pt-md" name="posts">
-        <div >
-          <div
-            v-for="(result, index) in searchResult"
-            :key="index"
-          >
+        <div>
+          <div v-for="(result, index) in searchResult" :key="index">
             <q-item class="q-pt-md">
-          <q-item-section avatar top>
-            <q-avatar size="xl">
-              <img :src="result.prfphoto" />
-            </q-avatar>
-          </q-item-section>
+              <q-item-section avatar top>
+                <q-avatar size="xl">
+                  <img :src="result.prfphoto" />
+                </q-avatar>
+              </q-item-section>
 
-          <q-item-section top>
-            <q-item-label
-              lines="1"
-              class="defaultfont-semibold"
-              style="font-size: medium"
-            >
-              {{ result.fullname }}
-            </q-item-label>
-            <q-item-label lines="1" style="font-size: small">
-              {{ result.housingName }}
-            </q-item-label>
-            <span class="text-grey" style="font-size: xx-small">
-              {{ result.date }}
-            </span>
-          </q-item-section>
+              <q-item-section top>
+                <q-item-label
+                  lines="1"
+                  class="defaultfont-semibold"
+                  style="font-size: medium"
+                >
+                  {{ result.fullname }}
+                </q-item-label>
+                <q-item-label lines="1" style="font-size: small">
+                  {{ result.housingName }}
+                </q-item-label>
+                <span class="text-grey" style="font-size: xx-small">
+                  {{ result.date }}
+                </span>
+              </q-item-section>
 
-          <q-item-section side top>
-            <q-btn
-              dense
-              flat
-              :ripple="false"
-              class="text-black"
-              icon="bi-three-dots"
-            />
-          </q-item-section>
-        </q-item>
+              <q-item-section side top>
+                <q-btn
+                  dense
+                  flat
+                  :ripple="false"
+                  class="text-black"
+                  icon="bi-three-dots"
+                />
+              </q-item-section>
+            </q-item>
 
-        <div class="q-my-xs">
-          <q-img :src="result.photo" />
-        </div>
+            <div class="q-my-xs">
+              <q-img :src="result.photo" />
+            </div>
 
-        <q-item class="">
-          <q-item-section class="defaultfont-medium">
-            <q-item-label lines="1" style="font-size: small">
-              {{ result.title }}
-            </q-item-label>
-            <q-item-label style="font-size: small">
-              {{ result.fee }} PHP monthly
-            </q-item-label>
-            <span
-              class="text-bold cursor-pointer"
-              style="font-size: x-small; text-align: right"
-              @click="$router.push('/post')"
-            >
-              +View more
-            </span>
-          </q-item-section>
-        </q-item>
-        <q-separator inset color="primary" />
-         <q-item>
-          <div class="row">
-            <q-btn
-              flat
-              round
-              :ripple="false"
-              color="primary"
-              size="sm"
-              icon="bi-heart"
-            />
-            <q-btn
-              flat
-              round
-              :ripple="false"
-              color="primary"
-              size="sm"
-              icon="bi-chat-right"
-            />
-            <q-btn
-              flat
-              round
-              :ripple="false"
-              color="primary"
-              size="sm"
-              icon="bi-bookmark"
-            />
-          </div>
-          <q-space />
-          <span
-            class="defaultfont-medium absolute-bottom-right q-pr-md q-pb-md"
-            style="font-size: x-small"
-          >
-            {{ result.likes }} Likes • {{ result.bookmarks }} Bookmarks
-          </span>
-        </q-item>
-        <q-separator size="0.5rem" color="secondary" />
+            <q-item class="">
+              <q-item-section class="defaultfont-medium">
+                <q-item-label lines="1" style="font-size: small">
+                  {{ result.title }}
+                </q-item-label>
+                <q-item-label style="font-size: small">
+                  {{ result.fee }} PHP monthly
+                </q-item-label>
+                <span
+                  class="text-bold cursor-pointer"
+                  style="font-size: x-small; text-align: right"
+                  @click="$router.push('/post')"
+                >
+                  +View more
+                </span>
+              </q-item-section>
+            </q-item>
+            <q-separator inset color="primary" />
+            <q-item>
+              <div class="row">
+                <q-btn
+                  flat
+                  round
+                  :ripple="false"
+                  color="primary"
+                  size="sm"
+                  icon="bi-heart"
+                />
+                <q-btn
+                  flat
+                  round
+                  :ripple="false"
+                  color="primary"
+                  size="sm"
+                  icon="bi-chat-right"
+                />
+                <q-btn
+                  flat
+                  round
+                  :ripple="false"
+                  color="primary"
+                  size="sm"
+                  icon="bi-bookmark"
+                />
+              </div>
+              <q-space />
+              <span
+                class="defaultfont-medium absolute-bottom-right q-pr-md q-pb-md"
+                style="font-size: x-small"
+              >
+                {{ result.likes }} Likes • {{ result.bookmarks }} Bookmarks
+              </span>
+            </q-item>
+            <q-separator size="0.5rem" color="secondary" />
           </div>
         </div>
       </q-tab-panel>
 
-      <!-- USER TAB -->
+      <!-- USERS TAB -->
       <q-tab-panel class="q-pa-none q-pt-md" name="users">
-        <div>
-          <q-card
-            v-for="(result, index) in searchResult"
-            :key="index"
-            @click="$router.push('/l/account')"
-          >
-             <q-item class="q-pt-md">
-          <q-item-section avatar top>
-            <q-avatar size="xl">
-              <img :src="result.prfphoto" />
-            </q-avatar>
-          </q-item-section>
+        <q-list
+          v-for="(result, index) in searchResult"
+          :key="index"
+          @click="$router.push('/l/account')"
+        >
+          <q-item class="row items-center">
+            <q-item-section avatar>
+              <q-avatar size="xl">
+                <img :src="result.prfphoto" />
+              </q-avatar>
+            </q-item-section>
 
-          <q-item-section top>
-            <q-item-label
-              lines="1"
-              class="defaultfont-semibold"
-              style="font-size: medium"
-            >
-              {{ result.fullname }}
-            </q-item-label>
-            <q-item-label lines="1" style="font-size: small">
-              {{ result.housingName }}
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-          </q-card>
-        </div>
+            <q-item-section>
+              <q-item-label
+                lines="1"
+                class="defaultfont-semibold"
+                style="font-size: medium"
+              >
+                {{ result.fullname }}
+              </q-item-label>
+              <q-item-label lines="1" style="font-size: small">
+                {{ result.housingName }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
       </q-tab-panel>
     </q-tab-panels>
 
-    <div v-if="searchResult.length == 0 && searchClicked" class="flex flex-center">No result found!</div>
+    <div
+      v-if="searchResult.length == 0 && searchClicked"
+      class="flex flex-center"
+    >
+      No result found!
+    </div>
   </q-page>
 </template>
 
 <script lang="ts">
 import { Vue, Options } from "vue-class-component";
-
 // this is just a interface you need to practice this because TS required it a lot
 interface IPost {
   date: number;
@@ -183,14 +198,12 @@ interface IPost {
   bookmarks: number;
   photo: string;
 }
-
 @Options({})
 export default class Search extends Vue {
   search = "";
   tabs = "posts";
   loadingState = false;
   searchClicked = false;
-
   // dummy posts. expected this data will fetch to your local db.
   // i just call the interface here
   posts: IPost[] = [
@@ -219,10 +232,8 @@ export default class Search extends Vue {
       photo: "https://cdn.quasar.dev/img/parallax2.jpg",
     },
   ];
-
   // i will store the search result here
   searchResult: IPost[] = [];
-
   // search post methods to filter fullname, title, housingname
   searchPosts() {
     const result = this.posts.filter(
@@ -234,7 +245,6 @@ export default class Search extends Vue {
     this.searchResult = result;
     this.searchClicked = true;
   }
-
   // to clear search inputs and set search result into default value
   clearSearch() {
     this.searchResult = [];
