@@ -1,94 +1,90 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <q-card flat class="bg-transparent text-center" style="width: 12rem">
-      <!-- LOGO PICTURE -->
-      <div>
+  <q-layout view="hHh lpR fFf" class="defaultfont-light bg-primary text-white">
+    <q-page class="row items-center justify-evenly">
+      <q-card flat class="bg-transparent text-center" style="width: 12rem">
+        <!-- LOGO PICTURE -->
         <q-img src="~assets/mbaling-logo-vertical.svg" style="width: 6rem" />
-      </div>
-      <!-- USERNAME & PASSWORD INPUT -->
-      <div class="q-mt-xl">
-        <q-input
-          dark
-          dense
-          input-class="text-center"
-          color="white"
-          v-model="username"
-          type="username"
-          placeholder="username"
-          @keyup.enter="loginUser()"
-        />
-        <q-input
-          dark
-          dense
-          color="white"
-          input-class="text-center"
-          v-model="password"
-          type="password"
-          placeholder="password"
-          @keyup.enter="loginUser()"
-        />
-        <!-- LOG-IN BUTTON -->
-        <q-btn
-          :ripple="false"
-          unelevated
-          rounded
-          dense
-          no-caps
-          class="text-red text-bold q-mt-md"
-          style="height: 1.5rem; width: 6rem; font-size: smaller"
-          color="white"
-          label="log-in"
-          @click="loginUser()"
-        />
-      </div>
-    </q-card>
-  </q-page>
+
+        <!-- USERNAME & PASSWORD INPUT -->
+        <div class="q-mt-xl">
+          <q-input
+            v-model="username"
+            dark
+            dense
+            color="white"
+            input-class="text-center"
+            type="text"
+            placeholder="username"
+            @keyup.enter="loginUser()"
+          />
+          <q-input
+            v-model="password"
+            dark
+            dense
+            color="white"
+            input-class="text-center"
+            type="password"
+            placeholder="password"
+            @keyup.enter="loginUser()"
+          />
+
+          <!-- LOG-IN BUTTON -->
+          <q-btn
+            :ripple="false"
+            unelevated
+            rounded
+            dense
+            no-caps
+            label="log-in"
+            color="white"
+            class="q-mt-md text-red text-bold"
+            style="height: 1.5rem; width: 6rem; font-size: smaller"
+            @click="loginUser()"
+          />
+        </div>
+      </q-card>
+    </q-page>
+
+    <!-- SIGN-UP INFO POP-UP -->
+    <q-footer class="row justify-center" style="height: 3rem">
+      <p
+        class="defaultfont-light cursor-pointer"
+        style="font-size: smaller; line-height: 0.85rem"
+        @click="alert()"
+      >
+        Sign-up for an account
+        <q-icon name="bi-question-circle" />
+      </p>
+    </q-footer>
+  </q-layout>
 </template>
 
 <script lang="ts">
 import { Vue } from "vue-class-component";
-import { ref } from "vue";
 
 export default class LoginForm extends Vue {
   username = "";
   password = "";
 
   async loginUser() {
-    let user = this.username;
-    let pass = this.password;
-    if (user == "user" && pass == "password") {
-      await this.$router.replace("/s/home");
+    if (this.username == "user" && this.password == "password") {
+      await this.$router.replace("/student/home");
     } else {
       this.$q.notify({
+        message: "Incorrect username or password.",
         color: "secondary",
         textColor: "primary",
         position: "top",
-        message: "Incorrect username or password.",
+        classes: "defaultfont",
       });
     }
   }
+  alert() {
+    this.$q.dialog({
+      message:
+        "Please proceed to the MSU Housing Management Division to sign-up for an account.",
+      class: "defaultfont",
+    });
+  }
 }
-// export default {
-//   name: "LoginForm",
-//   setup() {
-//     return {
-//       username: ref(""),
-//       password: ref(""),
-//     };
-//   },
-//   methods: {
-//     async loginUser() {
-//       if (this.username == "user" && this.password == "password") {
-//         await this.$router.replace("/s/home");
-//       } else {
-//         this.$q.notify({
-//           color: "secondary",
-//           textColor: "primary",
-//           position: "top",
-//           message: "Incorrect username or password.",
-//         });
-//       }
-//     },
-//   },
-// };
 </script>

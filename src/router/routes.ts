@@ -3,35 +3,130 @@ import { RouteRecordRaw } from "vue-router";
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    component: () => import("layouts/LoginLayout.vue"),
-    children: [{ path: "", component: () => import("pages/LoginForm.vue") }],
+    component: () => import("pages/LoginForm.vue"),
   },
   {
-    path: "/",
-    component: () => import("layouts/MainLayout.vue"),
+    path: "/student/",
+    component: () => import("layouts/MainLayoutStudent.vue"),
     children: [
-      { path: "s/home", component: () => import("pages/student/StudentHome.vue") },
-      { path: "l/home", component: () => import("pages/landlord/LandlordHome.vue") },
-      { path: "search", component: () => import("pages/Search.vue") },
-      { path: "inbox", component: () => import("pages/inbox/Inbox.vue") },
-      { path: "s/account", component: () => import("pages/student/StudentAccount.vue") },
-      { path: "l/account", component: () => import("pages/landlord/LandlordAccount.vue") },
+      {
+        path: "home",
+        component: () => import("pages/student/StudentHome.vue"),
+      },
+      {
+        path: "account",
+        component: () => import("pages/student/StudentAccount.vue"),
+      },
+      {
+        path: "search",
+        component: () => import("pages/student/StudentSearch.vue"),
+      },
+      {
+        path: "inbox",
+        component: () => import("pages/general-inbox/Inbox.vue"),
+      },
+    ],
+  },
+  {
+    path: "/student/settings/",
+    component: () => import("layouts/SettingLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/student/setting/Settings.vue"),
+      },
+      {
+        path: "account",
+        component: () => import("pages/student/setting/ManageAccount.vue"),
+      },
+      {
+        path: "privacy",
+        component: () => import("pages/student/setting/ManagePrivacy.vue"),
+      },
+    ],
+  },
+  {
+    path: "/landlord/",
+    component: () => import("layouts/MainLayoutLandlord.vue"),
+    children: [
+      {
+        path: "home",
+        component: () => import("pages/landlord/LandlordHome.vue"),
+      },
+      {
+        path: "account",
+        component: () => import("pages/landlord/LandlordAccount.vue"),
+      },
+      {
+        path: "posts",
+        component: () => import("pages/landlord/LandlordPosts.vue"),
+      },
+      {
+        path: "inbox",
+        component: () => import("pages/general-inbox/Inbox.vue"),
+      },
+    ],
+  },
+  {
+    path: "/landlord/settings/",
+    component: () => import("layouts/SettingLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/landlord/setting/Settings.vue"),
+      },
+      {
+        path: "account",
+        component: () => import("pages/landlord/setting/ManageAccount.vue"),
+      },
+      {
+        path: "privacy",
+        component: () => import("pages/landlord/setting/ManagePrivacy.vue"),
+      },
     ],
   },
   {
     path: "/",
-    component: () => import("src/layouts/BlankLayout.vue"),
+    component: () => import("layouts/BlankLayout.vue"),
     children: [
-      { path: 'post', component: () => import('pages/Post.vue') },
-      { path: "form", component: () => import("pages/landlord/PostForm.vue") },
-      { path: "chat", component: () => import("pages/inbox/Chatroom.vue") },
+      {
+        path: "post",
+        component: () => import("pages/general-post/Post.vue")
+      },
+      {
+        path: "form",
+        component: () => import("pages/general-post/PostForm.vue"),
+      },
+      {
+        path: "profile",
+        component: () => import("pages/Profile.vue")
+      },
+      {
+        path: "chat",
+        component: () => import("pages/general-inbox/Chatroom.vue"),
+      },
     ],
   },
   {
-    path: "/",
-    component: () => import("src/layouts/SettingsLayout.vue"),
+    path: "/settings/",
+    component: () => import("layouts/SettingLayout.vue"),
     children: [
-      { path: "setting", component: () => import("pages/setting/Settings.vue") },
+      {
+        path: "help",
+        component: () => import("pages/general-setting/HelpCenter.vue"),
+      },
+      {
+        path: "feedback",
+        component: () => import("pages/general-setting/Feedback.vue"),
+      },
+      {
+        path: "terms-of-service",
+        component: () => import("pages/general-setting/ServicePolicy.vue"),
+      },
+      {
+        path: "privacy-policy",
+        component: () => import("pages/general-setting/PrivacyPolicy.vue"),
+      },
     ],
   },
 

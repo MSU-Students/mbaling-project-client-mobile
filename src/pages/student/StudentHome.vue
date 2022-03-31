@@ -1,133 +1,73 @@
 <template>
-  <q-header style="height: 3rem; background-color: transparent" />
-
-  <q-page class="defaultfont bg-secondary text-black">
-    <q-list class="q-pt-sm">
-      <q-list v-for="post in posts" :key="post.date" class="bg-white">
-        <q-item class="q-pt-md">
-          <q-item-section avatar top>
-            <q-avatar size="xl">
-              <img :src="post.prfphoto" />
-            </q-avatar>
-          </q-item-section>
-
-          <q-item-section top>
-            <q-item-label
-              lines="1"
-              class="defaultfont-semibold"
-              style="font-size: medium"
-            >
-              {{ post.fullname }}
-            </q-item-label>
-            <q-item-label lines="1" style="font-size: small">
-              {{ post.housingName }}
-            </q-item-label>
-            <span class="text-grey" style="font-size: xx-small">
-              {{ post.date }}
-            </span>
-          </q-item-section>
-
-          <q-item-section side top>
-            <q-btn
-              dense
-              flat
-              :ripple="false"
-              class="text-black"
-              icon="bi-three-dots"
-            />
-          </q-item-section>
-        </q-item>
-
-        <div class="q-my-xs">
-          <q-img :src="post.photo" />
+  <page-header />
+  <q-page class="defaultfont bg-secondary">
+    <!-- POST COMPONENT -->
+    <post v-for="post in posts" :key="post.date">
+      <template #prfphoto>
+        <q-img :src="post.prfphoto" @click="$router.push('/profile')" />
+      </template>
+      <template #fullname>
+        <span @click="$router.push('/profile')">
+          {{ post.firstname }} {{ post.middlename.charAt(0) }}.
+          {{ post.lastname }}
+        </span>
+      </template>
+      <template #housingName>
+        <span @click="$router.push('/profile')">
+          {{ post.housingName }}
+        </span>
+      </template>
+      <template #date> {{ post.date }} </template>
+      <template #photo>
+        <div v-for="photo in post.photos" :key="photo.id">
+          <q-img
+            v-if="photo.id === 1"
+            :src="photo.url"
+            fit="cover"
+            style="height: 15rem"
+          />
         </div>
+      </template>
+      <template #title> {{ post.title }} </template>
+      <template #fee> {{ post.fee }} </template>
+      <template #button-left>
+        <q-btn
+          label="Chat"
+          :ripple="false"
+          dense
+          flat
+          @click="$router.push('/chat')"
+        />
+      </template>
+      <template #button-right>
+        <q-btn
+          label="Expand"
+          :ripple="false"
+          dense
+          flat
+          @click="$router.push('/post')"
+        />
+      </template>
+    </post>
 
-        <q-item>
-          <q-item-section class="defaultfont-medium">
-            <q-item-label lines="1" style="font-size: small">
-              {{ post.title }}
-            </q-item-label>
-            <q-item-label style="font-size: small">
-              {{ post.fee }} PHP monthly
-            </q-item-label>
-            <span
-              class="text-bold cursor-pointer"
-              style="font-size: x-small; text-align: right"
-              @click="this.$router.push('/post')"
-            >
-              +View more
-            </span>
-          </q-item-section>
-        </q-item>
-        <q-separator inset color="primary" />
-
-        <q-item>
-          <div class="row">
-            <q-btn
-              flat
-              round
-              :ripple="false"
-              color="primary"
-              size="sm"
-              icon="bi-heart"
-            />
-            <q-btn
-              flat
-              round
-              :ripple="false"
-              color="primary"
-              size="sm"
-              icon="bi-chat-right"
-            />
-            <q-btn
-              flat
-              round
-              :ripple="false"
-              color="primary"
-              size="sm"
-              icon="bi-bookmark"
-            />
-          </div>
-          <q-space />
-          <span
-            class="defaultfont-medium absolute-bottom-right q-pr-md q-pb-md"
-            style="font-size: x-small"
-          >
-            {{ post.likes }} Likes • {{ post.bookmarks }} Bookmarks
-          </span>
-        </q-item>
-        <q-separator size="0.5rem" color="secondary" />
-      </q-list>
-    </q-list>
+    <!-- NO POSTS WARNING -->
+    <div class="row items-center justify-evenly" style="height: 7.5rem">
+      <span class="text-grey-5">no more post to fetch</span>
+    </div>
   </q-page>
 </template>
 
 <script lang="ts">
-import { PostInfo } from "src/store/postform/state";
+import { PostInterface } from "src/store/post/state";
 import { Vue, Options } from "vue-class-component";
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
 
 @Options({
   computed: {
     ...mapState("posts", ["posts"]),
-  }
+  },
 })
-
 export default class StudentHome extends Vue {
-  posts!: PostInfo[];
-
-  defaultPost: PostInfo = {
-    date: "",
-    fullname: "",
-    housingName: "",
-    prfphoto: "",
-    title:"",
-    fee: "",
-    likes: "",
-    bookmarks: "",
-    photo: "",
-  };
+  posts!: PostInterface[];
 }
 </script>
-
-<style scoped></style>
