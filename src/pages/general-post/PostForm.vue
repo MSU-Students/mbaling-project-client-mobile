@@ -55,15 +55,15 @@
 
     <!-- INPUT FIELDS -->
     <div class="q-mx-md">
-      <q-input class="q-my-sm" filled dense autogrow placeholder="Title" />
+      <q-input filled dense placeholder="Title" class="q-my-sm" />
 
       <div class="row q-my-sm">
         <q-input
-          class="q-mr-md"
           filled
           dense
-          style="width: 50%"
           placeholder="Fee"
+          class="q-mr-md"
+          style="width: 50%"
         />
         <span class="q-mt-sm q-pt-xs">MONTHLY FEE</span>
       </div>

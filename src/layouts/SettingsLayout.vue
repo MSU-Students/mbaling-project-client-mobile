@@ -21,5 +21,5 @@
 <script lang="ts">
 import { Vue } from "vue-class-component";
 
-export default class SettingLayout extends Vue {}
+export default class SettingsLayout extends Vue {}
 </script>

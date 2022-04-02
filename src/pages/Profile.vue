@@ -11,6 +11,7 @@
     </template>
     <template #button-right>
       <q-btn
+        v-if="isStudent"
         icon="bi-envelope-fill"
         :ripple="false"
         flat
@@ -39,18 +40,6 @@
           <br />
           {{ user.addressLine3 }}, {{ user.addressLine4 }}
         </p>
-        <!-- <div class="q-my-md">
-          <q-btn
-            :ripple="false"
-            unelevated
-            no-caps
-            color="white"
-            size="md"
-            text-color="primary"
-          >
-
-          </q-btn>
-        </div> -->
       </div>
     </div>
 
@@ -84,17 +73,23 @@
         </template>
         <template #title> {{ post.title }} </template>
         <template #fee> {{ post.fee }} </template>
-        <template #expand>
-          <span
-            class="text-bold cursor-pointer"
-            style="font-size: x-small; text-align: right"
+        <template #buttons>
+          <q-btn
+            v-if="isStudent"
+            label="Chat"
+            :ripple="false"
+            dense
+            flat
+            @click="$router.push('/chat')"
+          />
+          <q-btn
+            label="Expand"
+            :ripple="false"
+            dense
+            flat
             @click="$router.push('/post')"
-          >
-            +View more
-          </span>
+          />
         </template>
-        <template #likes> {{ post.likes }} </template>
-        <template #bookmarks> {{ post.bookmarks }} </template>
       </post>
     </div>
   </q-page>
@@ -104,6 +99,7 @@
 import { Vue } from "vue-class-component";
 
 export default class Profile extends Vue {
+  isStudent = true;
   user = {
     id: 20220001,
     username: "zinboarding",

@@ -1,10 +1,19 @@
 <template>
   <q-btn
+    v-if="!$route.fullPath.includes('/post')"
     icon="bi-three-dots"
     :ripple="false"
     dense
     flat
     class="text-black"
+    @click="showOptions()"
+  />
+  <q-btn
+    v-else
+    label="More"
+    :ripple="false"
+    flat
+    class="q-mt-xs"
     @click="showOptions()"
   />
 </template>
@@ -16,6 +25,7 @@ export default class PostOptionsComponent extends Vue {
   showOptions() {
     this.$q
       .bottomSheet({
+        message: "These features are not yet available.",
         grid: false,
         class: "q-px-sm q-py-md defaultfont",
         actions: [

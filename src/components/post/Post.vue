@@ -49,9 +49,7 @@
 
     <!-- POST ACTION BUTTONS -->
     <q-card-actions align="evenly" class="text-primary">
-      <slot name="button-left" />
-      <slot name="button-middle" />
-      <slot name="button-right" />
+      <slot name="buttons" />
     </q-card-actions>
     <q-separator size="0.5rem" color="secondary" />
   </q-list>

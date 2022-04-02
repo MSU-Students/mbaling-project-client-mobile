@@ -98,7 +98,7 @@
             />
           </template>
 
-          <template v-slot:after>
+          <!-- <template v-slot:after>
             <q-btn
               icon="bi-plus-circle"
               v-on:click="showOptions = !showOptions"
@@ -115,7 +115,7 @@
               dense
               flat
             />
-          </template>
+          </template> -->
         </q-input>
       </q-toolbar-title>
     </q-toolbar>

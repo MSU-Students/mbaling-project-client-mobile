@@ -29,7 +29,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/student/settings/",
-    component: () => import("layouts/SettingLayout.vue"),
+    component: () => import("layouts/SettingsLayout.vue"),
     children: [
       {
         path: "",
@@ -69,7 +69,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/landlord/settings/",
-    component: () => import("layouts/SettingLayout.vue"),
+    component: () => import("layouts/SettingsLayout.vue"),
     children: [
       {
         path: "",
@@ -90,14 +90,6 @@ const routes: RouteRecordRaw[] = [
     component: () => import("layouts/BlankLayout.vue"),
     children: [
       {
-        path: "post",
-        component: () => import("pages/general-post/Post.vue")
-      },
-      {
-        path: "form",
-        component: () => import("pages/general-post/PostForm.vue"),
-      },
-      {
         path: "profile",
         component: () => import("pages/Profile.vue")
       },
@@ -108,8 +100,26 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: "/post/",
+    component: () => import("layouts/BlankLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/general-post/Post.vue")
+      },
+      {
+        path: "form",
+        component: () => import("pages/general-post/PostForm.vue"),
+      },
+      {
+        path: "edit",
+        component: () => import("pages/general-post/PostEdit.vue")
+      },
+    ],
+  },
+  {
     path: "/settings/",
-    component: () => import("layouts/SettingLayout.vue"),
+    component: () => import("layouts/SettingsLayout.vue"),
     children: [
       {
         path: "help",

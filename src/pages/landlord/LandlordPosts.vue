@@ -25,7 +25,7 @@
           :ripple="false"
           dense
           flat
-          @click="$router.push('/post')"
+          @click="$router.push('/post/edit')"
         />
       </template>
       <template #button-right>

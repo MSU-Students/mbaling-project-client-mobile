@@ -30,7 +30,7 @@
       </template>
       <template #title> {{ post.title }} </template>
       <template #fee> {{ post.fee }} </template>
-      <template #button-left>
+      <template #buttons>
         <q-btn
           label="Chat"
           :ripple="false"
@@ -38,8 +38,6 @@
           flat
           @click="$router.push('/chat')"
         />
-      </template>
-      <template #button-right>
         <q-btn
           label="Expand"
           :ripple="false"

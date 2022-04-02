@@ -30,7 +30,7 @@
       </template>
       <template #title> {{ post.title }} </template>
       <template #fee> {{ post.fee }} </template>
-      <template #button-middle>
+      <template #buttons>
         <q-btn
           label="Expand"
           :ripple="false"
@@ -52,7 +52,7 @@
         icon="bi-pin-angle"
         fab
         color="primary"
-        @click="$router.push('/form')"
+        @click="$router.push('/post/form')"
       />
     </q-page-sticky>
   </q-page>

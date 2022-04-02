@@ -8,7 +8,14 @@
     </q-toolbar-title>
     <page-header>
       <template #button-right>
-        <post-options />
+        <q-btn
+        icon="bi-arrow-left"
+        :ripple="false"
+        flat
+        color="black"
+        class="q-pr-sm"
+        @click="$router.go(-1)"
+      />
       </template>
     </page-header>
   </q-header>
@@ -18,7 +25,7 @@
     <q-item class="q-pt-md" clickable>
       <q-item-section avatar top>
         <q-avatar size="xl">
-          <img :src="activePost.prfphoto" @click="$router.push('/profile')" />
+          <img :src="post.prfphoto" @click="$router.push('/profile')" />
         </q-avatar>
       </q-item-section>
 
@@ -29,18 +36,18 @@
           style="font-size: medium"
           @click="$router.push('/profile')"
         >
-          {{ activePost.firstname }} {{ activePost.middlename.charAt(0) }}.
-          {{ activePost.lastname }}
+          {{ post.firstname }} {{ post.middlename.charAt(0) }}.
+          {{ post.lastname }}
         </q-item-label>
         <q-item-label
           lines="1"
           style="font-size: small"
           @click="$router.push('/profile')"
         >
-          {{ activePost.housingName }}
+          {{ post.housingName }}
         </q-item-label>
         <span class="text-grey" style="font-size: xx-small">
-          {{ activePost.date }}
+          {{ post.date }}
         </span>
       </q-item-section>
     </q-item>
@@ -82,7 +89,7 @@
           />
         </template>
         <q-carousel-slide
-          v-for="photo in activePost.photos"
+          v-for="photo in post.photos"
           :key="photo.id"
           :name="photo.id"
           :img-src="photo.url"
@@ -94,16 +101,16 @@
     <q-item>
       <q-item-section class="defaultfont-medium">
         <q-item-label style="font-size: small">
-          {{ activePost.title }}
+          {{ post.title }}
         </q-item-label>
         <q-item-label class="q-py-xs" style="font-size: small">
-          {{ activePost.fee }} PHP monthly
+          {{ post.fee }} PHP monthly
         </q-item-label>
 
         <q-item-label class="q-pa-sm">
           <div>
             <q-icon
-              v-if="activePost.prvKitchen"
+              v-if="post.prvKitchen"
               name="bi-check-square-fill"
               style="font-size: large"
             />
@@ -112,7 +119,7 @@
           </div>
           <div class="q-mt-xs">
             <q-icon
-              v-if="activePost.prvCR"
+              v-if="post.prvCR"
               name="bi-check-square-fill"
               style="font-size: large"
             />
@@ -125,7 +132,7 @@
           Description
         </span>
         <q-item-label class="q-mt-sm description-content">
-          {{ activePost.description }}
+          {{ post.description }}
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -150,13 +157,7 @@
           class="q-mt-xs"
           @click="$router.push('/chat')"
         />
-        <q-btn
-          label="Back"
-          :ripple="false"
-          flat
-          class="q-mt-xs"
-          @click="$router.go(-1)"
-        />
+        <post-options />
       </q-card-actions>
     </div>
   </q-footer>
@@ -169,7 +170,7 @@ import { Vue } from "vue-class-component";
 export default class Post extends Vue {
   slide = ref("style");
   isStudent = true;
-  activePost = {
+  post = {
     id: 135413523,
     title:
       "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
