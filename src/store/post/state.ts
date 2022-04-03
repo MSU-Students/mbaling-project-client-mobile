@@ -9,16 +9,13 @@ export interface PostInterface {
     id: number;
     url: string;
   }[];
+  date: number;
 
   firstname: string;
   middlename: string;
   lastname: string;
   prfphoto: string;
   housingName: string;
-
-  date: number;
-  likes: number;
-  bookmarks: number;
 }
 
 export interface PostStateInterface {
@@ -33,19 +30,9 @@ function state(): PostStateInterface {
       title:
         "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
       fee: "1200",
-      description: `Room dimension: 12x10ft
-        Beds: 2 (single bed)
-        rent fee is per person
-        w/ Personal cabinet and shelves
-        w/ 24/7 security camera surveillance
+      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-        POLICIEs:
-        -Observe cleanliness and personal privacy
-        -Respect other boarders (if you have problems with other boarder, in the manager to settle them)
-        -Always lock the door when leaving your room
-        -The management will not be liable of your stolen properties
-        -No visitors allowed
-        -Curfew is 9pm-5am`,
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
       prvKitchen: false,
       prvCR: false,
       photos: [
@@ -62,16 +49,13 @@ function state(): PostStateInterface {
           url: "https://cdn.quasar.dev/img/quasar.jpg",
         },
       ],
+      date: 1631096539262,
 
       firstname: "Azshara",
       middlename: "Queldorei",
       lastname: "Highborne",
       prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
       housingName: "Zin-Azshari Boarding House",
-
-      date: 1631096539262,
-      likes: 44,
-      bookmarks: 1,
     },
     posts: [
       {
@@ -79,19 +63,9 @@ function state(): PostStateInterface {
         title:
           "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
         fee: "1200",
-        description: `Room dimension: 12x10ft
-          Beds: 2 (single bed)
-          rent fee is per person
-          w/ Personal cabinet and shelves
-          w/ 24/7 security camera surveillance
+        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-          POLICIEs:
-          -Observe cleanliness and personal privacy
-          -Respect other boarders (if you have problems with other boarder, in the manager to settle them)
-          -Always lock the door when leaving your room
-          -The management will not be liable of your stolen properties
-          -No visitors allowed
-          -Curfew is 9pm-5am`,
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
         prvKitchen: false,
         prvCR: false,
         photos: [
@@ -108,25 +82,22 @@ function state(): PostStateInterface {
             url: "https://cdn.quasar.dev/img/quasar.jpg",
           },
         ],
+        date: 1631096539262,
 
         firstname: "Azshara",
         middlename: "Queldorei",
         lastname: "Highborne",
         prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
         housingName: "Zin-Azshari Boarding House",
-
-        date: 1631096539262,
-        likes: 44,
-        bookmarks: 1,
       },
       {
         id: 134134,
         title:
           "Family/Couple size Apartment room w/ Private kitchen and bathroom",
         fee: "6500",
-        description: `Apartment for small family or couples.
-          *with security camera surveillance
-          *with private parking lot`,
+        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
         prvKitchen: true,
         prvCR: true,
         photos: [
@@ -139,16 +110,13 @@ function state(): PostStateInterface {
             url: "https://cdn.quasar.dev/img/mountains.jpg",
           },
         ],
+        date: 1632388510672,
 
         firstname: "Monkey",
         middlename: "Dante",
         lastname: "Luffy",
         prfphoto: "https://cdn.quasar.dev/img/avatar4.jpg",
         housingName: "Pirate King Apartment",
-
-        date: 1632388510672,
-        likes: 32,
-        bookmarks: 4,
       },
     ],
   };

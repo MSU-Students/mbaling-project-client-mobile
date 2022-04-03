@@ -9,13 +9,13 @@
     <page-header>
       <template #button-right>
         <q-btn
-        icon="bi-arrow-left"
-        :ripple="false"
-        flat
-        color="black"
-        class="q-pr-sm"
-        @click="$router.go(-1)"
-      />
+          icon="bi-arrow-left"
+          :ripple="false"
+          flat
+          color="black"
+          class="q-pr-sm"
+          @click="$router.go(-1)"
+        />
       </template>
     </page-header>
   </q-header>
@@ -168,26 +168,18 @@ import { ref } from "vue";
 import { Vue } from "vue-class-component";
 
 export default class Post extends Vue {
-  slide = ref("style");
+  slide = ref(1);
+  fullscreen = false;
   isStudent = true;
+
   post = {
     id: 135413523,
     title:
       "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
     fee: 1200,
-    description: `Room dimension: 12x10ft
-        Beds: 2 (single bed)
-        rent fee is per person
-        w/ Personal cabinet and shelves
-        w/ 24/7 security camera surveillance
+    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-        POLICIEs:
-        -Observe cleanliness and personal privacy
-        -Respect other boarders (if you have problems with other boarder, in the manager to settle them)
-        -Always lock the door when leaving your room
-        -The management will not be liable of your stolen properties
-        -No visitors allowed
-        -Curfew is 9pm-5am`,
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
     prvKitchen: false,
     prvCR: false,
     photos: [
@@ -204,16 +196,13 @@ export default class Post extends Vue {
         url: "https://cdn.quasar.dev/img/quasar.jpg",
       },
     ],
+    date: 1631096539262,
 
     firstname: "Azshara",
     middlename: "Queldorei",
     lastname: "Highborne",
     prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
     housingName: "Zin-Azshari Boarding House",
-
-    date: 1631096539262,
-    likes: 44,
-    bookmarks: 1,
   };
 }
 </script>
