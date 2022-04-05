@@ -14,7 +14,7 @@
     <template #title> Manage Account </template>
   </page-header>
 
-  <q-page class="defaultfont flex column">
+  <q-page class="defaultfont">
     <q-list>
       <!-- EDIT USER PROFILE INFO -->
       <q-item class="q-mt-md defaultfont-semibold text-grey">
@@ -24,6 +24,7 @@
             name="bi-pencil-square"
             size="xs"
             class="text-grey cursor-pointer"
+            @click="$router.push('/settings/profile')"
           />
         </q-item-section>
       </q-item>
@@ -62,6 +63,7 @@
             name="bi-pencil-square"
             size="xs"
             class="text-grey cursor-pointer"
+            @click="$router.push('/settings/address')"
           />
         </q-item-section>
       </q-item>

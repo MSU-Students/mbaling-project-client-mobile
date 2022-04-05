@@ -14,7 +14,7 @@
     <template #title> Settings and Privacy </template>
   </page-header>
 
-  <q-page class="defaultfont flex column">
+  <q-page class="defaultfont">
     <q-list>
       <q-item class="q-mt-md defaultfont-semibold text-grey">
         <q-item-section> ACCOUNT </q-item-section>

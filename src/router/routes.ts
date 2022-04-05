@@ -36,7 +36,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import("pages/student/setting/Settings.vue"),
       },
       {
-        path: "account",
+        path: "account/",
         component: () => import("pages/student/setting/ManageAccount.vue"),
       },
       {
@@ -91,7 +91,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: "profile",
-        component: () => import("pages/Profile.vue")
+        component: () => import("pages/Profile.vue"),
       },
       {
         path: "chat",
@@ -105,7 +105,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: "",
-        component: () => import("pages/general-post/Post.vue")
+        component: () => import("pages/general-post/Post.vue"),
       },
       {
         path: "form",
@@ -113,7 +113,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "edit",
-        component: () => import("pages/general-post/PostEdit.vue")
+        component: () => import("pages/general-post/PostEdit.vue"),
       },
     ],
   },
@@ -136,6 +136,14 @@ const routes: RouteRecordRaw[] = [
       {
         path: "privacy-policy",
         component: () => import("pages/general-setting/PrivacyPolicy.vue"),
+      },
+      {
+        path: "profile",
+        component: () => import("pages/general-setting/EditProfile.vue"),
+      },
+      {
+        path: "address",
+        component: () => import("pages/general-setting/EditAddress.vue"),
       },
     ],
   },
