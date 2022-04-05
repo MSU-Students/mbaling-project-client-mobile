@@ -16,7 +16,9 @@
 
   <q-page class="defaultfont flex column">
     <q-list>
-      <div class="q-ml-md q-mt-md defaultfont-semibold text-grey">ACCOUNT</div>
+      <q-item class="q-mt-md defaultfont-semibold text-grey">
+        <q-item-section> ACCOUNT </q-item-section>
+      </q-item>
       <!-- MANAGE ACCOUNT -->
       <q-item
         clickable
@@ -40,9 +42,11 @@
         </q-item-section>
         <q-item-section> Privacy </q-item-section>
       </q-item>
-      <q-separator inset />
+      <q-separator inset class="q-mt-md" />
 
-      <div class="q-ml-md q-mt-md defaultfont-semibold text-grey">SUPPORT</div>
+      <q-item class="q-mt-md defaultfont-semibold text-grey">
+        <q-item-section> SUPPORT </q-item-section>
+      </q-item>
       <!-- HELP CENTER -->
       <q-item
         clickable
@@ -66,9 +70,11 @@
         </q-item-section>
         <q-item-section> Feedback </q-item-section>
       </q-item>
-      <q-separator inset />
+      <q-separator inset class="q-mt-md" />
 
-      <div class="q-ml-md q-mt-md defaultfont-semibold text-grey">ABOUT</div>
+      <q-item class="q-mt-md defaultfont-semibold text-grey">
+        <q-item-section> ABOUT </q-item-section>
+      </q-item>
       <!-- TERMS OF SERVICE -->
       <q-item
         clickable
@@ -92,9 +98,11 @@
         </q-item-section>
         <q-item-section> Privacy Policy </q-item-section>
       </q-item>
-      <q-separator inset />
+      <q-separator inset class="q-mt-md" />
 
-      <div class="q-ml-md q-mt-md defaultfont-semibold text-grey">LOGIN</div>
+      <q-item class="q-mt-md defaultfont-semibold text-grey">
+        <q-item-section> LOGIN </q-item-section>
+      </q-item>
       <!-- SYSTEM LOG-OUT -->
       <q-item clickable v-ripple="false">
         <q-item-section style="max-width: 1.75rem">

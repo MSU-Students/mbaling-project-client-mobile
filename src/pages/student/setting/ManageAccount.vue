@@ -16,41 +16,35 @@
 
   <q-page class="defaultfont flex column">
     <q-list>
-      <div class="q-ml-md q-mt-md defaultfont-semibold text-grey">
-        PROFILE INFORMATION
-      </div>
-      <!-- EDIT FULL NAME -->
-      <q-item clickable v-ripple="false" @click="$router.push('')">
-        <q-item-section> First name </q-item-section>
+      <!-- EDIT USER PROFILE INFO -->
+      <q-item class="q-mt-md defaultfont-semibold text-grey">
+        <q-item-section> PROFILE INFORMATION </q-item-section>
+        <q-item-section side>
+          <q-icon
+            name="bi-pencil-square"
+            size="xs"
+            class="text-grey cursor-pointer"
+          />
+        </q-item-section>
+      </q-item>
+
+      <q-item
+        v-for="profile in profileInfo"
+        :key="profile.label"
+        clickable
+        v-ripple="false"
+      >
+        <q-item-section> {{ profile.label }} </q-item-section>
         <q-item-section side style="width: 40%">
           <q-item-label lines="1" class="text-grey">
-            {{ activeUser.firstname }}
+            {{ profile.value }}
           </q-item-label>
         </q-item-section>
       </q-item>
 
-      <q-item clickable v-ripple="false" @click="$router.push('')">
-        <q-item-section> Middle name </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            {{ activeUser.middlename }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-item clickable v-ripple="false" @click="$router.push('')">
-        <q-item-section> Last name </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            {{ activeUser.lastname }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <!-- EDIT FULL COURSE -->
       <q-item clickable v-ripple="false" @click="alert()">
         <q-item-section> Set course </q-item-section>
-        <q-item-section size style="max-width: 1.75rem">
+        <q-item-section size style="max-width: 1.25rem">
           <q-icon
             name="bi-question-circle"
             size="xs"
@@ -58,81 +52,30 @@
           />
         </q-item-section>
       </q-item>
+      <q-separator inset class="q-mt-md" />
 
-      <!-- EDIT MOBILE NUMBER -->
-      <q-item clickable v-ripple="false" @click="$router.push('')">
-        <q-item-section> Phone number </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            {{ activeUser.contact }}
-          </q-item-label>
+      <!-- EDIT USER ADDRESS INFO -->
+      <q-item class="q-mt-md defaultfont-semibold text-grey">
+        <q-item-section> ADDRESS INFORMATION </q-item-section>
+        <q-item-section side>
+          <q-icon
+            name="bi-pencil-square"
+            size="xs"
+            class="text-grey cursor-pointer"
+          />
         </q-item-section>
       </q-item>
 
-      <!-- EDIT EMAIL ADDRESS -->
-      <q-item clickable v-ripple="false" @click="$router.push('')">
-        <q-item-section> Email </q-item-section>
+      <q-item
+        v-for="address in addressInfo"
+        :key="address.label"
+        clickable
+        v-ripple="false"
+      >
+        <q-item-section> {{ address.label }} </q-item-section>
         <q-item-section side style="width: 40%">
           <q-item-label lines="1" class="text-grey">
-            {{ activeUser.email }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <!-- EDIT BIRTHDATE -->
-      <q-item clickable v-ripple="false" @click="$router.push('')">
-        <q-item-section> Date of birth </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            {{ activeUser.birthdate }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <!-- EDIT BIRTHDATE -->
-      <q-item clickable v-ripple="false" @click="$router.push('')">
-        <q-item-section> Gender </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            {{ activeUser.gender }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-separator inset />
-
-      <div class="q-ml-md q-mt-md defaultfont-semibold text-grey">
-        CAMPUS ADDRESS
-      </div>
-      <!-- EDIT HOUSING ADDRESS -->
-      <q-item clickable v-ripple="false" @click="$router.push('')">
-        <q-item-section> Housing address </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            {{ activeUser.housingName }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <!-- SEND VERIFICATION OF HOUSING ADDRESS -->
-      <q-item clickable v-ripple="false" @click="$router.push('')">
-        <q-item-section> Verification </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            Not verified
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-separator inset />
-
-      <div class="q-ml-md q-mt-md defaultfont-semibold text-grey">
-        ADDRESS INFORMATION
-      </div>
-      <!-- EDIT FULL NAME -->
-      <q-item clickable v-ripple="false" @click="$router.push('')">
-        <q-item-section> Set address </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            {{ activeUser.addressLine1 }}, {{ activeUser.addressLine2 }}
+            {{ address.value }}
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -171,6 +114,48 @@ export default class StudentManageAccount extends Vue {
     contact: "09531409858",
     email: "bashier.ns30@s.msumain.edu.ph",
   };
+
+  profileInfo = [
+    {
+      label: "First name",
+      value: this.activeUser.firstname,
+    },
+    {
+      label: "Middle name",
+      value: this.activeUser.middlename,
+    },
+    {
+      label: "Last name",
+      value: this.activeUser.lastname,
+    },
+    {
+      label: "Phone number",
+      value: this.activeUser.contact,
+    },
+    {
+      label: "Email",
+      value: this.activeUser.email,
+    },
+    {
+      label: "Date of birth",
+      value: this.activeUser.birthdate,
+    },
+    {
+      label: "Gender",
+      value: this.activeUser.gender,
+    },
+  ];
+
+  addressInfo = [
+    {
+      label: "Campus address",
+      value: this.activeUser.housingName,
+    },
+    {
+      label: "Set home address",
+      value: this.activeUser.addressLine1 + ", " + this.activeUser.addressLine2,
+    },
+  ];
 
   alert() {
     this.$q.dialog({

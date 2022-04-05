@@ -46,6 +46,7 @@
           placeholder="Message"
           bg-color="white"
           class="full-width"
+          @keyup.enter="sendMessage()"
         >
           <template v-slot:append>
             <q-btn
@@ -53,7 +54,7 @@
               :disable="!newMessage"
               flat
               class="q-pa-none"
-              @click="sendMessage"
+              @click="sendMessage()"
             />
           </template>
 
@@ -119,7 +120,7 @@
 
           <!-- ADD FROM LINK BUTTON -->
           <div class="flex flex-center col">
-            <!-- <q-card
+            <q-card
               flat
               class="bg-primary flex flex-center"
               style="height: 6rem; width: 6rem"
@@ -135,7 +136,7 @@
               >
                 <span class="q-pt-sm text-subtitle2">Link</span>
               </q-btn>
-            </q-card> -->
+            </q-card>
           </div>
         </div>
       </div>

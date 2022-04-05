@@ -16,9 +16,9 @@
 
   <q-page class="defaultfont flex column">
     <q-list>
-      <div class="q-ml-md q-mt-md defaultfont-semibold text-grey">
-        CREDENTIALS
-      </div>
+      <q-item class="q-mt-md defaultfont-semibold text-grey">
+        <q-item-section> CREDENTIALS </q-item-section>
+      </q-item>
       <!-- EDIT USERNAME -->
       <q-item clickable v-ripple="false" @click="$router.push('')">
         <q-item-section> Username </q-item-section>
@@ -33,11 +33,11 @@
       <q-item clickable v-ripple="false" @click="$router.push('')">
         <q-item-section> Password </q-item-section>
       </q-item>
-      <q-separator inset />
+      <q-separator inset class="q-mt-md" />
 
-      <div class="q-ml-md q-mt-md defaultfont-semibold text-grey">
-        DISCOVERABILITY
-      </div>
+      <q-item class="q-mt-md defaultfont-semibold text-grey">
+        <q-item-section> DISCOVERABILITY </q-item-section>
+      </q-item>
       <!-- EDIT HOUSING ADDRESS -->
       <q-item clickable v-ripple="false" @click="confirmEdit()">
         <q-item-section> Display username </q-item-section>
