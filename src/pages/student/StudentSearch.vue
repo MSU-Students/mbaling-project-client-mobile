@@ -1,7 +1,7 @@
 <template>
   <q-header class="defaultfont bg-white text-black q-pa-md">
     <!-- SEARCH INPUT FIELD -->
-    <q-form @submit="searchPosts()">
+    <q-form @submit="searchAction()">
       <q-input
         v-model="search"
         :loading="loadingState"
@@ -11,7 +11,7 @@
         clearable
         placeholder="Search"
         @clear="clearSearch()"
-        @keyup.enter="searchPosts()"
+        @keyup.enter="searchAction()"
       >
         <template v-slot:prepend>
           <q-btn flat round size="0.7rem">
@@ -22,7 +22,7 @@
     </q-form>
   </q-header>
 
-  <q-page v-if="searchResult.length > 0">
+  <q-page v-if="searchResultPost.length > 0 || searchResultUser.length > 0">
     <!-- POSTS & USERS TAB -->
     <q-tabs
       v-model="tab"
@@ -41,15 +41,16 @@
     <q-tab-panels v-model="tab" animated>
       <!-- POSTS TAB PANEL -->
       <q-tab-panel name="posts" class="q-pa-md">
-        <div class="row items-start">
+        <div v-if="searchResultPost.length > 0" class="row items-start">
           <div
-            v-for="(result, index) in searchResult"
+            v-for="(result, index) in searchResultPost"
             :key="index"
             style="width: 50%"
           >
-            <div class="q-pa-sm">
+            <div v-for="photo in result.photos" :key="photo.id" class="q-pa-sm">
               <q-img
-                :src="result.photo"
+                v-if="photo.id === 1"
+                :src="photo.url"
                 fit="none"
                 style="width: 100%; height: 15rem; border-radius: 0.5rem"
                 @click="$router.push('/post')"
@@ -63,42 +64,74 @@
             </div>
           </div>
         </div>
+        <q-page v-else class="row items-center justify-evenly">
+          <p class="defaultfont text-grey-5 text-center">
+            <q-icon
+              name="bi-question-circle"
+              color="grey-5"
+              size="xl"
+              class="q-mb-sm"
+            />
+            <br />
+            NOTHING FOUND
+          </p>
+        </q-page>
       </q-tab-panel>
 
       <!-- USERS TAB PANEL -->
       <q-tab-panel name="users" class="q-pa-none q-pt-md">
-        <q-list
-          v-for="(result, index) in searchResult"
-          :key="index"
-        >
-          <q-item clickable class="row items-center" @click="$router.push('/profile')">
-            <q-item-section avatar>
-              <q-avatar size="xl">
-                <img :src="result.prfphoto" />
-              </q-avatar>
-            </q-item-section>
+        <div v-if="searchResultUser.length > 0">
+          <q-list v-for="(result, index) in searchResultUser" :key="index">
+            <q-item
+              clickable
+              class="row items-center"
+              @click="$router.push('/profile')"
+            >
+              <q-item-section avatar>
+                <q-avatar size="xl">
+                  <img :src="result.prfphoto" />
+                </q-avatar>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label
-                lines="1"
-                class="defaultfont-semibold"
-                style="font-size: medium"
-              >
-                {{ result.fullname }}
-              </q-item-label>
-              <q-item-label lines="1" style="font-size: small">
-                {{ result.housingName }}
-              </q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
+              <q-item-section>
+                <q-item-label
+                  lines="1"
+                  class="defaultfont-semibold"
+                  style="font-size: medium"
+                >
+                  {{ result.firstname }} {{ result.middlename.charAt(0) }}.
+                  {{ result.lastname }}
+                </q-item-label>
+                <q-item-label lines="1" style="font-size: small">
+                  {{ result.housingName }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+        <q-page v-else class="row items-center justify-evenly">
+          <p class="defaultfont text-grey-5 text-center">
+            <q-icon
+              name="bi-question-circle"
+              color="grey-5"
+              size="xl"
+              class="q-mb-sm"
+            />
+            <br />
+            NOTHING FOUND
+          </p>
+        </q-page>
       </q-tab-panel>
     </q-tab-panels>
   </q-page>
 
   <!-- NOTHING FOUND WARNING -->
   <q-page
-    v-if="searchResult.length == 0 && searchClicked"
+    v-if="
+      searchResultPost.length == 0 &&
+      searchResultUser.length == 0 &&
+      searchClicked
+    "
     class="row items-center justify-evenly"
   >
     <p class="defaultfont text-grey-5 text-center">
@@ -118,16 +151,24 @@
 import { ref } from "vue";
 import { Vue, Options } from "vue-class-component";
 
-interface IPost {
-  date: number;
-  fullname: string;
-  housingName: string;
-  prfphoto: string;
+interface PostInterface {
+  id?: number;
   title: string;
   fee: string;
-  likes: number;
-  bookmarks: number;
-  photo: string;
+  description: string;
+  prvKitchen: boolean;
+  prvCR: boolean;
+  photos: {
+    id: number;
+    url: string;
+  }[];
+  date: number;
+
+  firstname: string;
+  middlename: string;
+  lastname: string;
+  prfphoto: string;
+  housingName: string;
 }
 
 @Options({})
@@ -137,48 +178,95 @@ export default class StudentSearch extends Vue {
   loadingState = false;
   searchClicked = false;
 
-  posts: IPost[] = [
+  posts: PostInterface[] = [
     {
-      date: 1631096539262,
-      fullname: "Azshara Highborne",
-      housingName: "Zin-Azshari Boarding House",
-      prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
+      id: 135413523,
       title:
         "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
-      fee: "1,200",
-      likes: 44,
-      bookmarks: 1,
-      photo: "https://cdn.quasar.dev/img/parallax1.jpg",
+      fee: "1200",
+      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+      prvKitchen: false,
+      prvCR: false,
+      photos: [
+        {
+          id: 1,
+          url: "https://cdn.quasar.dev/img/parallax1.jpg",
+        },
+        {
+          id: 2,
+          url: "https://cdn.quasar.dev/img/mountains.jpg",
+        },
+        {
+          id: 3,
+          url: "https://cdn.quasar.dev/img/quasar.jpg",
+        },
+      ],
+      date: 1631096539262,
+
+      firstname: "Azshara",
+      middlename: "Queldorei",
+      lastname: "Highborne",
+      prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
+      housingName: "Zin-Azshari Boarding House",
     },
     {
-      date: 1631096551509,
-      fullname: "Monkey D. Luffy",
-      housingName: "Pirate King Apartment",
-      prfphoto: "https://cdn.quasar.dev/img/avatar4.jpg",
+      id: 134134,
       title:
-        "Free boarding room size Apartment room w/ Private kitchen and bathroom",
-      fee: "6,500",
-      likes: 32,
-      bookmarks: 4,
-      photo: "https://cdn.quasar.dev/img/parallax2.jpg",
+        "Family/Couple size Apartment room w/ Private kitchen and bathroom",
+      fee: "6500",
+      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+      prvKitchen: true,
+      prvCR: true,
+      photos: [
+        {
+          id: 1,
+          url: "https://cdn.quasar.dev/img/parallax2.jpg",
+        },
+        {
+          id: 2,
+          url: "https://cdn.quasar.dev/img/mountains.jpg",
+        },
+      ],
+      date: 1632388510672,
+
+      firstname: "Monkey",
+      middlename: "Dante",
+      lastname: "Luffy",
+      prfphoto: "https://cdn.quasar.dev/img/avatar4.jpg",
+      housingName: "Pirate King Apartment",
     },
   ];
 
-  searchResult: IPost[] = [];
+  searchResultPost: PostInterface[] = [];
+  searchResultUser: PostInterface[] = [];
 
-  searchPosts() {
-    const result = this.posts.filter(
+  searchAction() {
+    // if (this.search != "") {
+    const resultPosts = this.posts.filter(
       (post) =>
-        post.fullname.toLowerCase().includes(this.search.toLowerCase()) ||
         post.title.toLowerCase().includes(this.search.toLowerCase()) ||
         post.housingName.toLowerCase().includes(this.search.toLowerCase())
     );
-    this.searchResult = result;
+    const resultUsers = this.posts.filter(
+      (post) =>
+        post.firstname.toLowerCase().includes(this.search.toLowerCase()) ||
+        post.middlename.toLowerCase().includes(this.search.toLowerCase()) ||
+        post.lastname.toLowerCase().includes(this.search.toLowerCase()) ||
+        post.housingName.toLowerCase().includes(this.search.toLowerCase())
+    );
+    this.searchResultPost = resultPosts;
+    this.searchResultUser = resultUsers;
     this.searchClicked = true;
+    // }
   }
 
   clearSearch() {
-    this.searchResult = [];
+    this.searchResultPost = [];
+    this.searchResultUser = [];
     this.searchClicked = false;
   }
 }

@@ -37,7 +37,20 @@
     </div>
 
     <!-- ACTIVITY SECTION -->
-    <div class="q-mt-sm"></div>
+    <div class="q-pa-md q-mt-md">
+      <q-card class="q-pa-md defaultfont">
+        <div class="defaultfont-semibold">Set your campus address</div>
+        <q-form class="q-my-sm">
+          <q-input square filled dense clearable placeholder="Search">
+            <template v-slot:prepend>
+              <q-btn flat round size="0.7rem">
+                <q-icon name="bi-search" size="1.25rem" type="submit" />
+              </q-btn>
+            </template>
+          </q-input>
+        </q-form>
+      </q-card>
+    </div>
   </q-page>
 </template>
 

@@ -43,7 +43,7 @@
 
     <!-- NO POSTS WARNING -->
     <div class="row items-center justify-evenly" style="height: 7.5rem">
-      <span class="text-grey-5">no more post to fetch</span>
+      <q-spinner color="primary" size="3em" />
     </div>
 
     <!-- ADD POST BUTTON -->
