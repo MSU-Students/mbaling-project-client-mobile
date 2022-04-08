@@ -31,7 +31,7 @@
                 ? 'mbi-home-fill'
                 : 'mbi-home'
             "
-          ></i>
+          />
         </q-btn>
 
         <q-btn
@@ -45,7 +45,7 @@
                 ? 'mbi-post-fill'
                 : 'mbi-post'
             "
-          ></i>
+          />
         </q-btn>
 
         <q-btn
@@ -59,7 +59,7 @@
                 ? 'mbi-inbox-fill'
                 : 'mbi-inbox'
             "
-          ></i>
+          />
         </q-btn>
 
         <q-btn
@@ -73,7 +73,7 @@
                 ? 'mbi-account-fill'
                 : 'mbi-account'
             "
-          ></i>
+          />
         </q-btn>
       </q-btn-group>
     </q-footer>

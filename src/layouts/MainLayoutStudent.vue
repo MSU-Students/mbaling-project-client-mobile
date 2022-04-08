@@ -18,9 +18,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer
-      class="bg-primary text-white"
-    >
+    <q-footer class="bg-primary text-white">
       <q-btn-group flat spread style="height: 3rem">
         <q-btn :ripple="false" size="lg" @click="$router.push('/student/home')">
           <i
@@ -29,7 +27,7 @@
                 ? 'mbi-home-fill'
                 : 'mbi-home'
             "
-          ></i>
+          />
         </q-btn>
 
         <q-btn
@@ -43,7 +41,7 @@
                 ? 'mbi-search-fill'
                 : 'mbi-search'
             "
-          ></i>
+          />
         </q-btn>
 
         <q-btn
@@ -57,7 +55,7 @@
                 ? 'mbi-inbox-fill'
                 : 'mbi-inbox'
             "
-          ></i>
+          />
         </q-btn>
 
         <q-btn
@@ -71,7 +69,7 @@
                 ? 'mbi-account-fill'
                 : 'mbi-account'
             "
-          ></i>
+          />
         </q-btn>
       </q-btn-group>
     </q-footer>
