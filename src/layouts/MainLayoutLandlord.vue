@@ -1,28 +1,21 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header
-      v-if="!$route.fullPath.includes('/landlord/search')"
-      elevated
-      class="q-px-md q-py-sm bg-white"
-      style="height: 3rem"
-    >
-      <q-toolbar-title>
-        <q-img
-          src="~assets/mbaling-logo-horizontal.svg"
-          style="max-width: 8rem"
-        />
-      </q-toolbar-title>
-    </q-header>
-
     <q-page-container>
       <router-view />
     </q-page-container>
 
-    <q-footer class="bg-primary text-white">
-      <q-btn-group flat spread style="height: 3rem">
+    <q-footer reveal class="q-pb-lg bg-transparent flex flex-center">
+      <q-btn-group
+        rounded
+        flat
+        spread
+        class="bg-secondary text-primary box-shadow"
+        style="height: 3.5rem"
+      >
         <q-btn
           :ripple="false"
           size="lg"
+          style="width: 5rem"
           @click="$router.push('/landlord/home')"
         >
           <i
@@ -37,11 +30,12 @@
         <q-btn
           :ripple="false"
           size="lg"
-          @click="$router.push('/landlord/post')"
+          style="width: 5rem"
+          @click="$router.push('/landlord/posts')"
         >
           <i
             :class="
-              $route.fullPath.includes('/landlord/post')
+              $route.fullPath.includes('/landlord/posts')
                 ? 'mbi-post-fill'
                 : 'mbi-post'
             "
@@ -51,6 +45,7 @@
         <q-btn
           :ripple="false"
           size="lg"
+          style="width: 5rem"
           @click="$router.push('/landlord/inbox')"
         >
           <i
@@ -65,6 +60,7 @@
         <q-btn
           :ripple="false"
           size="lg"
+          style="width: 5rem"
           @click="$router.push('/landlord/account')"
         >
           <i
@@ -85,3 +81,9 @@ import { Vue } from "vue-class-component";
 
 export default class MainLayoutLandlord extends Vue {}
 </script>
+
+<style>
+.box-shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5) !important;
+}
+</style>

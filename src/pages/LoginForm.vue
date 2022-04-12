@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf" class="defaultfont-light bg-primary text-white">
-    <q-page class="row items-center justify-evenly">
+    <q-page class="flex flex-center">
       <q-card flat class="bg-transparent text-center" style="width: 12rem">
         <!-- LOGO PICTURE -->
         <q-img src="~assets/mbaling-logo-vertical.svg" style="width: 6rem" />
@@ -11,9 +11,9 @@
             v-model="username"
             dark
             dense
+            type="text"
             color="white"
             input-class="text-center"
-            type="text"
             placeholder="username"
             @keyup.enter="loginUser()"
           />
@@ -21,23 +21,23 @@
             v-model="password"
             dark
             dense
+            type="password"
             color="white"
             input-class="text-center"
-            type="password"
             placeholder="password"
             @keyup.enter="loginUser()"
           />
 
           <!-- LOG-IN BUTTON -->
           <q-btn
-            :ripple="false"
+            label="log-in"
             unelevated
             rounded
             dense
             no-caps
-            label="log-in"
+            :ripple="false"
             color="white"
-            class="q-mt-md text-red text-bold"
+            class="q-mt-md text-bold text-red"
             style="height: 1.5rem; width: 6rem; font-size: smaller"
             @click="loginUser()"
           />
@@ -46,7 +46,7 @@
     </q-page>
 
     <!-- SIGN-UP INFO POP-UP -->
-    <q-footer class="row justify-center" style="height: 3rem">
+    <q-footer class="flex justify-center" style="height: 3rem">
       <p
         class="defaultfont-light cursor-pointer"
         style="font-size: smaller; line-height: 0.85rem"

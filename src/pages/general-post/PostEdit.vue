@@ -1,100 +1,114 @@
 <template>
-  <page-header style="background-color: white">
-    <template #button-left>
-      <q-btn
-        icon="bi-arrow-left"
-        :ripple="false"
-        flat
-        color="black"
-        class="q-pl-sm"
-        @click="$router.go(-1)"
-      />
-    </template>
-    <template #button-right>
-      <q-btn
-        label="save"
-        :ripple="false"
-        unelevated
-        size="sm"
-        color="primary"
-        class="q-mr-sm"
-      />
-    </template>
-  </page-header>
-
   <q-page class="defaultfont text-black">
-    <!-- POST PHOTO SECTION -->
-    <div class="bg-secondary" style="height: 15rem">
-      <div class="row items-center justify-evenly" style="height: 100%">
+    <div class="bg-black" style="height: 20rem">
+      <div
+        class="bg-grey-4 row items-center justify-evenly"
+        style="height: 100%; border-radius: 2rem 2rem 0 0"
+      >
         <q-icon name="bi-image" size="xl" color="grey" />
       </div>
     </div>
 
-    <!-- UPLOAD AND CAMERA BUTTONS -->
-    <div class="q-mt-sm q-mb-lg q-px-lg">
-      <q-btn-group flat spread>
+    <div align="right" class="q-px-md q-py-sm row items-center">
+      <div class="col">
         <q-btn
-          icon="bi-image"
+          v-on:click="showClearBtn = !showClearBtn"
           label="Upload"
-          flat
-          size="sm"
+          unelevated
+          rounded
+          no-caps
           color="primary"
-          class="defaultfont-bold"
+          class="q-ml-sm text-center"
+          style="height: 2rem"
         />
-        <input ref="fileInput" hidden multiple type="file" class="file-input" />
-        <q-btn
-          icon="bi-camera"
-          label="Capture"
-          flat
-          size="sm"
-          color="primary"
-          class="defaultfont-bold"
-        />
-      </q-btn-group>
+        <Transition name="appear">
+          <q-btn
+            v-show="showClearBtn"
+            icon="bi-x-circle"
+            flat
+            dense
+            :ripple="false"
+            size="md"
+            class="q-ml-sm text-primary"
+          />
+        </Transition>
+      </div>
     </div>
 
-    <!-- INPUT FIELDS -->
-    <div class="q-mx-md">
+    <div class="q-mt-sm q-px-md">
       <q-input
         v-model="title"
-        filled
+        autogrow
         dense
         placeholder="Title"
-        class="q-my-sm"
+        input-class="text-center"
+        style="font-size: medium"
+      />
+      <q-input
+        v-model="fee"
+        dense
+        placeholder="Monthly Fee"
+        input-class="text-center"
+        class="q-mt-xs q-px-xl"
+        style="font-size: medium"
       />
 
-      <div class="row q-my-sm">
-        <q-input
-          v-model="fee"
-          filled
-          dense
-          placeholder="Fee"
-          class="q-mr-md"
-          style="width: 50%"
-        />
-        <span class="q-mt-sm q-pt-xs">MONTHLY FEE</span>
-      </div>
-
-      <div class="q-pl-lg q-mt-md column">
-        <q-checkbox
-          label="Private Kitchen"
-          v-model="pkBox"
-          dense
-          color="primary"
-          class="q-mb-sm"
-        />
-        <q-checkbox label="Private CR" v-model="pcBox" dense color="primary" />
+      <div class="q-px-md q-mt-md row items-center">
+        <div align="center" class="col">
+          <q-checkbox
+            label="Private Kitchen"
+            v-model="pkBox"
+            dense
+            color="primary"
+          />
+        </div>
+        <div align="center" class="col">
+          <q-checkbox
+            label="Private CR"
+            v-model="pcBox"
+            dense
+            color="primary"
+          />
+        </div>
       </div>
 
       <q-input
         v-model="description"
-        filled
         type="textarea"
         placeholder="Description"
-        class="q-mt-md"
+        class="q-mt-md q-pb-lg"
+        style="font-size: small"
       />
     </div>
+
+    <q-page-sticky position="top-left" :offset="[18, 18]">
+      <q-btn
+        icon="bi-arrow-left-short"
+        unelevated
+        round
+        color="black"
+        style="opacity: 0.5"
+        @click="$router.go(-1)"
+      />
+    </q-page-sticky>
   </q-page>
+
+  <q-footer
+    bordered
+    class="q-px-md defaultfont bg-white row items-center"
+    style="height: 4rem"
+  >
+    <div align="right" class="col">
+      <q-btn
+        label="Save"
+        unelevated
+        rounded
+        no-caps
+        color="primary"
+        style="height: 3rem; width: 5rem"
+      />
+    </div>
+  </q-footer>
 </template>
 
 <script lang="ts">
@@ -111,7 +125,7 @@ export default class PostEdit extends Vue {
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
     prvKitchen: false,
-    prvCR: false,
+    prvCR: true,
     photos: [
       {
         id: 1,
@@ -137,8 +151,27 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
   title = ref(this.post.title);
   fee = ref(this.post.fee);
+  description = ref(this.post.description);
   pkBox = ref(this.post.prvKitchen);
   pcBox = ref(this.post.prvCR);
-  description = ref(this.post.description);
+
+  showClearBtn = false;
 }
 </script>
+
+<style>
+.appear-enter-active {
+  animation: bounce-in 0.5s;
+}
+.appear-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+</style>

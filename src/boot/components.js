@@ -1,10 +1,11 @@
 import { boot } from 'quasar/wrappers'
 
 const components = {
-  'post': require('components/post/Post').default,
+  'post-feed': require('components/post/PostFeed').default,
+  'post-list': require('components/post/PostList').default,
   'post-options': require('components/post/PostOptions').default,
-  'post-card': require('components/post/PostCard').default,
-  'page-header': require('components/PageHeader').default
+  'page-header': require('components/PageHeader').default,
+  'settings-menu': require('components/SettingsMenu').default
 }
 
 // "async" is optional;

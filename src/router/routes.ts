@@ -10,6 +10,9 @@ const routes: RouteRecordRaw[] = [
     component: () => import("layouts/MainLayoutStudent.vue"),
     children: [
       {
+        path: "", redirect: "/student/home",
+      },
+      {
         path: "home",
         component: () => import("pages/student/StudentHome.vue"),
       },
@@ -36,12 +39,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import("pages/student/setting/Settings.vue"),
       },
       {
-        path: "account/",
-        component: () => import("pages/student/setting/ManageAccount.vue"),
+        path: "profile",
+        component: () => import("pages/student/setting/ManageProfile.vue"),
       },
       {
-        path: "privacy",
-        component: () => import("pages/student/setting/ManagePrivacy.vue"),
+        path: "account",
+        component: () => import("pages/student/setting/ManageAccount.vue"),
       },
     ],
   },
@@ -49,6 +52,9 @@ const routes: RouteRecordRaw[] = [
     path: "/landlord/",
     component: () => import("layouts/MainLayoutLandlord.vue"),
     children: [
+      {
+        path: "", redirect: "/landlord/home",
+      },
       {
         path: "home",
         component: () => import("pages/landlord/LandlordHome.vue"),
@@ -76,12 +82,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import("pages/landlord/setting/Settings.vue"),
       },
       {
-        path: "account",
-        component: () => import("pages/landlord/setting/ManageAccount.vue"),
+        path: "profile",
+        component: () => import("pages/landlord/setting/ManageProfile.vue"),
       },
       {
-        path: "privacy",
-        component: () => import("pages/landlord/setting/ManagePrivacy.vue"),
+        path: "account",
+        component: () => import("pages/landlord/setting/ManageAccount.vue"),
       },
     ],
   },
@@ -122,28 +128,36 @@ const routes: RouteRecordRaw[] = [
     component: () => import("layouts/SettingsLayout.vue"),
     children: [
       {
-        path: "help",
-        component: () => import("pages/general-setting/HelpCenter.vue"),
+        path: "about",
+        component: () => import("pages/general-setting/About.vue"),
       },
       {
-        path: "feedback",
-        component: () => import("pages/general-setting/Feedback.vue"),
+        path: "edit+username",
+        component: () => import("pages/general-setting/edit/EditUsername.vue"),
       },
       {
-        path: "terms-of-service",
-        component: () => import("pages/general-setting/ServicePolicy.vue"),
+        path: "edit+password",
+        component: () => import("pages/general-setting/edit/EditPassword.vue"),
       },
       {
-        path: "privacy-policy",
-        component: () => import("pages/general-setting/PrivacyPolicy.vue"),
+        path: "edit+email",
+        component: () => import("pages/general-setting/edit/EditEmail.vue"),
       },
       {
-        path: "profile",
-        component: () => import("pages/general-setting/EditProfile.vue"),
+        path: "edit+mobile",
+        component: () => import("pages/general-setting/edit/EditMobile.vue"),
       },
       {
-        path: "address",
-        component: () => import("pages/general-setting/EditAddress.vue"),
+        path: "edit+address",
+        component: () => import("pages/general-setting/edit/EditAddress.vue"),
+      },
+      {
+        path: "edit+housing",
+        component: () => import("pages/general-setting/edit/EditHousing.vue"),
+      },
+      {
+        path: "edit+campus+housing",
+        component: () => import("pages/general-setting/edit/EditCampusHousing.vue"),
       },
     ],
   },

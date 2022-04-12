@@ -18,7 +18,7 @@ export interface UserInterface {
   addressLine2: string;
   addressLine3: string;
   addressLine4: string;
-  housingName: string;
+  housingAddress: string;
 
   birthdate?: string;
   gender?: "Male" | "Female";
@@ -53,11 +53,11 @@ function state(): UserStateInterface {
       addressLine2: "Bubonga Marawi",
       addressLine3: "Marawi City",
       addressLine4: "Lanao del Sur",
-      housingName: "",
+      housingAddress: "",
 
-      birthdate: "October 19, 1998",
+      birthdate: "1998-10-19",
       gender: "Male",
-      contact: "09531409858",
+      contact: "09090206852",
       email: "bashier.ns30@s.msumain.edu.ph",
     },
     users: [
@@ -81,15 +81,15 @@ function state(): UserStateInterface {
         addressLine2: "Bubonga Marawi",
         addressLine3: "Marawi City",
         addressLine4: "Lanao del Sur",
-        housingName: "",
+        housingAddress: "",
 
-        birthdate: "October 19, 1998",
+        birthdate: "1998-10-19",
         gender: "Male",
-        contact: "09531409858",
+        contact: "09090206852",
         email: "bashier.ns30@s.msumain.edu.ph",
       },
       {
-        id: 20220001,
+        id: 202200001,
         username: "zinboarding",
         password: "password",
         isStudent: false,
@@ -108,11 +108,11 @@ function state(): UserStateInterface {
         addressLine2: "Dimaluna I",
         addressLine3: "Marawi City",
         addressLine4: "Lanao del Sur",
-        housingName: "Zin-Azshari Boarding House",
+        housingAddress: "Zin-Azshari Boarding House",
 
-        birthdate: "August 31, 1989",
+        birthdate: "1999-08-31",
         gender: "Female",
-        contact: "09090206852",
+        contact: "09531409858",
         email: "azshara.highborne@gmail.com",
       },
     ],

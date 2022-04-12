@@ -1,56 +1,49 @@
 <template>
-  <page-header>
-    <template #button-right>
-      <q-btn
-        icon="bi-list"
-        :ripple="false"
-        dense
-        flat
-        color="black"
-        @click="$router.push('/student/settings')"
-      />
-    </template>
-  </page-header>
-
-  <q-page class="defaultfont bg-secondary text-black">
-    <!-- PROFILE SECTION -->
-    <div class="q-pa-md bg-primary flex-center text-center">
-      <q-avatar size="8rem" class="q-mt-md">
-        <img :src="activeUser.prfphoto" />
-      </q-avatar>
-
-      <!-- USER PROFILE -->
-      <div class="q-mt-lg text-white">
-        <p style="font-size: medium">@{{ activeUser.username }}</p>
-        <span class="defaultfont-bold text-uppercase" style="font-size: large">
-          {{ activeUser.firstname }} {{ activeUser.middlename.charAt(0) }}.
-          {{ activeUser.lastname }}
-        </span>
-        <div>
-          <p style="font-size: smaller; line-height: 0.85rem">
-            {{ activeUser.degree }}, {{ activeUser.yearAdmitted }} <br />
-            {{ activeUser.department }} <br />
-            {{ activeUser.college }}
-          </p>
-        </div>
+  <q-header class="defaultfont bg-secondary">
+    <div class="q-px-md row items-center text-black" style="height: 4rem">
+      <div align="left" class="col-10">
+        <q-item-label
+          lines="1"
+          class="defaultfont-semibold text-primary"
+          style="font-size: medium"
+          >@{{ activeUser.username }}</q-item-label
+        >
+      </div>
+      <div align="right" class="col">
+        <q-btn
+          icon="bi-gear-fill"
+          dense
+          flat
+          :ripple="false"
+          color="black"
+          size="md"
+          @click="$router.push('/student/settings')"
+        />
       </div>
     </div>
 
-    <!-- ACTIVITY SECTION -->
-    <div class="q-pa-md q-mt-md">
-      <q-card class="q-pa-md defaultfont">
-        <div class="defaultfont-semibold">Set your campus address</div>
-        <q-form class="q-my-sm">
-          <q-input square filled dense clearable placeholder="Search">
-            <template v-slot:prepend>
-              <q-btn flat round size="0.7rem">
-                <q-icon name="bi-search" size="1.25rem" type="submit" />
-              </q-btn>
-            </template>
-          </q-input>
-        </q-form>
-      </q-card>
+    <div align="center" class="q-px-md q-pb-xs text-black">
+      <q-avatar size="10rem" class="bg-primary">
+        <q-img :src="activeUser.prfphoto" />
+      </q-avatar>
+      <div
+        class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
+        style="font-size: large"
+      >
+        {{ activeUser.firstname }} {{ activeUser.lastname }}
+      </div>
+      <div class="q-px-md" style="font-size: small">
+        <p style="line-height: 1rem">
+          {{ activeUser.degree }} <br />
+          {{ activeUser.department }} <br />
+          {{ activeUser.college }}
+        </p>
+      </div>
     </div>
+    <q-separator inset color="primary" size="0.1rem" class="q-my-sm" />
+  </q-header>
+
+  <q-page class="defaultfont">
   </q-page>
 </template>
 
@@ -78,11 +71,11 @@ export default class StudentAccount extends Vue {
     addressLine2: "Bubonga Marawi",
     addressLine3: "Marawi City",
     addressLine4: "Lanao del Sur",
-    housingName: "",
+    housingAddress: "",
 
-    birthdate: "October 19, 1998",
+    birthdate: "1998-10-19",
     gender: "Male",
-    contact: "09531409858",
+    contact: "09090206852",
     email: "bashier.ns30@s.msumain.edu.ph",
   };
 }

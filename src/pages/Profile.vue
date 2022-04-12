@@ -1,98 +1,103 @@
 <template>
-  <page-header style="background-color: primary">
-    <template #button-left>
-      <q-btn
-        icon="bi-arrow-left"
-        :ripple="false"
-        flat
-        class="q-pl-sm"
-        @click="$router.go(-1)"
-      />
-    </template>
-    <template #button-right>
-      <q-btn
-        v-if="isStudent"
-        icon="bi-envelope-fill"
-        :ripple="false"
-        flat
-        @click="$router.push('/chat')"
-      />
-    </template>
-  </page-header>
-
-  <q-page class="defaultfont bg-secondary text-black">
-    <!-- PROFILE SECTION -->
-    <div class="q-pa-md bg-primary flex-center text-center">
-      <q-avatar size="8rem" class="q-mt-md">
-        <img :src="user.prfphoto" />
+  <q-header class="q-px-md q-pt-xl defaultfont bg-secondary">
+    <div class="text-black row justify-center">
+      <q-avatar size="10rem" class="bg-primary">
+        <q-img :src="user.prfphoto" />
       </q-avatar>
-
-      <!-- USER PROFILE -->
-      <div class="q-mt-lg text-white">
-        <p style="font-size: medium">@{{ user.username }}</p>
-        <span class="defaultfont-bold text-uppercase" style="font-size: large">
-          {{ user.firstname }} {{ user.middlename.charAt(0) }}.
-          {{ user.lastname }}
-        </span>
-        <p style="font-size: smaller; line-height: 0.85rem">
-          {{ user.housingName }} <br />
-          {{ user.addressLine1 }}, {{ user.addressLine2 }},
-          <br />
-          {{ user.addressLine3 }}, {{ user.addressLine4 }}
+      <div
+        class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
+        style="font-size: large"
+      >
+        {{ user.housingAddress }}
+      </div>
+      <div
+        class="q-px-lg defaultfont-light text-primary text-bold"
+        style="font-size: medium"
+      >
+        @{{ user.username }}
+      </div>
+      <div class="q-mt-sm q-px-md" style="font-size: medium">
+        <p style="line-height: 1.2rem">
+          {{ user.addressLine1 }}, {{ user.addressLine2 }} <br />
+          {{ user.addressLine4 }}, {{ user.addressLine4 }}
         </p>
       </div>
     </div>
+    <q-separator color="primary" size="0.1rem" class="q-my-sm" />
+  </q-header>
 
-    <!-- USER POST DISPLAY LIST -->
-    <div class="q-mt-sm q-pa-md">
-      <post v-for="post in posts" :key="post.date">
-        <template #prfphoto>
-          <q-img :src="post.prfphoto" @click="$router.push('/profile')" />
-        </template>
-        <template #fullname>
-          <span @click="$router.push('/profile')">
-            {{ post.firstname }} {{ post.middlename.charAt(0) }}.
-            {{ post.lastname }}
-          </span>
-        </template>
-        <template #housingName>
-          <span @click="$router.push('/profile')">
-            {{ post.housingName }}
-          </span>
-        </template>
-        <template #date> {{ post.date }} </template>
-        <template #photo>
+  <q-page class="defaultfont bg-secondary text-black">
+    <div class="q-pt-sm q-px-sm q-pb-md defaultfont">
+      <div class="q-ml-sm defaultfont-semibold text-body1">POSTS</div>
+      <div class="defaultfont row items-start">
+        <div
+          v-for="post in posts"
+          :key="post.id"
+          class="q-pa-xs"
+          style="width: 50%"
+        >
           <div v-for="photo in post.photos" :key="photo.id">
             <q-img
               v-if="photo.id === 1"
               :src="photo.url"
               fit="cover"
-              style="height: 15rem"
-            />
+              class="bg-primary"
+              style="width: 100%; height: 18rem; border-radius: 0.5rem"
+              @click="$router.push('/post')"
+            >
+              <div class="absolute-bottom text-left">
+                <q-item-label lines="2" style="font-size: medium">
+                  {{ post.title }}
+                </q-item-label>
+              </div>
+            </q-img>
           </div>
-        </template>
-        <template #title> {{ post.title }} </template>
-        <template #fee> {{ post.fee }} </template>
-        <template #buttons>
-          <q-btn
-            v-if="isStudent"
-            label="Chat"
-            :ripple="false"
-            dense
-            flat
-            @click="$router.push('/chat')"
-          />
-          <q-btn
-            label="Expand"
-            :ripple="false"
-            dense
-            flat
-            @click="$router.push('/post')"
-          />
-        </template>
-      </post>
+        </div>
+      </div>
     </div>
+
+    <q-page-sticky position="bottom-left" :offset="[18, 18]">
+      <q-btn
+        icon="bi-arrow-left-short"
+        unelevated
+        round
+        color="black"
+        style="opacity: 0.5"
+        @click="$router.go(-1)"
+      />
+    </q-page-sticky>
   </q-page>
+
+  <q-footer
+    bordered
+    class="q-px-sm defaultfont bg-white text-black"
+    style="height: 4rem"
+  >
+    <div class="row items-center" style="height: 4rem">
+      <div align="left" class="col-8">
+        <q-btn
+          icon="bi-chat-fill"
+          flat
+          round
+          :ripple="false"
+          color="black"
+          size="md"
+          @click="$router.push('/chat')"
+        />
+      </div>
+      <div align="right" class="col">
+        <q-btn
+          icon="bi-geo-alt-fill"
+          flat
+          round
+          :ripple="false"
+          color="black"
+          size="md"
+          @click="alert()"
+        />
+      </div>
+    </div>
+  </q-footer>
 </template>
 
 <script lang="ts">
@@ -101,7 +106,7 @@ import { Vue } from "vue-class-component";
 export default class Profile extends Vue {
   isStudent = true;
   user = {
-    id: 20220001,
+    id: 202200001,
     username: "zinboarding",
     password: "password",
     isStudent: false,
@@ -120,11 +125,11 @@ export default class Profile extends Vue {
     addressLine2: "Dimaluna I",
     addressLine3: "Marawi City",
     addressLine4: "Lanao del Sur",
-    housingName: "Zin-Azshari Boarding House",
+    housingAddress: "Zin-Azshari Boarding House",
 
-    birthdate: "August 31, 1989",
+    birthdate: "1999-08-31",
     gender: "Female",
-    contact: "09090206852",
+    contact: "09531409858",
     email: "azshara.highborne@gmail.com",
   };
   posts = [
@@ -132,7 +137,7 @@ export default class Profile extends Vue {
       id: 135413523,
       title:
         "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
-      fee: 1200,
+      fee: "1200",
       description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
@@ -154,12 +159,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
       ],
       date: 1631096539262,
 
-      firstname: "Azshara",
-      middlename: "Queldorei",
-      lastname: "Highborne",
+      housingAddress: "Zin-Azshari Boarding House",
+      username: "zinboarding",
       prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-      housingName: "Zin-Azshari Boarding House",
     },
   ];
+
+  alert() {
+    this.$q.dialog({
+      message: "This feature is not available yet.",
+      class: "defaultfont",
+    });
+  }
 }
 </script>

@@ -1,76 +1,105 @@
 <template>
-  <page-header>
-    <template #button-left>
+  <page-header style="height: 4rem">
+    <template #slot-left>
       <q-btn
-        icon="bi-arrow-left"
-        :ripple="false"
+        icon="bi-chevron-left"
         dense
         flat
+        :ripple="false"
+        size="sm"
         color="black"
-        class="q-pl-sm"
+        class="q-ml-md"
         @click="$router.go(-1)"
       />
     </template>
-    <template #title> Manage Account </template>
+    <template #slot-middle>
+      <div
+        class="defaultfont-light text-bold text-black"
+        style="font-size: medium"
+      >
+        Account settings
+      </div>
+    </template>
   </page-header>
 
   <q-page class="defaultfont">
-    <q-list>
-      <!-- EDIT USER PROFILE INFO -->
-      <q-item class="q-mt-md defaultfont-semibold text-grey">
-        <q-item-section> PROFILE INFORMATION </q-item-section>
-        <q-item-section side>
-          <q-icon
-            name="bi-pencil-square"
-            size="xs"
-            class="text-grey cursor-pointer"
-            @click="$router.push('/settings/profile')"
-          />
-        </q-item-section>
-      </q-item>
+    <div align="center" class="q-pa-md">
+      <q-avatar size="6rem" class="bg-primary">
+        <q-img :src="activeUser.prfphoto" />
+      </q-avatar>
+      <div class="q-mt-sm defaultfont-semibold text-body1">
+        {{ activeUser.username }}
+      </div>
+    </div>
 
-      <q-item
-        v-for="profile in profileInfo"
-        :key="profile.label"
-        clickable
-        v-ripple="false"
-      >
-        <q-item-section> {{ profile.label }} </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            {{ profile.value }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-separator inset class="q-mt-md" />
+    <div class="q-px-md">
+      <div @click="$router.push('/settings/edit+username')">
+        <settings-menu class="q-py-xs">
+          <template #title>Username</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
+      <div @click="$router.push('/settings/edit+password')">
+        <settings-menu class="q-py-xs">
+          <template #title>Password</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
+      <div @click="$router.push('/settings/edit+email')">
+        <settings-menu class="q-py-xs">
+          <template #title>E-mail</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
+      <div @click="$router.push('/settings/edit+mobile')">
+        <settings-menu class="q-py-xs">
+          <template #title>Mobile number</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
 
-      <!-- EDIT USER ADDRESS INFO -->
-      <q-item class="q-mt-md defaultfont-semibold text-grey">
-        <q-item-section> HOUSING INFORMATION </q-item-section>
-        <q-item-section side>
-          <q-icon
-            name="bi-pencil-square"
-            size="xs"
-            class="text-grey cursor-pointer"
-            @click="$router.push('/settings/address')"
-          />
-        </q-item-section>
-      </q-item>
+      <div class="q-mt-lg q-mb-sm text-grey-7">Housing information</div>
+      <div @click="$router.push('/settings/edit+housing')">
+        <settings-menu class="q-py-xs">
+          <template #title>Housing name</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
+      <div @click="$router.push('/settings/edit+address')">
+        <settings-menu class="q-py-xs">
+          <template #title>Address</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
+    </div>
+    <q-separator class="q-mt-md" />
 
-      <q-item
-        v-for="housing in housingInfo"
-        :key="housing.label"
-        clickable
-        v-ripple="false"
-      >
-        <q-item-section> {{ housing.label }} </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            {{ housing.value }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
+    <div align="left" class="q-mt-lg q-px-lg q-pb-xl row items-center">
+      <div align="left" class="col-10">
+        <div class="defaultfont-semibold text-grey-8" style="font-size: medium">
+          Delete account
+        </div>
+        <div class="defaultfont text-grey" style="font-size: smaller">
+          Please proceed to the MSU Housing Management Division to delete your
+          account.
+        </div>
+      </div>
+      <div align="right" class="col">
+        <q-icon name="bi-question-circle" size="lg" color="grey" />
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -79,7 +108,7 @@ import { Vue } from "vue-class-component";
 
 export default class LandlordManageAccount extends Vue {
   activeUser = {
-    id: 20220001,
+    id: 202200001,
     username: "zinboarding",
     password: "password",
     isStudent: false,
@@ -98,54 +127,12 @@ export default class LandlordManageAccount extends Vue {
     addressLine2: "Dimaluna I",
     addressLine3: "Marawi City",
     addressLine4: "Lanao del Sur",
-    housingName: "Zin-Azshari Boarding House",
+    housingAddress: "Zin-Azshari Boarding House",
 
-    birthdate: "August 31, 1989",
+    birthdate: "1999-08-31",
     gender: "Female",
-    contact: "09090206852",
+    contact: "09531409858",
     email: "azshara.highborne@gmail.com",
   };
-
-  profileInfo = [
-    {
-      label: "First name",
-      value: this.activeUser.firstname,
-    },
-    {
-      label: "Middle name",
-      value: this.activeUser.middlename,
-    },
-    {
-      label: "Last name",
-      value: this.activeUser.lastname,
-    },
-    {
-      label: "Phone number",
-      value: this.activeUser.contact,
-    },
-    {
-      label: "Email",
-      value: this.activeUser.email,
-    },
-    {
-      label: "Date of birth",
-      value: this.activeUser.birthdate,
-    },
-    {
-      label: "Gender",
-      value: this.activeUser.gender,
-    },
-  ];
-
-  housingInfo = [
-    {
-      label: "Housing name",
-      value: this.activeUser.housingName,
-    },
-    {
-      label: "Set housing address",
-      value: this.activeUser.addressLine1 + ", " + this.activeUser.addressLine2,
-    },
-  ];
 }
 </script>

@@ -11,11 +11,9 @@ export interface PostInterface {
   }[];
   date: number;
 
-  firstname: string;
-  middlename: string;
-  lastname: string;
+  housingAddress: string;
+  username: string;
   prfphoto: string;
-  housingName: string;
 }
 
 export interface PostStateInterface {
@@ -51,11 +49,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
       ],
       date: 1631096539262,
 
-      firstname: "Azshara",
-      middlename: "Queldorei",
-      lastname: "Highborne",
+      housingAddress: "Zin-Azshari Boarding House",
+      username: "zinboarding",
       prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-      housingName: "Zin-Azshari Boarding House",
     },
     posts: [
       {
@@ -84,11 +80,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         ],
         date: 1631096539262,
 
-        firstname: "Azshara",
-        middlename: "Queldorei",
-        lastname: "Highborne",
+        housingAddress: "Zin-Azshari Boarding House",
+        username: "zinboarding",
         prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-        housingName: "Zin-Azshari Boarding House",
       },
       {
         id: 134134,
@@ -112,11 +106,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         ],
         date: 1632388510672,
 
-        firstname: "Monkey",
-        middlename: "Dante",
-        lastname: "Luffy",
+        housingAddress: "Pirate King Apartment",
+        username: "pirateking_home",
         prfphoto: "https://cdn.quasar.dev/img/avatar4.jpg",
-        housingName: "Pirate King Apartment",
       },
     ],
   };

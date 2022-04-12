@@ -1,149 +1,85 @@
 <template>
-  <q-header class="defaultfont bg-white text-black q-pa-md">
+  <q-header
+    class="q-pa-md defaultfont bg-secondary text-black"
+    style="height: 4.5rem"
+  >
     <!-- SEARCH INPUT FIELD -->
     <q-form @submit="searchAction()">
       <q-input
         v-model="search"
-        :loading="loadingState"
-        square
-        filled
+        rounded
+        outlined
         dense
         clearable
         placeholder="Search"
+        class="searchinput"
         @clear="clearSearch()"
         @keyup.enter="searchAction()"
       >
         <template v-slot:prepend>
-          <q-btn flat round size="0.7rem">
-            <q-icon name="bi-search" size="1.25rem" type="submit" />
+          <q-btn flat round size="sm">
+            <q-icon name="bi-search" type="submit" size="xs" />
           </q-btn>
         </template>
       </q-input>
     </q-form>
   </q-header>
 
-  <q-page v-if="searchResultPost.length > 0 || searchResultUser.length > 0">
-    <!-- POSTS & USERS TAB -->
-    <q-tabs
-      v-model="tab"
-      dense
-      inline-label
-      active-color="black"
-      indicator-color="transparent"
-      align="justify"
-      class="q-px-md defaultfont-semibold text-grey"
-    >
-      <q-tab :ripple="false" name="posts" label="Posts" />
-      <q-tab :ripple="false" name="users" label="Users" />
-    </q-tabs>
-    <q-separator inset size="0.1rem" color="black" />
-
-    <q-tab-panels v-model="tab" animated>
-      <!-- POSTS TAB PANEL -->
-      <q-tab-panel name="posts" class="q-pa-md">
-        <div v-if="searchResultPost.length > 0" class="row items-start">
-          <div
-            v-for="(result, index) in searchResultPost"
-            :key="index"
-            style="width: 50%"
-          >
-            <div v-for="photo in result.photos" :key="photo.id" class="q-pa-sm">
-              <q-img
-                v-if="photo.id === 1"
-                :src="photo.url"
-                fit="none"
-                style="width: 100%; height: 15rem; border-radius: 0.5rem"
-                @click="$router.push('/post')"
+  <q-page v-if="(searchResultPost.length || searchResultUser.length) > 0">
+    <div v-if="searchResultUser.length > 0" class="q-pt-sm q-px-sm defaultfont">
+      <div class="q-ml-sm defaultfont-semibold text-body1">USERS</div>
+      <div class="q-px-xs">
+        <q-scroll-area :visible="false" style="height: 5.5rem; max-width: 100%">
+          <div class="q-pt-xs q-gutter-sm row items-start no-wrap">
+            <div v-for="(result, index) in searchResultUser" :key="index">
+              <q-avatar
+                size="4rem"
+                class="bg-primary"
+                @click="$router.push('/profile')"
               >
-                <div class="absolute-bottom text-left">
-                  <q-item-label lines="2" style="font-size: small">
-                    {{ result.title }}
-                  </q-item-label>
-                </div>
-              </q-img>
+                <q-img :src="result.prfphoto">
+                  <q-tooltip>
+                    {{ result.housingAddress }}
+                  </q-tooltip>
+                </q-img>
+              </q-avatar>
             </div>
           </div>
-        </div>
-        <q-page v-else class="row items-center justify-evenly">
-          <p class="defaultfont text-grey-5 text-center">
-            <q-icon
-              name="bi-question-circle"
-              color="grey-5"
-              size="xl"
-              class="q-mb-sm"
-            />
-            <br />
-            NOTHING FOUND
-          </p>
-        </q-page>
-      </q-tab-panel>
+        </q-scroll-area>
+      </div>
+    </div>
 
-      <!-- USERS TAB PANEL -->
-      <q-tab-panel name="users" class="q-pa-none q-pt-md">
-        <div v-if="searchResultUser.length > 0">
-          <q-list v-for="(result, index) in searchResultUser" :key="index">
-            <q-item
-              clickable
-              class="row items-center"
-              @click="$router.push('/profile')"
+    <div
+      v-if="searchResultPost.length > 0"
+      class="q-pt-sm q-px-sm q-pb-md defaultfont"
+    >
+      <div class="q-ml-sm defaultfont-semibold text-body1">POSTS</div>
+      <div class="defaultfont row items-start">
+        <div
+          v-for="(result, index) in searchResultPost"
+          :key="index"
+          class="q-pa-xs"
+          style="width: 50%"
+        >
+          <div v-for="photo in result.photos" :key="photo.id">
+            <q-img
+              v-if="photo.id === 1"
+              :src="photo.url"
+              fit="cover"
+              class="bg-primary"
+              style="width: 100%; height: 18rem; border-radius: 0.5rem"
+              @click="$router.push('/post')"
             >
-              <q-item-section avatar>
-                <q-avatar size="xl">
-                  <img :src="result.prfphoto" />
-                </q-avatar>
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label
-                  lines="1"
-                  class="defaultfont-semibold"
-                  style="font-size: medium"
-                >
-                  {{ result.firstname }} {{ result.middlename.charAt(0) }}.
-                  {{ result.lastname }}
+              <div class="absolute-bottom text-left">
+                <q-item-label lines="2" style="font-size: medium">
+                  {{ result.title }}
                 </q-item-label>
-                <q-item-label lines="1" style="font-size: small">
-                  {{ result.housingName }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
+              </div>
+            </q-img>
+          </div>
         </div>
-        <q-page v-else class="row items-center justify-evenly">
-          <p class="defaultfont text-grey-5 text-center">
-            <q-icon
-              name="bi-question-circle"
-              color="grey-5"
-              size="xl"
-              class="q-mb-sm"
-            />
-            <br />
-            NOTHING FOUND
-          </p>
-        </q-page>
-      </q-tab-panel>
-    </q-tab-panels>
-  </q-page>
-
-  <!-- NOTHING FOUND WARNING -->
-  <q-page
-    v-if="
-      searchResultPost.length == 0 &&
-      searchResultUser.length == 0 &&
-      searchClicked
-    "
-    class="row items-center justify-evenly"
-  >
-    <p class="defaultfont text-grey-5 text-center">
-      <q-icon
-        name="bi-question-circle"
-        color="grey-5"
-        size="xl"
-        class="q-mb-sm"
-      />
-      <br />
-      NOTHING FOUND
-    </p>
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -151,47 +87,51 @@
 import { ref } from "vue";
 import { Vue, Options } from "vue-class-component";
 import { PostInterface } from "src/store/post/state";
+import { UserInterface } from "src/store/user/state";
 import { mapState } from "vuex";
 
 @Options({
   computed: {
     ...mapState("posts", ["posts"]),
+    ...mapState("user", ["users"]),
   },
 })
 export default class StudentSearch extends Vue {
   search = "";
   tab = ref("posts");
   loadingState = false;
-  searchClicked = false;
 
   posts!: PostInterface[];
+  users!: UserInterface[];
 
   searchResultPost: PostInterface[] = [];
-  searchResultUser: PostInterface[] = [];
+  searchResultUser: UserInterface[] = [];
 
   searchAction() {
-    // if (this.search != "") {
-    const resultPosts = this.posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(this.search.toLowerCase())
+    const resultPosts = this.posts.filter((post) =>
+      post.title.toLowerCase().includes(this.search.toLowerCase())
     );
-    const resultUsers = this.posts.filter(
-      (post) =>
-        post.firstname.toLowerCase().includes(this.search.toLowerCase()) ||
-        post.middlename.toLowerCase().includes(this.search.toLowerCase()) ||
-        post.lastname.toLowerCase().includes(this.search.toLowerCase()) ||
-        post.housingName.toLowerCase().includes(this.search.toLowerCase())
+    const resultUsers = this.users.filter(
+      (user) =>
+        user.housingAddress.toLowerCase().includes(this.search.toLowerCase()) ||
+        user.username.toLowerCase().includes(this.search.toLowerCase())
     );
     this.searchResultPost = resultPosts;
     this.searchResultUser = resultUsers;
-    this.searchClicked = true;
-    // }
   }
 
   clearSearch() {
     this.searchResultPost = [];
     this.searchResultUser = [];
-    this.searchClicked = false;
+    this.search = "";
   }
 }
 </script>
+
+<style>
+.searchinput {
+  font-size: medium;
+  background-color: #f2f2f2;
+  border-radius: 10rem;
+}
+</style>

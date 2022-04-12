@@ -1,20 +1,23 @@
 <template>
   <q-btn
-    v-if="!$route.fullPath.includes('/post')"
-    icon="bi-three-dots"
-    :ripple="false"
-    dense
+    v-if="$route.fullPath.includes('/post')"
     flat
-    class="text-black"
-    @click="showOptions()"
+    round
+    :ripple="false"
+    color="black"
+    size="md"
+    icon="bi-plus-circle-fill"
+    @click="options()"
   />
   <q-btn
     v-else
-    label="More"
-    :ripple="false"
+    icon="bi-three-dots"
     flat
-    class="q-mt-xs"
-    @click="showOptions()"
+    dense
+    :ripple="false"
+    size="sm"
+    class="text-black"
+    @click="options()"
   />
 </template>
 
@@ -22,12 +25,12 @@
 import { Vue } from "vue-class-component";
 
 export default class PostOptionsComponent extends Vue {
-  showOptions() {
+  options() {
     this.$q
       .bottomSheet({
         message: "These features are not yet available.",
         grid: false,
-        class: "q-px-sm q-py-md defaultfont",
+        class: "q-px-sm q-py-md defaultfont text-bold text-body1",
         actions: [
           {
             label: "Report post",

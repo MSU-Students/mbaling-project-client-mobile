@@ -1,59 +1,6 @@
 <template>
-  <q-header elevated class="q-px-md q-py-sm bg-white" style="height: 3rem">
-    <q-toolbar-title>
-      <q-img
-        src="~assets/mbaling-logo-horizontal.svg"
-        style="max-width: 8rem"
-      />
-    </q-toolbar-title>
-    <page-header>
-      <template #button-right>
-        <q-btn
-          icon="bi-arrow-left"
-          :ripple="false"
-          flat
-          color="black"
-          class="q-pr-sm"
-          @click="$router.go(-1)"
-        />
-      </template>
-    </page-header>
-  </q-header>
-
-  <q-page class="defaultfont text-black">
-    <!-- POST PROFILE -->
-    <q-item class="q-pt-md" clickable>
-      <q-item-section avatar top>
-        <q-avatar size="xl">
-          <img :src="post.prfphoto" @click="$router.push('/profile')" />
-        </q-avatar>
-      </q-item-section>
-
-      <q-item-section top>
-        <q-item-label
-          lines="1"
-          class="defaultfont-semibold"
-          style="font-size: medium"
-          @click="$router.push('/profile')"
-        >
-          {{ post.firstname }} {{ post.middlename.charAt(0) }}.
-          {{ post.lastname }}
-        </q-item-label>
-        <q-item-label
-          lines="1"
-          style="font-size: small"
-          @click="$router.push('/profile')"
-        >
-          {{ post.housingName }}
-        </q-item-label>
-        <span class="text-grey" style="font-size: xx-small">
-          {{ post.date }}
-        </span>
-      </q-item-section>
-    </q-item>
-
-    <!-- POST PICTURE CAROUSEL -->
-    <div class="q-my-xs">
+  <q-page class="defaultfont">
+    <div class="bg-black">
       <q-carousel
         v-model="slide"
         navigation
@@ -63,8 +10,10 @@
         swipeable
         transition-prev="slide-right"
         transition-next="slide-left"
-        height="15rem"
+        height="20rem"
         autoplay="2"
+        class="bg-primary"
+        style="border-radius: 2rem 2rem 0 0"
       >
         <template v-slot:navigation-icon="{ active, onClick }">
           <q-btn
@@ -73,7 +22,7 @@
             flat
             round
             dense
-            size="xs"
+            size="0.4rem"
             color="primary"
             @click="onClick"
           />
@@ -83,7 +32,7 @@
             flat
             round
             dense
-            size="xs"
+            size="0.4rem"
             color="white"
             @click="onClick"
           />
@@ -97,68 +46,112 @@
       </q-carousel>
     </div>
 
-    <!-- POST INFO -->
-    <q-item>
-      <q-item-section class="defaultfont-medium">
-        <q-item-label style="font-size: small">
-          {{ post.title }}
-        </q-item-label>
-        <q-item-label class="q-py-xs" style="font-size: small">
-          {{ post.fee }} PHP monthly
-        </q-item-label>
+    <div class="q-pa-sm bg-white">
+      <q-item class="row items-center">
+        <q-item-section avatar>
+          <q-avatar size="xl" class="bg-primary">
+            <img :src="post.prfphoto" />
+          </q-avatar>
+        </q-item-section>
 
-        <q-item-label class="q-pa-sm">
-          <div>
-            <q-icon
-              v-if="post.prvKitchen"
-              name="bi-check-square-fill"
-              style="font-size: large"
-            />
-            <q-icon v-else name="bi-x-square-fill" style="font-size: large" />
-            Private Kitchen
-          </div>
-          <div class="q-mt-xs">
-            <q-icon
-              v-if="post.prvCR"
-              name="bi-check-square-fill"
-              style="font-size: large"
-            />
-            <q-icon v-else name="bi-x-square-fill" style="font-size: large" />
-            Private CR
-          </div>
-        </q-item-label>
+        <q-item-section>
+          <q-item-label
+            lines="1"
+            class="defaultfont-semibold"
+            style="font-size: medium"
+          >
+            {{ post.housingAddress }}
+          </q-item-label>
+          <q-item-label lines="1" style="font-size: small">
+            @{{ post.username }}
+          </q-item-label>
+        </q-item-section>
 
-        <span class="q-mt-md text-grey" style="font-size: x-small">
-          Description
-        </span>
-        <q-item-label class="q-mt-sm description-content">
-          {{ post.description }}
-        </q-item-label>
-      </q-item-section>
-    </q-item>
-    <q-item class="bg-transparent" style="height: 3.5rem" />
+        <q-item-section avatar>
+          <q-btn
+            flat
+            round
+            color="black"
+            size="md"
+            @click="$router.push('/profile')"
+          >
+            <q-icon
+              name="bi-arrow-up-short"
+              size="lg"
+              style="transform: rotate(45deg)"
+            />
+          </q-btn>
+        </q-item-section>
+      </q-item>
+    </div>
+
+    <div class="q-px-md bg-white">
+      <div
+        align="center"
+        class="q-mt-xs defaultfont-semibold"
+        style="font-size: large"
+      >
+        {{ post.title }}
+      </div>
+      <div align="center" class="q-py-xs" style="font-size: medium">
+        {{ post.fee }} PHP monthly
+      </div>
+      <div class="q-pa-md" style="font-size: medium">
+        <div>
+          <q-icon
+            :name="
+              post.prvKitchen ? 'bi-check-square-fill' : 'bi-x-square-fill'
+            "
+            size="xs"
+          />
+          Private Kitchen
+        </div>
+        <div>
+          <q-icon
+            :name="post.prvCR ? 'bi-check-square-fill' : 'bi-x-square-fill'"
+            size="xs"
+          />
+          Private CR
+        </div>
+      </div>
+      <div class="q-pb-md description-content">
+        {{ post.description }}
+      </div>
+    </div>
+
+    <q-page-sticky position="top-left" :offset="[18, 18]">
+      <q-btn
+        icon="bi-arrow-left-short"
+        unelevated
+        round
+        color="black"
+        style="opacity: 0.5"
+        @click="$router.go(-1)"
+      />
+    </q-page-sticky>
   </q-page>
 
-  <!-- POST ACTION BUTTONS (FOOTER) -->
-  <q-footer class="defaultfont">
-    <div class="fixed-bottom bg-white" style="height: 3.5rem">
-      <q-separator
-        inset
-        color="primary"
-        class="fixed-bottom"
-        style="bottom: 3rem"
-      />
-      <q-card-actions align="evenly" class="text-primary">
+  <q-footer
+    bordered
+    class="q-px-sm defaultfont bg-white text-black"
+    style="height: 4rem"
+  >
+    <div class="row items-center" style="height: 4rem">
+      <div align="left" class="col">
         <q-btn
-          v-if="isStudent"
-          label="Chat"
-          :ripple="false"
           flat
-          class="q-mt-xs"
+          round
+          :ripple="false"
+          color="black"
+          size="md"
+          icon="bi-chat-fill"
           @click="$router.push('/chat')"
         />
+      </div>
+      <div align="center" class="col-6"></div>
+      <div align="right" class="col">
         <post-options />
-      </q-card-actions>
+      </div>
     </div>
   </q-footer>
 </template>
@@ -176,7 +169,7 @@ export default class Post extends Vue {
     id: 135413523,
     title:
       "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
-    fee: 1200,
+    fee: "1200",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
@@ -198,11 +191,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
     ],
     date: 1631096539262,
 
-    firstname: "Azshara",
-    middlename: "Queldorei",
-    lastname: "Highborne",
+    housingAddress: "Zin-Azshari Boarding House",
+    username: "zinboarding",
     prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-    housingName: "Zin-Azshari Boarding House",
   };
 }
 </script>

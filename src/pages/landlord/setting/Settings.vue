@@ -1,125 +1,114 @@
 <template>
-  <page-header>
-    <template #button-left>
+  <page-header style="height: 4rem">
+    <template #slot-left>
       <q-btn
-        icon="bi-arrow-left"
+        icon="bi-chevron-left"
         :ripple="false"
         dense
         flat
+        size="sm"
         color="black"
-        class="q-pl-sm"
+        class="q-ml-md"
         @click="$router.go(-1)"
       />
     </template>
-    <template #title> Settings and Privacy </template>
+    <template #slot-middle>
+      <div
+        class="defaultfont-light text-bold text-black"
+        style="font-size: medium"
+      >
+        Settings
+      </div>
+    </template>
   </page-header>
 
-  <q-page class="defaultfont">
-    <q-list>
-      <q-item class="q-mt-md defaultfont-semibold text-grey">
-        <q-item-section> ACCOUNT </q-item-section>
-      </q-item>
-      <!-- MANAGE ACCOUNT -->
-      <q-item
-        clickable
-        v-ripple="false"
-        @click="$router.push('/landlord/settings/account')"
-      >
-        <q-item-section style="max-width: 1.75rem">
-          <q-icon name="bi-person" size="xs" />
-        </q-item-section>
-        <q-item-section> Manage Account </q-item-section>
-      </q-item>
+  <q-page class="q-pa-md defaultfont">
+    <div class="q-my-sm text-grey-7">Account information</div>
+    <div @click="$router.push('/landlord/settings/profile')">
+      <settings-menu class="q-py-xs">
+        <template #title>Edit profile</template>
+        <template #icon>
+          <q-icon name="bi-arrow-right-short" size="md" color="black" />
+        </template>
+      </settings-menu>
+    </div>
+    <div @click="$router.push('/landlord/settings/account')">
+      <settings-menu class="q-py-xs">
+        <template #title>Account settings</template>
+        <template #icon>
+          <q-icon name="bi-arrow-right-short" size="md" color="black" />
+        </template>
+      </settings-menu>
+    </div>
+    <div @click="alert()">
+      <settings-menu class="q-py-xs">
+        <template #title>Privacy</template>
+        <template #icon>
+          <q-icon name="bi-arrow-right-short" size="md" color="black" />
+        </template>
+      </settings-menu>
+    </div>
 
-      <!-- MANAGE PRIVACY -->
-      <q-item
-        clickable
-        v-ripple="false"
-        @click="$router.push('/landlord/settings/privacy')"
-      >
-        <q-item-section style="max-width: 1.75rem">
-          <q-icon name="bi-shield-lock" size="xs" />
-        </q-item-section>
-        <q-item-section> Privacy </q-item-section>
-      </q-item>
-      <q-separator inset class="q-mt-md" />
+    <div class="q-mt-lg q-mb-sm text-grey-7">Support</div>
+    <div @click="alert()">
+      <settings-menu class="q-py-xs">
+        <template #title>Feedback</template>
+        <template #icon>
+          <q-icon
+            name="bi-arrow-up-short"
+            size="md"
+            color="black"
+            style="transform: rotate(45deg)"
+          />
+        </template>
+      </settings-menu>
+    </div>
+    <div @click="alert()">
+      <settings-menu class="q-py-xs">
+        <template #title>Terms & privacy</template>
+        <template #icon>
+          <q-icon
+            name="bi-arrow-up-short"
+            size="md"
+            color="black"
+            style="transform: rotate(45deg)"
+          />
+        </template>
+      </settings-menu>
+    </div>
+    <div @click="$router.push('/settings/about')">
+      <settings-menu class="q-py-xs">
+        <template #title>About</template>
+        <template #icon>
+          <q-icon name="bi-arrow-right-short" size="md" color="black" />
+        </template>
+      </settings-menu>
+    </div>
 
-      <q-item class="q-mt-md defaultfont-semibold text-grey">
-        <q-item-section> SUPPORT </q-item-section>
-      </q-item>
-      <!-- HELP CENTER -->
-      <q-item
-        clickable
-        v-ripple="false"
-        @click="$router.push('/settings/help')"
-      >
-        <q-item-section style="max-width: 1.75rem">
-          <q-icon name="bi-question-circle" size="xs" />
-        </q-item-section>
-        <q-item-section> Help Center </q-item-section>
-      </q-item>
-
-      <!-- FEEDBACK -->
-      <q-item
-        clickable
-        v-ripple="false"
-        @click="$router.push('/settings/feedback')"
-      >
-        <q-item-section style="max-width: 1.75rem">
-          <q-icon name="bi-envelope" size="xs" />
-        </q-item-section>
-        <q-item-section> Feedback </q-item-section>
-      </q-item>
-      <q-separator inset class="q-mt-md" />
-
-      <q-item class="q-mt-md defaultfont-semibold text-grey">
-        <q-item-section> ABOUT </q-item-section>
-      </q-item>
-      <!-- TERMS OF SERVICE -->
-      <q-item
-        clickable
-        v-ripple="false"
-        @click="$router.push('/settings/terms-of-service')"
-      >
-        <q-item-section style="max-width: 1.75rem">
-          <q-icon name="bi-journal-text" size="xs" />
-        </q-item-section>
-        <q-item-section> Terms of Service </q-item-section>
-      </q-item>
-
-      <!-- PRIVACY POLICY -->
-      <q-item
-        clickable
-        v-ripple="false"
-        @click="$router.push('/settings/privacy-policy')"
-      >
-        <q-item-section style="max-width: 1.75rem">
-          <q-icon name="bi-file-earmark-lock" size="xs" />
-        </q-item-section>
-        <q-item-section> Privacy Policy </q-item-section>
-      </q-item>
-      <q-separator inset class="q-mt-md" />
-
-      <q-item class="q-mt-md defaultfont-semibold text-grey">
-        <q-item-section> LOGIN </q-item-section>
-      </q-item>
-      <!-- SYSTEM LOG-OUT -->
-      <q-item clickable v-ripple="false">
-        <q-item-section style="max-width: 1.75rem">
-          <q-icon name="bi-box-arrow-left" size="xs" />
-        </q-item-section>
-        <q-item-section> Logout </q-item-section>
-      </q-item>
-    </q-list>
+    <div class="q-mt-lg q-mb-sm text-grey-7">Actions</div>
+    <div @click="$router.replace('/')">
+      <settings-menu class="q-py-xs">
+        <template #title>Log out</template>
+      </settings-menu>
+    </div>
   </q-page>
 
-  <q-footer class="row justify-center bg-white" style="height: 3rem">
-    <p class="defaultfont-light text-primary">v1.0.0(2022)</p>
+  <q-footer class="bg-secondary flex flex-center" style="height: 4rem">
+    <div class="q-mb-xl">
+      <q-img src="~assets/mbaling-logo-horizontal.svg" style="width: 6rem" />
+    </div>
   </q-footer>
 </template>
 
 <script lang="ts">
 import { Vue } from "vue-class-component";
 
-export default class LandlordSettings extends Vue {}
+export default class LandlordSettings extends Vue {
+  alert() {
+    this.$q.dialog({
+      message: "This feature is not available yet.",
+      class: "defaultfont",
+    });
+  }
+}
 </script>

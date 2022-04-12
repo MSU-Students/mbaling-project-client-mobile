@@ -5,12 +5,6 @@
     leave-active-class="animated slideOutRight"
   >
     <q-layout view="hHh lpR fFf">
-      <q-header
-        bordered
-        class="q-px-md q-py-sm bg-white"
-        style="height: 3rem"
-      />
-
       <q-page-container>
         <router-view />
       </q-page-container>

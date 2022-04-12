@@ -1,17 +1,24 @@
 <template>
-  <page-header />
+  <page-header style="height: 3rem">
+    <template #slot-middle>
+      <div class="defaultfont-bold text-black" style="font-size: large">
+        MESSAGES
+      </div>
+    </template>
+  </page-header>
+
   <q-page class="defaultfont bg-secondary text-black">
     <!-- CONTACT/INBOX LIST -->
-    <q-list class="q-pt-xs">
+    <q-list class="q-pa-sm">
       <q-list
         v-for="contact in contacts"
         :key="contact.username"
         class="bg-white"
       >
-        <q-item :v-ripple="false" clickable>
+        <q-item clickable :v-ripple="false">
           <q-item-section avatar @click="$router.push('/chat')">
-            <q-avatar size="lg">
-              <img :src="contact.prfphoto" />
+            <q-avatar size="xl" class="bg-primary">
+              <q-img :src="contact.prfphoto" />
             </q-avatar>
           </q-item-section>
 
@@ -19,9 +26,9 @@
             <q-item-label
               lines="1"
               class="defaultfont-semibold"
-              style="font-size: small"
+              style="font-size: medium"
             >
-              {{ contact.fullname }}
+              {{ contact.housingname }}
             </q-item-label>
             <q-item-label lines="1" style="font-size: smaller">
               {{ contact.message }}
@@ -31,12 +38,12 @@
           <!-- OPTION BUTTON -->
           <q-item-section side>
             <q-btn
-              icon="bi-trash"
-              :ripple="false"
-              dense
-              flat
-              size="sm"
+              label="Delete"
+              unelevated
+              rounded
+              no-caps
               color="primary"
+              style="height: 2.5rem"
               @click="confirmDelete()"
             />
           </q-item-section>
@@ -54,27 +61,27 @@ export default class Inbox extends Vue {
   contacts = [
     {
       username: 1,
-      fullname: "Ruddy Jedrzej",
-      message: "Hey Dodol, how r u boi",
+      housingname: "Superboys Cottage",
       prfphoto: "https://cdn.quasar.dev/img/avatar1.jpg",
+      message: "Hey Dodol, how r u boi",
     },
     {
       username: 2,
-      fullname: "Mallorie Alessandrini",
-      message: "Hey Babe whacha doin..",
+      housingname: "Zin-Azshari Boarding House",
       prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
+      message: "Hey Babe whacha doin..",
     },
     {
       username: 3,
-      fullname: "Elisabetta Wicklen",
-      message: "anda so kantonn!!",
+      housingname: "Martell Ladies' Boarding",
       prfphoto: "https://cdn.quasar.dev/img/avatar3.jpg",
+      message: "anda so kantonn!!",
     },
     {
       username: 4,
-      fullname: "Seka Fawdrey",
-      message: "Antae tao sa college>",
+      housingname: "Pirate King Apartment",
       prfphoto: "https://cdn.quasar.dev/img/avatar4.jpg",
+      message: "Antae tao sa college>",
     },
   ];
 

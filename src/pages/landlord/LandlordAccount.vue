@@ -1,44 +1,48 @@
 <template>
-  <page-header>
-    <template #button-right>
-      <q-btn
-        icon="bi-list"
-        :ripple="false"
-        dense
-        flat
-        color="black"
-        @click="$router.push('/landlord/settings')"
-      />
-    </template>
-  </page-header>
-
-  <q-page class="defaultfont bg-secondary text-black">
-    <!-- PROFILE SECTION -->
-    <div class="q-pa-md bg-primary flex-center text-center">
-      <q-avatar size="8rem" class="q-mt-md">
-        <img :src="activeUser.prfphoto" />
-      </q-avatar>
-
-      <!-- USER PROFILE -->
-      <div class="q-mt-lg text-white">
-        <p style="font-size: medium">@{{ activeUser.username }}</p>
-        <span class="defaultfont-bold text-uppercase" style="font-size: large">
-          {{ activeUser.firstname }} {{ activeUser.middlename.charAt(0) }}.
-          {{ activeUser.lastname }}
-        </span>
-        <div>
-          <p style="font-size: smaller; line-height: 0.85rem">
-            {{ activeUser.housingName }} <br />
-            {{ activeUser.addressLine1 }}, {{ activeUser.addressLine2 }},
-            <br />
-            {{ activeUser.addressLine3 }}, {{ activeUser.addressLine4 }}
-          </p>
-        </div>
+  <q-header class="defaultfont bg-secondary">
+    <div class="q-px-md row items-center text-black" style="height: 4rem">
+      <div align="left" class="col-10">
+        <q-item-label
+          lines="1"
+          class="defaultfont-semibold text-primary"
+          style="font-size: medium"
+          >@{{ activeUser.username }}</q-item-label
+        >
+      </div>
+      <div align="right" class="col">
+        <q-btn
+          icon="bi-gear-fill"
+          dense
+          flat
+          :ripple="false"
+          color="black"
+          size="md"
+          @click="$router.push('/landlord/settings')"
+        />
       </div>
     </div>
 
-    <!-- ACTIVITY SECTION -->
-    <div class="q-mt-sm"></div>
+    <div align="center" class="q-px-md q-pb-xs text-black">
+      <q-avatar size="10rem" class="bg-primary">
+        <q-img :src="activeUser.prfphoto" />
+      </q-avatar>
+      <div
+        class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
+        style="font-size: large"
+      >
+        {{ activeUser.housingAddress }}
+      </div>
+      <div class="q-px-md" style="font-size: small">
+        <p style="line-height: 1rem">
+          {{ activeUser.addressLine1 }}, {{ activeUser.addressLine2 }} <br />
+          {{ activeUser.addressLine3 }}, {{ activeUser.addressLine4 }}
+        </p>
+      </div>
+    </div>
+    <q-separator inset color="primary" size="0.1rem" class="q-my-sm" />
+  </q-header>
+
+  <q-page class="defaultfont">
   </q-page>
 </template>
 
@@ -47,7 +51,7 @@ import { Vue } from "vue-class-component";
 
 export default class LandlordAccount extends Vue {
   activeUser = {
-    id: 20220001,
+    id: 202200001,
     username: "zinboarding",
     password: "password",
     isStudent: false,
@@ -66,11 +70,11 @@ export default class LandlordAccount extends Vue {
     addressLine2: "Dimaluna I",
     addressLine3: "Marawi City",
     addressLine4: "Lanao del Sur",
-    housingName: "Zin-Azshari Boarding House",
+    housingAddress: "Zin-Azshari Boarding House",
 
-    birthdate: "August 31, 1989",
+    birthdate: "1999-08-31",
     gender: "Female",
-    contact: "09090206852",
+    contact: "09531409858",
     email: "azshara.highborne@gmail.com",
   };
 }

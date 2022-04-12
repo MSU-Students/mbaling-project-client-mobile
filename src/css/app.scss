@@ -2,8 +2,8 @@
 
 /* MAINLAYOUT BASE ICONS */
 @font-face {
-  font-family: "mbaling-icons";
-  src: url("fonts/mbaling-icons.woff?3takk9") format("woff");
+  font-family: 'mbaling-icons';
+  src: url('fonts/mbaling-icons.woff?5a9imj') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -11,7 +11,7 @@
 
 [class^="mbi-"], [class*=" mbi-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: "mbaling-icons" !important;
+  font-family: 'mbaling-icons' !important;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;

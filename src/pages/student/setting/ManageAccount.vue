@@ -1,87 +1,105 @@
 <template>
-  <page-header>
-    <template #button-left>
+  <page-header style="height: 4rem">
+    <template #slot-left>
       <q-btn
-        icon="bi-arrow-left"
-        :ripple="false"
+        icon="bi-chevron-left"
         dense
         flat
+        :ripple="false"
+        size="sm"
         color="black"
-        class="q-pl-sm"
+        class="q-ml-md"
         @click="$router.go(-1)"
       />
     </template>
-    <template #title> Manage Account </template>
+    <template #slot-middle>
+      <div
+        class="defaultfont-light text-bold text-black"
+        style="font-size: medium"
+      >
+        Account settings
+      </div>
+    </template>
   </page-header>
 
   <q-page class="defaultfont">
-    <q-list>
-      <!-- EDIT USER PROFILE INFO -->
-      <q-item class="q-mt-md defaultfont-semibold text-grey">
-        <q-item-section> PROFILE INFORMATION </q-item-section>
-        <q-item-section side>
-          <q-icon
-            name="bi-pencil-square"
-            size="xs"
-            class="text-grey cursor-pointer"
-            @click="$router.push('/settings/profile')"
-          />
-        </q-item-section>
-      </q-item>
+    <div align="center" class="q-pa-md">
+      <q-avatar size="6rem" class="bg-primary">
+        <q-img :src="activeUser.prfphoto" />
+      </q-avatar>
+      <div class="q-mt-sm defaultfont-semibold text-body1">
+        {{ activeUser.username }}
+      </div>
+    </div>
 
-      <q-item
-        v-for="profile in profileInfo"
-        :key="profile.label"
-        clickable
-        v-ripple="false"
-      >
-        <q-item-section> {{ profile.label }} </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            {{ profile.value }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
+    <div class="q-px-md">
+      <div @click="$router.push('/settings/edit+username')">
+        <settings-menu class="q-py-xs">
+          <template #title>Username</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
+      <div @click="$router.push('/settings/edit+password')">
+        <settings-menu class="q-py-xs">
+          <template #title>Password</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
+      <div @click="$router.push('/settings/edit+email')">
+        <settings-menu class="q-py-xs">
+          <template #title>E-mail</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
+      <div @click="$router.push('/settings/edit+mobile')">
+        <settings-menu class="q-py-xs">
+          <template #title>Mobile number</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
 
-      <q-item clickable v-ripple="false" @click="alert()">
-        <q-item-section> Set course </q-item-section>
-        <q-item-section size style="max-width: 1.25rem">
-          <q-icon
-            name="bi-question-circle"
-            size="xs"
-            class="text-grey cursor-pointer"
-          />
-        </q-item-section>
-      </q-item>
-      <q-separator inset class="q-mt-md" />
+      <div class="q-mt-lg q-mb-sm text-grey-7">Address information</div>
+      <div @click="$router.push('/settings/edit+campus+housing')">
+        <settings-menu class="q-py-xs">
+          <template #title>Campus housing</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
+      <div @click="$router.push('/settings/edit+address')">
+        <settings-menu class="q-py-xs">
+          <template #title>Address</template>
+          <template #icon>
+            <q-icon name="bi-arrow-right-short" size="md" color="grey" />
+          </template>
+        </settings-menu>
+      </div>
+    </div>
+    <q-separator class="q-mt-md" />
 
-      <!-- EDIT USER ADDRESS INFO -->
-      <q-item class="q-mt-md defaultfont-semibold text-grey">
-        <q-item-section> ADDRESS INFORMATION </q-item-section>
-        <q-item-section side>
-          <q-icon
-            name="bi-pencil-square"
-            size="xs"
-            class="text-grey cursor-pointer"
-            @click="$router.push('/settings/address')"
-          />
-        </q-item-section>
-      </q-item>
-
-      <q-item
-        v-for="address in addressInfo"
-        :key="address.label"
-        clickable
-        v-ripple="false"
-      >
-        <q-item-section> {{ address.label }} </q-item-section>
-        <q-item-section side style="width: 40%">
-          <q-item-label lines="1" class="text-grey">
-            {{ address.value }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
+    <div align="left" class="q-mt-lg q-px-lg q-pb-xl row items-center">
+      <div align="left" class="col-10">
+        <div class="defaultfont-semibold text-grey-8" style="font-size: medium">
+          Delete account
+        </div>
+        <div class="defaultfont text-grey" style="font-size: smaller">
+          Please proceed to the MSU Housing Management Division to delete your
+          account.
+        </div>
+      </div>
+      <div align="right" class="col">
+        <q-icon name="bi-question-circle" size="lg" color="grey" />
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -109,62 +127,12 @@ export default class StudentManageAccount extends Vue {
     addressLine2: "Bubonga Marawi",
     addressLine3: "Marawi City",
     addressLine4: "Lanao del Sur",
-    housingName: "",
+    housingAddress: "",
 
-    birthdate: "October 19, 1998",
+    birthdate: "1998-10-19",
     gender: "Male",
-    contact: "09531409858",
+    contact: "09090206852",
     email: "bashier.ns30@s.msumain.edu.ph",
   };
-
-  profileInfo = [
-    {
-      label: "First name",
-      value: this.activeUser.firstname,
-    },
-    {
-      label: "Middle name",
-      value: this.activeUser.middlename,
-    },
-    {
-      label: "Last name",
-      value: this.activeUser.lastname,
-    },
-    {
-      label: "Phone number",
-      value: this.activeUser.contact,
-    },
-    {
-      label: "Email",
-      value: this.activeUser.email,
-    },
-    {
-      label: "Date of birth",
-      value: this.activeUser.birthdate,
-    },
-    {
-      label: "Gender",
-      value: this.activeUser.gender,
-    },
-  ];
-
-  addressInfo = [
-    {
-      label: "Campus address",
-      value: this.activeUser.housingName,
-    },
-    {
-      label: "Set home address",
-      value: this.activeUser.addressLine1 + ", " + this.activeUser.addressLine2,
-    },
-  ];
-
-  alert() {
-    this.$q.dialog({
-      message:
-        "Please proceed to the MSU Housing Management Division to edit this section.",
-      class: "defaultfont",
-    });
-  }
 }
 </script>
