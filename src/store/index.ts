@@ -10,6 +10,8 @@ import posts from "./post";
 import { PostStateInterface } from "./post/state";
 import user from "./user";
 import { UserStateInterface } from "./user/state";
+import auth from "./auth"
+import { IAuthState } from './auth/state';
 
 /*
  * If not building with SSR mode, you can
@@ -27,6 +29,7 @@ export interface StateInterface {
   example: unknown;
   posts: PostStateInterface;
   user: UserStateInterface;
+  auth: IAuthState
 }
 
 // provide typings for `this.$store`
@@ -46,6 +49,7 @@ export default store(function (/* { ssrContext } */) {
       // example
       posts,
       user,
+      auth,
     },
 
     // enable strict mode (adds overhead!)

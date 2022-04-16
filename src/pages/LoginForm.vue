@@ -60,22 +60,54 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { AUser } from "src/store/auth/state";
+import { Options, Vue } from "vue-class-component";
+import { mapActions, mapState } from "vuex";
+
+
+@Options({
+  methods: {
+    ...mapActions('auth', ['login', 'authUser']),
+  },
+  computed: {
+    ...mapState('auth', ['currentUser']),
+  },
+})
 
 export default class LoginForm extends Vue {
-  username = "";
-  password = "";
+login!: (auth: { userName: string; password: string }) => Promise<AUser>;
+  currentUser!: AUser;
+
+  username = '';
+  password = '';
+  isPwd = true;
 
   async loginUser() {
-    if (this.username == "user" && this.password == "password") {
-      await this.$router.replace("/student/home");
-    } else {
+    try {
+      await this.login({
+        userName: this.username,
+        password: this.password,
+      });
+      if (this.currentUser.type == 'student') {
+        await this.$router.replace('/student/home');
+        this.$q.notify({
+          position: 'center',
+          type: 'positive',
+          message: 'You are logged in',
+        });
+      }
+      else if (this.currentUser.type == 'landlord') {
+        await this.$router.replace('/landlord/home');
+        this.$q.notify({
+          position: 'center',
+          type: 'positive',
+          message: 'You are logged in',
+        });
+      }
+    } catch (error) {
       this.$q.notify({
-        message: "Incorrect username or password.",
-        color: "secondary",
-        textColor: "primary",
-        position: "top",
-        classes: "defaultfont",
+        type: 'negative',
+        message: 'Wrong Username or Password!',
       });
     }
   }
