@@ -37,7 +37,7 @@
 
     <div class="q-mt-sm q-px-md">
       <q-input
-        v-model="title"
+        v-model="inputPost.title"
         autogrow
         dense
         placeholder="Title"
@@ -45,7 +45,7 @@
         style="font-size: medium"
       />
       <q-input
-        v-model="fee"
+        v-model="inputPost.fee"
         dense
         placeholder="Monthly Fee"
         input-class="text-center"
@@ -57,7 +57,7 @@
         <div align="center" class="col">
           <q-checkbox
             label="Private Kitchen"
-            v-model="pkBox"
+            v-model="inputPost.prvKitchen"
             dense
             color="primary"
           />
@@ -65,7 +65,7 @@
         <div align="center" class="col">
           <q-checkbox
             label="Private CR"
-            v-model="pcBox"
+            v-model="inputPost.prvCR"
             dense
             color="primary"
           />
@@ -73,12 +73,13 @@
       </div>
 
       <q-input
-        v-model="description"
+        v-model="inputPost.description"
         type="textarea"
         placeholder="Description"
         class="q-mt-md q-pb-lg"
         style="font-size: small"
       />
+
     </div>
 
     <q-page-sticky position="top-left" :offset="[18, 18]">
@@ -91,6 +92,7 @@
         @click="$router.go(-1)"
       />
     </q-page-sticky>
+
   </q-page>
 
   <q-footer
@@ -106,22 +108,87 @@
         no-caps
         color="primary"
         style="height: 3rem; width: 5rem"
+        @click="createPost()"
       />
+
     </div>
   </q-footer>
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { PostDto } from "src/services/rest-api";
+import { AUser } from "src/store/auth/state";
+import { Options, Vue } from "vue-class-component";
+import { mapState, mapActions } from "vuex";
+
+@Options({
+  computed: {
+    ...mapState("post", ["posts"]),
+    ...mapState('auth', ['currentUser']),
+  },
+  methods: {
+    ...mapActions('post', ['addPost']),
+    ...mapActions('auth', ['authUser'])
+  },
+})
 
 export default class PostForm extends Vue {
-  title = "";
-  fee = "";
-  description = ``;
+
+  addPost!: (payload: PostDto) => Promise<void>;
+  authUser! : () => Promise<void>
+
+  currentUser!: AUser
+
+  async mounted() {
+    await this.authUser();
+  }
+
   pkBox = false;
   pcBox = false;
-
   showClearBtn = false;
+  addnewPost = false;
+
+  inputPost: PostDto ={
+    description: "",
+    fee: "",
+    negotiable: false,
+    prvCR: false,
+    prvKitchen: false,
+    photos: "https://cdn.quasar.dev/img/quasar.jpg",
+    title: "",
+    username: "",
+    date: 0,
+    housingAddress: "",
+    prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg"
+  }
+
+  async resetModel() {
+    this.inputPost = {
+     description: "",
+    fee: "",
+    negotiable: false,
+    prvCR: false,
+    prvKitchen: false,
+    photos: "",
+    title: "",
+    username: "",
+    date: 0,
+    housingAddress: "",
+    prfphoto: ""
+
+    };
+  }
+
+  async createPost() {
+   await this.addPost(this.inputPost);
+    this.addnewPost = false;
+    this.$q.notify({
+      type: 'positive',
+      message: 'Successfully Adeded.',
+    });
+  }
+
+
 }
 </script>
 

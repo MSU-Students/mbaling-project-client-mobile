@@ -88,25 +88,49 @@ export interface PostDto {
      * @type {boolean}
      * @memberof PostDto
      */
-    'pcBox': boolean;
+    'prvCR': boolean;
     /**
      * 
      * @type {boolean}
      * @memberof PostDto
      */
-    'pkBox': boolean;
+    'prvKitchen': boolean;
     /**
      * 
      * @type {string}
      * @memberof PostDto
      */
-    'photo': string;
+    'photos': string;
     /**
      * 
      * @type {string}
      * @memberof PostDto
      */
     'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostDto
+     */
+    'username': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PostDto
+     */
+    'date': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostDto
+     */
+    'housingAddress': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostDto
+     */
+    'prfphoto': string;
 }
 /**
  * 
@@ -853,6 +877,44 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {any} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerUploadFile: async (file?: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/user/upload`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1037,6 +1099,16 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(id, userDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {any} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userControllerUploadFile(file?: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerUploadFile(file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -1204,6 +1276,15 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         updateUser(id: number, userDto: UserDto, options?: any): AxiosPromise<UserDto> {
             return localVarFp.updateUser(id, userDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {any} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerUploadFile(file?: any, options?: any): AxiosPromise<void> {
+            return localVarFp.userControllerUploadFile(file, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1403,6 +1484,17 @@ export class DefaultApi extends BaseAPI {
      */
     public updateUser(id: number, userDto: UserDto, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).updateUser(id, userDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {any} [file] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public userControllerUploadFile(file?: any, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).userControllerUploadFile(file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -6,7 +6,7 @@
           lines="1"
           class="defaultfont-semibold text-primary"
           style="font-size: medium"
-          >@{{ activeUser.username }}</q-item-label
+          >@{{ currentUser.username }}</q-item-label
         >
       </div>
       <div align="right" class="col">
@@ -24,18 +24,18 @@
 
     <div align="center" class="q-px-md q-pb-xs text-black">
       <q-avatar size="10rem" class="bg-primary">
-        <q-img :src="activeUser.prfphoto" />
+        <q-img :src="currentUser.email" />
       </q-avatar>
       <div
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
         style="font-size: large"
       >
-        {{ activeUser.housingAddress }}
+        {{ currentUser.housingunit }}
       </div>
       <div class="q-px-md" style="font-size: small">
         <p style="line-height: 1rem">
-          {{ activeUser.addressLine1 }}, {{ activeUser.addressLine2 }} <br />
-          {{ activeUser.addressLine3 }}, {{ activeUser.addressLine4 }}
+          {{ currentUser.address1 }}, {{ currentUser.address2 }} <br />
+          {{ currentUser.address3 }}, {{ currentUser.address4 }}
         </p>
       </div>
     </div>
@@ -47,35 +47,52 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { AUser } from "src/store/auth/state";
+import { Options, Vue } from "vue-class-component";
+import { mapActions, mapState } from "vuex";
 
+@Options({
+  methods: {
+    ...mapActions('auth', ['authUser']),
+  },
+  computed: {
+    ...mapState('auth', ['currentUser']),
+  },
+})
 export default class LandlordAccount extends Vue {
-  activeUser = {
-    id: 202200001,
-    username: "zinboarding",
-    password: "password",
-    isStudent: false,
 
-    firstname: "Azshara",
-    middlename: "Queldorei",
-    lastname: "Highborne",
-    prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
+  authUser! : () => Promise<void>
+  currentUser!: AUser
 
-    degree: "",
-    department: "",
-    college: "",
-    yearAdmitted: 0,
+  async mounted() {
+    await this.authUser();
+  }
+  // activeUser = {
+  //   id: 202200001,
+  //   username: "zinboarding",
+  //   password: "password",
+  //   isStudent: false,
 
-    addressLine1: "1205 5th Street",
-    addressLine2: "Dimaluna I",
-    addressLine3: "Marawi City",
-    addressLine4: "Lanao del Sur",
-    housingAddress: "Zin-Azshari Boarding House",
+  //   firstname: "Azshara",
+  //   middlename: "Queldorei",
+  //   lastname: "Highborne",
+  //   prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
 
-    birthdate: "1999-08-31",
-    gender: "Female",
-    contact: "09531409858",
-    email: "azshara.highborne@gmail.com",
-  };
+  //   degree: "",
+  //   department: "",
+  //   college: "",
+  //   yearAdmitted: 0,
+
+  //   addressLine1: "1205 5th Street",
+  //   addressLine2: "Dimaluna I",
+  //   addressLine3: "Marawi City",
+  //   addressLine4: "Lanao del Sur",
+  //   housingAddress: "Zin-Azshari Boarding House",
+
+  //   birthdate: "1999-08-31",
+  //   gender: "Female",
+  //   contact: "09531409858",
+  //   email: "azshara.highborne@gmail.com",
+  // };
 }
 </script>

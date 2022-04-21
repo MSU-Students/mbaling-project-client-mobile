@@ -6,7 +6,7 @@ import {
   useStore as vuexUseStore,
 } from "vuex";
 
-import posts from "./post";
+import post from "./post";
 import { PostStateInterface } from "./post/state";
 import user from "./user";
 import { UserStateInterface } from "./user/state";
@@ -27,7 +27,7 @@ export interface StateInterface {
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   example: unknown;
-  posts: PostStateInterface;
+  post: PostStateInterface;
   user: UserStateInterface;
   auth: IAuthState
 }
@@ -47,7 +47,7 @@ export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
       // example
-      posts,
+      post,
       user,
       auth,
     },

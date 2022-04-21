@@ -6,10 +6,9 @@
       class="q-pa-xs"
       style="width: 50%"
     >
-      <div v-for="photo in post.photos" :key="photo.id">
+      <div>
         <q-img
-          v-if="photo.id === 1"
-          :src="photo.url"
+          :src="post.photos"
           fit="cover"
           class="bg-primary"
           style="width: 100%; height: 18rem; border-radius: 0.5rem"
@@ -45,14 +44,22 @@
 <script lang="ts">
 import { Vue, Options } from "vue-class-component";
 import { PostInterface } from "src/store/post/state";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 @Options({
   computed: {
-    ...mapState("posts", ["posts"]),
+    ...mapState("post", ["posts"]),
+  },
+  methods: {
+    ...mapActions('post', ['getAllPost']),
   },
 })
 export default class PostFeedComponent extends Vue {
+  getAllPost! : () => Promise<void>
   posts!: PostInterface[];
+
+  async mounted() {
+    await this.getAllPost();
+  }
 }
 </script>
