@@ -1,25 +1,13 @@
 <template>
   <q-header class="defaultfont bg-secondary">
-    <div class="q-px-md row items-center text-black" style="height: 4rem">
-      <div align="left" class="col-10">
-        <q-item-label
-          lines="1"
-          class="defaultfont-semibold text-primary"
-          style="font-size: medium"
-          >@{{ currentUser.username }}</q-item-label
-        >
-      </div>
-      <div align="right" class="col">
-        <q-btn
-          icon="bi-gear-fill"
-          dense
-          flat
-          :ripple="false"
-          color="black"
-          size="md"
-          @click="$router.push('/student/settings')"
-        />
-      </div>
+    <div align="center" class="q-pt-lg" style="height: 4rem">
+      <q-item-label
+        lines="1"
+        class="defaultfont-semibold text-primary"
+        style="font-size: medium"
+      >
+        @{{ currentUser.username }}
+      </q-item-label>
     </div>
 
     <div align="center" class="q-px-md q-pb-xs text-black">
@@ -43,8 +31,7 @@
     <q-separator inset color="primary" size="0.1rem" class="q-my-sm" />
   </q-header>
 
-  <q-page class="defaultfont">
-  </q-page>
+  <q-page class="defaultfont"> </q-page>
 </template>
 
 <script lang="ts">
@@ -54,16 +41,15 @@ import { mapActions, mapState } from "vuex";
 
 @Options({
   methods: {
-    ...mapActions('auth', ['authUser']),
+    ...mapActions("auth", ["authUser"]),
   },
   computed: {
-    ...mapState('auth', ['currentUser']),
+    ...mapState("auth", ["currentUser"]),
   },
 })
-
 export default class StudentAccount extends Vue {
-  authUser! : () => Promise<void>
-  currentUser!: AUser
+  authUser!: () => Promise<void>;
+  currentUser!: AUser;
 
   async mounted() {
     await this.authUser();

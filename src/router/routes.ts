@@ -25,18 +25,17 @@ const routes: RouteRecordRaw[] = [
         component: () => import("pages/student/StudentSearch.vue"),
       },
       {
-        path: "inbox",
-        component: () => import("pages/general-inbox/Inbox.vue"),
+        path: "settings",
+        component: () => import("pages/student/setting/Settings.vue"),
       },
     ],
   },
   {
-    path: "/student/settings/",
+    path: "/student/settings/edit/",
     component: () => import("layouts/SettingsLayout.vue"),
     children: [
       {
-        path: "",
-        component: () => import("pages/student/setting/Settings.vue"),
+        path: "", redirect: "/student/settings",
       },
       {
         path: "profile",
@@ -68,18 +67,17 @@ const routes: RouteRecordRaw[] = [
         component: () => import("pages/landlord/LandlordPosts.vue"),
       },
       {
-        path: "inbox",
-        component: () => import("pages/general-inbox/Inbox.vue"),
+        path: "settings",
+        component: () => import("pages/landlord/setting/Settings.vue"),
       },
     ],
   },
   {
-    path: "/landlord/settings/",
+    path: "/landlord/settings/edit/",
     component: () => import("layouts/SettingsLayout.vue"),
     children: [
       {
-        path: "",
-        component: () => import("pages/landlord/setting/Settings.vue"),
+        path: "", redirect: "/student/settings",
       },
       {
         path: "profile",

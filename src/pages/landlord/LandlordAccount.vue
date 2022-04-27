@@ -1,25 +1,13 @@
 <template>
   <q-header class="defaultfont bg-secondary">
-    <div class="q-px-md row items-center text-black" style="height: 4rem">
-      <div align="left" class="col-10">
-        <q-item-label
-          lines="1"
-          class="defaultfont-semibold text-primary"
-          style="font-size: medium"
-          >@{{ currentUser.username }}</q-item-label
-        >
-      </div>
-      <div align="right" class="col">
-        <q-btn
-          icon="bi-gear-fill"
-          dense
-          flat
-          :ripple="false"
-          color="black"
-          size="md"
-          @click="$router.push('/landlord/settings')"
-        />
-      </div>
+    <div align="center" class="q-pt-lg" style="height: 4rem">
+      <q-item-label
+        lines="1"
+        class="defaultfont-semibold text-primary"
+        style="font-size: medium"
+      >
+        @{{ currentUser.username }}
+      </q-item-label>
     </div>
 
     <div align="center" class="q-px-md q-pb-xs text-black">

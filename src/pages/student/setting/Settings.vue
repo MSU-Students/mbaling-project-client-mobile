@@ -1,6 +1,6 @@
 <template>
   <page-header style="height: 4rem">
-    <template #slot-left>
+    <!-- <template #slot-left>
       <q-btn
         icon="bi-chevron-left"
         :ripple="false"
@@ -11,7 +11,7 @@
         class="q-ml-md"
         @click="$router.go(-1)"
       />
-    </template>
+    </template> -->
     <template #slot-middle>
       <div
         class="defaultfont-light text-bold text-black"
@@ -24,7 +24,7 @@
 
   <q-page class="q-pa-md defaultfont">
     <div class="q-my-sm text-grey-7">Account information</div>
-    <div @click="$router.push('/student/settings/profile')">
+    <div @click="$router.push('/student/settings/edit/profile')">
       <settings-menu class="q-py-xs">
         <template #title>Edit profile</template>
         <template #icon>
@@ -32,7 +32,7 @@
         </template>
       </settings-menu>
     </div>
-    <div @click="$router.push('/student/settings/account')">
+    <div @click="$router.push('/student/settings/edit/account')">
       <settings-menu class="q-py-xs">
         <template #title>Account settings</template>
         <template #icon>
@@ -93,8 +93,8 @@
     </div>
   </q-page>
 
-  <q-footer class="bg-secondary flex flex-center" style="height: 4rem">
-    <div class="q-mb-xl">
+  <q-footer class="bg-secondary" style="height: 8rem">
+    <div align="center">
       <q-img src="~assets/mbaling-logo-horizontal.svg" style="width: 6rem" />
     </div>
   </q-footer>

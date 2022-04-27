@@ -42,7 +42,7 @@
           />
         </q-btn>
 
-        <q-btn
+        <!-- <q-btn
           :ripple="false"
           size="lg"
           style="width: 5rem"
@@ -55,7 +55,7 @@
                 : 'mbi-inbox'
             "
           />
-        </q-btn>
+        </q-btn> -->
 
         <q-btn
           :ripple="false"
@@ -65,9 +65,24 @@
         >
           <i
             :class="
-              ($route.fullPath.includes('/student/account') || $route.fullPath.includes('/student/settings'))
+              $route.fullPath.includes('/student/account')
                 ? 'mbi-account-fill'
                 : 'mbi-account'
+            "
+          />
+        </q-btn>
+
+        <q-btn
+          :ripple="false"
+          size="lg"
+          style="width: 5rem"
+          @click="$router.push('/student/settings')"
+        >
+          <i
+            :class="
+              $route.fullPath.includes('/student/settings')
+                ? 'mbi-settings-fill'
+                : 'mbi-settings'
             "
           />
         </q-btn>

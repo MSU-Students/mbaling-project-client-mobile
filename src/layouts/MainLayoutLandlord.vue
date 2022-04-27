@@ -42,7 +42,7 @@
           />
         </q-btn>
 
-        <q-btn
+        <!-- <q-btn
           :ripple="false"
           size="lg"
           style="width: 5rem"
@@ -55,7 +55,7 @@
                 : 'mbi-inbox'
             "
           />
-        </q-btn>
+        </q-btn> -->
 
         <q-btn
           :ripple="false"
@@ -68,6 +68,21 @@
               $route.fullPath.includes('/landlord/account')
                 ? 'mbi-account-fill'
                 : 'mbi-account'
+            "
+          />
+        </q-btn>
+
+        <q-btn
+          :ripple="false"
+          size="lg"
+          style="width: 5rem"
+          @click="$router.push('/landlord/settings')"
+        >
+          <i
+            :class="
+              $route.fullPath.includes('/landlord/settings')
+                ? 'mbi-settings-fill'
+                : 'mbi-settings'
             "
           />
         </q-btn>
