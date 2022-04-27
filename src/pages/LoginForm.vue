@@ -109,6 +109,7 @@ login!: (auth: { userName: string; password: string }) => Promise<AUser>;
         textColor: 'primary',
         position: 'top',
         message: 'Incorrect username or password.',
+        classes: 'defaultfont',
       });
     }
   }
