@@ -40,6 +40,7 @@
         v-model="inputPost.title"
         autogrow
         dense
+        type="text"
         placeholder="Title"
         input-class="text-center"
         style="font-size: medium"
@@ -47,6 +48,7 @@
       <q-input
         v-model="inputPost.fee"
         dense
+        type="number"
         placeholder="Monthly Fee"
         input-class="text-center"
         class="q-mt-xs q-px-xl"
@@ -79,7 +81,6 @@
         class="q-mt-md q-pb-lg"
         style="font-size: small"
       />
-
     </div>
 
     <q-page-sticky position="top-left" :offset="[18, 18]">

@@ -93,8 +93,8 @@
     </div>
   </q-page>
 
-  <q-footer class="bg-secondary flex flex-center" style="height: 4rem">
-    <div class="q-mb-xl">
+  <q-footer class="bg-secondary" style="height: 8rem">
+    <div align="center">
       <q-img src="~assets/mbaling-logo-horizontal.svg" style="width: 6rem" />
     </div>
   </q-footer>

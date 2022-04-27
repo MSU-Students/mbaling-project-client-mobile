@@ -17,7 +17,7 @@
         class="defaultfont-light text-bold text-black"
         style="font-size: medium"
       >
-        Username
+        Mobile number
       </div>
     </template>
     <template #slot-right>
