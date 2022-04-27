@@ -2,10 +2,8 @@
   <q-layout view="hHh lpR fFf" class="defaultfont-light bg-primary text-white">
     <q-page class="flex flex-center">
       <q-card flat class="bg-transparent text-center" style="width: 12rem">
-        <!-- LOGO PICTURE -->
         <q-img src="~assets/mbaling-logo-vertical.svg" style="width: 6rem" />
 
-        <!-- USERNAME & PASSWORD INPUT -->
         <div class="q-mt-xl">
           <q-input
             v-model="username"
@@ -28,7 +26,6 @@
             @keyup.enter="loginUser()"
           />
 
-          <!-- LOG-IN BUTTON -->
           <q-btn
             label="log-in"
             unelevated
@@ -107,7 +104,11 @@ login!: (auth: { userName: string; password: string }) => Promise<AUser>;
     } catch (error) {
       this.$q.notify({
         type: 'negative',
-        message: 'Wrong Username or Password!',
+        icon: 'bi-exclamation-triangle-fill',
+        color: 'secondary',
+        textColor: 'primary',
+        position: 'top',
+        message: 'Incorrect username or password.',
       });
     }
   }
