@@ -11,8 +11,8 @@
     </div>
 
     <div align="center" class="q-px-md q-pb-xs text-black">
-      <q-avatar size="10rem" class="bg-primary">
-        <q-img :src="currentUser.email" />
+      <q-avatar size="10rem" class="bg-primary ion-avatar">
+        <q-img :src="`http://localhost:3000/media/${currentUser.prfphoto}`" />
       </q-avatar>
       <div
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
@@ -56,3 +56,12 @@ export default class StudentAccount extends Vue {
   }
 }
 </script>
+
+<style>
+.ion-avatar img{
+      border-radius: 100% !important;
+      overflow: hidden !important;
+
+      border: 2px solid rgb(190,40,45) !important;
+    }
+</style>

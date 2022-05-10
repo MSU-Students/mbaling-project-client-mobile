@@ -8,10 +8,16 @@ import {
 
 import post from "./post";
 import { PostStateInterface } from "./post/state";
-import user from "./user";
+
+import account from "./user";
 import { UserStateInterface } from "./user/state";
+
 import auth from "./auth"
 import { IAuthState } from './auth/state';
+
+
+import media from './media-module';
+import { MediaStateInterface } from './media-module/state';
 
 /*
  * If not building with SSR mode, you can
@@ -28,8 +34,9 @@ export interface StateInterface {
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   example: unknown;
   post: PostStateInterface;
-  user: UserStateInterface;
-  auth: IAuthState
+  account: UserStateInterface;
+  auth: IAuthState;
+  media: MediaStateInterface
 }
 
 // provide typings for `this.$store`
@@ -48,8 +55,9 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       // example
       post,
-      user,
+      account,
       auth,
+      media
     },
 
     // enable strict mode (adds overhead!)

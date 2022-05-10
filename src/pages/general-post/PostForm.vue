@@ -21,6 +21,7 @@
           class="q-ml-sm text-center"
           style="height: 2rem"
         />
+
         <Transition name="appear">
           <q-btn
             v-show="showClearBtn"
@@ -34,7 +35,18 @@
         </Transition>
       </div>
     </div>
-
+ <div class="col">
+                      <q-file
+                        outlined
+                        label="Upload Image"
+                        accept=".jpg, image/*"
+                        v-model="imageAttachement"
+                      >
+                        <template v-slot:prepend>
+                          <q-icon name="camera" />
+                        </template>
+                      </q-file>
+                    </div>
     <div class="q-mt-sm q-px-md">
       <q-input
         v-model="inputPost.title"
@@ -116,10 +128,12 @@
 </template>
 
 <script lang="ts">
-import { PostDto } from "src/services/rest-api";
+import { QFile } from "quasar";
+import { MediaDto, PostDto } from "src/services/rest-api";
 import { AUser } from "src/store/auth/state";
-import { Options, Vue } from "vue-class-component";
+import { Options, Vue,} from "vue-class-component";
 import { mapState, mapActions } from "vuex";
+
 
 @Options({
   computed: {
@@ -128,12 +142,14 @@ import { mapState, mapActions } from "vuex";
   },
   methods: {
     ...mapActions('post', ['addPost']),
-    ...mapActions('auth', ['authUser'])
+    ...mapActions('auth', ['authUser']),
+    ...mapActions('media', ['uploadMedia']),
   },
 })
 
 export default class PostForm extends Vue {
 
+  uploadMedia!: (payload: File) => Promise<MediaDto>;
   addPost!: (payload: PostDto) => Promise<void>;
   authUser! : () => Promise<void>
 
@@ -147,47 +163,53 @@ export default class PostForm extends Vue {
   pcBox = false;
   showClearBtn = false;
   addnewPost = false;
+  model = ""
+  imageAttachement: File[] | File = [];
 
-  inputPost: PostDto ={
-    description: "",
+
+  inputPost: any ={
+    description: ``,
     fee: "",
-    negotiable: false,
     prvCR: false,
     prvKitchen: false,
     photos: "https://cdn.quasar.dev/img/quasar.jpg",
     title: "",
-    username: "",
     date: 0,
     housingAddress: "",
-    prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg"
+    prfphoto: 0,
+    url: 0,
+    landlordID: 0
   }
 
   async resetModel() {
     this.inputPost = {
-     description: "",
+    description: ``,
     fee: "",
-    negotiable: false,
     prvCR: false,
     prvKitchen: false,
     photos: "",
     title: "",
-    username: "",
     date: 0,
     housingAddress: "",
-    prfphoto: ""
+    prfphoto: "",
+    url: 0,
+    landlordID: 0
 
     };
   }
 
   async createPost() {
-   await this.addPost(this.inputPost);
+   const media = await this.uploadMedia(this.imageAttachement as File);
+   await this.addPost({...this.inputPost,
+                  prfphoto: this.currentUser.prfphoto,
+                  userID: this.currentUser.id,
+                  url: media.id});
     this.addnewPost = false;
     this.$q.notify({
       type: 'positive',
       message: 'Successfully Adeded.',
     });
   }
-
 
 }
 </script>

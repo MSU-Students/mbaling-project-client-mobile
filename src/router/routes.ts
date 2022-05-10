@@ -104,7 +104,7 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: "/post/",
+    path: "/post/:id?",
     component: () => import("layouts/BlankLayout.vue"),
     children: [
       {

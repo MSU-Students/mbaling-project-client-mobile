@@ -2,13 +2,13 @@ import { MutationTree } from "vuex";
 import { PostStateInterface } from "./state";
 
 const mutation: MutationTree<PostStateInterface> = {
-  setAccount(state, payload) {
+  setPost(state, payload) {
     state.newPost = payload;
   },
-  updateAccount(state, payload) {
+  updatePost(state, payload) {
     state.newPost = payload;
   },
-  deleteAccount(state, payload) {
+  deletePost(state, payload) {
     state.posts.push(payload);
   },
 
@@ -24,6 +24,10 @@ const mutation: MutationTree<PostStateInterface> = {
   getProfile(state, payload) {
     state.posts = payload;
   },
+
+  getPostById(state, payload) {
+    state.newPost = payload;
+  }
 };
 
 export default mutation;

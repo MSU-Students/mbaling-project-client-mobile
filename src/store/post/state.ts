@@ -10,7 +10,8 @@ export interface PostInterface {
     username: string,
     date: number,
     housingAddress: string,
-    prfphoto: string
+    prfphoto: number
+    url: string
 }
 
 export interface PostStateInterface {

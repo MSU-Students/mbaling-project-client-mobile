@@ -9,9 +9,9 @@ class PostService extends DefaultApi {
     return response.data;
   }
 
-  async getAll(): Promise<PostDto> {
+  async getAll(): Promise<PostDto[]> {
     const response = await mbalingApiService.getPost();
-    return response.data;
+    return response.data as unknown as PostDto[];
   }
 
   async update(id: number, payload: any) {
@@ -21,6 +21,11 @@ class PostService extends DefaultApi {
 
   async delete(id: number) {
     const response = await mbalingApiService.deletePost(id);
+    return response.data;
+  }
+
+  async getOnePostById(id: number) {
+    const response = await mbalingApiService.getPostById(id);
     return response.data;
   }
 

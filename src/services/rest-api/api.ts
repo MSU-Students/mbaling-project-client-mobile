@@ -62,6 +62,31 @@ export interface HousingDto {
 /**
  * 
  * @export
+ * @interface MediaDto
+ */
+export interface MediaDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof MediaDto
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MediaDto
+     */
+    'mimeType': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MediaDto
+     */
+    'filename'?: string;
+}
+/**
+ * 
+ * @export
  * @interface PostDto
  */
 export interface PostDto {
@@ -77,12 +102,6 @@ export interface PostDto {
      * @memberof PostDto
      */
     'fee': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PostDto
-     */
-    'negotiable': boolean;
     /**
      * 
      * @type {boolean}
@@ -109,12 +128,6 @@ export interface PostDto {
     'title': string;
     /**
      * 
-     * @type {string}
-     * @memberof PostDto
-     */
-    'username': string;
-    /**
-     * 
      * @type {number}
      * @memberof PostDto
      */
@@ -127,10 +140,28 @@ export interface PostDto {
     'housingAddress': string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof PostDto
      */
-    'prfphoto': string;
+    'prfphoto': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PostDto
+     */
+    'url': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PostDto
+     */
+    'landlordID': number;
+    /**
+     * 
+     * @type {object}
+     * @memberof PostDto
+     */
+    'userID'?: object;
 }
 /**
  * 
@@ -240,7 +271,7 @@ export interface UserDto {
      * @type {string}
      * @memberof UserDto
      */
-    'yearAdmit': string;
+    'year': string;
     /**
      * 
      * @type {string}
@@ -271,6 +302,12 @@ export interface UserDto {
      * @memberof UserDto
      */
     'housingunit': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserDto
+     */
+    'prfphoto': number;
     /**
      * 
      * @type {string}
@@ -395,6 +432,40 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Delete Media by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMedia: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteMedia', 'id', id)
+            const localVarPath = `/media/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Delete post by id
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -471,6 +542,36 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Get all media
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllMedia: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/media`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get all posts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -501,12 +602,80 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Get Media by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMedia: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMedia', 'id', id)
+            const localVarPath = `/media/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get all posts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getPost: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/postform`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get post by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPostById: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getPostById', 'id', id)
+            const localVarPath = `/postform/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -879,12 +1048,13 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Add Media
          * @param {any} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userControllerUploadFile: async (file?: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/user/upload`;
+        uploadMedia: async (file?: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/media/uploadFile`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -960,6 +1130,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete Media by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteMedia(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MediaDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMedia(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Delete post by id
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -982,6 +1163,16 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get all media
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllMedia(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MediaDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllMedia(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get all posts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -992,12 +1183,34 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get Media by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMedia(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MediaDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMedia(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get all posts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getPost(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPost(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get post by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPostById(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPostById(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1101,12 +1314,13 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Add Media
          * @param {any} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userControllerUploadFile(file?: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerUploadFile(file, options);
+        async uploadMedia(file?: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MediaDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadMedia(file, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1151,6 +1365,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Delete Media by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMedia(id: number, options?: any): AxiosPromise<MediaDto> {
+            return localVarFp.deleteMedia(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Delete post by id
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -1171,6 +1395,15 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Get all media
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllMedia(options?: any): AxiosPromise<MediaDto> {
+            return localVarFp.getAllMedia(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get all posts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1180,12 +1413,32 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Get Media by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMedia(id: number, options?: any): AxiosPromise<MediaDto> {
+            return localVarFp.getMedia(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get all posts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getPost(options?: any): AxiosPromise<PostDto> {
             return localVarFp.getPost(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get post by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPostById(id: number, options?: any): AxiosPromise<PostDto> {
+            return localVarFp.getPostById(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1279,12 +1532,13 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Add Media
          * @param {any} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userControllerUploadFile(file?: any, options?: any): AxiosPromise<void> {
-            return localVarFp.userControllerUploadFile(file, options).then((request) => request(axios, basePath));
+        uploadMedia(file?: any, options?: any): AxiosPromise<MediaDto> {
+            return localVarFp.uploadMedia(file, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1334,6 +1588,18 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
+     * @summary Delete Media by id
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public deleteMedia(id: number, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteMedia(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Delete post by id
      * @param {number} id 
      * @param {*} [options] Override http request option.
@@ -1358,6 +1624,17 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get all media
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getAllMedia(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getAllMedia(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get all posts
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1369,6 +1646,18 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get Media by id
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getMedia(id: number, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getMedia(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get all posts
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1376,6 +1665,18 @@ export class DefaultApi extends BaseAPI {
      */
     public getPost(options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getPost(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get post by id
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getPostById(id: number, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getPostById(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1488,13 +1789,14 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
+     * @summary Add Media
      * @param {any} [file] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public userControllerUploadFile(file?: any, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).userControllerUploadFile(file, options).then((request) => request(this.axios, this.basePath));
+    public uploadMedia(file?: any, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).uploadMedia(file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

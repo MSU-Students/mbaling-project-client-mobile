@@ -12,7 +12,7 @@
 
     <div align="center" class="q-px-md q-pb-xs text-black">
       <q-avatar size="10rem" class="bg-primary">
-        <q-img :src="currentUser.email" />
+        <q-img :src="`http://localhost:3000/media/${currentUser.prfphoto}`" class="avatar" />
       </q-avatar>
       <div
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
@@ -84,3 +84,11 @@ export default class LandlordAccount extends Vue {
   // };
 }
 </script>
+<style>
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50% !important;
+  border: 2px solid rgb(190, 40, 45) !important;
+}
+</style>

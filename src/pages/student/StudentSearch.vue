@@ -26,7 +26,7 @@
   </q-header>
 
   <q-page v-if="(searchResultPost.length || searchResultUser.length) > 0">
-    <div v-if="searchResultUser.length > 0" class="q-pt-sm q-px-sm defaultfont">
+    <div  class="q-pt-sm q-px-sm defaultfont">
       <div class="q-ml-sm defaultfont-semibold text-body1">USERS</div>
       <div class="q-px-xs">
         <q-scroll-area :visible="false" style="height: 5.5rem; max-width: 100%">
@@ -37,9 +37,9 @@
                 class="bg-primary"
                 @click="$router.push('/profile')"
               >
-                <q-img :src="result.prfphoto">
+                <q-img :src="`http://localhost:3000/media/${result.prfphoto}`">
                   <q-tooltip>
-                    {{ result.housingAddress }}
+                    {{ result.housingunit }}
                   </q-tooltip>
                 </q-img>
               </q-avatar>
@@ -56,15 +56,14 @@
       <div class="q-ml-sm defaultfont-semibold text-body1">POSTS</div>
       <div class="defaultfont row items-start">
         <div
-          v-for="(result, index) in searchResultPost"
+          v-for="(result,index) in searchResultPost"
           :key="index"
           class="q-pa-xs"
           style="width: 50%"
         >
-          <div v-for="photo in result.photos" :key="photo.id">
+          <div>
             <q-img
-              v-if="photo.id === 1"
-              :src="photo.url"
+              :src="`http://localhost:3000/media/${result.url}`"
               fit="cover"
               class="bg-primary"
               style="width: 100%; height: 18rem; border-radius: 0.5rem"
@@ -88,34 +87,54 @@ import { ref } from "vue";
 import { Vue, Options } from "vue-class-component";
 import { PostInterface } from "src/store/post/state";
 import { UserInterface } from "src/store/user/state";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
+import { AUser } from "src/store/auth/state";
 
 @Options({
   computed: {
-    ...mapState("posts", ["posts"]),
-    ...mapState("user", ["users"]),
+    ...mapState("post", ["posts"]),
+    ...mapState('auth', ['currentUser']),
+    ...mapState('account', ['allAccount']),
+  },
+  methods: {
+    ...mapActions('post', ['getAllPost']),
+    ...mapActions('auth', ['authUser']),
   },
 })
 export default class StudentSearch extends Vue {
+
+  getAllPost! : () => Promise<void>
+  getAllMedia!: () => Promise<void>
+  authUser! : () => Promise<void>
+  posts!: PostInterface[];
+  allAccount!: UserInterface[]
+  currentUser!: AUser
+
+
+  async mounted() {
+
+    await this.getAllPost();
+    console.log('Hello')
+  }
   search = "";
   tab = ref("posts");
   loadingState = false;
 
-  posts!: PostInterface[];
-  users!: UserInterface[];
+
 
   searchResultPost: PostInterface[] = [];
   searchResultUser: UserInterface[] = [];
 
   searchAction() {
+    const resultUsers = this.allAccount.filter(
+      (user) =>
+        user.housingunit.toLowerCase().includes(this.search.toLowerCase()) ||
+        user.username.toLowerCase().includes(this.search.toLowerCase())
+    );
     const resultPosts = this.posts.filter((post) =>
       post.title.toLowerCase().includes(this.search.toLowerCase())
     );
-    const resultUsers = this.users.filter(
-      (user) =>
-        user.housingAddress.toLowerCase().includes(this.search.toLowerCase()) ||
-        user.username.toLowerCase().includes(this.search.toLowerCase())
-    );
+
     this.searchResultPost = resultPosts;
     this.searchResultUser = resultUsers;
   }

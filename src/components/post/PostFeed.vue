@@ -1,18 +1,18 @@
 <template>
   <div class="q-px-sm defaultfont row items-start">
     <div
-      v-for="post in posts"
-      :key="post.id"
+      v-for="(post, index) in posts"
+      :key="index"
       class="q-pa-xs"
       style="width: 50%"
     >
       <div>
         <q-img
-          :src="post.photos"
+          :src="`http://localhost:3000/media/${post.url}`"
           fit="cover"
           class="bg-primary"
           style="width: 100%; height: 18rem; border-radius: 0.5rem"
-          @click="$router.push('/post')"
+          @click="redirect(post)"
         >
           <div class="absolute-bottom text-left">
             <q-item-label lines="2" style="font-size: medium">
@@ -26,7 +26,7 @@
         <div class="col-9">
           <q-item-label lines="1" class="defaultfont-semibold">
             <q-avatar size="sm" class="bg-primary">
-              <q-img :src="post.prfphoto" />
+              <q-img :src="`http://localhost:3000/media/${post.prfphoto}`" />
             </q-avatar>
             <span class="q-ml-sm" style="font-size: small">
               {{ post.housingAddress }}
@@ -45,21 +45,40 @@
 import { Vue, Options } from "vue-class-component";
 import { PostInterface } from "src/store/post/state";
 import { mapActions, mapState } from "vuex";
+import { AUser } from "src/store/auth/state";
+import {
+  MediaInterface,
+  MediaStateInterface,
+} from "src/store/media-module/state";
+import { PostDto, UserDto } from "src/services/rest-api";
 
 @Options({
   computed: {
     ...mapState("post", ["posts"]),
+    ...mapState("media", ["allMedia"]),
+    ...mapState("auth", ["currentUser"]),
   },
   methods: {
-    ...mapActions('post', ['getAllPost']),
+    ...mapActions("post", ["getAllPost"]),
+    ...mapActions("media", ["getAllMedia"]),
+    ...mapActions("auth", ["authUser"]),
   },
 })
 export default class PostFeedComponent extends Vue {
-  getAllPost! : () => Promise<void>
-  posts!: PostInterface[];
+  getAllPost!: () => Promise<void>;
+  authUser!: () => Promise<void>;
+  posts!: PostDto[];
+  allMedia!: MediaInterface[];
+  currentUser!: AUser;
 
   async mounted() {
     await this.getAllPost();
+  }
+
+  async redirect(post: any) {
+    console.log(post);
+    const postID = post.id;
+    await this.$router.push(`/post/${postID}`);
   }
 }
 </script>

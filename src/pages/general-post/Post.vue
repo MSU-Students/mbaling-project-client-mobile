@@ -37,12 +37,6 @@
             @click="onClick"
           />
         </template>
-        <q-carousel-slide
-          v-for="photo in post.photos"
-          :key="photo.id"
-          :name="photo.id"
-          :img-src="photo.url"
-        />
       </q-carousel>
     </div>
 
@@ -138,15 +132,14 @@
   >
     <div class="row items-center" style="height: 4rem">
       <div align="left" class="col">
-        <q-btn
-          flat
-          round
-          :ripple="false"
-          color="black"
-          size="md"
-          icon="bi-chat-fill"
-          @click="$router.push('/chat')"
-        />
+        <a
+          href="https://m.me/basam.serad.79"
+          target="_blank"
+          style="text-decoration: none"
+        >
+          <q-icon size="1.4rem" color="black" class="q-pl-sm bi bi-chat-fill">
+          </q-icon>
+        </a>
       </div>
       <div align="center" class="col-6"></div>
       <div align="right" class="col">
@@ -157,44 +150,44 @@
 </template>
 
 <script lang="ts">
-import { ref } from "vue";
-import { Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
+import { mapActions, mapState } from "vuex";
 
+@Options({
+  computed: {
+    ...mapState("post", ["newPost"]),
+  },
+  methods: {
+    ...mapActions("post", ["getPostById"]),
+  },
+})
 export default class Post extends Vue {
-  slide = ref(1);
+  getPostById!: (id: any) => Promise<void>;
+  newPost!: any;
+
+  slide = 1;
   fullscreen = false;
   isStudent = true;
 
   post = {
-    id: 135413523,
-    title:
-      "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
-    fee: "1200",
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+    id: "",
+    title: "",
+    fee: "",
+    description: "",
     prvKitchen: false,
     prvCR: false,
-    photos: [
-      {
-        id: 1,
-        url: "https://cdn.quasar.dev/img/parallax1.jpg",
-      },
-      {
-        id: 2,
-        url: "https://cdn.quasar.dev/img/mountains.jpg",
-      },
-      {
-        id: 3,
-        url: "https://cdn.quasar.dev/img/quasar.jpg",
-      },
-    ],
-    date: 1631096539262,
-
-    housingAddress: "Zin-Azshari Boarding House",
-    username: "zinboarding",
-    prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
+    date: "",
+    housingAddress: "",
+    username: "",
+    prfphoto: "",
   };
+
+  async mounted() {
+    const postId = this.$route.params.id;
+    await this.getPostById(postId);
+    this.post = this.newPost;
+    console.log(this.post);
+  }
 }
 </script>
 

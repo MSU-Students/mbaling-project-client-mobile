@@ -3,8 +3,10 @@ import { StateInterface } from "../index";
 import { PostStateInterface } from "./state";
 
 const getters: GetterTree<PostStateInterface, StateInterface> = {
-  someAction(/* context */) {
-    // your code
+  studentAccount(state) {
+    return state.posts.filter((i) =>
+      /^student$/i.test(i.username || '')
+    );
   },
 };
 

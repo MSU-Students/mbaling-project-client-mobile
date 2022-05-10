@@ -1,10 +1,11 @@
 <template>
+
   <div class="q-px-sm defaultfont">
-    <div v-for="post in posts" :key="post.id" class="q-mb-sm q-pa-xs">
-      <div v-for="photo in post.photos" :key="photo.id">
+    <div v-for="post in posts" :key="post" class="q-mb-sm q-pa-xs">
+      <div>
+        <div v-if="post.prfphoto == currentUser.prfphoto">
         <q-img
-          v-if="photo.id === 1"
-          :src="photo.url"
+          :src="`http://localhost:3000/media/${post.url}`"
           fit="cover"
           class="bg-primary"
           style="width: 100%; height: 16rem; border-radius: 0.5rem"
@@ -16,7 +17,7 @@
             </q-item-label>
           </div>
         </q-img>
-      </div>
+
 
       <div class="q-my-xs q-px-xs row items-center">
         <div class="col">
@@ -48,22 +49,44 @@
           />
         </div>
       </div>
+      </div>
+      </div>
+</div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
 import { Vue, Options } from "vue-class-component";
 import { PostInterface } from "src/store/post/state";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
+import { PostDto } from "src/services/rest-api";
+import { AUser } from "src/store/auth/state";
+import { MediaInterface } from "src/store/media-module/state";
 
 @Options({
   computed: {
-    ...mapState("posts", ["posts"]),
+    ...mapState("post", ["posts"]),
+    ...mapState("media", ["allMedia"]),
+    ...mapState('auth', ['currentUser']),
+  },
+  methods: {
+    ...mapActions('post', ['getAllPost']),
+    ...mapActions('media', ['getAllMedia']),
+    ...mapActions('auth', ['authUser']),
   },
 })
 export default class PostPageComponent extends Vue {
-  posts!: PostInterface[];
+  getAllPost! : () => Promise<void>
+  authUser! : () => Promise<void>
+  posts!: PostDto[];
+  allMedia!: MediaInterface[];
+  currentUser!: AUser
+
+
+  async mounted() {
+    await this.getAllPost();
+    await this.authUser()
+  }
 
   confirmDelete() {
     this.$q.dialog({
