@@ -37,25 +37,28 @@
   <q-page class="q-px-md defaultfont">
     <div align="center" class="q-pa-md">
       <q-avatar size="8rem" class="bg-primary">
-        <q-img :src="`http://localhost:3000/media/${currentUser.prfphoto}`" class="avatar" />
+        <q-img
+          :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
+          class="avatar"
+        />
       </q-avatar>
-       <div class="q-mt-sm q-px-xl">
-         <q-btn class="q-ma-none q-pa-none" rounded>
-                        <q-file
-                        style="width: 4rem"
-                          class="q-pa-none q-ma-none"
-                          item-aligned
-                          use-chips
-                          rounded
-                          dense
-                          outlined
-                          label="Edit"
-                          accept=".jpg, image/*"
-                          v-model="imageAttachement"
-                        >
-                        </q-file>
-                        </q-btn>
-                      </div>
+      <div class="q-mt-sm q-px-xl">
+        <q-btn class="q-ma-none q-pa-none" rounded>
+          <q-file
+            style="width: 4rem"
+            class="q-pa-none q-ma-none"
+            item-aligned
+            use-chips
+            rounded
+            dense
+            outlined
+            label="Edit"
+            accept=".jpg, image/*"
+            v-model="imageAttachement"
+          >
+          </q-file>
+        </q-btn>
+      </div>
       <div class="q-mt-sm">
         <q-btn
           label="Edit"
@@ -119,18 +122,15 @@ import { mapActions, mapState } from "vuex";
 @Options({
   methods: {
     ...mapActions("auth", ["authUser"]),
-    ...mapActions("account", ["editAccount", "getAllUser"
-    ]),
+    ...mapActions("account", ["editAccount", "getAllUser"]),
     ...mapActions("media", ["uploadMedia"]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
   },
 })
-
 export default class LandlordManageProfile extends Vue {
-
-editAccount!: (payload: UserDto) => Promise<void>;
+  editAccount!: (payload: UserDto) => Promise<void>;
   uploadMedia!: (payload: File) => Promise<MediaDto>;
   authUser!: () => Promise<void>;
   currentUser!: AUser;
@@ -140,118 +140,89 @@ editAccount!: (payload: UserDto) => Promise<void>;
   genderOptions = ["Male", "Female"];
 
   async mounted() {
-    console.log('Mounted here')
-    console.log(this.currentUser.id)
-    console.log(this.authUser)
+    console.log("Mounted here");
+    console.log(this.currentUser.id);
+    console.log(this.authUser);
     await this.authUser();
   }
 
-inputAccount: any = {
-  prfphoto: 0,
-  fName: "",
-  lName: "",
-  type: "",
-  status: "",
-  username: "",
-  password: "",
-  birthdate: "",
-  degree: "",
-  department: "",
-  college: "",
-  contact: "",
-  gender: "",
-  year: "",
-  address1: "",
-  address2: "",
-  address3: "",
-  address4: "",
-  housingunit: ""
-};
+  inputAccount: any = {
+    prfphoto: 0,
+    fName: "",
+    lName: "",
+    type: "",
+    status: "",
+    username: "",
+    password: "",
+    birthdate: "",
+    degree: "",
+    department: "",
+    college: "",
+    contact: "",
+    gender: "",
+    year: "",
+    address1: "",
+    address2: "",
+    address3: "",
+    address4: "",
+    housingunit: "",
+  };
 
-
-    async oneditAccount() {
-      const media = await this.uploadMedia(this.imageAttachement as File);
-      console.log(this.currentUser.id)
+  async oneditAccount() {
+    const media = await this.uploadMedia(this.imageAttachement as File);
+    console.log(this.currentUser.id);
     await this.editAccount({
-    ...this.inputAccount,
-      id:           this.currentUser.id,
-      prfphoto:     media.id,
-      type:         this.currentUser.type,
-      status:       this.currentUser.status,
-      username:     this.currentUser.username,
-      password:     this.currentUser.password,
-      birthdate:    this.currentUser.birthdate,
-      degree:       this.currentUser.degree,
-      department:   this.currentUser.department,
-      college:      this.currentUser.college,
-      contact:      this.currentUser.contact,
-      gender:       this.currentUser.gender,
-      year:         this.currentUser.year,
-      address1:     this.currentUser.address1,
-      address2:     this.currentUser.address2,
-      address3:     this.currentUser.address3,
-      address4:     this.currentUser.address4,
-      housingunit:  this.currentUser.housingunit
-       });
+      ...this.inputAccount,
+      id: this.currentUser.id,
+      prfphoto: media.id,
+      type: this.currentUser.type,
+      status: this.currentUser.status,
+      username: this.currentUser.username,
+      password: this.currentUser.password,
+      birthdate: this.currentUser.birthdate,
+      degree: this.currentUser.degree,
+      department: this.currentUser.department,
+      college: this.currentUser.college,
+      contact: this.currentUser.contact,
+      gender: this.currentUser.gender,
+      year: this.currentUser.year,
+      address1: this.currentUser.address1,
+      address2: this.currentUser.address2,
+      address3: this.currentUser.address3,
+      address4: this.currentUser.address4,
+      housingunit: this.currentUser.housingunit,
+    });
     this.updateAccount = false;
     this.resetModel();
     this.$q.notify({
-      type: 'positive',
-      message: 'Successfully Edit.',
+      type: "positive",
+      message: "Successfully Edit.",
     });
   }
 
   resetModel() {
-   this.inputAccount={
-     prfphoto: 0,
-  fName: "",
-  lName: "",
-  type: "",
-  status: "",
-  username: "",
-  password: "",
-  birthdate: "",
-  degree: "",
-  department: "",
-  college: "",
-  contact: "",
-  gender: "",
-  year: "",
-  address1: "",
-  address2: "",
-  address3: "",
-  address4: "",
-  housingunit: ""
-   }
+    this.inputAccount = {
+      prfphoto: 0,
+      fName: "",
+      lName: "",
+      type: "",
+      status: "",
+      username: "",
+      password: "",
+      birthdate: "",
+      degree: "",
+      department: "",
+      college: "",
+      contact: "",
+      gender: "",
+      year: "",
+      address1: "",
+      address2: "",
+      address3: "",
+      address4: "",
+      housingunit: "",
+    };
   }
-  // activeUser = {
-  //   id: 202200001,
-  //   username: "zinboarding",
-  //   password: "password",
-  //   isStudent: false,
-
-  //   firstname: "Azshara",
-  //   middlename: "Queldorei",
-  //   lastname: "Highborne",
-  //   prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-
-  //   degree: "",
-  //   department: "",
-  //   college: "",
-  //   yearAdmitted: 0,
-
-  //   addressLine1: "1205 5th Street",
-  //   addressLine2: "Dimaluna I",
-  //   addressLine3: "Marawi City",
-  //   addressLine4: "Lanao del Sur",
-  //   housingAddress: "Zin-Azshari Boarding House",
-
-  //   birthdate: "1999-08-31",
-  //   gender: "Female",
-  //   contact: "09531409858",
-  //   email: "azshara.highborne@gmail.com",
-  // };
-  // genderOptions = ["Male", "Female"];
 
   confirmEdit() {
     this.$q.dialog({

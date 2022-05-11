@@ -109,7 +109,7 @@
         </div>
       </div>
       <div align="right" class="col">
-        <q-icon name="bi-question-circle" size="lg" color="grey" />
+        <q-icon name="bi-question-circle" size="lg" color="grey" @click="$router.replace('/tutorial/chatlink')"/>
       </div>
     </div>
   </q-page>
@@ -235,34 +235,6 @@ export default class StudentManageProfile extends Vue {
     });
   }
 }
-
-// currentUser = {
-//   id: 201812730,
-//   username: "palawanexpress98",
-//   password: "password",
-//   isStudent: true,
-
-//   firstname: "Nahed",
-//   middlename: "Solaiman",
-//   lastname: "Bashier",
-//   prfphoto: "https://cdn.quasar.dev/img/boy-avatar.png",
-
-//   degree: "BS Information Technology (Database System)",
-//   department: "Department of Information Sciences",
-//   college: "College of Information and Computing Sciences",
-//   yearAdmitted: 2018,
-
-//   addressLine1: "0059 Disarip Street",
-//   addressLine2: "Bubonga Marawi",
-//   addressLine3: "Marawi City",
-//   addressLine4: "Lanao del Sur",
-//   housingAddress: "",
-
-//   birthdate: "1998-10-19",
-//   gender: "Male",
-//   contact: "09090206852",
-//   email: "bashier.ns30@s.msumain.edu.ph",
-// };
 </script>
 
 <style>

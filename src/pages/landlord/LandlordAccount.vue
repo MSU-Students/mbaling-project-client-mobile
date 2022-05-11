@@ -12,7 +12,10 @@
 
     <div align="center" class="q-px-md q-pb-xs text-black">
       <q-avatar size="10rem" class="bg-primary">
-        <q-img :src="`http://localhost:3000/media/${currentUser.prfphoto}`" class="avatar" />
+        <q-img
+          :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
+          class="avatar"
+        />
       </q-avatar>
       <div
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
@@ -31,6 +34,121 @@
   </q-header>
 
   <q-page class="defaultfont">
+    <div class="q-px-lg q-py-md">
+      <div align="left" class="row items-center">
+        <div align="left" class="col-10">
+          <div
+            class="defaultfont-semibold text-grey-8"
+            style="font-size: medium"
+          >
+            Set chat link
+          </div>
+          <div class="defaultfont text-grey" style="font-size: smaller">
+            Please input below your Facebook Messenger username to connect it
+            with your account. <br />
+            Click the icon on the right for tutorial.
+          </div>
+        </div>
+        <div align="right" class="col">
+          <q-icon
+            name="bi-question-circle"
+            size="lg"
+            color="grey"
+            @click="$router.push('/tutorial/chatlink')"
+          />
+        </div>
+      </div>
+      <q-input
+        :disable="!chatlinkEdit"
+        dense
+        class="q-mb-xs"
+        style="font-size: medium"
+      />
+      <div align="right">
+        <q-btn
+          v-show="chatlinkEdit"
+          label="Save"
+          dense
+          unelevated
+          rounded
+          no-caps
+          color="primary"
+          class="text-center text-caption"
+          style="width: 4rem"
+          @click="chatlinkSave()"
+        />
+        <q-btn
+          v-show="!chatlinkEdit"
+          v-on:click="chatlinkEdit = !chatlinkEdit"
+          label="Edit"
+          dense
+          outline
+          rounded
+          no-caps
+          color="primary"
+          class="text-center text-caption"
+          style="width: 4rem"
+        />
+      </div>
+    </div>
+
+    <div class="q-px-lg q-pb-lg">
+      <div align="left" class="row items-center">
+        <div align="left" class="col-10">
+          <div
+            class="defaultfont-semibold text-grey-8"
+            style="font-size: medium"
+          >
+            Set map link
+          </div>
+          <div class="defaultfont text-grey" style="font-size: smaller">
+            Please input below the link of your Google Map location to connect
+            it with your account. <br />
+            Click the icon on the right for tutorial.
+          </div>
+        </div>
+        <div align="right" class="col">
+          <q-icon
+            name="bi-question-circle"
+            size="lg"
+            color="grey"
+            @click="$router.push('/tutorial/maplink')"
+          />
+        </div>
+      </div>
+      <q-input
+        :disable="!maplinkEdit"
+        dense
+        class="q-mb-xs"
+        style="font-size: medium"
+      />
+      <div align="right">
+        <q-btn
+          v-show="maplinkEdit"
+          label="Save"
+          dense
+          unelevated
+          rounded
+          no-caps
+          color="primary"
+          class="text-center text-caption"
+          style="width: 4rem"
+          @click="maplinkSave()"
+        />
+        <q-btn
+          v-show="!maplinkEdit"
+          v-on:click="maplinkEdit = !maplinkEdit"
+          label="Edit"
+          dense
+          outline
+          rounded
+          no-caps
+          color="primary"
+          class="text-center text-caption"
+          style="width: 4rem"
+        />
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -41,47 +159,42 @@ import { mapActions, mapState } from "vuex";
 
 @Options({
   methods: {
-    ...mapActions('auth', ['authUser']),
+    ...mapActions("auth", ["authUser"]),
   },
   computed: {
-    ...mapState('auth', ['currentUser']),
+    ...mapState("auth", ["currentUser"]),
   },
 })
 export default class LandlordAccount extends Vue {
-
-  authUser! : () => Promise<void>
-  currentUser!: AUser
+  authUser!: () => Promise<void>;
+  currentUser!: AUser;
+  chatlinkEdit = false;
+  maplinkEdit = false;
 
   async mounted() {
     await this.authUser();
   }
-  // activeUser = {
-  //   id: 202200001,
-  //   username: "zinboarding",
-  //   password: "password",
-  //   isStudent: false,
 
-  //   firstname: "Azshara",
-  //   middlename: "Queldorei",
-  //   lastname: "Highborne",
-  //   prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-
-  //   degree: "",
-  //   department: "",
-  //   college: "",
-  //   yearAdmitted: 0,
-
-  //   addressLine1: "1205 5th Street",
-  //   addressLine2: "Dimaluna I",
-  //   addressLine3: "Marawi City",
-  //   addressLine4: "Lanao del Sur",
-  //   housingAddress: "Zin-Azshari Boarding House",
-
-  //   birthdate: "1999-08-31",
-  //   gender: "Female",
-  //   contact: "09531409858",
-  //   email: "azshara.highborne@gmail.com",
-  // };
+  chatlinkSave() {
+    this.$q.dialog({
+      title: "Confirm Edit",
+      message: "Are you sure you want to publish the changes?",
+      cancel: true,
+      persistent: true,
+      class: "defaultfont",
+    });
+    this.chatlinkEdit = !this.chatlinkEdit;
+  }
+  maplinkSave() {
+    this.$q.dialog({
+      title: "Confirm Edit",
+      message: "Are you sure you want to publish the changes?",
+      cancel: true,
+      persistent: true,
+      class: "defaultfont",
+    });
+    this.maplinkEdit = !this.maplinkEdit;
+  }
 }
 </script>
 <style>

@@ -31,7 +31,28 @@
     <q-separator inset color="primary" size="0.1rem" class="q-my-sm" />
   </q-header>
 
-  <q-page class="defaultfont"> </q-page>
+  <q-page class="defaultfont">
+    <div class="q-px-lg q-py-md">
+      <div align="left" class="row items-center">
+        <div align="left" class="col-10">
+          <div
+            class="defaultfont-semibold text-grey-8"
+            style="font-size: medium"
+          >
+            Set your campus housing
+          </div>
+          <div class="defaultfont text-grey" style="font-size: smaller">
+            Please set your campus housing address to complete your student user
+            record. <br />
+            Go to Settings > Account settings > Campus housing.
+          </div>
+        </div>
+        <div align="right" class="col">
+          <q-icon name="bi-question-circle" size="lg" color="grey" />
+        </div>
+      </div>
+    </div>
+  </q-page>
 </template>
 
 <script lang="ts">
@@ -58,10 +79,10 @@ export default class StudentAccount extends Vue {
 </script>
 
 <style>
-.ion-avatar img{
-      border-radius: 100% !important;
-      overflow: hidden !important;
+.ion-avatar img {
+  border-radius: 100% !important;
+  overflow: hidden !important;
 
-      border: 2px solid rgb(190,40,45) !important;
-    }
+  border: 2px solid rgb(190, 40, 45) !important;
+}
 </style>
