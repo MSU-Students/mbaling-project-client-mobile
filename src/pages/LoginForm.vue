@@ -2,10 +2,8 @@
   <q-layout view="hHh lpR fFf" class="defaultfont-light bg-primary text-white">
     <q-page class="flex flex-center">
       <q-card flat class="bg-transparent text-center" style="width: 12rem">
-        <!-- LOGO PICTURE -->
         <q-img src="~assets/mbaling-logo-vertical.svg" style="width: 6rem" />
 
-        <!-- USERNAME & PASSWORD INPUT -->
         <div class="q-mt-xl">
           <q-input
             v-model="username"
@@ -28,7 +26,6 @@
             @keyup.enter="loginUser()"
           />
 
-          <!-- LOG-IN BUTTON -->
           <q-btn
             label="log-in"
             unelevated
@@ -45,7 +42,6 @@
       </q-card>
     </q-page>
 
-    <!-- SIGN-UP INFO POP-UP -->
     <q-footer class="flex justify-center" style="height: 3rem">
       <p
         class="defaultfont-light cursor-pointer"
@@ -64,50 +60,60 @@ import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapState } from "vuex";
 
-
 @Options({
   methods: {
-    ...mapActions('auth', ['login', 'authUser']),
+    ...mapActions("auth", ["login", "authUser"]),
   },
   computed: {
-    ...mapState('auth', ['currentUser']),
+    ...mapState("auth", ["currentUser"]),
   },
 })
-
 export default class LoginForm extends Vue {
-login!: (auth: { userName: string; password: string }) => Promise<AUser>;
+  login!: (auth: { userName: string; password: string }) => Promise<AUser>;
   currentUser!: AUser;
 
-  username = '';
-  password = '';
+  username = "";
+  password = "";
   isPwd = true;
 
   async loginUser() {
     try {
+      this.$q.loading.show({
+        spinnerSize: 60,
+        message: "You are being logged in...",
+        customClass: "defaultfont",
+      });
       await this.login({
         userName: this.username,
         password: this.password,
       });
-      if (this.currentUser.type == 'student') {
-        await this.$router.replace('/student/home');
+      if (this.currentUser.type == "student") {
+        this.$q.loading.hide();
+        await this.$router.replace("/student/home");
         this.$q.notify({
-          position: 'center',
-          type: 'positive',
-          message: 'You are logged in',
+          position: "center",
+          type: "positive",
+          message: "You are logged in",
         });
-      }
-      else if (this.currentUser.type == 'landlord') {
-        await this.$router.replace('/landlord/home');
+      } else if (this.currentUser.type == "landlord") {
+        this.$q.loading.hide();
+        await this.$router.replace("/landlord/home");
         this.$q.notify({
-          position: 'center',
-          type: 'positive',
-          message: 'You are logged in',
+          position: "center",
+          type: "positive",
+          message: "You are logged in",
         });
       }
     } catch (error) {
+      this.$q.loading.hide();
       this.$q.notify({
-        type: 'negative',
-        message: 'Wrong Username or Password!',
+        type: "negative",
+        icon: "bi-exclamation-triangle-fill",
+        color: "secondary",
+        textColor: "primary",
+        position: "top",
+        message: "Incorrect username or password.",
+        classes: "defaultfont",
       });
     }
   }

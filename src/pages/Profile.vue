@@ -1,6 +1,6 @@
 <template>
   <q-header class="q-px-md q-pt-xl defaultfont bg-secondary">
-    <div class="text-black row justify-center">
+    <div align="center" class="text-black">
       <q-avatar size="10rem" class="bg-primary">
         <q-img :src="user.prfphoto" />
       </q-avatar>
