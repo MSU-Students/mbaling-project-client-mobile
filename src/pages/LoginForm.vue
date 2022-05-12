@@ -97,12 +97,16 @@ export default class LoginForm extends Vue {
         });
       } else if (this.currentUser.type == "landlord") {
         this.$q.loading.hide();
-        await this.$router.replace("/landlord/home");
-        this.$q.notify({
-          position: "center",
-          type: "positive",
-          message: "You are logged in",
-        });
+        if (this.currentUser.housingunit == "") {
+          await this.$router.replace("/housing+setup");
+        } else {
+          await this.$router.replace("/landlord/home");
+          this.$q.notify({
+            position: "center",
+            type: "positive",
+            message: "You are logged in",
+          });
+        }
       }
     } catch (error) {
       this.$q.loading.hide();
