@@ -94,6 +94,10 @@ const routes: RouteRecordRaw[] = [
     component: () => import("layouts/BlankLayout.vue"),
     children: [
       {
+        path: "housing+setup",
+        component: () => import("pages/landlord/LandlordSetup.vue"),
+      },
+      {
         path: "profile",
         component: () => import("pages/Profile.vue"),
       },
