@@ -90,10 +90,13 @@ export default class LoginForm extends Vue {
       if (this.currentUser.type == "student") {
         this.$q.loading.hide();
         await this.$router.replace("/student/home");
-        this.$q.notify({
-          position: "center",
-          type: "positive",
-          message: "You are logged in",
+       this.$q.notify({
+          position: 'top',
+          color: "secondary",
+          textColor: "primary",
+          type: 'positive',
+          classes: "defaultfont",
+          message: 'You are logged in',
         });
       } else if (this.currentUser.type == "landlord") {
         this.$q.loading.hide();
@@ -102,10 +105,13 @@ export default class LoginForm extends Vue {
         } else {
           await this.$router.replace("/landlord/home");
           this.$q.notify({
-            position: "center",
-            type: "positive",
-            message: "You are logged in",
-          });
+          position: 'top',
+          color: "secondary",
+          textColor: "primary",
+          type: 'positive',
+          classes: "defaultfont",
+          message: 'You are logged in',
+        });
         }
       }
     } catch (error) {
