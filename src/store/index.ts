@@ -15,9 +15,11 @@ import { UserStateInterface } from "./user/state";
 import auth from "./auth"
 import { IAuthState } from './auth/state';
 
-
 import media from './media-module';
 import { MediaStateInterface } from './media-module/state';
+
+import housing from './housing-module'
+import { HousingStateInterface } from "./housing-module/state";
 
 /*
  * If not building with SSR mode, you can
@@ -36,7 +38,8 @@ export interface StateInterface {
   post: PostStateInterface;
   account: UserStateInterface;
   auth: IAuthState;
-  media: MediaStateInterface
+  media: MediaStateInterface;
+  housing: HousingStateInterface;
 }
 
 // provide typings for `this.$store`
@@ -57,7 +60,10 @@ export default store(function (/* { ssrContext } */) {
       post,
       account,
       auth,
-      media
+      media,
+      housing
+
+
     },
 
     // enable strict mode (adds overhead!)

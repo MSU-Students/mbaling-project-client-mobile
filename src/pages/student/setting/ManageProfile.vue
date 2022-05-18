@@ -55,7 +55,7 @@
 
     <div class="q-px-lg q-pb-lg">
       <q-input
-        v-model="inputAccount.fName"
+        v-model="currentUser.fName"
         :placeholder="`${currentUser.fName}`"
         label="First name"
         stack-label

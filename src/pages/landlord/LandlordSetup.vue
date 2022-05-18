@@ -21,7 +21,12 @@
         Please input below the business name of your housing firm.
       </div>
       <div align="center" class="q-mt-md">
-        <q-input type="text" dense input-class="text-center" />
+        <q-input
+          v-model="inputAccount.housingunit"
+          type="text"
+          dense
+          input-class="text-center"
+        />
       </div>
       <div align="center" class="q-mt-sm">
         <q-btn
@@ -91,24 +96,28 @@
       </div>
       <div align="center" class="q-mt-md">
         <q-input
+          v-model="inputAccount.address1"
           type="text"
           dense
           hint="e.g. House No., Building, Street Name"
           input-class="text-center"
         />
         <q-input
+          v-model="inputAccount.address2"
           type="text"
           dense
           hint="e.g. Barangay"
           input-class="text-center"
         />
         <q-input
+          v-model="inputAccount.address3"
           type="text"
           dense
           hint="e.g. City, Municipality"
           input-class="text-center"
         />
         <q-input
+          v-model="inputAccount.address4"
           type="text"
           dense
           hint="e.g. Province, State"
@@ -198,9 +207,42 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { UserDto, HousingDto } from "src/services/rest-api";
+import { AUser } from "src/store/auth/state";
+import { HousingInterface } from "src/store/housing-module/state";
+import { Options, Vue } from "vue-class-component";
+import { mapState, mapActions } from "vuex";
 
+@Options({
+  computed: {
+    ...mapState("post", ["posts"]),
+    ...mapState("auth", ["currentUser"]),
+    ...mapState("housing", ["allHousing", "newHousing"]),
+  },
+  methods: {
+    ...mapActions("post", ["addPost"]),
+    ...mapActions("auth", ["authUser"]),
+    ...mapActions("account", ["editAccount", "getAllUser"]),
+    ...mapActions("housing", ["addHousing", "getAllHousing", "getOneHousing"]),
+  },
+})
 export default class LoginForm extends Vue {
+  editAccount!: (payload: UserDto) => Promise<void>;
+  addHousing!: (payload: HousingDto) => Promise<HousingDto>;
+  authUser!: () => Promise<void>;
+  getAllHousing!: () => Promise<void>;
+  getOneHousing!: (name: any) => Promise<void>;
+  newHousing!: any;
+  allHousing!: HousingInterface;
+  currentUser!: AUser;
+
+  async mounted() {
+    console.log("Mounted here");
+    console.log(this.authUser);
+    await this.authUser();
+  }
+  updateAccount = false;
+
   next = false;
   hnameEx = false;
   hnameExInput = "Alex Boarding House";
@@ -210,27 +252,110 @@ export default class LoginForm extends Vue {
   haddExInput3 = "MSU, Marawi City";
   haddExInput4 = "Lanao del Sur";
 
-  hNameSave() {
-    this.$q.dialog({
-      title: "Confirm Edit",
-      message: "Are you sure you want to publish it?",
-      cancel: true,
-      persistent: true,
-      class: "defaultfont",
-    }).onOk(() => {
-      this.next = !this.next;
-    });
+  inputAccount: any = {
+    prfphoto: 0,
+    fName: "",
+    lName: "",
+    type: "",
+    status: "",
+    username: "",
+    password: "",
+    birthdate: "",
+    degree: "",
+    department: "",
+    college: "",
+    contact: "",
+    gender: "",
+    year: "",
+    address1: "",
+    address2: "",
+    address3: "",
+    address4: "",
+    housingunit: "",
+  };
+
+  inputHousing: any = {
+    name: "",
+    userID: 0,
+  };
+
+  resetModel() {
+    this.inputAccount = {
+      prfphoto: 0,
+      fName: "",
+      lName: "",
+      type: "",
+      status: "",
+      username: "",
+      password: "",
+      birthdate: "",
+      degree: "",
+      department: "",
+      college: "",
+      contact: "",
+      gender: "",
+      year: "",
+      address1: "",
+      address2: "",
+      address3: "",
+      address4: "",
+      housingunit: "",
+    };
   }
-  hAddSave() {
-    this.$q.dialog({
-      title: "Confirm Edit",
-      message: "Are you sure you want to publish it?",
-      cancel: true,
-      persistent: true,
-      class: "defaultfont",
-    }).onOk(() => {
-      this.$router.replace("/landlord/home");
+  hNameSave() {
+    this.$q
+      .dialog({
+        title: "Confirm Edit",
+        message: "Are you sure you want to publish it?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+      .onOk(() => {
+        this.next = !this.next;
+      });
+  }
+  async hAddSave() {
+    console.log("HERE");
+    const addhousing = await this.addHousing({
+      ...this.inputHousing,
+      name: this.inputAccount.housingunit,
+      userID: this.currentUser.id,
     });
+    console.log(addhousing);
+    console.log(addhousing.name);
+    console.log(addhousing.userID);
+    const getHousingId = await this.getOneHousing(addhousing.name);
+    console.log(getHousingId);
+
+    await this.editAccount({
+      ...this.inputAccount,
+      id: this.currentUser.id,
+      fName: this.currentUser.fName,
+      lName: this.currentUser.lName,
+      mName: this.currentUser.mName,
+      email: this.currentUser.email,
+      username: this.currentUser.username,
+      type: this.currentUser.type,
+      status: this.currentUser.status,
+      birthdate: this.currentUser.birthdate,
+      contact: this.currentUser.contact,
+      gender: this.currentUser.gender,
+      address1: this.inputAccount.address1,
+      address2: this.inputAccount.address2,
+      address3: this.inputAccount.address3,
+      address4: this.inputAccount.address4,
+      housingunit: this.inputAccount.housingunit,
+      housingID: 1,
+    });
+
+    this.updateAccount = false;
+    this.resetModel();
+    this.$q.notify({
+      type: "positive",
+      message: "Successfully Added.",
+    });
+    await this.$router.replace("/landlord/home");
   }
 }
 </script>

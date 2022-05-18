@@ -54,10 +54,10 @@ export interface HousingDto {
     'name': string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof HousingDto
      */
-    'userId': string;
+    'userID': number;
 }
 /**
  * 
@@ -313,6 +313,24 @@ export interface UserDto {
      * @type {string}
      * @memberof UserDto
      */
+    'chatLink': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDto
+     */
+    'mapLink': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserDto
+     */
+    'housingID': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDto
+     */
     'refreshToken'?: string;
 }
 
@@ -548,6 +566,40 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          */
         getAllMedia: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/media`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get user by name
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHousingName: async (name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getHousingName', 'name', name)
+            const localVarPath = `/housing-unit/{name}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1173,6 +1225,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get user by name
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHousingName(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HousingDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHousingName(name, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get all posts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1404,6 +1467,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Get user by name
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHousingName(name: string, options?: any): AxiosPromise<HousingDto> {
+            return localVarFp.getHousingName(name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get all posts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1631,6 +1704,18 @@ export class DefaultApi extends BaseAPI {
      */
     public getAllMedia(options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getAllMedia(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get user by name
+     * @param {string} name 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getHousingName(name: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getHousingName(name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

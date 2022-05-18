@@ -27,7 +27,7 @@
         </div>
         <div align="right" class="col-6">
           <q-btn
-            label="Edit"
+            label="Edit"                                                                                              `````1111111111111111111111111112`
             unelevated
             rounded
             no-caps
