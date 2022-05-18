@@ -211,10 +211,26 @@ export default class LoginForm extends Vue {
   haddExInput4 = "Lanao del Sur";
 
   hNameSave() {
-    this.next = !this.next;
+    this.$q.dialog({
+      title: "Confirm Edit",
+      message: "Are you sure you want to publish it?",
+      cancel: true,
+      persistent: true,
+      class: "defaultfont",
+    }).onOk(() => {
+      this.next = !this.next;
+    });
   }
   hAddSave() {
-    this.$router.replace("/landlord/home");
+    this.$q.dialog({
+      title: "Confirm Edit",
+      message: "Are you sure you want to publish it?",
+      cancel: true,
+      persistent: true,
+      class: "defaultfont",
+    }).onOk(() => {
+      this.$router.replace("/landlord/home");
+    });
   }
 }
 </script>
