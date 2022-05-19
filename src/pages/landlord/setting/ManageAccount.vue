@@ -25,10 +25,10 @@
   <q-page class="defaultfont">
     <div align="center" class="q-pa-md">
       <q-avatar size="6rem" class="bg-primary">
-        <q-img :src="activeUser.prfphoto" />
+        <q-img :src="`http://localhost:3000/media/${currentUser.prfphoto}`" class="avatar" />
       </q-avatar>
       <div class="q-mt-sm defaultfont-semibold text-body1">
-        {{ activeUser.username }}
+        {{ currentUser.username }}
       </div>
     </div>
 
@@ -104,9 +104,25 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { AUser } from "src/store/auth/state";
+import { Options, Vue } from "vue-class-component";
+import { mapActions, mapState } from "vuex";
+@Options({
+  methods: {
+    ...mapActions("auth", ["authUser"]),
+  },
+  computed: {
+    ...mapState("auth", ["currentUser"]),
+  },
+})
 
 export default class LandlordManageAccount extends Vue {
+  authUser!: () => Promise<void>;
+  currentUser!: AUser;
+
+  async mounted() {
+    await this.authUser();
+  }
   activeUser = {
     id: 202200001,
     username: "zinboarding",
@@ -136,3 +152,13 @@ export default class LandlordManageAccount extends Vue {
   };
 }
 </script>
+
+<style>
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50% !important;
+  border: 2px solid rgb(190, 40, 45) !important;
+}
+</style>
+

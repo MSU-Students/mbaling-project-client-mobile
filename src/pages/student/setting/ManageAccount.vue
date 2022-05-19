@@ -25,10 +25,10 @@
   <q-page class="defaultfont">
     <div align="center" class="q-pa-md">
       <q-avatar size="6rem" class="bg-primary">
-        <q-img :src="activeUser.prfphoto" />
+         <q-img :src="`http://localhost:3000/media/${currentUser.prfphoto}`" class="avatar" />
       </q-avatar>
       <div class="q-mt-sm defaultfont-semibold text-body1">
-        {{ activeUser.username }}
+        {{ currentUser.username }}
       </div>
     </div>
 
@@ -104,35 +104,34 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { AUser } from "src/store/auth/state";
+import { Options, Vue } from "vue-class-component";
+import { mapActions, mapState } from "vuex";
+
+@Options({
+  methods: {
+    ...mapActions("auth", ["authUser"]),
+  },
+  computed: {
+    ...mapState("auth", ["currentUser"]),
+  },
+})
 
 export default class StudentManageAccount extends Vue {
-  activeUser = {
-    id: 201812730,
-    username: "palawanexpress98",
-    password: "password",
-    isStudent: true,
 
-    firstname: "Nahed",
-    middlename: "Solaiman",
-    lastname: "Bashier",
-    prfphoto: "https://cdn.quasar.dev/img/boy-avatar.png",
+   authUser!: () => Promise<void>;
+  currentUser!: AUser;
 
-    degree: "BS Information Technology (Database System)",
-    department: "Department of Information Sciences",
-    college: "College of Information and Computing Sciences",
-    yearAdmitted: 2018,
-
-    addressLine1: "0059 Disarip Street",
-    addressLine2: "Bubonga Marawi",
-    addressLine3: "Marawi City",
-    addressLine4: "Lanao del Sur",
-    housingAddress: "",
-
-    birthdate: "1998-10-19",
-    gender: "Male",
-    contact: "09090206852",
-    email: "bashier.ns30@s.msumain.edu.ph",
-  };
+  async mounted() {
+    await this.authUser();
+  }
 }
 </script>
+<style>
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50% !important;
+  border: 2px solid rgb(190, 40, 45) !important;
+}
+</style>

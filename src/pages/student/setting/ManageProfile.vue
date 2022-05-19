@@ -295,8 +295,8 @@ editStudentProfile = false;
   }
 
   async onSaveStudentAccount() {
-    const media = await this.uploadMedia(this.imageAttachement as File);
-    await this.editAccount({...this.currentUser, prfphoto: media.id});
+    const media =  this.uploadMedia(this.imageAttachement as File);
+    await this.editAccount({...this.currentUser, prfphoto: (await media).id});
     this.editStudentProfile = false;
     this.$q.notify({
           position: 'bottom',
