@@ -202,7 +202,7 @@ export default class PostForm extends Vue {
   async createPost() {
    const media = await this.uploadMedia(this.imageAttachement as File);
    await this.addPost({...this.inputPost,
-                  prfphoto: this.currentUser.prfphoto,
+                  prfphoto: this.currentUser.prfphoto || this.inputPost.prfphoto,
                   userID: this.currentUser.id,
                   url: media.id});
     this.addnewPost = false;
