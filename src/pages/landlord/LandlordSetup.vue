@@ -341,6 +341,7 @@ export default class LoginForm extends Vue {
       birthdate: this.currentUser.birthdate,
       contact: this.currentUser.contact,
       gender: this.currentUser.gender,
+      password: this.currentUser.password,
       address1: this.inputAccount.address1,
       address2: this.inputAccount.address2,
       address3: this.inputAccount.address3,
