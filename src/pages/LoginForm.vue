@@ -96,7 +96,7 @@ export default class LoginForm extends Vue {
           textColor: "primary",
           type: 'positive',
           classes: "defaultfont",
-          message: 'You are logged in',
+          message: 'You are logged in ' + this.currentUser.fName,
         });
       } else if (this.currentUser.type == "landlord") {
         this.$q.loading.hide();
@@ -110,7 +110,7 @@ export default class LoginForm extends Vue {
           textColor: "primary",
           type: 'positive',
           classes: "defaultfont",
-          message: 'You are logged in',
+          message: 'You are logged in ' + this.currentUser.fName,
         });
         }
       }

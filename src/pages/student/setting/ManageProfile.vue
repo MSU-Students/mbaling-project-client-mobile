@@ -1,4 +1,6 @@
 <template>
+<!-- Edit Student Profile -->
+<q-form @submit="onSaveStudentAccount()" v-if="editStudentProfile">
   <page-header style="height: 4rem">
     <template #slot-left>
       <q-btn
@@ -12,6 +14,7 @@
         @click="$router.go(-1)"
       />
     </template>
+
     <template #slot-middle>
       <div
         class="defaultfont-light text-bold text-black"
@@ -20,21 +23,22 @@
         Edit profile
       </div>
     </template>
+
     <template #slot-right>
       <q-btn
-        label="Save"
+        label="save"
         unelevated
         rounded
         no-caps
         color="primary"
         class="q-mr-md defaultfont"
         style="height: 3rem"
-        @click="oneditAccount()"
+        type="submit"
       />
     </template>
   </page-header>
 
-  <q-page class="defaultfont">
+  <div class="defaultfont">
     <div align="center" class="q-pa-md">
       <q-avatar size="8rem" class="bg-primary">
         <q-img
@@ -56,31 +60,27 @@
     <div class="q-px-lg q-pb-lg">
       <q-input
         v-model="currentUser.fName"
-        :placeholder="`${currentUser.fName}`"
         label="First name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-input
-        v-model="inputAccount.mName"
-        :placeholder="`${currentUser.mName}`"
+        v-model="currentUser.mName"
         label="Middle name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-input
-        v-model="inputAccount.lName"
-        :placeholder="`${currentUser.lName}`"
+        v-model="currentUser.lName"
         label="Last name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-select
-        v-model="inputAccount.gender"
-        :placeholder="`${currentUser.gender}`"
+        v-model="currentUser.gender"
         :options="genderOptions"
         label="Gender"
         stack-label
@@ -88,7 +88,7 @@
         style="font-size: medium"
       />
       <q-input
-        v-model="inputAccount.birthdate"
+        v-model="currentUser.birthdate"
         label="Date of birth"
         stack-label
         type="date"
@@ -96,8 +96,118 @@
         style="font-size: medium"
       />
     </div>
+    </div>
+    </q-form>
+
+<!--  -->
+<q-form @submit="showEditStudent" v-else>
+  <page-header style="height: 4rem">
+    <template #slot-left>
+      <q-btn
+        icon="bi-chevron-left"
+        dense
+        flat
+        :ripple="false"
+        size="sm"
+        color="black"
+        class="q-ml-md"
+        @click="$router.go(-1)"
+      />
+    </template>
+
+    <template #slot-middle>
+      <div
+        class="defaultfont-light text-bold text-black"
+        style="font-size: medium"
+      >
+        Edit profile
+      </div>
+    </template>
+
+    <template #slot-right>
+      <q-btn
+        label="edit"
+        unelevated
+        rounded
+        no-caps
+        outline
+        class="q-mr-md defaultfont"
+        style="color: #BE282D; height: 3rem"
+        type="submit"
+      />
+
+    </template>
+  </page-header>
+
+  <div class="defaultfont">
+    <div align="center" class="q-pa-md">
+      <q-avatar size="8rem" class="bg-primary">
+        <q-img
+          :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
+          class="avatar"
+        />
+      </q-avatar>
+      <div class="q-mt-md q-px-xl" style="font-size: x-large;">
+        @{{ currentUser.username }}
+      </div>
+    </div>
+
+    <div class="q-px-lg q-pb-lg">
+      <q-input
+        v-model="currentUser.fName"
+        label="First name"
+        stack-label
+        readonly
+        disable
+        class="q-mt-lg"
+        style="font-size: medium"
+      />
+      <q-input
+        v-model="currentUser.mName"
+        label="Middle name"
+        stack-label
+        readonly
+        disable
+        class="q-mt-lg"
+        style="font-size: medium"
+      />
+      <q-input
+        v-model="currentUser.lName"
+        label="Last name"
+        stack-label
+        readonly
+        disable
+        class="q-mt-lg"
+        style="font-size: medium"
+      />
+      <q-select
+        v-model="currentUser.gender"
+        :options="genderOptions"
+        label="Gender"
+        stack-label
+        readonly
+        disable
+        class="q-mt-lg"
+        style="font-size: medium"
+      />
+      <q-input
+        v-model="currentUser.birthdate"
+        label="Date of birth"
+        stack-label
+        readonly
+        disable
+        type="date"
+        class="q-mt-lg"
+        style="font-size: medium"
+      />
+    </div>
+    </div>
+    </q-form>
+<!--  -->
+
     <q-separator class="q-mt-sm" />
 
+    <div class="defaultfont">
     <div align="left" class="q-mt-lg q-px-lg q-pb-xl row items-center">
       <div align="left" class="col-10">
         <div class="defaultfont-semibold text-grey-8" style="font-size: medium">
@@ -109,10 +219,16 @@
         </div>
       </div>
       <div align="right" class="col">
-        <q-icon name="bi-question-circle" size="lg" color="grey" @click="$router.replace('/tutorial/chatlink')"/>
+        <q-icon
+          name="bi-question-circle"
+          size="lg"
+          color="grey"
+          @click="$router.replace('/tutorial/chatlink')"
+        />
       </div>
     </div>
-  </q-page>
+  </div>
+
 </template>
 
 <script lang="ts">
@@ -136,7 +252,7 @@ export default class StudentManageProfile extends Vue {
   editAccount!: (payload: UserDto) => Promise<void>;
   uploadMedia!: (payload: File) => Promise<MediaDto>;
   authUser!: () => Promise<void>;
-  currentUser!: AUser;
+  currentUser!: any;
 
   imageAttachement: File[] | File = [];
   updateAccount = false;
@@ -170,60 +286,82 @@ export default class StudentManageProfile extends Vue {
     housingunit: "",
   };
 
-  async oneditAccount() {
+// Edit Student Profile
+editStudentProfile = false;
+
+  async showEditStudent() {
+    this.editStudentProfile = true;
+    this.currentUser = {...this.currentUser}
+  }
+
+  async onSaveStudentAccount() {
     const media = await this.uploadMedia(this.imageAttachement as File);
-    console.log(this.currentUser.id);
-    await this.editAccount({
-      ...this.inputAccount,
-      id: this.currentUser.id,
-      prfphoto: media.id,
-      type: this.currentUser.type,
-      status: this.currentUser.status,
-      username: this.currentUser.username,
-      password: this.currentUser.password,
-      birthdate: this.currentUser.birthdate,
-      degree: this.currentUser.degree,
-      department: this.currentUser.department,
-      college: this.currentUser.college,
-      contact: this.currentUser.contact,
-      gender: this.currentUser.gender,
-      year: this.currentUser.year,
-      address1: this.currentUser.address1,
-      address2: this.currentUser.address2,
-      address3: this.currentUser.address3,
-      address4: this.currentUser.address4,
-      housingunit: this.currentUser.housingunit,
-    });
-    this.updateAccount = false;
-    this.resetModel();
+    await this.editAccount({...this.currentUser, prfphoto: media.id});
+    this.editStudentProfile = false;
     this.$q.notify({
-      type: "positive",
-      message: "Successfully Edit.",
-    });
+          position: 'bottom',
+          color: "secondary",
+          textColor: "primary",
+          type: 'positive',
+          classes: "defaultfont",
+          message: 'Account Updated',
+        });
   }
-  resetModel() {
-    this.inputAccount = {
-      prfphoto: 0,
-      fName: "",
-      lName: "",
-      type: "",
-      status: "",
-      username: "",
-      password: "",
-      birthdate: "",
-      degree: "",
-      department: "",
-      college: "",
-      contact: "",
-      gender: "",
-      year: "",
-      address1: "",
-      address2: "",
-      address3: "",
-      address4: "",
-      housingunit: "",
-    };
-  }
+
+  // async oneditAccount() {
+  //   const media = await this.uploadMedia(this.imageAttachement as File);
+  //   console.log(this.presentStudent.id);
+  //   await this.editAccount({
+  //     ...this.inputAccount,
+      // id: this.presentStudent.id,
+      // prfphoto: media.id,
+      // type: this.presentStudent.type,
+      // status: this.presentStudent.status,
+      // username: this.presentStudent.username,
+      // password: this.presentStudent.password,
+      // birthdate: this.presentStudent.birthdate,
+      // degree: this.presentStudent.degree,
+      // department: this.presentStudent.department,
+      // college: this.presentStudent.college,
+      // contact: this.presentStudent.contact,
+      // gender: this.presentStudent.gender,
+      // year: this.presentStudent.year,
+      // address1: this.presentStudent.address1,
+      // address2: this.presentStudent.address2,
+      // address3: this.presentStudent.address3,
+      // address4: this.presentStudent.address4,
+      // housingunit: this.presentStudent.housingunit,
+  //   });
+  //   this.updateAccount = false;
+  //   this.resetModel();
+  //   this.$q.notify({
+  //     type: "positive",
+  //     message: "Successfully Edit.",
+  //   });
+  // }
+  // resetModel() {
+  //   this.inputAccount = {
+  //     prfphoto: 0,
+  //     fName: "",
+  //     lName: "",
+  //     type: "",
+  //     status: "",
+  //     username: "",
+  //     password: "",
+  //     birthdate: "",
+  //     degree: "",
+  //     department: "",
+  //     college: "",
+  //     contact: "",
+  //     gender: "",
+  //     year: "",
+  //     address1: "",
+  //     address2: "",
+  //     address3: "",
+  //     address4: "",
+  //     housingunit: "",
+  //   };
+  // }
 
   confirmEdit() {
     this.$q.dialog({

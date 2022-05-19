@@ -1,4 +1,5 @@
 <template>
+<div v-if="editLandlordProfile">
   <page-header style="height: 4rem">
     <template #slot-left>
       <q-btn
@@ -29,12 +30,12 @@
         color="primary"
         class="q-mr-md defaultfont"
         style="height: 3rem"
-        @click="oneditAccount()"
+        @click="onSaveLandlord()"
       />
     </template>
   </page-header>
 
-  <q-page class="q-px-md defaultfont">
+  <div class="q-px-md defaultfont">
     <div align="center" class="q-pa-md">
       <q-avatar size="8rem" class="bg-primary">
         <q-img
@@ -43,58 +44,40 @@
         />
       </q-avatar>
       <div class="q-mt-sm q-px-xl">
-        <q-btn class="q-ma-none q-pa-none" rounded>
-          <q-file
-            style="width: 4rem"
-            class="q-pa-none q-ma-none"
-            item-aligned
-            use-chips
-            rounded
-            dense
-            outlined
-            label="Edit"
-            accept=".jpg, image/*"
-            v-model="imageAttachement"
-          >
-          </q-file>
-        </q-btn>
-      </div>
-      <div class="q-mt-sm">
-        <q-btn
-          label="Edit"
-          unelevated
-          rounded
-          no-caps
-          text-color="black"
-          color="grey-3"
-        />
+        <q-file
+          outlined
+          label="Upload Image"
+          accept=".jpg, image/*"
+          v-model="imageAttachement"
+        >
+        </q-file>
       </div>
     </div>
 
     <div class="q-px-sm q-pb-xl">
       <q-input
-        v-model="inputAccount.fName"
+        v-model="currentUser.fName"
         label="First name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-input
-        v-model="inputAccount.mName"
+        v-model="currentUser.mName"
         label="Middle name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-input
-        v-model="inputAccount.lName"
+        v-model="currentUser.lName"
         label="Last name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-select
-        v-model="inputAccount.gender"
+        v-model="currentUser.gender"
         :options="genderOptions"
         label="Gender"
         stack-label
@@ -102,7 +85,7 @@
         style="font-size: medium"
       />
       <q-input
-        v-model="inputAccount.birthdate"
+        v-model="currentUser.birthdate"
         label="Date of birth"
         stack-label
         type="date"
@@ -110,7 +93,112 @@
         style="font-size: medium"
       />
     </div>
-  </q-page>
+  </div>
+  </div>
+
+  <!--  -->
+
+  <div v-else>
+  <page-header style="height: 4rem">
+    <template #slot-left>
+      <q-btn
+        icon="bi-chevron-left"
+        dense
+        flat
+        :ripple="false"
+        size="sm"
+        color="black"
+        class="q-ml-md"
+        @click="$router.go(-1)"
+      />
+    </template>
+    <template #slot-middle>
+      <div
+        class="defaultfont-light text-bold text-black"
+        style="font-size: medium"
+      >
+        Edit profile
+      </div>
+    </template>
+    <template #slot-right>
+      <q-btn
+        label="edit"
+        unelevated
+        rounded
+        no-caps
+        outline
+        color="primary"
+        class="q-mr-md defaultfont"
+        style="height: 3rem"
+        @click="onEditLandlord()"
+      />
+    </template>
+  </page-header>
+
+  <div class="q-px-md defaultfont">
+    <div align="center" class="q-pa-md">
+      <q-avatar size="8rem" class="bg-primary">
+        <q-img
+          :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
+          class="avatar"
+        />
+      </q-avatar>
+      <div class="q-mt-md q-px-xl" style="font-size: x-large;">
+        @{{ currentUser.username }}
+      </div>
+    </div>
+
+    <div class="q-px-sm q-pb-xl">
+      <q-input
+        v-model="currentUser.fName"
+        label="First name"
+        stack-label
+        readonly
+        disable
+        class="q-mt-lg"
+        style="font-size: medium"
+      />
+      <q-input
+        v-model="currentUser.mName"
+        label="Middle name"
+        stack-label
+        readonly
+        disable
+        class="q-mt-lg"
+        style="font-size: medium"
+      />
+      <q-input
+        v-model="currentUser.lName"
+        label="Last name"
+        stack-label
+        readonly
+        disable
+        class="q-mt-lg"
+        style="font-size: medium"
+      />
+      <q-select
+        v-model="currentUser.gender"
+        :options="genderOptions"
+        label="Gender"
+        stack-label
+        readonly
+        disable
+        class="q-mt-lg"
+        style="font-size: medium"
+      />
+      <q-input
+        v-model="currentUser.birthdate"
+        label="Date of birth"
+        stack-label
+        readonly
+        disable
+        type="date"
+        class="q-mt-lg"
+        style="font-size: medium"
+      />
+    </div>
+  </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -133,7 +221,7 @@ export default class LandlordManageProfile extends Vue {
   editAccount!: (payload: UserDto) => Promise<void>;
   uploadMedia!: (payload: File) => Promise<MediaDto>;
   authUser!: () => Promise<void>;
-  currentUser!: AUser;
+  currentUser!: any;
 
   imageAttachement: File[] | File = [];
   updateAccount = false;
@@ -168,61 +256,83 @@ export default class LandlordManageProfile extends Vue {
     housingunit: "",
   };
 
-  async oneditAccount() {
-    const media = await this.uploadMedia(this.imageAttachement as File);
-    console.log(this.currentUser.id);
-    await this.editAccount({
-      ...this.inputAccount,
-      id: this.currentUser.id,
-      prfphoto: media.id,
-      type: this.currentUser.type,
-      status: this.currentUser.status,
-      username: this.currentUser.username,
-      password: this.currentUser.password,
-      birthdate: this.currentUser.birthdate,
-      degree: this.currentUser.degree,
-      department: this.currentUser.department,
-      college: this.currentUser.college,
-      contact: this.currentUser.contact,
-      gender: this.currentUser.gender,
-      year: this.currentUser.year,
-      address1: this.currentUser.address1,
-      address2: this.currentUser.address2,
-      address3: this.currentUser.address3,
-      address4: this.currentUser.address4,
-      housingunit: this.currentUser.housingunit,
-    });
-    this.updateAccount = false;
-    this.resetModel();
-    this.$q.notify({
-      type: "positive",
-      message: "Successfully Edit.",
-    });
+  // Edit Landlord Profiles
+  editLandlordProfile = false;
+
+  async onEditLandlord() {
+    this.editLandlordProfile = true;
+    this.currentUser = {...this.currentUser}
   }
 
-  resetModel() {
-    this.inputAccount = {
-      prfphoto: 0,
-      fName: "",
-      lName: "",
-      type: "",
-      status: "",
-      username: "",
-      password: "",
-      birthdate: "",
-      degree: "",
-      department: "",
-      college: "",
-      contact: "",
-      gender: "",
-      year: "",
-      address1: "",
-      address2: "",
-      address3: "",
-      address4: "",
-      housingunit: "",
-    };
+  async onSaveLandlord() {
+    const media = await this.uploadMedia(this.imageAttachement as File);
+    await this.editAccount({...this.currentUser, prfphoto: media.id});
+    this.editLandlordProfile = false;
+    this.$q.notify({
+          position: 'bottom',
+          color: "secondary",
+          textColor: "primary",
+          type: 'positive',
+          classes: "defaultfont",
+          message: 'Account Updated',
+        });
   }
+
+  // async oneditAccount() {
+  //   const media = await this.uploadMedia(this.imageAttachement as File);
+  //   console.log(this.currentUser.id);
+  //   await this.editAccount({
+  //     ...this.inputAccount,
+  //     id: this.currentUser.id,
+  //     prfphoto: media.id,
+  //     type: this.currentUser.type,
+  //     status: this.currentUser.status,
+  //     username: this.currentUser.username,
+  //     password: this.currentUser.password,
+  //     birthdate: this.currentUser.birthdate,
+  //     degree: this.currentUser.degree,
+  //     department: this.currentUser.department,
+  //     college: this.currentUser.college,
+  //     contact: this.currentUser.contact,
+  //     gender: this.currentUser.gender,
+  //     year: this.currentUser.year,
+  //     address1: this.currentUser.address1,
+  //     address2: this.currentUser.address2,
+  //     address3: this.currentUser.address3,
+  //     address4: this.currentUser.address4,
+  //     housingunit: this.currentUser.housingunit,
+  //   });
+  //   this.updateAccount = false;
+  //   this.resetModel();
+  //   this.$q.notify({
+  //     type: "positive",
+  //     message: "Successfully Edit.",
+  //   });
+  // }
+
+  // resetModel() {
+  //   this.inputAccount = {
+  //     prfphoto: 0,
+  //     fName: "",
+  //     lName: "",
+  //     type: "",
+  //     status: "",
+  //     username: "",
+  //     password: "",
+  //     birthdate: "",
+  //     degree: "",
+  //     department: "",
+  //     college: "",
+  //     contact: "",
+  //     gender: "",
+  //     year: "",
+  //     address1: "",
+  //     address2: "",
+  //     address3: "",
+  //     address4: "",
+  //     housingunit: "",
+  //   };
+  // }
 
   confirmEdit() {
     this.$q.dialog({
