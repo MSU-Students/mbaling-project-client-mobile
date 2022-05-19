@@ -210,7 +210,7 @@
 </template>
 
 <script lang="ts">
-import { UserDto, MediaDto, HousingDto } from "src/services/rest-api";
+import { UserDto, HousingDto } from "src/services/rest-api";
 import { AUser } from "src/store/auth/state";
 import { HousingInterface } from "src/store/housing-module/state";
 import { Options, Vue } from "vue-class-component";
@@ -219,24 +219,22 @@ import { mapState, mapActions } from "vuex";
 @Options({
   computed: {
     ...mapState("post", ["posts"]),
-    ...mapState('auth', ['currentUser']),
-    ...mapState('housing',['allHousing', 'newHousing'])
+    ...mapState("auth", ["currentUser"]),
+    ...mapState("housing", ["allHousing", "newHousing"]),
   },
   methods: {
-    ...mapActions('post', ['addPost']),
-    ...mapActions('auth', ['authUser']),
+    ...mapActions("post", ["addPost"]),
+    ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("housing", ["addHousing","getAllHousing", "getOneHousing"]),
+    ...mapActions("housing", ["addHousing", "getAllHousing", "getOneHousing"]),
   },
 })
-
 export default class LoginForm extends Vue {
-
   editAccount!: (payload: UserDto) => Promise<void>;
   addHousing!: (payload: HousingDto) => Promise<HousingDto>;
   authUser!: () => Promise<void>;
-  getAllHousing!:  () => Promise<void>
-  getOneHousing!:  (name: any) => Promise<void>
+  getAllHousing!: () => Promise<void>;
+  getOneHousing!: (name: any) => Promise<void>;
   newHousing!: any;
   allHousing!: HousingInterface;
   currentUser!: any;

@@ -176,24 +176,30 @@ export default class LandlordAccount extends Vue {
   }
 
   chatlinkSave() {
-    this.$q.dialog({
-      title: "Confirm Edit",
-      message: "Are you sure you want to publish the changes?",
-      cancel: true,
-      persistent: true,
-      class: "defaultfont",
-    });
-    this.chatlinkEdit = !this.chatlinkEdit;
+    this.$q
+      .dialog({
+        title: "Confirm Edit",
+        message: "Are you sure you want to publish the changes?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+      .onOk(() => {
+        this.chatlinkEdit = !this.chatlinkEdit;
+      });
   }
   maplinkSave() {
-    this.$q.dialog({
-      title: "Confirm Edit",
-      message: "Are you sure you want to publish the changes?",
-      cancel: true,
-      persistent: true,
-      class: "defaultfont",
-    });
-    this.maplinkEdit = !this.maplinkEdit;
+    this.$q
+      .dialog({
+        title: "Confirm Edit",
+        message: "Are you sure you want to publish the changes?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+      .onOk(() => {
+        this.maplinkEdit = !this.maplinkEdit;
+      });
   }
 }
 </script>
