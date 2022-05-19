@@ -2,8 +2,8 @@
 
   <div class="q-px-sm defaultfont">
     <div v-for="post in posts" :key="post" class="q-mb-sm q-pa-xs">
-      <div>
-        <div v-if="post.prfphoto == currentUser.prfphoto">
+      <div v-for="userID in posts.userID" :key="userID" class="q-mb-sm q-pa-xs">
+        <div v-if="post.prfphoto == userID">
         <q-img
           :src="`http://localhost:3000/media/${post.url}`"
           fit="cover"
