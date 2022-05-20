@@ -48,6 +48,12 @@ export interface AccessTokenDto {
 export interface HousingDto {
     /**
      * 
+     * @type {number}
+     * @memberof HousingDto
+     */
+    'id'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof HousingDto
      */
@@ -155,13 +161,7 @@ export interface PostDto {
      * @type {number}
      * @memberof PostDto
      */
-    'landlordID': number;
-    /**
-     * 
-     * @type {object}
-     * @memberof PostDto
-     */
-    'userID'?: object;
+    'userID': number;
 }
 /**
  * 
@@ -624,7 +624,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Get all posts
+         * @summary Get all housing
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1236,7 +1236,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get all posts
+         * @summary Get all housing
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1477,7 +1477,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Get all posts
+         * @summary Get all housing
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1720,7 +1720,7 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get all posts
+     * @summary Get all housing
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi

@@ -18,7 +18,7 @@ const actions: ActionTree<HousingStateInterface, StateInterface> = {
     console.log('GetOneHousing Action here')
     const res = await housingService.getHousingbyName(payload);
     console.log(payload.id)
-    console.log(payload)
+    console.log(res)
     console.log('GetOneHousing Action here 2')
     context.commit('getOneHousing', res);
   },
