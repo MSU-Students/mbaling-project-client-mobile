@@ -20,8 +20,17 @@
       <div class="defaultfont text-grey text-center" style="font-size: smaller">
         Please input below the business name of your housing firm.
       </div>
+      <q-form @submit="hNameSave()">
       <div align="center" class="q-mt-md">
-        <q-input v-model="inputAccount.housingunit" type="text" dense input-class="text-center" />
+        <q-input
+          v-model="inputAccount.housingunit"
+          type="text"
+          dense
+          input-class="text-center"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Please Input your Housing Name']"
+          hide-bottom-space
+           />
       </div>
       <div align="center" class="q-mt-sm">
         <q-btn
@@ -32,9 +41,10 @@
           color="primary"
           class="text-center text-caption"
           style="width: 4rem"
-          @click="hNameSave()"
+          type="submit"
         />
       </div>
+      </q-form>
 
 <!-- Housing Name Example -->
 
@@ -94,34 +104,47 @@
       <div class="defaultfont text-grey text-center" style="font-size: smaller">
         Please input below the address of your housing firm.
       </div>
+      <q-form @submit="hAddSaved()" greedy>
       <div align="center" class="q-mt-md">
         <q-input
-          v-model="currentUser.address1"
+          v-model="inputAccount.address1"
           type="text"
           dense
           hint="e.g. House No., Building, Street Name"
           input-class="text-center"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Please Input your Street']"
+          hide-bottom-space
         />
         <q-input
-          v-model="currentUser.address2"
+          v-model="inputAccount.address2"
           type="text"
           dense
           hint="e.g. Barangay"
           input-class="text-center"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Please Input your Barangay']"
+          hide-bottom-space
         />
         <q-input
-          v-model="currentUser.address3"
+          v-model="inputAccount.address3"
           type="text"
           dense
           hint="e.g. City, Municipality"
           input-class="text-center"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Please Input your Municipality']"
+          hide-bottom-space
         />
         <q-input
-          v-model="currentUser.address4"
+          v-model="inputAccount.address4"
           type="text"
           dense
           hint="e.g. Province, State"
           input-class="text-center"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Please Input your Province']"
+          hide-bottom-space
         />
       </div>
       <div align="center" class="q-mt-sm">
@@ -133,9 +156,10 @@
           color="primary"
           class="text-center text-caption"
           style="width: 4rem"
-          @click="hAddSaved()"
+          type="sumbit"
         />
       </div>
+      </q-form>
 
 <!-- Housing Address Example -->
 
