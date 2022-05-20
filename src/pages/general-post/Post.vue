@@ -1,7 +1,8 @@
 <template>
   <q-page class="defaultfont">
     <div class="bg-black">
-      <q-carousel
+          <q-img :src="`http://localhost:3000/media/${post.url}`"/>
+      <!-- <q-carousel
         v-model="slide"
         navigation
         arrows
@@ -37,14 +38,14 @@
             @click="onClick"
           />
         </template>
-      </q-carousel>
+      </q-carousel> -->
     </div>
 
     <div class="q-pa-sm bg-white">
       <q-item class="row items-center">
         <q-item-section avatar>
           <q-avatar size="xl" class="bg-primary">
-            <img :src="post.prfphoto" />
+             <q-img :src="`http://localhost:3000/media/${post.prfphoto}`"/>
           </q-avatar>
         </q-item-section>
 
@@ -57,7 +58,7 @@
             {{ post.housingAddress }}
           </q-item-label>
           <q-item-label lines="1" style="font-size: small">
-            @{{ post.username }}
+            @{{ post.url }}
           </q-item-label>
         </q-item-section>
 
@@ -150,6 +151,7 @@
 </template>
 
 <script lang="ts">
+import { PostDto } from "src/services/rest-api";
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapState } from "vuex";
 
@@ -169,17 +171,18 @@ export default class Post extends Vue {
   fullscreen = false;
   isStudent = true;
 
-  post = {
-    id: "",
-    title: "",
-    fee: "",
+  post: PostDto = {
     description: "",
-    prvKitchen: false,
+    fee: "",
     prvCR: false,
-    date: "",
+    prvKitchen: false,
+    photos: "",
+    title: "",
+    date: 0,
     housingAddress: "",
-    username: "",
-    prfphoto: "",
+    prfphoto: 0,
+    url: 0,
+    userID: 0
   };
 
   async mounted() {

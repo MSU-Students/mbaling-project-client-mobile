@@ -5,7 +5,9 @@
         class="bg-grey-4 row items-center justify-evenly"
         style="height: 100%; border-radius: 2rem 2rem 0 0"
       >
-        <q-icon name="bi-image" size="xl" color="grey" />
+       <q-img
+          :src="`http://localhost:3000/media/${post.url}`"/>
+        <!-- <q-icon name="bi-image" size="xl" color="grey" /> -->
       </div>
     </div>
 
@@ -37,7 +39,7 @@
 
     <div class="q-mt-sm q-px-md">
       <q-input
-        v-model="title"
+        v-model="post.title"
         autogrow
         dense
         placeholder="Title"
@@ -45,7 +47,7 @@
         style="font-size: medium"
       />
       <q-input
-        v-model="fee"
+        v-model="post.fee"
         dense
         placeholder="Monthly Fee"
         input-class="text-center"
@@ -57,7 +59,7 @@
         <div align="center" class="col">
           <q-checkbox
             label="Private Kitchen"
-            v-model="pkBox"
+            v-model="post.prvKitchen"
             dense
             color="primary"
           />
@@ -65,7 +67,7 @@
         <div align="center" class="col">
           <q-checkbox
             label="Private CR"
-            v-model="pcBox"
+            v-model="post.prvCR"
             dense
             color="primary"
           />
@@ -73,7 +75,7 @@
       </div>
 
       <q-input
-        v-model="description"
+        v-model="post.description"
         type="textarea"
         placeholder="Description"
         class="q-mt-md q-pb-lg"
@@ -112,48 +114,83 @@
 </template>
 
 <script lang="ts">
+import { PostDto } from "src/services/rest-api";
 import { ref } from "vue";
-import { Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
+import { mapState, mapActions } from "vuex";
+
+@Options({
+  computed: {
+    ...mapState("post", ["newPost"]),
+  },
+  methods: {
+    ...mapActions("post", ["getPostById"]),
+  },
+})
 
 export default class PostEdit extends Vue {
-  post = {
-    id: 135413523,
-    title:
-      "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
-    fee: 1200,
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  getPostById!: (id: any) => Promise<void>;
+  newPost!: any;
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+
+  post: PostDto = {
+    description: "",
+    fee: "",
+    prvCR: false,
     prvKitchen: false,
-    prvCR: true,
-    photos: [
-      {
-        id: 1,
-        url: "https://cdn.quasar.dev/img/parallax1.jpg",
-      },
-      {
-        id: 2,
-        url: "https://cdn.quasar.dev/img/mountains.jpg",
-      },
-      {
-        id: 3,
-        url: "https://cdn.quasar.dev/img/quasar.jpg",
-      },
-    ],
-    date: 1631096539262,
-
-    firstname: "Azshara",
-    middlename: "Queldorei",
-    lastname: "Highborne",
-    prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-    housingName: "Zin-Azshari Boarding House",
+    photos: "",
+    title: "",
+    date: 0,
+    housingAddress: "",
+    prfphoto: 0,
+    url: 0,
+    userID: 0
   };
 
-  title = ref(this.post.title);
-  fee = ref(this.post.fee);
-  description = ref(this.post.description);
-  pkBox = ref(this.post.prvKitchen);
-  pcBox = ref(this.post.prvCR);
+  async mounted() {
+    const postId = this.$route.params.id;
+    await this.getPostById(postId);
+    this.post = this.newPost;
+    console.log(this.post);
+  }
+//   post = {
+//     id: 135413523,
+//     title:
+//       "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
+//     fee: 1200,
+//     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+// Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+//     prvKitchen: false,
+//     prvCR: true,
+//     photos: [
+//       {
+//         id: 1,
+//         url: "https://cdn.quasar.dev/img/parallax1.jpg",
+//       },
+//       {
+//         id: 2,
+//         url: "https://cdn.quasar.dev/img/mountains.jpg",
+//       },
+//       {
+//         id: 3,
+//         url: "https://cdn.quasar.dev/img/quasar.jpg",
+//       },
+//     ],
+//     date: 1631096539262,
+
+//     firstname: "Azshara",
+//     middlename: "Queldorei",
+//     lastname: "Highborne",
+//     prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
+//     housingName: "Zin-Azshari Boarding House",
+//   };
+
+  // title = ref(this.post.title);
+  // fee = ref(this.post.fee);
+  // description = ref(this.post.description);
+  // pkBox = ref(this.post.prvKitchen);
+  // pcBox = ref(this.post.prvCR);
 
   showClearBtn = false;
 }

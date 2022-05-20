@@ -120,7 +120,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import("pages/general-post/PostForm.vue"),
       },
       {
-        path: "edit",
+        path: "edit/:id?",
         component: () => import("pages/general-post/PostEdit.vue"),
       },
     ],

@@ -21,7 +21,7 @@
         Please input below the business name of your housing firm.
       </div>
       <div align="center" class="q-mt-md">
-        <q-input v-model="currentUser.housingunit" type="text" dense input-class="text-center" />
+        <q-input v-model="inputAccount.housingunit" type="text" dense input-class="text-center" />
       </div>
       <div align="center" class="q-mt-sm">
         <q-btn
@@ -133,7 +133,7 @@
           color="primary"
           class="text-center text-caption"
           style="width: 4rem"
-          @click="hNameSaved()"
+          @click="hAddSaved()"
         />
       </div>
 
@@ -269,32 +269,18 @@ export default class LoginForm extends Vue {
   haddExInput4 = "Lanao del Sur";
 
 
-  // inputAccount: any = {
-  //   prfphoto: 0,
-  //   fName: "",
-  //   lName: "",
-  //   type: "",
-  //   status: "",
-  //   username: "",
-  //   password: "",
-  //   birthdate: "",
-  //   degree: "",
-  //   department: "",
-  //   college: "",
-  //   contact: "",
-  //   gender: "",
-  //   year: "",
-  //   address1: "",
-  //   address2: "",
-  //   address3: "",
-  //   address4: "",
-  //   housingunit: "",
-  // };
+  inputAccount: any = {
+    address1: "",
+    address2: "",
+    address3: "",
+    address4: "",
+    housingunit: "",
+  };
 
-  // inputHousing: any={
-  //   name: "",
-  //   userID: 0
-  // }
+  inputHousing: any={
+    name: "",
+    userID: 0
+  }
 
   // resetModel() {
   //   this.inputAccount = {
@@ -323,48 +309,36 @@ export default class LoginForm extends Vue {
     await this.editAccount(this.currentUser);
     this.next = !this.next;
   }
-  async hNameSaved(){
-    await this.editAccount(this.currentUser);
-    await this.$router.replace("/landlord/home");
-  }
-  // async hAddSave() {
-  //   console.log('HERE')
-  //   const addhousing = await this.addHousing({...this.inputHousing, name: this.inputAccount.housingunit, userID: this.currentUser.id,})
-  //   console.log(addhousing)
-  //   console.log(addhousing.name)
-  //   console.log(addhousing.userID)
-  //   const getHousingId = await this.getOneHousing(addhousing.name)
-  //   console.log(getHousingId)
-
-  //   await this.editAccount({
-  //     ...this.inputAccount,
-  //     id: this.currentUser.id,
-  //     fName: this.currentUser.fName,
-  //     lName: this.currentUser.lName,
-  //     mName: this.currentUser.mName,
-  //     email: this.currentUser.email,
-  //     username: this.currentUser.username,
-  //     type: this.currentUser.type,
-  //     status: this.currentUser.status,
-  //     birthdate: this.currentUser.birthdate,
-  //     contact: this.currentUser.contact,
-  //     gender: this.currentUser.gender,
-  //     address1: this.inputAccount.address1,
-  //     address2: this.inputAccount.address2,
-  //     address3: this.inputAccount.address3,
-  //     address4: this.inputAccount.address4,
-  //     housingunit: this.inputAccount.housingunit,
-  //     housingID: 1
-  //   });
-
-  //   this.updateAccount = false;
-  //   this.resetModel();
-  //   this.$q.notify({
-  //     type: "positive",
-  //     message: "Successfully Added.",
-  //   })
+  // async hNameSaved(){
+  //   await this.editAccount(this.currentUser);
   //   await this.$router.replace("/landlord/home");
   // }
+  async hAddSaved() {
+    console.log('HERE')
+    const addhousing = await this.addHousing({...this.inputHousing, name: this.inputAccount.housingunit, userID: this.currentUser.id,})
+    console.log(addhousing)
+    console.log(addhousing.name)
+    console.log(addhousing.userID)
+    console.log(addhousing.id)
+
+    await this.editAccount({
+      ...this.currentUser,
+      id: this.currentUser.id,
+      address1: this.inputAccount.address1,
+      address2: this.inputAccount.address2,
+      address3: this.inputAccount.address3,
+      address4: this.inputAccount.address4,
+      housingunit: this.inputAccount.housingunit,
+      housingID: addhousing.id
+    });
+
+    this.updateAccount = false;
+    this.$q.notify({
+      type: "positive",
+      message: "Successfully Added.",
+    })
+    await this.$router.replace("/landlord/home");
+  }
 }
 </script>
 

@@ -72,6 +72,7 @@ export default class PostFeedComponent extends Vue {
   currentUser!: AUser;
 
   async mounted() {
+    console.log('HELLO')
     await this.getAllPost();
   }
 

@@ -3,7 +3,7 @@
   <div class="q-px-sm defaultfont">
     <div v-for="post in posts" :key="post" class="q-mb-sm q-pa-xs">
       <div>
-        <div v-if="post.prfphoto == currentUser.prfphoto">
+        <div v-if="post.userID == currentUser.id">
         <q-img
           :src="`http://localhost:3000/media/${post.url}`"
           fit="cover"
@@ -34,7 +34,7 @@
             color="primary"
             class="text-center text-caption"
             style="width: 4rem"
-            @click="$router.push('/post/edit')"
+            @click="redirect(post)"
           />
           <q-btn
             label="Trash"
@@ -86,6 +86,12 @@ export default class PostPageComponent extends Vue {
   async mounted() {
     await this.getAllPost();
     await this.authUser()
+  }
+
+  async redirect(post: any) {
+    console.log(post);
+    const postID = post.id;
+    await this.$router.push(`/post/edit/${postID}`);
   }
 
   confirmDelete() {
