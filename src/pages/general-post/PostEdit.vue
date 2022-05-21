@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div align="right" class="q-px-md q-py-sm row items-center">
+    <!-- <div align="right" class="q-px-md q-py-sm row items-center">
       <div class="col">
         <q-btn
           v-on:click="showClearBtn = !showClearBtn"
@@ -35,51 +35,103 @@
           />
         </Transition>
       </div>
+    </div> -->
+
+<!-- Upload Picture -->
+    <div class="row">
+    <div class="col">
+       <q-file
+        class="q-pr-lg text-primary"
+        outlined
+        label="Upload"
+        accept=".jpg, image/*"
+        item-aligned
+        style="width: 13rem;"
+      >
+        <template v-slot:prepend>
+          <q-icon name="album" />
+        </template>
+      </q-file>
     </div>
+    <div class="col">
+      <q-file
+        class="q-pr-lg text-primary"
+        disable
+        outlined
+        label="Capture"
+        accept=".jpg, image/*"
+        item-aligned
+        style="width: 13rem;"
+        @click="alert()"
+      >
+        <template v-slot:prepend>
+          <q-icon name="camera" />
+        </template>
+      </q-file>
+    </div>
+    </div>
+<!--  -->
 
     <div class="q-mt-sm q-px-md">
       <q-input
         v-model="post.title"
-        autogrow
+        filled
         dense
+        type="text"
         placeholder="Title"
-        input-class="text-center"
+        input-class="text-on-left"
         style="font-size: medium"
       />
+      <div class="row">
+        <div class="col">
       <q-input
+        class="q-mt-sm"
         v-model="post.fee"
+        prefix="P"
         dense
+        filled
+        type="number"
         placeholder="Monthly Fee"
-        input-class="text-center"
-        class="q-mt-xs q-px-xl"
+        input-class="text-on-left"
         style="font-size: medium"
       />
+      </div>
+      <div class="col q-pt-sm q-pl-sm">
+          <q-checkbox
+            label="Negotiable"
+            v-model="post.Negotiable"
+            color="primary"
+            style="font-size: medium"
+          />
+      </div>
+      </div>
 
-      <div class="q-px-md q-mt-md row items-center">
-        <div align="center" class="col">
+        <div class="q-pt-md q-pl-lg">
           <q-checkbox
             label="Private Kitchen"
             v-model="post.prvKitchen"
-            dense
             color="primary"
+            style="font-size: medium"
+            dense
           />
         </div>
-        <div align="center" class="col">
+        <div class="q-pt-md q-pl-lg">
           <q-checkbox
             label="Private CR"
             v-model="post.prvCR"
-            dense
             color="primary"
+            style="font-size: medium"
+            dense
           />
         </div>
-      </div>
 
       <q-input
         v-model="post.description"
         type="textarea"
+        filled
         placeholder="Description"
         class="q-mt-md q-pb-lg"
-        style="font-size: small"
+        style="font-size: md;"
       />
     </div>
 
@@ -108,34 +160,40 @@
         no-caps
         color="primary"
         style="height: 3rem; width: 5rem"
+        @click="onSaveEditPost()"
       />
     </div>
   </q-footer>
 </template>
 
 <script lang="ts">
-import { PostDto } from "src/services/rest-api";
+import { PostDto, MediaDto } from "src/services/rest-api";
 import { ref } from "vue";
 import { Options, Vue } from "vue-class-component";
 import { mapState, mapActions } from "vuex";
+import Post from "./Post.vue";
 
 @Options({
   computed: {
     ...mapState("post", ["newPost"]),
   },
   methods: {
-    ...mapActions("post", ["getPostById"]),
+    ...mapActions("post", ["getPostById", "editPost"]),
+    ...mapActions("media", ["uploadMedia"]),
   },
 })
 
 export default class PostEdit extends Vue {
+  editPost!: (payload: PostDto) => Promise<void>;
+  uploadMedia!: (payload: File) => Promise<MediaDto>;
   getPostById!: (id: any) => Promise<void>;
   newPost!: any;
+  imageAttachement: File[] | File = [];
 
-
-  post: PostDto = {
+  post: any = {
     description: "",
     fee: "",
+    Negotiable: false,
     prvCR: false,
     prvKitchen: false,
     photos: "",
@@ -153,6 +211,24 @@ export default class PostEdit extends Vue {
     this.post = this.newPost;
     console.log(this.post);
   }
+
+  async onSaveEditPost(){
+    console.log("Yeahh!!")
+    const media = await this.uploadMedia(this.imageAttachement as File);
+    await this.editPost({...this.post,
+                        id: this.post.id,
+                        photos: media.id
+                        });
+    this.$q.notify({
+          position: 'bottom',
+          color: "secondary",
+          textColor: "primary",
+          type: 'positive',
+          classes: "defaultfont",
+          message: 'Successfully Edited!',
+        });
+  }
+
 //   post = {
 //     id: 135413523,
 //     title:
@@ -193,6 +269,13 @@ export default class PostEdit extends Vue {
   // pcBox = ref(this.post.prvCR);
 
   showClearBtn = false;
+
+  alert() {
+    this.$q.dialog({
+      message: "This feature is not available yet.",
+      class: "defaultfont",
+    });
+  }
 }
 </script>
 

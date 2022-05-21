@@ -37,11 +37,15 @@
                 class="bg-primary"
                 @click="$router.push('/profile')"
               >
-                <q-img :src="`http://localhost:3000/media/${result.prfphoto}`">
+                <!-- <q-img :src="`http://localhost:3000/media/${result.prfphoto}`"> -->
+                <q-img v-if="result.prfphoto" class="avatar q-pt-none q-mt-none"
+                  :src="`http://localhost:3000/media/${result.prfphoto}`"
+                />
+                <img v-if="!result.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
                   <q-tooltip>
                     {{ result.housingunit }}
                   </q-tooltip>
-                </q-img>
+                <!-- </q-img> -->
               </q-avatar>
             </div>
           </div>

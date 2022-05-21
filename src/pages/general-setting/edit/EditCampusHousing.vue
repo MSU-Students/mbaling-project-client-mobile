@@ -35,7 +35,7 @@
 
     <!-- Search Input -->
 
-    <div class="q-px-md q-pb-xl defaultfont">
+    <div class="q-px-md defaultfont">
       <div class="q-pt-md">
         <q-form @submit="searchAction()">
           <q-input
@@ -59,12 +59,12 @@
     <q-list v-for="(result, index) in searchResultUser" :key="index">
       <q-item
         clickable
-        dense
-        class="q-pt-md q-my-sm row items-center"
+        class="q-pt-xl q-mx-lg row items-center"
         style="height: 3rem"
+        @click="housingSaveResult(result)"
       >
         <div>
-          <q-item-section>
+          <q-item-section class="q-my-lg">
             <q-item-label
               lines="1"
               class="defaultfont-semibold"
@@ -163,6 +163,7 @@ export default class EditCampusHousing extends Vue {
   allHousing!: HousingInterface[];
   allAccount!: UserInterface[];
   currentUser!: any;
+  housing!: any;
 
   async mounted() {
     await this.getAllHousing();
@@ -187,6 +188,11 @@ export default class EditCampusHousing extends Vue {
       classes: "defaultfont",
       message: "Account Updated",
     });
+  }
+
+  async housingSaveResult(res: any){
+    this.search = res.name;
+    console.log("what!" + this.search)
   }
 
   // Search Funtion

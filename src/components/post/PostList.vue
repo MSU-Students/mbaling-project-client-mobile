@@ -9,7 +9,7 @@
           fit="cover"
           class="bg-primary"
           style="width: 100%; height: 16rem; border-radius: 0.5rem"
-          @click="$router.push('/post')"
+          @click="redirectPost(post)"
         >
           <div class="absolute-bottom text-left">
             <q-item-label lines="2" style="font-size: medium">
@@ -88,6 +88,12 @@ export default class PostPageComponent extends Vue {
     await this.authUser()
   }
 
+  async redirectPost(post: any) {
+    console.log(post);
+    const postID = post.id;
+    await this.$router.push(`/post/${postID}`);
+  }
+
   async redirect(post: any) {
     console.log(post);
     const postID = post.id;
@@ -103,5 +109,6 @@ export default class PostPageComponent extends Vue {
       class: "defaultfont",
     });
   }
+
 }
 </script>
