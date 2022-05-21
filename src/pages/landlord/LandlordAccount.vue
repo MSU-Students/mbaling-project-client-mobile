@@ -12,10 +12,11 @@
 
     <div align="center" class="q-px-md q-pb-xs text-black">
       <q-avatar size="10rem" class="bg-primary">
-        <q-img
+        <q-img v-if="currentUser.prfphoto"
           :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
           class="avatar"
         />
+        <q-img v-if="!currentUser.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
       </q-avatar>
       <div
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"

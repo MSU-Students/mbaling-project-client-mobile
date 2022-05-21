@@ -41,10 +41,11 @@
   <div class="defaultfont">
     <div align="center" class="q-pa-md">
       <q-avatar size="8rem" class="bg-primary">
-        <q-img
+        <q-img v-if="currentUser.prfphoto"
           :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
           class="avatar"
         />
+        <img v-if="!currentUser.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
       </q-avatar>
       <div class="q-mt-sm q-px-xl">
         <q-file
@@ -142,10 +143,11 @@
   <div class="defaultfont">
     <div align="center" class="q-pa-md">
       <q-avatar size="8rem" class="bg-primary">
-        <q-img
+        <q-img v-if="currentUser.prfphoto"
           :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
           class="avatar"
         />
+        <q-img v-if="!currentUser.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
       </q-avatar>
       <div class="q-mt-md q-px-xl" style="font-size: x-large;">
         @{{ currentUser.username }}
