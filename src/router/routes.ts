@@ -98,7 +98,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import("pages/landlord/LandlordSetup.vue"),
       },
       {
-        path: "profile",
+        path: "profile/:id?",
         component: () => import("pages/Profile.vue"),
       },
       {

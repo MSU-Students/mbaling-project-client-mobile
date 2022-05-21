@@ -18,7 +18,7 @@ const mutation: MutationTree<UserStateInterface> = {
     state.allAccount.push(...payload);
   },
 
-  getOneUser(state, payload) {
+  getUserById(state, payload) {
     state.allAccount = payload;
   },
 

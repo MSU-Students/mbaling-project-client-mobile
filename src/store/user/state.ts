@@ -1,29 +1,26 @@
 export interface UserInterface {
   id?: number;
-  username: string;
-  password: string;
-  isStudent: boolean;
-
-  firstname: string;
-  middlename: string;
-  lastname: string;
-  prfphoto: number;
-
-  degree: string;
-  department: string;
-  college: string;
-  yearAdmitted: number;
-
-  addressLine1: string;
-  addressLine2: string;
-  addressLine3: string;
-  addressLine4: string;
-  housingunit: string;
-
-  birthdate?: string;
-  gender?: "Male" | "Female";
-  contact?: string;
-  email?: string;
+   username: string;
+   password?: string;
+   fName: string;
+   mName?: string;
+   lName: string;
+   type: 'student' | 'landlord';
+   email: string;
+   birthdate: string;
+   degree: string;
+   department: string;
+   college: string;
+   contact: string;
+   gender:string;
+   year: string;
+   address1: string;
+   address2: string;
+   address3: string;
+   address4: string;
+   housingunit: string;
+   prfphoto: string;
+   status: 'active' | 'inactive'
 
 }
 

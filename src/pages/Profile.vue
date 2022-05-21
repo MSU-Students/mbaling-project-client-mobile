@@ -8,18 +8,18 @@
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
         style="font-size: large"
       >
-        {{ user.housingAddress }}
+        {{ user.housingunit }}
       </div>
       <div
         class="q-px-lg defaultfont-light text-primary text-bold"
         style="font-size: medium"
       >
-        @{{ user.username }}
+        @{{ user.userID }}
       </div>
       <div class="q-mt-sm q-px-md" style="font-size: medium">
         <p style="line-height: 1.2rem">
-          {{ user.addressLine1 }}, {{ user.addressLine2 }} <br />
-          {{ user.addressLine4 }}, {{ user.addressLine4 }}
+          {{ user.address1 }}, {{ user.address2 }} <br />
+          {{ user.address3 }}, {{ user.address4 }}
         </p>
       </div>
     </div>
@@ -32,14 +32,13 @@
       <div class="defaultfont row items-start">
         <div
           v-for="post in posts"
-          :key="post.id"
+          :key="post"
           class="q-pa-xs"
           style="width: 50%"
         >
-          <div v-for="photo in post.photos" :key="photo.id">
+          <div>
             <q-img
-              v-if="photo.id === 1"
-              :src="photo.url"
+              :src="post.url"
               fit="cover"
               class="bg-primary"
               style="width: 100%; height: 18rem; border-radius: 0.5rem"
@@ -101,69 +100,124 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { PostDto, UserDto } from "src/services/rest-api";
+import { UserInterface } from "src/store/user/state";
+import { Options, Vue } from "vue-class-component";
+import { mapState, mapActions } from "vuex";
+
+@Options({
+  computed: {
+    ...mapState("post", ["posts"]),
+    ...mapState("account", ["allAccount", "newUser"]),
+  },
+  methods: {
+    ...mapActions("account", ["getAllUser","getUserById"]),
+    ...mapActions("post", ["getAllPost"]),
+  },
+})
 
 export default class Profile extends Vue {
+  getUserById!: (id: any) => Promise<void>;
+  getAllPost!: () => Promise<void>;
+  getAllUser!: () => Promise<void>;
+  newUser!: any
+  posts!: PostDto[];
+  allAccount!: UserInterface[];
   isStudent = true;
-  user = {
-    id: 202200001,
-    username: "zinboarding",
-    password: "password",
-    isStudent: false,
 
-    firstname: "Azshara",
-    middlename: "Queldorei",
-    lastname: "Highborne",
-    prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-
+  user: UserDto ={
+    fName: "",
+    lName: "",
+    type: "",
+    status: "",
+    username: "",
+    password: "",
+    birthdate: "",
     degree: "",
     department: "",
     college: "",
-    yearAdmitted: 0,
+    contact: "",
+    gender: "",
+    year: "",
+    address1: "",
+    address2: "",
+    address3: "",
+    address4: "",
+    housingunit: "",
+    prfphoto: 0,
+    chatLink: "",
+    mapLink: "",
+    housingID: 0
+  }
 
-    addressLine1: "1205 5th Street",
-    addressLine2: "Dimaluna I",
-    addressLine3: "Marawi City",
-    addressLine4: "Lanao del Sur",
-    housingAddress: "Zin-Azshari Boarding House",
+ async mounted() {
+    const postId = this.$route.params.id;
+    console.log(postId)
+    await this.getAllPost();
+    console.log(this.getUserById(postId) + " getUser Here")
+    this.user = this.newUser;
+    this.newUser = this.getUserById(postId)
+    console.log(this.user);
+  }
+  // user = {
+  //   id: 202200001,
+  //   username: "zinboarding",
+  //   password: "password",
+  //   isStudent: false,
 
-    birthdate: "1999-08-31",
-    gender: "Female",
-    contact: "09531409858",
-    email: "azshara.highborne@gmail.com",
-  };
-  posts = [
-    {
-      id: 135413523,
-      title:
-        "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
-      fee: "1200",
-      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  //   firstname: "Azshara",
+  //   middlename: "Queldorei",
+  //   lastname: "Highborne",
+  //   prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-      prvKitchen: false,
-      prvCR: false,
-      photos: [
-        {
-          id: 1,
-          url: "https://cdn.quasar.dev/img/parallax1.jpg",
-        },
-        {
-          id: 2,
-          url: "https://cdn.quasar.dev/img/mountains.jpg",
-        },
-        {
-          id: 3,
-          url: "https://cdn.quasar.dev/img/quasar.jpg",
-        },
-      ],
-      date: 1631096539262,
+  //   degree: "",
+  //   department: "",
+  //   college: "",
+  //   yearAdmitted: 0,
 
-      housingAddress: "Zin-Azshari Boarding House",
-      username: "zinboarding",
-      prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-    },
-  ];
+  //   addressLine1: "1205 5th Street",
+  //   addressLine2: "Dimaluna I",
+  //   addressLine3: "Marawi City",
+  //   addressLine4: "Lanao del Sur",
+  //   housingAddress: "Zin-Azshari Boarding House",
+
+  //   birthdate: "1999-08-31",
+  //   gender: "Female",
+  //   contact: "09531409858",
+  //   email: "azshara.highborne@gmail.com",
+  // };
+//   posts = [
+//     {
+//       id: 135413523,
+//       title:
+//         "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
+//       fee: "1200",
+//       description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+// Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+//       prvKitchen: false,
+//       prvCR: false,
+//       photos: [
+//         {
+//           id: 1,
+//           url: "https://cdn.quasar.dev/img/parallax1.jpg",
+//         },
+//         {
+//           id: 2,
+//           url: "https://cdn.quasar.dev/img/mountains.jpg",
+//         },
+//         {
+//           id: 3,
+//           url: "https://cdn.quasar.dev/img/quasar.jpg",
+//         },
+//       ],
+//       date: 1631096539262,
+
+//       housingAddress: "Zin-Azshari Boarding House",
+//       username: "zinboarding",
+//       prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
+//     },
+//   ];
 
   alert() {
     this.$q.dialog({

@@ -58,7 +58,7 @@
             {{ post.housingAddress }}
           </q-item-label>
           <q-item-label lines="1" style="font-size: small">
-            @{{ post.url }}
+            @{{ post.title }}
           </q-item-label>
         </q-item-section>
 
@@ -68,7 +68,7 @@
             round
             color="black"
             size="md"
-            @click="$router.push('/profile')"
+            @click="redirect(post)"
           >
             <q-icon
               name="bi-arrow-up-short"
@@ -191,7 +191,14 @@ export default class Post extends Vue {
     this.post = this.newPost;
     console.log(this.post);
   }
+
+  async redirect(post: any) {
+    console.log(post);
+    const postID = post.userID;
+    await this.$router.push(`/profile/${postID}`);
+  }
 }
+
 </script>
 
 <style>
