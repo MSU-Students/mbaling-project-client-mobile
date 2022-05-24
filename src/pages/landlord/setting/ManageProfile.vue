@@ -225,8 +225,9 @@ export default class LandlordManageProfile extends Vue {
   authUser!: () => Promise<void>;
   currentUser!: any;
 
-  imageAttachement: File[] | File = [];
+  imageAttachement: File = new File([], "Pick a Profile Picture");;
   updateAccount = false;
+  loading = false;
   genderOptions = ["Male", "Female"];
 
   async mounted() {
@@ -267,12 +268,16 @@ export default class LandlordManageProfile extends Vue {
   }
 
   async onSaveLandlord() {
-    const media = await this.uploadMedia(this.imageAttachement as File);
-    await this.editAccount({...this.currentUser,
-                            id: this.currentUser.id,
-                            prfphoto: media.id});
-    this.editLandlordProfile = false;
-    this.$q.notify({
+
+    try {
+      if (this.imageAttachement.size > 0) {
+        this.loading = true;
+        const media = await this.uploadMedia(this.imageAttachement as File);
+        await this.editAccount({ ...this.currentUser, prfphoto: media.id });
+      } else if (this.imageAttachement.size <= 0) {
+        await this.editAccount({ ...this.currentUser });
+      }
+      this.$q.notify({
           position: 'bottom',
           color: "secondary",
           textColor: "primary",
@@ -280,6 +285,26 @@ export default class LandlordManageProfile extends Vue {
           classes: "defaultfont",
           message: 'Account Updated',
         });
+    } catch (error) {
+      this.$q.notify({
+        type: "negative",
+        message: "Unsuccessfully Update",
+      });
+    }
+
+    // const media = await this.uploadMedia(this.imageAttachement as File);
+    // await this.editAccount({...this.currentUser,
+    //                         id: this.currentUser.id,
+    //                         prfphoto: media.id});
+    // this.editLandlordProfile = false;
+    // this.$q.notify({
+    //       position: 'bottom',
+    //       color: "secondary",
+    //       textColor: "primary",
+    //       type: 'positive',
+    //       classes: "defaultfont",
+    //       message: 'Account Updated',
+    //     });
   }
 
   // async oneditAccount() {

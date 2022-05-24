@@ -29,7 +29,7 @@
         color="primary"
         class="q-mr-md defaultfont"
         style="height: 3rem"
-        @click="confirmEdit()"
+        @click="onSubmit()"
       />
     </template>
   </page-header>
@@ -37,11 +37,17 @@
   <q-page class="q-px-md q-pb-xl defaultfont">
     <div class="q-pt-md">
       <q-input
-        v-model="text"
+        v-model="password.oldPassword"
         label="Current password"
         stack-label
         :type="showPwd ? 'password' : 'text'"
         style="font-size: medium"
+        lazy-rules
+                    :rules="[
+                      (val) =>
+                        (val && val.length > 0) ||
+                        'Input your old password',
+                    ]"
       >
         <template v-slot:append>
           <q-icon
@@ -53,12 +59,18 @@
       </q-input>
 
       <q-input
-        v-model="text"
+        v-model="password.newPassword"
         label="New password"
         stack-label
         :type="showPwd ? 'password' : 'text'"
         class="q-mt-lg"
         style="font-size: medium"
+        lazy-rules
+                    :rules="[
+                      (val) =>
+                        (val && val.length > 0) ||
+                        'Input your new password',
+                    ]"
       >
         <template v-slot:append>
           <q-icon
@@ -70,12 +82,18 @@
       </q-input>
 
       <q-input
-        v-model="text"
+        v-model="confirmpassword"
         label="Confrim new password"
         stack-label
         :type="showPwd ? 'password' : 'text'"
         class="q-mt-lg"
         style="font-size: medium"
+        lazy-rules
+                    :rules="[
+                      (val) =>
+                        (val && val.length > 0) ||
+                        'Input your confirm password',
+                    ]"
       >
         <template v-slot:append>
           <q-icon
@@ -90,12 +108,70 @@
 </template>
 
 <script lang="ts">
+import { ChangePasswordDto } from "src/services/rest-api";
 import { ref } from "vue";
-import { Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
+import { mapActions } from "vuex";
+
+@Options({
+  methods: {
+    ...mapActions("auth", ["changePassword"]),
+  },
+})
 
 export default class EditHousing extends Vue {
+
+  changePassword!: (changePassword: ChangePasswordDto) => Promise<void>;
+  password: ChangePasswordDto = {
+    oldPassword: "",
+    newPassword: "",
+  };
+
+  confirmpassword = "";
+
   text = ref("");
-  showPwd = ref(true);
+  showPwd = true;
+
+async onSubmit() {
+  this.$q
+      .dialog({
+        message: "Confirm to delete?",
+        cancel: true,
+        persistent: true,
+      })
+      .onOk(async () => {
+
+    try {
+      if (this.password.newPassword != this.confirmpassword) {
+        this.$q.notify({
+          type: "negative",
+          message: "Passwords not match!",
+        });
+        return;
+      }
+      await this.changePassword(this.password);
+      this.$q.notify({
+        type: "positive",
+        message: "Change password successfully",
+      });
+    } catch (error: any) {
+      this.$q.notify({
+        type: "negative",
+        message: error.message,
+      });
+    }
+    });
+  }
+
+  onClear() {
+    this.confirmpassword = "";
+    this.password = {
+      oldPassword: "",
+      newPassword: "",
+    };
+  }
+
+
 
   confirmEdit() {
     this.$q.dialog({

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { Configuration, DefaultApi } from './rest-api';
+import { ChangePasswordDto, Configuration, DefaultApi } from './rest-api';
 
 const localBasePath = 'http://' + location.hostname + ':3000';
 
@@ -77,6 +77,14 @@ class MbalingApiService extends DefaultApi {
   async getUserProfile() {
     const response = await mbalingApiService.profile();
     return response;
+  }
+
+  async changeMyPass(password: ChangePasswordDto) {
+    try {
+      await mbalingApiService.changePassword(password);
+    } catch (error) {
+      console.log('change pass error', error);
+    }
   }
 }
 
