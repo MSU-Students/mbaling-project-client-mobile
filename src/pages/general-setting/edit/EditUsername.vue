@@ -39,7 +39,7 @@
   <q-page class="q-px-md q-pb-xl defaultfont">
     <div class="q-pt-md">
       <q-input
-        v-model="currentUser.username"
+        v-model="inputAccount.username"
         label="Username"
         bottom-slots
         stack-label
@@ -88,7 +88,7 @@
         color="primary"
         class="q-mr-md defaultfont"
         style="height: 3rem"
-        @click="onEditStudent"
+        @click="onEditStudent(currentUser)"
       />
     </template>
   </page-header>
@@ -139,17 +139,20 @@ export default class EditUsermane extends Vue {
     await this.authUser();
   }
 
+  inputAccount: any = {
+    username: "",
+  }
 
   // Edit UserName
   editStudentUserName = false;
 
-    async onEditStudent() {
+    async onEditStudent(val: AUser) {
       this.editStudentUserName = true;
-      this.currentUser = {...this.currentUser}
+      this.inputAccount = {...val}
     }
 
     async onSaveStudent() {
-      await this.editAccount(this.currentUser);
+      await this.editAccount(this.inputAccount);
       this.editStudentUserName = false;
       this.$q.notify({
           position: 'bottom',
@@ -159,6 +162,7 @@ export default class EditUsermane extends Vue {
           classes: "defaultfont",
           message: 'Account Updated',
         });
+        window.location.reload();
     }
 
   confirmEdit() {

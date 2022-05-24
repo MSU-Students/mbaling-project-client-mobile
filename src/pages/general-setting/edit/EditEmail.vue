@@ -38,7 +38,7 @@
   <q-page class="q-px-md q-pb-xl defaultfont">
     <div class="q-pt-md">
       <q-input
-        v-model="currentUser.email"
+        v-model="inputAccount.email"
         label="E-mail"
         stack-label
         type="email"
@@ -82,7 +82,7 @@
         color="primary"
         class="q-mr-md defaultfont"
         style="height: 3rem"
-        @click="onEditStudent()"
+        @click="onEditStudent(currentUser)"
       />
     </template>
   </page-header>
@@ -128,17 +128,20 @@ export default class EditEmail extends Vue {
     await this.authUser();
   }
 
+  inputAccount: any = {
+    email: "",
+  }
 
   // Edit Email
   editStudentEmail = false;
 
-    async onEditStudent() {
+    async onEditStudent(val: AUser) {
       this.editStudentEmail = true;
-      this.currentUser = {...this.currentUser}
+      this.inputAccount = {...val}
     }
 
     async onSaveStudent() {
-      await this.editAccount(this.currentUser);
+      await this.editAccount(this.inputAccount);
       this.editStudentEmail = false;
       this.$q.notify({
           position: 'bottom',
@@ -148,6 +151,7 @@ export default class EditEmail extends Vue {
           classes: "defaultfont",
           message: 'Account Updated',
         });
+        window.location.reload();
     }
 
   confirmEdit() {

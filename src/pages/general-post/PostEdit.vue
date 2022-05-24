@@ -167,7 +167,7 @@
 </template>
 
 <script lang="ts">
-import { PostDto, MediaDto } from "src/services/rest-api";
+import { PostDto } from "src/services/rest-api";
 import { ref } from "vue";
 import { Options, Vue } from "vue-class-component";
 import { mapState, mapActions } from "vuex";
@@ -179,16 +179,14 @@ import Post from "./Post.vue";
   },
   methods: {
     ...mapActions("post", ["getPostById", "editPost"]),
-    ...mapActions("media", ["uploadMedia"]),
   },
 })
 
 export default class PostEdit extends Vue {
   editPost!: (payload: PostDto) => Promise<void>;
-  uploadMedia!: (payload: File) => Promise<MediaDto>;
   getPostById!: (id: any) => Promise<void>;
   newPost!: any;
-  imageAttachement: File[] | File = [];
+
 
   post: any = {
     description: "",
@@ -208,17 +206,13 @@ export default class PostEdit extends Vue {
   async mounted() {
     const postId = this.$route.params.id;
     await this.getPostById(postId);
-    this.post = this.newPost;
+    this.post = {...this.newPost};
     console.log(this.post);
   }
 
   async onSaveEditPost(){
     console.log("Yeahh!!")
-    const media = await this.uploadMedia(this.imageAttachement as File);
-    await this.editPost({...this.post,
-                        id: this.post.id,
-                        photos: media.id
-                        });
+    await this.editPost(this.post);
     this.$q.notify({
           position: 'bottom',
           color: "secondary",

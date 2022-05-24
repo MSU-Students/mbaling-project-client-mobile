@@ -38,11 +38,11 @@
   <div class="q-px-md defaultfont">
     <div align="center" class="q-pa-md">
       <q-avatar size="8rem" class="bg-primary">
-        <q-img v-if="currentUser.prfphoto"
-          :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
+        <q-img v-if="inputAccount.prfphoto"
+          :src="`http://localhost:3000/media/${inputAccount.prfphoto}`"
           class="avatar"
         />
-        <q-img v-if="!currentUser.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+        <q-img v-if="!inputAccount.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
       </q-avatar>
       <div class="q-mt-sm q-px-xl">
         <q-file
@@ -57,28 +57,28 @@
 
     <div class="q-px-sm q-pb-xl">
       <q-input
-        v-model="currentUser.fName"
+        v-model="inputAccount.fName"
         label="First name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-input
-        v-model="currentUser.mName"
+        v-model="inputAccount.mName"
         label="Middle name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-input
-        v-model="currentUser.lName"
+        v-model="inputAccount.lName"
         label="Last name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-select
-        v-model="currentUser.gender"
+        v-model="inputAccount.gender"
         :options="genderOptions"
         label="Gender"
         stack-label
@@ -86,7 +86,7 @@
         style="font-size: medium"
       />
       <q-input
-        v-model="currentUser.birthdate"
+        v-model="inputAccount.birthdate"
         label="Date of birth"
         stack-label
         type="date"
@@ -131,7 +131,7 @@
         color="primary"
         class="q-mr-md defaultfont"
         style="height: 3rem"
-        @click="onEditLandlord()"
+        @click="onEditLandlord(currentUser)"
       />
     </template>
   </page-header>
@@ -240,36 +240,23 @@ export default class LandlordManageProfile extends Vue {
     prfphoto: 0,
     fName: "",
     lName: "",
-    type: "",
-    status: "",
-    username: "",
-    password: "",
+    mName: "",
     birthdate: "",
-    degree: "",
-    department: "",
-    college: "",
-    contact: "",
     gender: "",
-    year: "",
-    address1: "",
-    address2: "",
-    address3: "",
-    address4: "",
-    housingunit: "",
   };
 
   // Edit Landlord Profiles
   editLandlordProfile = false;
 
-  async onEditLandlord() {
+  async onEditLandlord(val: AUser) {
     this.editLandlordProfile = true;
-    this.currentUser = {...this.currentUser}
+    this.inputAccount = {...val}
   }
 
   async onSaveLandlord() {
     const media = await this.uploadMedia(this.imageAttachement as File);
-    await this.editAccount({...this.currentUser,
-                            id: this.currentUser.id,
+    await this.editAccount({...this.inputAccount,
+                            id: this.inputAccount.id,
                             prfphoto: media.id});
     this.editLandlordProfile = false;
     this.$q.notify({
@@ -280,6 +267,7 @@ export default class LandlordManageProfile extends Vue {
           classes: "defaultfont",
           message: 'Account Updated',
         });
+        window.location.reload();
   }
 
   // async oneditAccount() {
