@@ -256,7 +256,8 @@ export default class StudentManageProfile extends Vue {
   authUser!: () => Promise<void>;
   currentUser!: any;
 
-  imageAttachement: File[] | File = [];
+  imageAttachement: File = new File([], "Pick a Profile Picture");
+  loading = true;
   updateAccount = false;
   genderOptions = ["Male", "Female"];
 
@@ -284,10 +285,15 @@ editStudentProfile = false;
   }
 
   async onSaveStudentAccount() {
-    const media =  this.uploadMedia(this.imageAttachement as File);
-    await this.editAccount({...this.inputAccount, prfphoto: (await media).id});
-    this.editStudentProfile = false;
-    this.$q.notify({
+   try {
+      if (this.imageAttachement.size > 0) {
+        this.loading = true;
+        const media = await this.uploadMedia(this.imageAttachement as File);
+        await this.editAccount({ ...this.inputAccount, prfphoto: media.id });
+      } else if (this.imageAttachement.size <= 0) {
+        await this.editAccount({ ...this.inputAccount });
+      }
+      this.$q.notify({
           position: 'bottom',
           color: "secondary",
           textColor: "primary",
@@ -296,6 +302,12 @@ editStudentProfile = false;
           message: 'Account Updated',
         });
         window.location.reload();
+    } catch (error) {
+      this.$q.notify({
+        type: "negative",
+        message: "Unsuccessfully Update",
+      });
+    }
   }
 
   // async oneditAccount() {

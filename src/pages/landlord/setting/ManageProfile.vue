@@ -225,7 +225,7 @@ export default class LandlordManageProfile extends Vue {
   authUser!: () => Promise<void>;
   currentUser!: any;
 
-  imageAttachement: File = new File([], "Pick a Profile Picture");;
+  imageAttachement: File = new File([], "Pick a Profile Picture");
   updateAccount = false;
   loading = false;
   genderOptions = ["Male", "Female"];
@@ -260,9 +260,9 @@ export default class LandlordManageProfile extends Vue {
       if (this.imageAttachement.size > 0) {
         this.loading = true;
         const media = await this.uploadMedia(this.imageAttachement as File);
-        await this.editAccount({ ...this.currentUser, prfphoto: media.id });
+        await this.editAccount({ ...this.inputAccount, prfphoto: media.id });
       } else if (this.imageAttachement.size <= 0) {
-        await this.editAccount({ ...this.currentUser });
+        await this.editAccount({ ...this.inputAccount });
       }
       this.$q.notify({
           position: 'bottom',
@@ -272,6 +272,7 @@ export default class LandlordManageProfile extends Vue {
           classes: "defaultfont",
           message: 'Account Updated',
         });
+        window.location.reload();
     } catch (error) {
       this.$q.notify({
         type: "negative",
