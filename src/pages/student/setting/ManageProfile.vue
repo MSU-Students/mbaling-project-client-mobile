@@ -41,11 +41,11 @@
   <div class="defaultfont">
     <div align="center" class="q-pa-md">
       <q-avatar size="8rem" class="bg-primary">
-        <q-img v-if="currentUser.prfphoto"
-          :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
+        <q-img v-if="inputAccount.prfphoto"
+          :src="`http://localhost:3000/media/${inputAccount.prfphoto}`"
           class="avatar"
         />
-        <img v-if="!currentUser.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+        <img v-if="!inputAccount.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
       </q-avatar>
       <div class="q-mt-sm q-px-xl">
         <q-file
@@ -60,28 +60,28 @@
 
     <div class="q-px-lg q-pb-lg">
       <q-input
-        v-model="currentUser.fName"
+        v-model="inputAccount.fName"
         label="First name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-input
-        v-model="currentUser.mName"
+        v-model="inputAccount.mName"
         label="Middle name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-input
-        v-model="currentUser.lName"
+        v-model="inputAccount.lName"
         label="Last name"
         stack-label
         class="q-mt-lg"
         style="font-size: medium"
       />
       <q-select
-        v-model="currentUser.gender"
+        v-model="inputAccount.gender"
         :options="genderOptions"
         label="Gender"
         stack-label
@@ -89,7 +89,7 @@
         style="font-size: medium"
       />
       <q-input
-        v-model="currentUser.birthdate"
+        v-model="inputAccount.birthdate"
         label="Date of birth"
         stack-label
         type="date"
@@ -101,7 +101,7 @@
     </q-form>
 
 <!--  -->
-<q-form @submit="showEditStudent" v-else>
+<q-form @submit="showEditStudent(currentUser)" v-else>
   <page-header style="height: 4rem">
     <template #slot-left>
       <q-btn
@@ -270,35 +270,22 @@ export default class StudentManageProfile extends Vue {
     prfphoto: 0,
     fName: "",
     lName: "",
-    type: "",
-    status: "",
-    username: "",
-    password: "",
+    mName: "",
     birthdate: "",
-    degree: "",
-    department: "",
-    college: "",
-    contact: "",
     gender: "",
-    year: "",
-    address1: "",
-    address2: "",
-    address3: "",
-    address4: "",
-    housingunit: "",
   };
 
 // Edit Student Profile
 editStudentProfile = false;
 
-  async showEditStudent() {
+  async showEditStudent(val: AUser) {
     this.editStudentProfile = true;
-    this.currentUser = {...this.currentUser}
+    this.inputAccount = {...val}
   }
 
   async onSaveStudentAccount() {
     const media =  this.uploadMedia(this.imageAttachement as File);
-    await this.editAccount({...this.currentUser, prfphoto: (await media).id});
+    await this.editAccount({...this.inputAccount, prfphoto: (await media).id});
     this.editStudentProfile = false;
     this.$q.notify({
           position: 'bottom',
@@ -308,6 +295,7 @@ editStudentProfile = false;
           classes: "defaultfont",
           message: 'Account Updated',
         });
+        window.location.reload();
   }
 
   // async oneditAccount() {

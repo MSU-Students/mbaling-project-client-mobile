@@ -38,7 +38,7 @@
   <q-page class="q-px-md q-pb-xl defaultfont">
     <div class="q-pt-md">
       <q-input
-        v-model="currentUser.housingunit"
+        v-model="inputAccount.housingunit"
         label="Housing name"
         stack-label
         type="text"
@@ -82,7 +82,7 @@
         color="primary"
         class="q-mr-md defaultfont"
         style="height: 3rem"
-        @click="onEditLandlord()"
+        @click="onEditLandlord(currentUser)"
       />
     </template>
   </page-header>
@@ -128,16 +128,20 @@ export default class EditHousing extends Vue {
     await this.authUser();
   }
 
+  inputAccount: any = {
+    housingunit: "",
+  }
+
   // Edit Housing
   editLandlordHousing = false;
 
-    async onEditLandlord() {
+    async onEditLandlord(val: AUser) {
       this.editLandlordHousing = true;
-      this.currentUser = {...this.currentUser}
+      this.inputAccount = {...val}
     }
 
     async onSaveLandlord() {
-      await this.editAccount(this.currentUser);
+      await this.editAccount(this.inputAccount);
       this.editLandlordHousing = false;
       this.$q.notify({
           position: 'bottom',
@@ -147,6 +151,7 @@ export default class EditHousing extends Vue {
           classes: "defaultfont",
           message: 'Account Updated',
         });
+        window.location.reload();
     }
 
   confirmEdit() {

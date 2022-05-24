@@ -38,7 +38,7 @@
   <q-page class="q-px-md q-pb-xl defaultfont">
     <div class="q-pt-md">
       <q-input
-        v-model="currentUser.address1"
+        v-model="inputAccount.address1"
         label="Address line 1"
         stack-label
         type="text"
@@ -46,7 +46,7 @@
         style="font-size: medium"
       />
       <q-input
-        v-model="currentUser.address2"
+        v-model="inputAccount.address2"
         label="Address line 2"
         stack-label
         type="text"
@@ -55,7 +55,7 @@
         style="font-size: medium"
       />
       <q-input
-        v-model="currentUser.address3"
+        v-model="inputAccount.address3"
         label="Address line 3"
         stack-label
         type="text"
@@ -64,7 +64,7 @@
         style="font-size: medium"
       />
       <q-input
-        v-model="currentUser.address4"
+        v-model="inputAccount.address4"
         label="Address line 4"
         stack-label
         type="text"
@@ -110,7 +110,7 @@
         color="primary"
         class="q-mr-md defaultfont"
         style="height: 3rem"
-        @click="onEditStudent()"
+        @click="onEditStudent(currentUser)"
       />
     </template>
   </page-header>
@@ -190,16 +190,23 @@ export default class EditAddress extends Vue {
     await this.authUser();
   }
 
+  inputAccount: any = {
+    address1: "",
+    address2: "",
+    address3: "",
+    address4: "",
+  }
+
   // Edit Address
   editStudentAddress = false;
 
-    async onEditStudent() {
+    async onEditStudent(val: AUser) {
       this.editStudentAddress = true;
-      this.currentUser = {...this.currentUser}
+      this.inputAccount = {...val}
     }
 
     async onSaveStudent() {
-      await this.editAccount(this.currentUser);
+      await this.editAccount(this.inputAccount);
       this.editStudentAddress = false;
       this.$q.notify({
           position: 'bottom',
@@ -209,6 +216,7 @@ export default class EditAddress extends Vue {
           classes: "defaultfont",
           message: 'Account Updated',
         });
+        window.location.reload();
     }
 
   confirmEdit() {

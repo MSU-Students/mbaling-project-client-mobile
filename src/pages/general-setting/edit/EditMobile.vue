@@ -38,7 +38,7 @@
   <q-page class="q-px-md q-pb-xl defaultfont">
     <div class="q-pt-md">
       <q-input
-        v-model="currentUser.contact"
+        v-model="inputAccount.contact"
         label="Mobile number"
         stack-label
         type="tel"
@@ -83,7 +83,7 @@
         color="primary"
         class="q-mr-md defaultfont"
         style="height: 3rem"
-        @click="onEditStudent()"
+        @click="onEditStudent(currentUser)"
       />
     </template>
   </page-header>
@@ -130,16 +130,20 @@ export default class EditMobile extends Vue {
     await this.authUser();
   }
 
+  inputAccount: any = {
+    contact: "",
+  }
+
   // Edit MobileNumber
   editStudentMobileNumber = false;
 
-    async onEditStudent() {
+    async onEditStudent(val: AUser) {
       this.editStudentMobileNumber = true;
-      this.currentUser = {...this.currentUser}
+      this.inputAccount = {...val}
     }
 
     async onSaveStudent() {
-      await this.editAccount(this.currentUser);
+      await this.editAccount(this.inputAccount);
       this.editStudentMobileNumber = false;
       this.$q.notify({
           position: 'bottom',
@@ -149,6 +153,7 @@ export default class EditMobile extends Vue {
           classes: "defaultfont",
           message: 'Account Updated',
         });
+        window.location.reload();
     }
 
   confirmEdit() {
