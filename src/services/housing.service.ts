@@ -17,6 +17,12 @@ class HousingService extends DefaultApi {
     return response.data;
   }
 
+  async update(id: number, payload: any) {
+    const response = await mbalingApiService.updateHousingname(id, payload);
+    return response.data;
+  }
+
+
 }
 
 const housingService = new HousingService();

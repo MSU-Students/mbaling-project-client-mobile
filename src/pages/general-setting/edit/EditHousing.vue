@@ -104,7 +104,7 @@
 </template>
 
 <script lang="ts">
-import { UserDto } from "src/services/rest-api";
+import { HousingDto, UserDto } from "src/services/rest-api";
 import { mapActions, mapState } from "vuex";
 import { Options, Vue } from "vue-class-component";
 import { AUser } from "src/store/auth/state";
@@ -113,13 +113,16 @@ import { AUser } from "src/store/auth/state";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
+    ...mapActions("housing", ["addHousing", "getAllHousing", "getOneHousing","editHousingName"]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
+    ...mapState("housing", ["allHousing", "newHousing"]),
   },
 })
 
 export default class EditHousing extends Vue {
+  editHousingName!: (payload: any) => Promise<void>;
   editAccount!: (payload: UserDto) => Promise<void>;
   authUser!: () => Promise<void>;
   currentUser!: any;
@@ -135,13 +138,13 @@ export default class EditHousing extends Vue {
   // Edit Housing
   editLandlordHousing = false;
 
-    async onEditLandlord(val: AUser) {
+    async onEditLandlord(val: any) {
       this.editLandlordHousing = true;
       this.inputAccount = {...val}
     }
 
     async onSaveLandlord() {
-      await this.editAccount(this.inputAccount);
+      await this.editHousingName({...this.inputAccount,name: this.inputAccount.name, id: this.currentUser.housingID});
       this.editLandlordHousing = false;
       this.$q.notify({
           position: 'bottom',

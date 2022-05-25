@@ -39,7 +39,7 @@
       <div class="q-pt-md">
         <q-form @submit="searchAction()">
           <q-input
-            v-model="search"
+            v-model="inputAccount.housingunit"
             clearable
             placeholder="Search for Housing"
             style="font-size: medium"
@@ -112,7 +112,7 @@
           color="primary"
           class="q-mr-md defaultfont"
           style="height: 3rem"
-          @click="onEditStudent()"
+          @click="onEditStudent(currentUser)"
         />
       </template>
     </page-header>
@@ -167,18 +167,26 @@ export default class EditCampusHousing extends Vue {
 
   async mounted() {
     await this.getAllHousing();
+    await this.authUser();
+    this.inputAccount = {...this.currentUser}
     console.log("Hello");
   }
 
+  inputAccount: any = {
+    housingunit: "",
+  }
+
   // Edit CampusHousing
+  // Checkpoint
   editStudentCampusHousing = false;
 
-  async onEditStudent() {
+  async onEditStudent(val: AUser) {
     this.editStudentCampusHousing = true;
+    this.inputAccount = {...val}
   }
 
   async onSaveStudent() {
-    await this.editAccount(this.currentUser);
+    await this.editAccount(this.inputAccount);
     this.editStudentCampusHousing = false;
     this.$q.notify({
       position: "bottom",
@@ -188,10 +196,12 @@ export default class EditCampusHousing extends Vue {
       classes: "defaultfont",
       message: "Account Updated",
     });
+    window.location.reload();
   }
 
   async housingSaveResult(res: any){
-    this.search = res.name;
+    this.inputAccount.housingunit = res.name;
+    this.search = this.inputAccount.housingunit;
     console.log("what!" + this.search)
   }
 

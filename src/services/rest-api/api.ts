@@ -1071,6 +1071,50 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Update housingname by id
+         * @param {number} id 
+         * @param {HousingDto} housingDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateHousingname: async (id: number, housingDto: HousingDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateHousingname', 'id', id)
+            // verify required parameter 'housingDto' is not null or undefined
+            assertParamExists('updateHousingname', 'housingDto', housingDto)
+            const localVarPath = `/housing-unit/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(housingDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update post by id
          * @param {number} id 
          * @param {PostDto} postDto 
@@ -1423,6 +1467,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update housingname by id
+         * @param {number} id 
+         * @param {HousingDto} housingDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateHousingname(id: number, housingDto: HousingDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HousingDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateHousingname(id, housingDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Update post by id
          * @param {number} id 
          * @param {PostDto} postDto 
@@ -1660,6 +1716,17 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         register(userDto: UserDto, options?: any): AxiosPromise<UserDto> {
             return localVarFp.register(userDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update housingname by id
+         * @param {number} id 
+         * @param {HousingDto} housingDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateHousingname(id: number, housingDto: HousingDto, options?: any): AxiosPromise<HousingDto> {
+            return localVarFp.updateHousingname(id, housingDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1936,6 +2003,19 @@ export class DefaultApi extends BaseAPI {
      */
     public register(userDto: UserDto, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).register(userDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update housingname by id
+     * @param {number} id 
+     * @param {HousingDto} housingDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public updateHousingname(id: number, housingDto: HousingDto, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).updateHousingname(id, housingDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

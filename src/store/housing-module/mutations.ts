@@ -5,7 +5,7 @@ const mutation: MutationTree<HousingStateInterface> = {
   setNewHousing(state, payload) {
     state.newHousing = payload;
   },
-  editHousing(state, payload) {
+  updateHousing(state, payload) {
     state.newHousing = payload;
   },
 

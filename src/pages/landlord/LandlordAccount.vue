@@ -59,8 +59,11 @@
           />
         </div>
       </div>
+      <q-form @submit="chatlinkSave(currentUser)">
       <q-input
+        type="url"
         :disable="!chatlinkEdit"
+        v-model="inputAccount.chatLink"
         dense
         class="q-mb-xs"
         style="font-size: medium"
@@ -76,7 +79,7 @@
           color="primary"
           class="text-center text-caption"
           style="width: 4rem"
-          @click="chatlinkSave()"
+          type="submit"
         />
         <q-btn
           v-show="!chatlinkEdit"
@@ -91,6 +94,7 @@
           style="width: 4rem"
         />
       </div>
+      </q-form>
     </div>
 
     <div class="q-px-lg q-pb-lg">
@@ -117,8 +121,11 @@
           />
         </div>
       </div>
+      <q-form @submit="maplinkSave(currentUser)">
       <q-input
+        type="url"
         :disable="!maplinkEdit"
+        v-model="inputAccount.mapLink"
         dense
         class="q-mb-xs"
         style="font-size: medium"
@@ -134,7 +141,7 @@
           color="primary"
           class="text-center text-caption"
           style="width: 4rem"
-          @click="maplinkSave()"
+          type="submit"
         />
         <q-btn
           v-show="!maplinkEdit"
@@ -149,11 +156,13 @@
           style="width: 4rem"
         />
       </div>
+      </q-form>
     </div>
   </q-page>
 </template>
 
 <script lang="ts">
+import { UserDto } from "src/services/rest-api";
 import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapState } from "vuex";
@@ -161,22 +170,32 @@ import { mapActions, mapState } from "vuex";
 @Options({
   methods: {
     ...mapActions("auth", ["authUser"]),
+    ...mapActions("account", ["editAccount", "getAllUser"]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
   },
 })
 export default class LandlordAccount extends Vue {
+  editAccount!: (payload: UserDto) => Promise<void>;
   authUser!: () => Promise<void>;
-  currentUser!: AUser;
+  currentUser!: any;
   chatlinkEdit = false;
   maplinkEdit = false;
 
   async mounted() {
     await this.authUser();
+    this.inputAccount = {...this.currentUser}
   }
 
-  chatlinkSave() {
+  inputAccount: any = {
+    chatLink: "",
+    mapLink: "",
+  }
+
+ async chatlinkSave(val: AUser) {
+    await this.editAccount(this.inputAccount);
+    this.inputAccount = {...val}
     this.$q
       .dialog({
         title: "Confirm Edit",
@@ -187,9 +206,12 @@ export default class LandlordAccount extends Vue {
       })
       .onOk(() => {
         this.chatlinkEdit = !this.chatlinkEdit;
+        window.location.reload();
       });
   }
-  maplinkSave() {
+ async maplinkSave(val: AUser) {
+   await this.editAccount(this.inputAccount);
+   this.inputAccount = {...val}
     this.$q
       .dialog({
         title: "Confirm Edit",
@@ -200,6 +222,7 @@ export default class LandlordAccount extends Vue {
       })
       .onOk(() => {
         this.maplinkEdit = !this.maplinkEdit;
+        window.location.reload();
       });
   }
 }
@@ -211,4 +234,9 @@ export default class LandlordAccount extends Vue {
   border-radius: 50% !important;
   border: 2px solid rgb(190, 40, 45) !important;
 }
+/* #url-type-styled-input:invalid {
+  border-color: rgba(203,0,2,.8);
+  box-shadow: inset 0 0.625em 0.125 rgba(0,0,0,.2), 0 0 0.125em rgba(203,0,2,.08);
+} */
 </style>
+
