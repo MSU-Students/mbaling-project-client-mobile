@@ -37,7 +37,6 @@
               <q-avatar
                 size="4rem"
                 class="bg-primary"
-               @click="redirect(result.id)"
               >
                 <!-- <q-img :src="`http://localhost:3000/media/${result.prfphoto}`"> -->
                 <q-img v-if="result.prfphoto" class="avatar q-pt-none q-mt-none"
@@ -127,17 +126,10 @@ export default class StudentSearch extends Vue {
     console.log('Hello')
   }
 
-<<<<<<< HEAD
   async redirectPost(post: any) {
     console.log(post);
     const postID = post.id;
     await this.$router.push(`/post/${postID}`);
-=======
-  async redirect(user: any) {
-    console.log(user);
-    const postID = user.id;
-    await this.$router.push(`/profile/${postID}`);
->>>>>>> 91995ded570f5bb26f7a22054461fb3161ebd38b
   }
 
   search = "";
