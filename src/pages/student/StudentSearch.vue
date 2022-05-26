@@ -25,6 +25,8 @@
     </q-form>
   </q-header>
 
+  <!-- Search Result User -->
+
   <q-page v-if="(searchResultPost.length || searchResultUser.length) > 0">
     <div  class="q-pt-sm q-px-sm defaultfont">
       <div class="q-ml-sm defaultfont-semibold text-body1">USERS</div>
@@ -53,6 +55,8 @@
       </div>
     </div>
 
+  <!-- Search Result Post -->
+
     <div
       v-if="searchResultPost.length > 0"
       class="q-pt-sm q-px-sm q-pb-md defaultfont"
@@ -71,7 +75,7 @@
               fit="cover"
               class="bg-primary"
               style="width: 100%; height: 18rem; border-radius: 0.5rem"
-              @click="$router.push('/post')"
+              @click="redirectPost(result)"
             >
               <div class="absolute-bottom text-left">
                 <q-item-label lines="2" style="font-size: medium">
@@ -120,11 +124,16 @@ export default class StudentSearch extends Vue {
     await this.getAllPost();
     console.log('Hello')
   }
+
+  async redirectPost(post: any) {
+    console.log(post);
+    const postID = post.id;
+    await this.$router.push(`/post/${postID}`);
+  }
+
   search = "";
   tab = ref("posts");
   loadingState = false;
-
-
 
   searchResultPost: PostInterface[] = [];
   searchResultUser: UserInterface[] = [];
