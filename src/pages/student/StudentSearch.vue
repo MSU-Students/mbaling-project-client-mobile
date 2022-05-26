@@ -41,8 +41,11 @@
                 <!-- <q-img :src="`http://localhost:3000/media/${result.prfphoto}`"> -->
                 <q-img v-if="result.prfphoto" class="avatar q-pt-none q-mt-none"
                   :src="`http://localhost:3000/media/${result.prfphoto}`"
+                  @click="redirectUser(result)"
                 />
-                <img v-if="!result.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+                <img v-if="!result.prfphoto" class="avatar q-pt-none q-mt-none"
+                @click="redirectUser(result)"
+                 src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
                   <q-tooltip>
                     {{ result.housingunit }}
                   </q-tooltip>
@@ -130,6 +133,12 @@ export default class StudentSearch extends Vue {
     console.log(post);
     const postID = post.id;
     await this.$router.push(`/post/${postID}`);
+  }
+
+  async redirectUser(user: any) {
+    console.log(user);
+    const userID = user.id;
+    await this.$router.push(`/profile/${userID}`);
   }
 
   search = "";
