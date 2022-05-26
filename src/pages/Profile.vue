@@ -2,7 +2,7 @@
   <q-header class="q-px-md q-pt-xl defaultfont bg-secondary">
     <div align="center" class="text-black">
       <q-avatar size="10rem" class="bg-primary">
-        <q-img :src="user.prfphoto" />
+        <q-img :src="`http://localhost:3000/media/${user.prfphoto}`" />
       </q-avatar>
       <div
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
@@ -36,13 +36,12 @@
           class="q-pa-xs"
           style="width: 50%"
         >
-          <div>
+          <div v-if="post.userID == user.id">
             <q-img
-              :src="post.url"
+              :src="`http://localhost:3000/media/${post.url}`"
               fit="cover"
               class="bg-primary"
-              style="width: 100%; height: 18rem; border-radius: 0.5rem"
-              @click="$router.push('/post')"
+              style="width: 100%; height: 16rem; border-radius: 0.5rem"
             >
               <div class="absolute-bottom text-left">
                 <q-item-label lines="2" style="font-size: medium">
@@ -81,7 +80,7 @@
           :ripple="false"
           color="black"
           size="md"
-          @click="$router.push('/chat')"
+          @click="$router.push(user.chatLink)"
         />
       </div>
       <div align="right" class="col">
@@ -111,21 +110,20 @@ import { mapState, mapActions } from "vuex";
     ...mapState("account", ["allAccount", "newUser"]),
   },
   methods: {
-    ...mapActions("account", ["getAllUser","getUserById"]),
+    ...mapActions("account", ["getAllUser", "getUserById"]),
     ...mapActions("post", ["getAllPost"]),
   },
 })
-
 export default class Profile extends Vue {
   getUserById!: (id: any) => Promise<void>;
   getAllPost!: () => Promise<void>;
   getAllUser!: () => Promise<void>;
-  newUser!: any
+  newUser!: any;
   posts!: PostDto[];
   allAccount!: UserInterface[];
   isStudent = true;
 
-  user: UserDto ={
+  user: UserDto = {
     fName: "",
     lName: "",
     type: "",
@@ -147,17 +145,14 @@ export default class Profile extends Vue {
     prfphoto: 0,
     chatLink: "",
     mapLink: "",
-    housingID: 0
-  }
+    housingID: 0,
+  };
 
- async mounted() {
-    const postId = this.$route.params.id;
-    console.log(postId)
-    await this.getAllPost();
-    console.log(this.getUserById(postId) + " getUser Here")
+  async mounted() {
+    const userId = this.$route.params.id;
+    const getuser = await this.getUserById(userId);
     this.user = this.newUser;
-    this.newUser = this.getUserById(postId)
-    console.log(this.user);
+    await this.getAllPost();
   }
   // user = {
   //   id: 202200001,
@@ -186,38 +181,38 @@ export default class Profile extends Vue {
   //   contact: "09531409858",
   //   email: "azshara.highborne@gmail.com",
   // };
-//   posts = [
-//     {
-//       id: 135413523,
-//       title:
-//         "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
-//       fee: "1200",
-//       description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  //   posts = [
+  //     {
+  //       id: 135413523,
+  //       title:
+  //         "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
+  //       fee: "1200",
+  //       description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-// Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-//       prvKitchen: false,
-//       prvCR: false,
-//       photos: [
-//         {
-//           id: 1,
-//           url: "https://cdn.quasar.dev/img/parallax1.jpg",
-//         },
-//         {
-//           id: 2,
-//           url: "https://cdn.quasar.dev/img/mountains.jpg",
-//         },
-//         {
-//           id: 3,
-//           url: "https://cdn.quasar.dev/img/quasar.jpg",
-//         },
-//       ],
-//       date: 1631096539262,
+  // Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+  //       prvKitchen: false,
+  //       prvCR: false,
+  //       photos: [
+  //         {
+  //           id: 1,
+  //           url: "https://cdn.quasar.dev/img/parallax1.jpg",
+  //         },
+  //         {
+  //           id: 2,
+  //           url: "https://cdn.quasar.dev/img/mountains.jpg",
+  //         },
+  //         {
+  //           id: 3,
+  //           url: "https://cdn.quasar.dev/img/quasar.jpg",
+  //         },
+  //       ],
+  //       date: 1631096539262,
 
-//       housingAddress: "Zin-Azshari Boarding House",
-//       username: "zinboarding",
-//       prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-//     },
-//   ];
+  //       housingAddress: "Zin-Azshari Boarding House",
+  //       username: "zinboarding",
+  //       prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
+  //     },
+  //   ];
 
   alert() {
     this.$q.dialog({

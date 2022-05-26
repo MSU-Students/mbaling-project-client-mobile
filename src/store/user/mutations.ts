@@ -19,7 +19,7 @@ const mutation: MutationTree<UserStateInterface> = {
   },
 
   getUserById(state, payload) {
-    state.allAccount = payload;
+    state.newUser = payload;
   },
 
   getProfile(state, payload) {

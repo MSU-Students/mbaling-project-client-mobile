@@ -117,6 +117,12 @@ export interface MediaDto {
 export interface PostDto {
     /**
      * 
+     * @type {number}
+     * @memberof PostDto
+     */
+    'id'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof PostDto
      */
@@ -201,6 +207,12 @@ export interface RefreshDto {
  * @interface UserDto
  */
 export interface UserDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserDto
+     */
+    'id'?: number;
     /**
      * 
      * @type {string}

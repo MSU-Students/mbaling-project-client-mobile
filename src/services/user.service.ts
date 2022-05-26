@@ -13,7 +13,7 @@ class UserService extends DefaultApi {
     return response.data;
   }
 
-  async getOne(id: number): Promise<UserDto> {
+  async getUserById(id: number): Promise<UserDto> {
     const response = await mbalingApiService.getUser(id);
     return response.data;
   }

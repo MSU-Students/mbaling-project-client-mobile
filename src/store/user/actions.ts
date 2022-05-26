@@ -29,8 +29,8 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
   },
 
   async getUserById(context, id: number): Promise<any> {
-    const res = await userService.getOne(id);
-    console.log(res.address1 + " User Action Here")
+    const res = await userService.getUserById(id);
+    console.log(res + " User Action Here")
     context.commit('getUserById', res);
   },
 
