@@ -144,7 +144,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
   methods: {
     ...mapActions("account", ["getAllUser", "editAccount"]),
     ...mapActions("auth", ["authUser"]),
-    ...mapActions("housing", ["addHousing", "getAllHousing", "getOneHousing"]),
+    ...mapActions("housing", ["addHousing", "getAllHousing"]),
   },
   computed: {
     ...mapState("account", ["allAccount"]),

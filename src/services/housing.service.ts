@@ -11,12 +11,6 @@ class HousingService extends DefaultApi {
     const response = await mbalingApiService.getHousingUnit();
     return response.data as unknown as HousingDto[];
   }
-
-  async getHousingbyName(name: string): Promise<HousingDto> {
-    const response = await mbalingApiService.getHousingName(name);
-    return response.data;
-  }
-
   async update(id: number, payload: any) {
     const response = await mbalingApiService.updateHousingname(id, payload);
     return response.data;

@@ -250,7 +250,7 @@ import { mapState, mapActions } from "vuex";
     ...mapActions("post", ["addPost"]),
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("housing", ["addHousing", "getAllHousing", "getOneHousing"]),
+    ...mapActions("housing", ["addHousing", "getAllHousing"]),
   },
 })
 export default class LoginForm extends Vue {
@@ -258,7 +258,6 @@ export default class LoginForm extends Vue {
   addHousing!: (payload: HousingDto) => Promise<HousingDto>;
   authUser!: () => Promise<void>;
   getAllHousing!: () => Promise<void>;
-  getOneHousing!: (name: any) => Promise<void>;
   newHousing!: any;
   allHousing!: HousingInterface;
   currentUser!: any;
