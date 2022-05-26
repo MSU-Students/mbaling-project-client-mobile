@@ -14,7 +14,7 @@
         class="q-px-lg defaultfont-light text-primary text-bold"
         style="font-size: medium"
       >
-        @{{ user.userID }}
+        @{{ user.username }}
       </div>
       <div class="q-mt-sm q-px-md" style="font-size: medium">
         <p style="line-height: 1.2rem">

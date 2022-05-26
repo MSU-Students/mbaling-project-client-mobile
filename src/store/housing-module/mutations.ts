@@ -18,7 +18,7 @@ const mutation: MutationTree<HousingStateInterface> = {
     state.allHousing.push(...payload);
   },
 
-  getOneHousing(state, payload) {
+  getHousingById(state, payload) {
     state.allHousing = payload;
   },
 

@@ -14,19 +14,16 @@ const actions: ActionTree<HousingStateInterface, StateInterface> = {
     const res = await housingService.getAll();
     context.commit('getAllHousing', res);
   },
-  async getOneHousing(context, payload: any): Promise<any> {
-    console.log('GetOneHousing Action here')
-    const res = await housingService.getHousingbyName(payload);
-    console.log(payload.id)
-    console.log(res)
-    console.log('GetOneHousing Action here 2')
-    context.commit('getOneHousing', res);
-  },
 
   async editHousingName(context, payload: any): Promise<any> {
     await housingService.update(payload.id, payload);
     console.log('edit housing here 2')
     await context.dispatch('updateHousing');
+  },
+
+  async getHousingById(context, id: number) {
+    const res = await housingService.getHousingById(id);
+    context.commit("getHousingById", res);
   },
 
 };

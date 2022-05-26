@@ -113,7 +113,7 @@ import { AUser } from "src/store/auth/state";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("housing", ["addHousing", "getAllHousing", "getOneHousing","editHousingName"]),
+    ...mapActions("housing", ["addHousing", "getAllHousing","editHousingName", "getHousingById"]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
@@ -122,8 +122,9 @@ import { AUser } from "src/store/auth/state";
 })
 
 export default class EditHousing extends Vue {
-  editHousingName!: (payload: any) => Promise<void>;
+  editHousingName!: (payload: HousingDto) => Promise<HousingDto>;
   editAccount!: (payload: UserDto) => Promise<void>;
+  getHousingById!: (id: any) => Promise<void>;
   authUser!: () => Promise<void>;
   currentUser!: any;
 
@@ -131,9 +132,14 @@ export default class EditHousing extends Vue {
     await this.authUser();
   }
 
-  inputAccount: any = {
-    housingunit: "",
+  inputHousing: any = {
+    name: "",
+    userID: 0
   }
+
+  inputAccount: any = {
+    housingunit:  ""
+  };
 
   // Edit Housing
   editLandlordHousing = false;
@@ -144,7 +150,17 @@ export default class EditHousing extends Vue {
     }
 
     async onSaveLandlord() {
-      await this.editHousingName({...this.inputAccount,name: this.inputAccount.name, id: this.currentUser.housingID});
+    console.log('CurrentUser ID: ' + this.currentUser.housingID)
+    await this.editHousingName({...this.inputHousing,
+                        id: this.currentUser.housingID,
+                        name: this.inputAccount.housingunit,
+                        userID: this.currentUser.id,})
+    await this.editAccount({
+      ...this.currentUser,
+      id: this.currentUser.id,
+      housingunit: this.inputAccount.housingunit
+    });
+
       this.editLandlordHousing = false;
       this.$q.notify({
           position: 'bottom',
@@ -154,7 +170,6 @@ export default class EditHousing extends Vue {
           classes: "defaultfont",
           message: 'Account Updated',
         });
-        window.location.reload();
     }
 
   confirmEdit() {

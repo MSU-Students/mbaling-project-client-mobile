@@ -27,10 +27,10 @@
       <q-img src="~assets/mbaling-logo-vertical-alt.svg" style="width: 5rem" />
     </div>
     <div class="q-mt-sm q-px-lg">
-      <p style="line-height: 1rem">
+      <!-- <p style="line-height: 1rem">
         <div>Version</div> <br />
         <span class="text-h6">1.0.0(2022)</span>
-      </p>
+      </p> -->
     </div>
     <q-separator />
     <div class="q-mt-md q-px-lg">

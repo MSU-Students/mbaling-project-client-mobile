@@ -649,16 +649,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Get user by name
-         * @param {string} name 
+         * @summary Get user by id
+         * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHousingName: async (name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('getHousingName', 'name', name)
-            const localVarPath = `/housing-unit/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+        getHousingById: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getHousingById', 'id', id)
+            const localVarPath = `/housing-unit/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1339,13 +1339,13 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get user by name
-         * @param {string} name 
+         * @summary Get user by id
+         * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getHousingName(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HousingDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getHousingName(name, options);
+        async getHousingById(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HousingDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHousingById(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1603,13 +1603,13 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Get user by name
-         * @param {string} name 
+         * @summary Get user by id
+         * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHousingName(name: string, options?: any): AxiosPromise<HousingDto> {
-            return localVarFp.getHousingName(name, options).then((request) => request(axios, basePath));
+        getHousingById(id: number, options?: any): AxiosPromise<HousingDto> {
+            return localVarFp.getHousingById(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1867,14 +1867,14 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get user by name
-     * @param {string} name 
+     * @summary Get user by id
+     * @param {number} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public getHousingName(name: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getHousingName(name, options).then((request) => request(this.axios, this.basePath));
+    public getHousingById(id: number, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getHousingById(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -35,7 +35,7 @@
               <q-avatar
                 size="4rem"
                 class="bg-primary"
-                @click="$router.push('/profile')"
+               @click="redirect(result.id)"
               >
                 <!-- <q-img :src="`http://localhost:3000/media/${result.prfphoto}`"> -->
                 <q-img v-if="result.prfphoto" class="avatar q-pt-none q-mt-none"
@@ -93,6 +93,7 @@ import { PostInterface } from "src/store/post/state";
 import { UserInterface } from "src/store/user/state";
 import { mapActions, mapState } from "vuex";
 import { AUser } from "src/store/auth/state";
+import { UserDto } from "src/services/rest-api";
 
 @Options({
   computed: {
@@ -103,10 +104,11 @@ import { AUser } from "src/store/auth/state";
   methods: {
     ...mapActions('post', ['getAllPost']),
     ...mapActions('auth', ['authUser']),
+    ...mapActions("account", ["getAllUser"]),
   },
 })
 export default class StudentSearch extends Vue {
-
+  getAllUser!: () => Promise<void>;
   getAllPost! : () => Promise<void>
   getAllMedia!: () => Promise<void>
   authUser! : () => Promise<void>
@@ -116,10 +118,17 @@ export default class StudentSearch extends Vue {
 
 
   async mounted() {
-
     await this.getAllPost();
+    await this.getAllUser()
     console.log('Hello')
   }
+
+  async redirect(user: any) {
+    console.log(user);
+    const postID = user.id;
+    await this.$router.push(`/profile/${postID}`);
+  }
+
   search = "";
   tab = ref("posts");
   loadingState = false;
