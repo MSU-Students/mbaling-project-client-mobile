@@ -5,9 +5,7 @@
         class="bg-grey-4 row items-center justify-evenly"
         style="height: 100%; border-radius: 2rem 2rem 0 0"
       >
-       <q-img
-          :src="`http://localhost:3000/media/${post.url}`"/>
-        <!-- <q-icon name="bi-image" size="xl" color="grey" /> -->
+        <q-icon name="bi-image" size="xl" color="grey" />
       </div>
     </div>
 
@@ -37,101 +35,58 @@
       </div>
     </div> -->
 
-<!-- Upload Picture -->
-    <div class="row">
-    <div class="col">
-       <q-file
-        class="q-pr-lg text-primary"
-        outlined
-        label="Upload"
-        accept=".jpg, image/*"
-        item-aligned
-        style="width: 13rem;"
-      >
-        <template v-slot:prepend>
-          <q-icon name="album" />
-        </template>
-      </q-file>
-    </div>
-    <div class="col">
-      <q-file
-        class="q-pr-lg text-primary"
-        disable
-        outlined
-        label="Capture"
-        accept=".jpg, image/*"
-        item-aligned
-        style="width: 13rem;"
-        @click="alert()"
-      >
-        <template v-slot:prepend>
-          <q-icon name="camera" />
-        </template>
-      </q-file>
-    </div>
-    </div>
-<!--  -->
-
+<div class="q-mt-sm q-px-xl">
+        <q-file
+          outlined
+          label="Upload Image"
+          accept=".jpg, image/*"
+          v-model="imageAttachement"
+        >
+        </q-file>
+      </div>
     <div class="q-mt-sm q-px-md">
       <q-input
         v-model="post.title"
-        filled
+        autogrow
         dense
-        type="text"
         placeholder="Title"
-        input-class="text-on-left"
+        input-class="text-center"
         style="font-size: medium"
       />
-      <div class="row">
-        <div class="col">
       <q-input
-        class="q-mt-sm"
         v-model="post.fee"
-        prefix="P"
         dense
-        filled
-        type="number"
         placeholder="Monthly Fee"
-        input-class="text-on-left"
+        input-class="text-center"
+        class="q-mt-xs q-px-xl"
         style="font-size: medium"
       />
-      </div>
-      <div class="col q-pt-sm q-pl-sm">
-          <q-checkbox
-            label="Negotiable"
-            v-model="post.Negotiable"
-            color="primary"
-            style="font-size: medium"
-          />
-      </div>
-      </div>
 
-        <div class="q-pt-md q-pl-lg">
+      <div class="q-px-md q-mt-md row items-center">
+        <div align="center" class="col">
           <q-checkbox
             label="Private Kitchen"
-            v-model="post.prvKitchen"
-            color="primary"
-            style="font-size: medium"
+            v-model="post.prvCR"
             dense
+            color="primary"
           />
         </div>
-        <div class="q-pt-md q-pl-lg">
+        <div align="center" class="col">
           <q-checkbox
             label="Private CR"
-            v-model="post.prvCR"
-            color="primary"
-            style="font-size: medium"
+            v-model="post.prvKitchen"
             dense
+            color="primary"
           />
         </div>
+      </div>
 
       <q-input
         v-model="post.description"
         type="textarea"
-        filled
         placeholder="Description"
         class="q-mt-md q-pb-lg"
-        style="font-size: md;"
+        style="font-size: small"
       />
     </div>
 
@@ -187,6 +142,12 @@ export default class PostEdit extends Vue {
   getPostById!: (id: any) => Promise<void>;
   newPost!: any;
 
+ pkBox = false;
+  pcBox = false;
+  showClearBtn = false;
+  addnewPost = false;
+  model = "";
+  imageAttachement: File[] | File = [];
 
   post: any = {
     description: "",
@@ -261,8 +222,6 @@ export default class PostEdit extends Vue {
   // description = ref(this.post.description);
   // pkBox = ref(this.post.prvKitchen);
   // pcBox = ref(this.post.prvCR);
-
-  showClearBtn = false;
 
   alert() {
     this.$q.dialog({

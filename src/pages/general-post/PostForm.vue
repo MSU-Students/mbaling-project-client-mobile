@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div align="right" class="q-px-md q-py-sm row items-center">
+    <!-- <div align="right" class="q-px-md q-py-sm row items-center">
       <div class="col">
         <q-btn
           v-on:click="showClearBtn = !showClearBtn"
@@ -33,11 +33,20 @@
           />
         </Transition>
       </div>
-    </div>
+    </div> -->
 
+<div class="q-mt-sm q-px-xl">
+        <q-file
+          outlined
+          label="Upload Image"
+          accept=".jpg, image/*"
+          v-model="imageAttachement"
+        >
+        </q-file>
+      </div>
     <div class="q-mt-sm q-px-md">
       <q-input
-        v-model="title"
+        v-model="inputPost.title"
         autogrow
         dense
         placeholder="Title"
@@ -45,7 +54,7 @@
         style="font-size: medium"
       />
       <q-input
-        v-model="fee"
+        v-model="inputPost.fee"
         dense
         placeholder="Monthly Fee"
         input-class="text-center"
@@ -57,7 +66,7 @@
         <div align="center" class="col">
           <q-checkbox
             label="Private Kitchen"
-            v-model="pkBox"
+            v-model="inputPost.prvCR"
             dense
             color="primary"
           />
@@ -65,7 +74,7 @@
         <div align="center" class="col">
           <q-checkbox
             label="Private CR"
-            v-model="pcBox"
+            v-model="inputPost.prvKitchen"
             dense
             color="primary"
           />
@@ -73,7 +82,7 @@
       </div>
 
       <q-input
-        v-model="description"
+        v-model="inputPost.description"
         type="textarea"
         placeholder="Description"
         class="q-mt-md q-pb-lg"
@@ -106,6 +115,7 @@
         no-caps
         color="primary"
         style="height: 3rem; width: 5rem"
+        @click="createPost()"
       />
     </div>
   </q-footer>
