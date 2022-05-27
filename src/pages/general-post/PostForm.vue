@@ -5,7 +5,7 @@
         class="bg-grey-4 row items-center justify-evenly"
         style="height: 100%; border-radius: 2rem 2rem 0 0"
       >
-        <q-icon name="bi-image" size="xl" color="grey" />
+        <q-icon name="bi-image" size="10rem" color="grey" />
       </div>
     </div>
 
@@ -87,6 +87,17 @@
         placeholder="Description"
         class="q-mt-md q-pb-lg"
         style="font-size: small"
+      />
+
+      <q-input
+        v-model="inputPost.contactNo"
+        dense
+        type="tel"
+        mask="#### - ### - ####"
+        placeholder="Contact No."
+        input-class="text-left"
+        class="q-mt-xs q-px-xs"
+        style="font-size: medium"
       />
     </div>
 
@@ -170,6 +181,7 @@ export default class PostForm extends Vue {
     prfphoto: 0,
     url: 0,
     landlordID: 0,
+    contactNo: "",
   };
 
   async resetModel() {

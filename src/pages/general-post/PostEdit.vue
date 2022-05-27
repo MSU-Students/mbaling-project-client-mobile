@@ -1,11 +1,15 @@
 <template>
   <q-page class="defaultfont text-black">
-    <div class="bg-black" style="height: 20rem">
+    <div class="bg-black">
+      <q-img
+      v-if="post.url"
+      :src="`http://localhost:3000/media/${post.url}`"/>
       <div
+        v-if="!post.url"
         class="bg-grey-4 row items-center justify-evenly"
         style="height: 100%; border-radius: 2rem 2rem 0 0"
       >
-        <q-icon name="bi-image" size="xl" color="grey" />
+        <q-icon name="bi-image" size="10rem" color="grey" />
       </div>
     </div>
 
@@ -88,6 +92,17 @@
         class="q-mt-md q-pb-lg"
         style="font-size: small"
       />
+
+      <q-input
+        v-model="post.contactNo"
+        dense
+        type="tel"
+        mask="#### - ### - ####"
+        placeholder="Contact No."
+        input-class="text-left"
+        class="q-mt-xs q-px-xs"
+        style="font-size: medium"
+      />
     </div>
 
     <q-page-sticky position="top-left" :offset="[18, 18]">
@@ -161,7 +176,8 @@ export default class PostEdit extends Vue {
     housingAddress: "",
     prfphoto: 0,
     url: 0,
-    userID: 0
+    userID: 0,
+    contactNo: "",
   };
 
   async mounted() {

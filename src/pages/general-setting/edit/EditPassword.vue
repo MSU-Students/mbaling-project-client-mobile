@@ -135,10 +135,12 @@ export default class EditHousing extends Vue {
 async onSubmit() {
   this.$q
       .dialog({
-        message: "Confirm to delete?",
-        cancel: true,
-        persistent: true,
-      })
+          title: "Confirm Edit",
+          message: "Are you sure you want to publish the changes?",
+          cancel: true,
+          persistent: true,
+          class: "defaultfont",
+    })
       .onOk(async () => {
 
     try {
@@ -154,6 +156,7 @@ async onSubmit() {
         type: "positive",
         message: "Change password successfully",
       });
+      window.location.reload();
     } catch (error: any) {
       this.$q.notify({
         type: "negative",
@@ -173,14 +176,14 @@ async onSubmit() {
 
 
 
-  confirmEdit() {
-    this.$q.dialog({
-      title: "Confirm Edit",
-      message: "Are you sure you want to publish the changes?",
-      cancel: true,
-      persistent: true,
-      class: "defaultfont",
-    });
-  }
+  // confirmEdit() {
+  //   this.$q.dialog({
+  //     title: "Confirm Edit",
+  //     message: "Are you sure you want to publish the changes?",
+  //     cancel: true,
+  //     persistent: true,
+  //     class: "defaultfont",
+  //   });
+  // }
 }
 </script>

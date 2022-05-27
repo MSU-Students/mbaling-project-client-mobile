@@ -134,7 +134,7 @@
     <div class="row items-center" style="height: 4rem">
       <div align="left" class="col">
         <a
-          href="https://m.me/basam.serad.79"
+          :href="`${user.chatLink}`"
           target="_blank"
           style="text-decoration: none"
         >
@@ -151,25 +151,54 @@
 </template>
 
 <script lang="ts">
-import { PostDto } from "src/services/rest-api";
+import { PostDto, UserDto } from "src/services/rest-api";
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapState } from "vuex";
 
 @Options({
   computed: {
     ...mapState("post", ["newPost"]),
+    ...mapState("account", ["allAccount", "newUser"]),
   },
   methods: {
     ...mapActions("post", ["getPostById"]),
+    ...mapActions("account", ["getAllUser", "getUserById"]),
   },
 })
 export default class Post extends Vue {
+  getUserById!: (id: any) => Promise<void>;
   getPostById!: (id: any) => Promise<void>;
   newPost!: any;
+  newUser!: any;
 
   slide = 1;
   fullscreen = false;
   isStudent = true;
+
+  user: UserDto = {
+    fName: "",
+    lName: "",
+    type: "",
+    status: "",
+    username: "",
+    password: "",
+    birthdate: "",
+    degree: "",
+    department: "",
+    college: "",
+    contact: "",
+    gender: "",
+    year: "",
+    address1: "",
+    address2: "",
+    address3: "",
+    address4: "",
+    housingunit: "",
+    prfphoto: 0,
+    chatLink: "",
+    mapLink: "",
+    housingID: 0
+  }
 
   post: PostDto = {
     description: "",
@@ -190,6 +219,8 @@ export default class Post extends Vue {
     await this.getPostById(postId);
     this.post = this.newPost;
     console.log(this.post);
+    await this.getUserById(this.post.userID)
+    this.user = this.newUser
   }
 
   async redirect(post: any) {

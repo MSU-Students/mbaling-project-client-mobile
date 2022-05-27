@@ -160,26 +160,28 @@ export default class EditHousing extends Vue {
       id: this.currentUser.id,
       housingunit: this.inputAccount.housingunit
     });
-
-      this.editLandlordHousing = false;
-      this.$q.notify({
-          position: 'bottom',
-          color: "secondary",
-          textColor: "primary",
-          type: 'positive',
-          classes: "defaultfont",
-          message: 'Account Updated',
-        });
+      this.$q
+        .dialog({
+          title: "Confirm Edit",
+          message: "Are you sure you want to publish the changes?",
+          cancel: true,
+          persistent: true,
+          class: "defaultfont",
+    })
+        .onOk(() => {
+          this.editLandlordHousing = false;
+          window.location.reload();
+      });
     }
 
-  confirmEdit() {
-    this.$q.dialog({
-      title: "Confirm Edit",
-      message: "Are you sure you want to publish the changes?",
-      cancel: true,
-      persistent: true,
-      class: "defaultfont",
-    });
-  }
+  // confirmEdit() {
+  //   this.$q.dialog({
+  //     title: "Confirm Edit",
+  //     message: "Are you sure you want to publish the changes?",
+  //     cancel: true,
+  //     persistent: true,
+  //     class: "defaultfont",
+  //   });
+  // }
 }
 </script>

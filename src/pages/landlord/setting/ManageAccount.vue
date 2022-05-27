@@ -124,33 +124,33 @@ export default class LandlordManageAccount extends Vue {
   async mounted() {
     await this.authUser();
   }
-  activeUser = {
-    id: 202200001,
-    username: "zinboarding",
-    password: "password",
-    isStudent: false,
+  // activeUser = {
+  //   id: 202200001,
+  //   username: "zinboarding",
+  //   password: "password",
+  //   isStudent: false,
 
-    firstname: "Azshara",
-    middlename: "Queldorei",
-    lastname: "Highborne",
-    prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
+  //   firstname: "Azshara",
+  //   middlename: "Queldorei",
+  //   lastname: "Highborne",
+  //   prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
 
-    degree: "",
-    department: "",
-    college: "",
-    yearAdmitted: 0,
+  //   degree: "",
+  //   department: "",
+  //   college: "",
+  //   yearAdmitted: 0,
 
-    addressLine1: "1205 5th Street",
-    addressLine2: "Dimaluna I",
-    addressLine3: "Marawi City",
-    addressLine4: "Lanao del Sur",
-    housingAddress: "Zin-Azshari Boarding House",
+  //   addressLine1: "1205 5th Street",
+  //   addressLine2: "Dimaluna I",
+  //   addressLine3: "Marawi City",
+  //   addressLine4: "Lanao del Sur",
+  //   housingAddress: "Zin-Azshari Boarding House",
 
-    birthdate: "1999-08-31",
-    gender: "Female",
-    contact: "09531409858",
-    email: "azshara.highborne@gmail.com",
-  };
+  //   birthdate: "1999-08-31",
+  //   gender: "Female",
+  //   contact: "09531409858",
+  //   email: "azshara.highborne@gmail.com",
+  // };
 }
 </script>
 

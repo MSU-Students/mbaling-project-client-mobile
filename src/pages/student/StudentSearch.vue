@@ -34,6 +34,7 @@
         <q-scroll-area :visible="false" style="height: 5.5rem; max-width: 100%">
           <div class="q-pt-xs q-gutter-sm row items-start no-wrap">
             <div v-for="(result, index) in searchResultUser" :key="index">
+              <div v-if="result.type == 'landlord'">
               <q-avatar
                 size="4rem"
                 class="bg-primary"
@@ -51,6 +52,7 @@
                   </q-tooltip>
                 <!-- </q-img> -->
               </q-avatar>
+              </div>
             </div>
           </div>
         </q-scroll-area>

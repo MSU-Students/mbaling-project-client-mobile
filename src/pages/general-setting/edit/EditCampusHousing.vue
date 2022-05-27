@@ -187,16 +187,18 @@ export default class EditCampusHousing extends Vue {
 
   async onSaveStudent() {
     await this.editAccount(this.inputAccount);
-    this.editStudentCampusHousing = false;
-    this.$q.notify({
-      position: "bottom",
-      color: "secondary",
-      textColor: "primary",
-      type: "positive",
-      classes: "defaultfont",
-      message: "Account Updated",
-    });
-    window.location.reload();
+    this.$q
+        .dialog({
+          title: "Confirm Edit",
+          message: "Are you sure you want to publish the changes?",
+          cancel: true,
+          persistent: true,
+          class: "defaultfont",
+    })
+        .onOk(() => {
+          this.editStudentCampusHousing = false;
+          window.location.reload();
+      });
   }
 
   async housingSaveResult(res: any){
@@ -221,14 +223,14 @@ export default class EditCampusHousing extends Vue {
     this.search = "";
   }
 
-  confirmEdit() {
-    this.$q.dialog({
-      title: "Confirm Edit",
-      message: "Are you sure you want to publish the changes?",
-      cancel: true,
-      persistent: true,
-      class: "defaultfont",
-    });
-  }
+  // confirmEdit() {
+  //   this.$q.dialog({
+  //     title: "Confirm Edit",
+  //     message: "Are you sure you want to publish the changes?",
+  //     cancel: true,
+  //     persistent: true,
+  //     class: "defaultfont",
+  //   });
+  // }
 }
 </script>

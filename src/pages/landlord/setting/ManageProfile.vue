@@ -264,15 +264,17 @@ export default class LandlordManageProfile extends Vue {
       } else if (this.imageAttachement.size <= 0) {
         await this.editAccount({ ...this.inputAccount });
       }
-      this.$q.notify({
-          position: 'bottom',
-          color: "secondary",
-          textColor: "primary",
-          type: 'positive',
-          classes: "defaultfont",
-          message: 'Account Updated',
-        });
-        window.location.reload();
+      this.$q
+        .dialog({
+          title: "Confirm Edit",
+          message: "Are you sure you want to publish the changes?",
+          cancel: true,
+          persistent: true,
+          class: "defaultfont",
+    })
+        .onOk(() => {
+          window.location.reload();
+      });
     } catch (error) {
       this.$q.notify({
         type: "negative",
@@ -351,15 +353,15 @@ export default class LandlordManageProfile extends Vue {
   //   };
   // }
 
-  confirmEdit() {
-    this.$q.dialog({
-      title: "Confirm Edit",
-      message: "Are you sure you want to publish the changes?",
-      cancel: true,
-      persistent: true,
-      class: "defaultfont",
-    });
-  }
+  // confirmEdit() {
+  //   this.$q.dialog({
+  //     title: "Confirm Edit",
+  //     message: "Are you sure you want to publish the changes?",
+  //     cancel: true,
+  //     persistent: true,
+  //     class: "defaultfont",
+  //   });
+  // }
 }
 </script>
 <style>

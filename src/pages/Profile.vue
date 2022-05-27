@@ -37,6 +37,7 @@
           style="width: 50%"
         >
           <div v-if="post.userID == user.id">
+
             <q-img
               :src="`http://localhost:3000/media/${post.url}`"
               fit="cover"
@@ -73,18 +74,17 @@
   >
     <div class="row items-center" style="height: 4rem">
       <div align="left" class="col-8">
-        <q-btn
-          icon="bi-chat-fill"
-          flat
-          round
-          :ripple="false"
-          color="black"
-          size="md"
-          @click="$router.push(user.chatLink)"
-        />
+        <a
+          :href="`${user.chatLink}`"
+          target="_blank"
+          style="text-decoration: none"
+        >
+          <q-icon size="1.4rem" color="black" class="q-pl-sm bi bi-chat-fill">
+          </q-icon>
+        </a>
       </div>
       <div align="right" class="col">
-        <q-btn
+        <!-- <q-btn
           icon="bi-geo-alt-fill"
           flat
           round
@@ -92,7 +92,15 @@
           color="black"
           size="md"
           @click="alert()"
-        />
+        /> -->
+        <a
+          :href="`${user.mapLink}`"
+          target="_blank"
+          style="text-decoration: none"
+        >
+          <q-icon size="1.4rem" color="black" class="q-pr-sm bi-geo-alt-fill">
+          </q-icon>
+        </a>
       </div>
     </div>
   </q-footer>
