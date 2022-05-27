@@ -186,7 +186,6 @@ export default class EditCampusHousing extends Vue {
   }
 
   async onSaveStudent() {
-    await this.editAccount(this.inputAccount);
     this.$q
         .dialog({
           title: "Confirm Edit",
@@ -196,6 +195,7 @@ export default class EditCampusHousing extends Vue {
           class: "defaultfont",
     })
         .onOk(() => {
+          this.editAccount(this.inputAccount);
           this.editStudentCampusHousing = false;
           window.location.reload();
       });

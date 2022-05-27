@@ -2,7 +2,8 @@
   <q-header class="q-px-md q-pt-xl defaultfont bg-secondary">
     <div align="center" class="text-black">
       <q-avatar size="10rem" class="bg-primary">
-        <q-img :src="`http://localhost:3000/media/${user.prfphoto}`" />
+        <q-img v-if="user.prfphoto" class="avatar" :src="`http://localhost:3000/media/${user.prfphoto}`" />
+        <q-img v-if="!user.prfphoto" class="avatar" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
       </q-avatar>
       <div
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
@@ -36,7 +37,7 @@
           class="q-pa-xs"
           style="width: 50%"
         >
-          <div v-if="post.userID == user.id">
+          <div v-if="post.userID === user.id">
 
             <q-img
               :src="`http://localhost:3000/media/${post.url}`"
@@ -230,3 +231,11 @@ export default class Profile extends Vue {
   }
 }
 </script>
+<style>
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50% !important;
+  border: 2px solid rgb(190, 40, 45) !important;
+}
+</style>

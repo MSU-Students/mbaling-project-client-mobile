@@ -152,7 +152,6 @@ export default class EditUsermane extends Vue {
     }
 
     async onSaveStudent() {
-      await this.editAccount(this.inputAccount);
       this.$q
         .dialog({
           title: "Confirm Edit",
@@ -162,6 +161,7 @@ export default class EditUsermane extends Vue {
           class: "defaultfont",
     })
         .onOk(() => {
+          this.editAccount(this.inputAccount);
           this.editStudentUserName = false;
           window.location.reload();
       });

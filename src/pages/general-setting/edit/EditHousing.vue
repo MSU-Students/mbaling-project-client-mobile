@@ -150,16 +150,6 @@ export default class EditHousing extends Vue {
     }
 
     async onSaveLandlord() {
-    console.log('CurrentUser ID: ' + this.currentUser.housingID)
-    await this.editHousingName({...this.inputHousing,
-                        id: this.currentUser.housingID,
-                        name: this.inputAccount.housingunit,
-                        userID: this.currentUser.id,})
-    await this.editAccount({
-      ...this.currentUser,
-      id: this.currentUser.id,
-      housingunit: this.inputAccount.housingunit
-    });
       this.$q
         .dialog({
           title: "Confirm Edit",
@@ -169,6 +159,16 @@ export default class EditHousing extends Vue {
           class: "defaultfont",
     })
         .onOk(() => {
+          console.log('CurrentUser ID: ' + this.currentUser.housingID)
+          this.editHousingName({...this.inputHousing,
+                        id: this.currentUser.housingID,
+                        name: this.inputAccount.housingunit,
+                        userID: this.currentUser.id,})
+          this.editAccount({
+      ...this.currentUser,
+      id: this.currentUser.id,
+      housingunit: this.inputAccount.housingunit
+    });
           this.editLandlordHousing = false;
           window.location.reload();
       });
