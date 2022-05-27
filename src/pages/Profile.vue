@@ -158,7 +158,7 @@ export default class Profile extends Vue {
 
   async mounted() {
     const userId = this.$route.params.id;
-    const getuser = await this.getUserById(userId);
+    await this.getUserById(userId);
     this.user = this.newUser;
     await this.getAllPost();
   }

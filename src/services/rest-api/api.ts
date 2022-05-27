@@ -187,6 +187,12 @@ export interface PostDto {
      * @memberof PostDto
      */
     'userID': number;
+    /**
+     * 
+     * @type {UserDto}
+     * @memberof PostDto
+     */
+    'user'?: UserDto;
 }
 /**
  * 
@@ -363,6 +369,12 @@ export interface UserDto {
      * @memberof UserDto
      */
     'refreshToken'?: string;
+    /**
+     * 
+     * @type {HousingDto}
+     * @memberof UserDto
+     */
+    'housing'?: HousingDto;
 }
 
 /**
