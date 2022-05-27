@@ -26,8 +26,7 @@
         <div class="col-9">
           <q-item-label lines="1" class="defaultfont-semibold">
             <q-avatar size="sm" class="bg-primary">
-              <q-img v-if="post.prfphoto" :src="`http://localhost:3000/media/${post.prfphoto}`" />
-              <q-img v-if="!post.prfphoto" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+              <q-img :src="`http://localhost:3000/media/${post.user?.prfphoto}`" />
             </q-avatar>
             <span class="q-ml-sm" style="font-size: small">
               {{ post.housingAddress }}
@@ -58,14 +57,17 @@ import { PostDto, UserDto } from "src/services/rest-api";
     ...mapState("post", ["posts"]),
     ...mapState("media", ["allMedia"]),
     ...mapState("auth", ["currentUser"]),
+    ...mapState("account", ["allAccount", "newUser"]),
   },
   methods: {
+    ...mapActions("account", ["getAllUser", "getUserById"]),
     ...mapActions("post", ["getAllPost"]),
     ...mapActions("media", ["getAllMedia"]),
     ...mapActions("auth", ["authUser"]),
   },
 })
 export default class PostFeedComponent extends Vue {
+  getUserById!: (id: any) => Promise<void>;
   getAllPost!: () => Promise<void>;
   authUser!: () => Promise<void>;
   posts!: PostDto[];
@@ -75,6 +77,7 @@ export default class PostFeedComponent extends Vue {
   async mounted() {
     console.log('HELLO')
     await this.getAllPost();
+
   }
 
   async redirect(post: any) {
