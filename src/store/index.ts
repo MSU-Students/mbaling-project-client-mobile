@@ -21,6 +21,10 @@ import { MediaStateInterface } from './media-module/state';
 import housing from './housing-module'
 import { HousingStateInterface } from "./housing-module/state";
 
+
+import application from './application-module';
+import { ApplicationStateInterface } from './application-module/state';
+
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -40,6 +44,7 @@ export interface StateInterface {
   auth: IAuthState;
   media: MediaStateInterface;
   housing: HousingStateInterface;
+  application: ApplicationStateInterface
 }
 
 // provide typings for `this.$store`
@@ -61,7 +66,8 @@ export default store(function (/* { ssrContext } */) {
       account,
       auth,
       media,
-      housing
+      housing,
+      application
 
 
     },
