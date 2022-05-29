@@ -1,5 +1,5 @@
-import { MutationTree } from 'vuex';
-import { MediaStateInterface } from './state';
+import { MutationTree } from "vuex";
+import { MediaStateInterface } from "./state";
 
 const mutation: MutationTree<MediaStateInterface> = {
   addMedia(state, result) {
@@ -9,10 +9,13 @@ const mutation: MutationTree<MediaStateInterface> = {
     state.allMedia = [];
     state.allMedia = result;
   },
-  getAllMedia(state, payload){
+  getAllMedia(state, payload) {
     state.allMedia = [];
     state.allMedia.push(...payload);
-  }
+  },
+  getAllPhotos(state, payload) {
+    state.allPhotos = payload;
+  },
 };
 
 export default mutation;

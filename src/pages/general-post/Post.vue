@@ -1,8 +1,8 @@
 <template>
   <q-page class="defaultfont">
     <div class="bg-black">
-          <q-img :src="`http://localhost:3000/media/${post.url}`"/>
-      <!-- <q-carousel
+      <!-- <q-img :src="`http://localhost:3000/media/${post.url}`" /> -->
+      <q-carousel
         v-model="slide"
         navigation
         arrows
@@ -38,14 +38,20 @@
             @click="onClick"
           />
         </template>
-      </q-carousel> -->
+        <q-carousel-slide
+          v-for="(photo, index) in allPhotos"
+          :key="index"
+          :name="photo"
+          :img-src="`http://localhost:3000/media/${photo.id}`"
+        />
+      </q-carousel>
     </div>
 
     <div class="q-pa-sm bg-white">
       <q-item class="row items-center">
         <q-item-section avatar>
           <q-avatar size="xl" class="bg-primary">
-             <q-img :src="`http://localhost:3000/media/${user.prfphoto}`"/>
+            <q-img :src="`http://localhost:3000/media/${user.prfphoto}`" />
           </q-avatar>
         </q-item-section>
 
@@ -55,21 +61,15 @@
             class="defaultfont-semibold"
             style="font-size: medium"
           >
-            {{ post.housingAddress }}
+            {{ post.user?.housingunit }}
           </q-item-label>
           <q-item-label lines="1" style="font-size: small">
-            @{{ post.title }}
+            @{{ post.user?.username }}
           </q-item-label>
         </q-item-section>
 
         <q-item-section avatar>
-          <q-btn
-            flat
-            round
-            color="black"
-            size="md"
-            @click="redirect(post)"
-          >
+          <q-btn flat round color="black" size="md" @click="redirect(post)">
             <q-icon
               name="bi-arrow-up-short"
               size="lg"
@@ -159,17 +159,21 @@ import { mapActions, mapState } from "vuex";
   computed: {
     ...mapState("post", ["newPost"]),
     ...mapState("account", ["allAccount", "newUser"]),
+    ...mapState("media", ["allPhotos"]),
   },
   methods: {
     ...mapActions("post", ["getPostById"]),
     ...mapActions("account", ["getAllUser", "getUserById"]),
+    ...mapActions("media", ["getAllMedia"]),
   },
 })
 export default class Post extends Vue {
   getUserById!: (id: any) => Promise<void>;
   getPostById!: (id: any) => Promise<void>;
+  getAllMedia!: () => Promise<void>;
   newPost!: any;
   newUser!: any;
+  allPhotos!: any[];
 
   slide = 1;
   fullscreen = false;
@@ -197,8 +201,8 @@ export default class Post extends Vue {
     prfphoto: 0,
     chatLink: "",
     mapLink: "",
-    housingID: 0
-  }
+    housingID: 0,
+  };
 
   post: PostDto = {
     description: "",
@@ -211,16 +215,22 @@ export default class Post extends Vue {
     housingAddress: "",
     prfphoto: 0,
     url: 0,
-    userID: 0
+    userID: 0,
   };
+
+  async created() {
+    await this.getAllMedia();
+    console.log('This is here')
+    console.log(this.allPhotos);
+  }
 
   async mounted() {
     const postId = this.$route.params.id;
     await this.getPostById(postId);
     this.post = this.newPost;
     console.log(this.post);
-    await this.getUserById(this.post.userID)
-    this.user = this.newUser
+    await this.getUserById(this.post.userID);
+    this.user = this.newUser;
   }
 
   async redirect(post: any) {
@@ -229,7 +239,6 @@ export default class Post extends Vue {
     await this.$router.push(`/profile/${postID}`);
   }
 }
-
 </script>
 
 <style>

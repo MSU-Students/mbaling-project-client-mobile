@@ -177,7 +177,6 @@ export default class PostEdit extends Vue {
     prfphoto: 0,
     url: 0,
     userID: 0,
-    contactNo: "",
   };
 
   async mounted() {

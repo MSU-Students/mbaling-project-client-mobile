@@ -108,6 +108,12 @@ export interface MediaDto {
      * @memberof MediaDto
      */
     'filename'?: string;
+    /**
+     * 
+     * @type {PostDto}
+     * @memberof MediaDto
+     */
+    'postPhoto'?: PostDto;
 }
 /**
  * 
@@ -193,6 +199,12 @@ export interface PostDto {
      * @memberof PostDto
      */
     'user'?: UserDto;
+    /**
+     * 
+     * @type {MediaDto}
+     * @memberof PostDto
+     */
+    'media'?: MediaDto;
 }
 /**
  * 

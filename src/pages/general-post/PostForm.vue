@@ -204,14 +204,18 @@ export default class PostForm extends Vue {
     const media = await this.uploadMedia(this.imageAttachement as File);
     await this.addPost({
       ...this.inputPost,
-      user: this.currentUser.id,
+      userID: this.currentUser.id,
       url: media.id,
     });
     this.addnewPost = false;
-    this.$q.notify({
-      type: "positive",
-      message: "Successfully Adeded.",
-    });
+          this.$q.notify({
+          type: 'positive',
+          caption: 'Successfully Added ',
+          position: 'bottom',
+          color: "secondary",
+          textColor: "primary",
+          classes: "defaultfont",
+        });
   }
 
   alert() {

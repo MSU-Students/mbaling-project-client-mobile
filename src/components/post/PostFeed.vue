@@ -29,7 +29,7 @@
               <q-img :src="`http://localhost:3000/media/${post.user?.prfphoto}`" />
             </q-avatar>
             <span class="q-ml-sm" style="font-size: small">
-              {{ post.housingAddress }}
+              {{ post.user?.housingunit }}
             </span>
           </q-item-label>
         </div>

@@ -45,7 +45,7 @@
             color="primary"
             class="q-ml-sm text-center text-caption"
             style="width: 4rem"
-            @click="confirmDelete()"
+            @click="delPost(post.id)"
           />
         </div>
       </div>
@@ -70,12 +70,13 @@ import { MediaInterface } from "src/store/media-module/state";
     ...mapState('auth', ['currentUser']),
   },
   methods: {
-    ...mapActions('post', ['getAllPost']),
+    ...mapActions('post', ['getAllPost', 'deletePost']),
     ...mapActions('media', ['getAllMedia']),
     ...mapActions('auth', ['authUser']),
   },
 })
 export default class PostPageComponent extends Vue {
+  deletePost! : (id: any) => Promise<void>
   getAllPost! : () => Promise<void>
   authUser! : () => Promise<void>
   posts!: PostDto[];
@@ -98,6 +99,31 @@ export default class PostPageComponent extends Vue {
     console.log(post);
     const postID = post.id;
     await this.$router.push(`/post/edit/${postID}`);
+  }
+
+  async delPost(val: any){
+    this.$q
+        .dialog({
+          title: "Confirm Delete",
+          message: "Are you sure you want to delete this post?",
+          cancel: true,
+          persistent: true,
+          class: "defaultfont",
+    })
+        .onOk( () => {
+           this.deletePost(val);
+         this.$q.notify({
+          type: 'positive',
+          caption: 'Successfully Deleted ',
+          message: 'Successfully',
+          position: 'bottom',
+          color: "secondary",
+          textColor: "primary",
+          classes: "defaultfont",
+        });
+          window.location.reload();
+      });
+
   }
 
   confirmDelete() {
