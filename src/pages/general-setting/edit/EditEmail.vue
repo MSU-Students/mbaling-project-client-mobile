@@ -141,7 +141,6 @@ export default class EditEmail extends Vue {
     }
 
     async onSaveStudent() {
-      await this.editAccount(this.inputAccount);
       this.$q
         .dialog({
           title: "Confirm Edit",
@@ -151,6 +150,7 @@ export default class EditEmail extends Vue {
           class: "defaultfont",
     })
         .onOk(() => {
+          this.editAccount(this.inputAccount);
           this.editStudentEmail = false;
           window.location.reload();
       });

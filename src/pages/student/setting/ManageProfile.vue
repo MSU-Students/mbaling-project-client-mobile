@@ -286,13 +286,6 @@ editStudentProfile = false;
 
   async onSaveStudentAccount() {
    try {
-      if (this.imageAttachement.size > 0) {
-        this.loading = true;
-        const media = await this.uploadMedia(this.imageAttachement as File);
-        await this.editAccount({ ...this.inputAccount, prfphoto: media.id });
-      } else if (this.imageAttachement.size <= 0) {
-        await this.editAccount({ ...this.inputAccount });
-      }
       this.$q
         .dialog({
           title: "Confirm Edit",
@@ -301,7 +294,14 @@ editStudentProfile = false;
           persistent: true,
           class: "defaultfont",
     })
-        .onOk(() => {
+        .onOk(async () => {
+          if (this.imageAttachement.size > 0) {
+        this.loading = true;
+        const media = await this.uploadMedia(this.imageAttachement as File);
+        await this.editAccount({ ...this.inputAccount, prfphoto: media.id });
+      } else if (this.imageAttachement.size <= 0) {
+        await this.editAccount({ ...this.inputAccount });
+      }
           window.location.reload();
       });
     } catch (error) {

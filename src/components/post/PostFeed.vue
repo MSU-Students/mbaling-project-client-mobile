@@ -87,3 +87,4 @@ export default class PostFeedComponent extends Vue {
   }
 }
 </script>
+
