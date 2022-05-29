@@ -43,6 +43,37 @@ export interface AccessTokenDto {
 /**
  * 
  * @export
+ * @interface ApplicationDto
+ */
+export interface ApplicationDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationDto
+     */
+    'status': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ApplicationDto
+     */
+    'studentID': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ApplicationDto
+     */
+    'landlordID': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ApplicationDto
+     */
+    'postID': number;
+}
+/**
+ * 
+ * @export
  * @interface ChangePasswordDto
  */
 export interface ChangePasswordDto {
@@ -397,6 +428,46 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary Add new application
+         * @param {ApplicationDto} applicationDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addApplication: async (applicationDto: ApplicationDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationDto' is not null or undefined
+            assertParamExists('addApplication', 'applicationDto', applicationDto)
+            const localVarPath = `/application`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(applicationDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Add new post
          * @param {HousingDto} housingDto 
          * @param {*} [options] Override http request option.
@@ -545,6 +616,44 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Delete application by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteApplication: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteApplication', 'id', id)
+            const localVarPath = `/application/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Delete Media by id
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -671,6 +780,78 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get application by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getApplicationById: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getApplicationById', 'id', id)
+            const localVarPath = `/application/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getApplications: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/application`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -1107,6 +1288,50 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Update application by id
+         * @param {number} id 
+         * @param {ApplicationDto} applicationDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateApplication: async (id: number, applicationDto: ApplicationDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateApplication', 'id', id)
+            // verify required parameter 'applicationDto' is not null or undefined
+            assertParamExists('updateApplication', 'applicationDto', applicationDto)
+            const localVarPath = `/application/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(applicationDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update housingname by id
          * @param {number} id 
          * @param {HousingDto} housingDto 
@@ -1288,6 +1513,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Add new application
+         * @param {ApplicationDto} applicationDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addApplication(applicationDto: ApplicationDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addApplication(applicationDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Add new post
          * @param {HousingDto} housingDto 
          * @param {*} [options] Override http request option.
@@ -1332,6 +1568,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete application by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteApplication(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteApplication(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Delete Media by id
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -1371,6 +1618,27 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async getAllMedia(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MediaDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllMedia(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get application by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getApplicationById(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getApplicationById(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getApplications(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getApplications(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1503,6 +1771,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update application by id
+         * @param {number} id 
+         * @param {ApplicationDto} applicationDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateApplication(id: number, applicationDto: ApplicationDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateApplication(id, applicationDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Update housingname by id
          * @param {number} id 
          * @param {HousingDto} housingDto 
@@ -1560,6 +1840,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @summary Add new application
+         * @param {ApplicationDto} applicationDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addApplication(applicationDto: ApplicationDto, options?: any): AxiosPromise<ApplicationDto> {
+            return localVarFp.addApplication(applicationDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Add new post
          * @param {HousingDto} housingDto 
          * @param {*} [options] Override http request option.
@@ -1600,6 +1890,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Delete application by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteApplication(id: number, options?: any): AxiosPromise<ApplicationDto> {
+            return localVarFp.deleteApplication(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Delete Media by id
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -1636,6 +1936,25 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         getAllMedia(options?: any): AxiosPromise<MediaDto> {
             return localVarFp.getAllMedia(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get application by id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getApplicationById(id: number, options?: any): AxiosPromise<ApplicationDto> {
+            return localVarFp.getApplicationById(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getApplications(options?: any): AxiosPromise<ApplicationDto> {
+            return localVarFp.getApplications(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1755,6 +2074,17 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Update application by id
+         * @param {number} id 
+         * @param {ApplicationDto} applicationDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateApplication(id: number, applicationDto: ApplicationDto, options?: any): AxiosPromise<ApplicationDto> {
+            return localVarFp.updateApplication(id, applicationDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Update housingname by id
          * @param {number} id 
          * @param {HousingDto} housingDto 
@@ -1808,6 +2138,18 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
 export class DefaultApi extends BaseAPI {
     /**
      * 
+     * @summary Add new application
+     * @param {ApplicationDto} applicationDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public addApplication(applicationDto: ApplicationDto, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).addApplication(applicationDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Add new post
      * @param {HousingDto} housingDto 
      * @param {*} [options] Override http request option.
@@ -1856,6 +2198,18 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
+     * @summary Delete application by id
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public deleteApplication(id: number, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteApplication(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Delete Media by id
      * @param {number} id 
      * @param {*} [options] Override http request option.
@@ -1899,6 +2253,29 @@ export class DefaultApi extends BaseAPI {
      */
     public getAllMedia(options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getAllMedia(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get application by id
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getApplicationById(id: number, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getApplicationById(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all application
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getApplications(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getApplications(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2039,6 +2416,19 @@ export class DefaultApi extends BaseAPI {
      */
     public register(userDto: UserDto, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).register(userDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update application by id
+     * @param {number} id 
+     * @param {ApplicationDto} applicationDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public updateApplication(id: number, applicationDto: ApplicationDto, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).updateApplication(id, applicationDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
