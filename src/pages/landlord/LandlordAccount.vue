@@ -196,10 +196,10 @@
                         class="defaultfont-semibold"
                         style="font-size: small"
                       >
-                        FirstName LastName
+                        {{data.name}}
                       </q-item-label>
                       <q-item-label lines="1" style="font-size: small">
-                        <p>@user</p>
+                        <p>@{{data.username}}</p>
                       </q-item-label>
                     </q-item-section>
                   </div>
@@ -249,14 +249,19 @@ import { mapActions, mapState } from "vuex";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
+    ...mapActions('application', ['getAllApplication', 'updateApplication']),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
+    ...mapState('application', ['applications']),
   },
 })
 export default class LandlordAccount extends Vue {
+  getAllApplication!: () => Promise<void>;
   editAccount!: (payload: UserDto) => Promise<void>;
   authUser!: () => Promise<void>;
+  applications!: any[];
+  data: any = [];
   currentUser!: any;
   chatlinkEdit = false;
   maplinkEdit = false;
@@ -264,6 +269,17 @@ export default class LandlordAccount extends Vue {
   async mounted() {
     await this.authUser();
     this.inputAccount = { ...this.currentUser };
+    await this.getAllApplication();
+    this.data = this.applications
+      .filter((i) => i.status == 'pending' && i.landlordID == this.currentUser.id)
+      .map((a: any) => {
+        return {
+          id: a.id,
+          name: a.student.fName + ' ' + a.student.lName,
+          username: a.student.username
+        };
+      });
+    console.log(this.data);
   }
 
   inputAccount: any = {

@@ -40,7 +40,7 @@
           outlined
           label="Upload Image"
           accept=".jpg, image/*"
-          v-model="imageAttachement"
+          v-model="firstImageAttachement"
         >
         </q-file>
       </div>
@@ -166,7 +166,7 @@ export default class PostForm extends Vue {
   showClearBtn = false;
   addnewPost = false;
   model = "";
-  imageAttachement: File[] | File = [];
+  firstImageAttachement: File[] | File = [];
 
   inputPost: any = {
     description: ``,
@@ -201,7 +201,7 @@ export default class PostForm extends Vue {
   }
 
   async createPost() {
-    const media = await this.uploadMedia(this.imageAttachement as File);
+    const media = await this.uploadMedia(this.firstImageAttachement as File);
     await this.addPost({
       ...this.inputPost,
       userID: this.currentUser.id,

@@ -141,6 +141,12 @@ export interface MediaDto {
     'filename'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof MediaDto
+     */
+    'postPhotoID'?: string;
+    /**
+     * 
      * @type {PostDto}
      * @memberof MediaDto
      */
