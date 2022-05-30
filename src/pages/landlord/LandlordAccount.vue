@@ -39,270 +39,66 @@
     <q-separator inset color="primary" size="0.1rem" class="q-my-sm" />
   </q-header>
 
-  <q-page class="defaultfont">
-    <div class="q-px-lg q-py-md">
-      <div align="left" class="row items-center">
-        <div align="left" class="col-10">
-          <div
-            class="defaultfont-semibold text-grey-8"
-            style="font-size: medium"
-          >
-            Set chat link
-          </div>
-          <div class="defaultfont text-grey" style="font-size: smaller">
-            Please input below your Facebook Messenger username to connect it
-            with your account. <br />
-            Click the icon on the right for tutorial.
-          </div>
-        </div>
-        <div align="right" class="col">
-          <q-icon
-            name="bi-question-circle"
-            size="lg"
-            color="grey"
-            @click="$router.push('/tutorial/chatlink')"
-          />
-        </div>
-      </div>
-      <q-form @submit="chatlinkSave(currentUser)">
-        <q-input
-          type="url"
-          :disable="!chatlinkEdit"
-          v-model="inputAccount.chatLink"
-          dense
-          class="q-mb-xs"
-          style="font-size: medium"
-        />
-        <div align="right">
-          <q-btn
-            v-show="chatlinkEdit"
-            label="Save"
-            dense
-            unelevated
-            rounded
-            no-caps
-            color="primary"
-            class="text-center text-caption"
-            style="width: 4rem"
-            type="submit"
-          />
-          <q-btn
-            v-show="!chatlinkEdit"
-            v-on:click="chatlinkEdit = !chatlinkEdit"
-            label="Edit"
-            dense
-            outline
-            rounded
-            no-caps
-            color="primary"
-            class="text-center text-caption"
-            style="width: 4rem"
-          />
-        </div>
-      </q-form>
-    </div>
+  <q-page class="defaultfont bg-seacondary">
+    <q-tabs
+      v-model="tab"
+      dense
+      align="left"
+      active-color="black"
+      indicator-color="transparent"
+      class="q-px-lg text-grey"
+      :breakpoint="0"
+    >
+      <q-tab
+        :ripple="false"
+        name="link"
+        icon="bi-link-45deg"
+        style="max-width: 2rem"
+      />
+      <q-tab
+        :ripple="false"
+        name="list"
+        icon="bi-list-ul"
+        style="max-width: 4rem"
+      />
+      <q-tab
+        :ripple="false"
+        name="apply"
+        icon="bi-clipboard-plus"
+        style="max-width: 2rem"
+      >
+        <q-badge floating color="primary"> 2 </q-badge>
+      </q-tab>
+    </q-tabs>
 
-    <div class="q-px-lg q-pb-lg">
-      <div align="left" class="row items-center">
-        <div align="left" class="col-10">
-          <div
-            class="defaultfont-semibold text-grey-8"
-            style="font-size: medium"
-          >
-            Set map link
-          </div>
-          <div class="defaultfont text-grey" style="font-size: smaller">
-            Please input below the link of your Google Map location to connect
-            it with your account. <br />
-            Click the icon on the right for tutorial.
-          </div>
-        </div>
-        <div align="right" class="col">
-          <q-icon
-            name="bi-question-circle"
-            size="lg"
-            color="grey"
-            @click="$router.push('/tutorial/maplink')"
-          />
-        </div>
-      </div>
-      <q-form @submit="maplinkSave(currentUser)">
-        <q-input
-          type="url"
-          :disable="!maplinkEdit"
-          v-model="inputAccount.mapLink"
-          dense
-          class="q-mb-xs"
-          style="font-size: medium"
-        />
-        <div align="right">
-          <q-btn
-            v-show="maplinkEdit"
-            label="Save"
-            dense
-            unelevated
-            rounded
-            no-caps
-            color="primary"
-            class="text-center text-caption"
-            style="width: 4rem"
-            type="submit"
-          />
-          <q-btn
-            v-show="!maplinkEdit"
-            v-on:click="maplinkEdit = !maplinkEdit"
-            label="Edit"
-            dense
-            outline
-            rounded
-            no-caps
-            color="primary"
-            class="text-center text-caption"
-            style="width: 4rem"
-          />
-        </div>
-      </q-form>
+    <q-tab-panels v-model="tab" animated>
+      <q-tab-panel name="link">
+        <links />
+      </q-tab-panel>
 
-      <!-- Pending Applications -->
+      <q-tab-panel name="list">
+        <list-boarders />
+      </q-tab-panel>
 
-      <div class="q-mt-lg">
-        <div class="q-ma-xs">
-          <q-item-label
-            class="defaultfont-semibold text-grey-5"
-            style="font-size: small"
-          >
-            Pending Applications
-          </q-item-label>
-          <div class="row">
-            <div class="col">
-              <q-list>
-                <q-item
-                  clickable
-                  dense
-                  class="q-pt-md q-my-sm row items-center"
-                  style="height: 3rem"
-                >
-                  <q-item-section class="q-pb-md" avatar>
-                    <q-avatar size="xl">
-                      <img
-                        class="avatar q-pt-none q-mt-none"
-                        src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
-                      />
-                    </q-avatar>
-                  </q-item-section>
-                  <div>
-                    <q-item-section>
-                      <q-item-label
-                        class="defaultfont-semibold"
-                        style="font-size: small"
-                      >
-                        FirstName LastName
-                      </q-item-label>
-                      <q-item-label lines="1" style="font-size: small">
-                        <p>@user</p>
-                      </q-item-label>
-                    </q-item-section>
-                  </div>
-                </q-item>
-              </q-list>
-            </div>
-            <div class="col-3">
-              <q-btn
-                :ripple="false"
-                unelevated
-                rounded
-                dense
-                no-caps
-                outline
-                class="text-#BE282D q-mb-sm"
-                style="height: 1.5rem; width: 5rem; font-size: smaller"
-                color="primary"
-                label="pending"
-              />
-              <q-btn
-                :ripple="false"
-                unelevated
-                rounded
-                dense
-                no-caps
-                outline
-                class="text-#BE282D"
-                style="height: 1.5rem; width: 5rem; font-size: smaller"
-                color="primary"
-                label="decline"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <q-tab-panel name="apply">
+        <list-applicants />
+      </q-tab-panel>
+    </q-tab-panels>
   </q-page>
 </template>
 
 <script lang="ts">
-import { UserDto } from "src/services/rest-api";
-import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
 
 @Options({
-  methods: {
-    ...mapActions("auth", ["authUser"]),
-    ...mapActions("account", ["editAccount", "getAllUser"]),
-  },
   computed: {
     ...mapState("auth", ["currentUser"]),
   },
 })
 export default class LandlordAccount extends Vue {
-  editAccount!: (payload: UserDto) => Promise<void>;
-  authUser!: () => Promise<void>;
   currentUser!: any;
-  chatlinkEdit = false;
-  maplinkEdit = false;
-
-  async mounted() {
-    await this.authUser();
-    this.inputAccount = { ...this.currentUser };
-  }
-
-  inputAccount: any = {
-    chatLink: "",
-    mapLink: "",
-  };
-
-  async chatlinkSave(val: AUser) {
-    await this.editAccount(this.inputAccount);
-    this.inputAccount = { ...val };
-    this.$q
-      .dialog({
-        title: "Confirm Edit",
-        message: "Are you sure you want to publish the changes?",
-        cancel: true,
-        persistent: true,
-        class: "defaultfont",
-      })
-      .onOk(() => {
-        this.chatlinkEdit = !this.chatlinkEdit;
-        window.location.reload();
-      });
-  }
-  async maplinkSave(val: AUser) {
-    await this.editAccount(this.inputAccount);
-    this.inputAccount = { ...val };
-    this.$q
-      .dialog({
-        title: "Confirm Edit",
-        message: "Are you sure you want to publish the changes?",
-        cancel: true,
-        persistent: true,
-        class: "defaultfont",
-      })
-      .onOk(() => {
-        this.maplinkEdit = !this.maplinkEdit;
-        window.location.reload();
-      });
-  }
+  tab = "link";
 }
 </script>
 <style>
@@ -317,4 +113,3 @@ export default class LandlordAccount extends Vue {
   box-shadow: inset 0 0.625em 0.125 rgba(0,0,0,.2), 0 0 0.125em rgba(203,0,2,.08);
 } */
 </style>
-
