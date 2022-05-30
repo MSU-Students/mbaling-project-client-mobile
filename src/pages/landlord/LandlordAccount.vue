@@ -12,11 +12,16 @@
 
     <div align="center" class="q-px-md q-pb-xs text-black">
       <q-avatar size="10rem" class="bg-primary">
-        <q-img v-if="currentUser.prfphoto"
+        <q-img
+          v-if="currentUser.prfphoto"
           :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
           class="avatar"
         />
-        <q-img v-if="!currentUser.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+        <q-img
+          v-if="!currentUser.prfphoto"
+          class="avatar q-pt-none q-mt-none"
+          src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+        />
       </q-avatar>
       <div
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
@@ -60,40 +65,40 @@
         </div>
       </div>
       <q-form @submit="chatlinkSave(currentUser)">
-      <q-input
-        type="url"
-        :disable="!chatlinkEdit"
-        v-model="inputAccount.chatLink"
-        dense
-        class="q-mb-xs"
-        style="font-size: medium"
-      />
-      <div align="right">
-        <q-btn
-          v-show="chatlinkEdit"
-          label="Save"
+        <q-input
+          type="url"
+          :disable="!chatlinkEdit"
+          v-model="inputAccount.chatLink"
           dense
-          unelevated
-          rounded
-          no-caps
-          color="primary"
-          class="text-center text-caption"
-          style="width: 4rem"
-          type="submit"
+          class="q-mb-xs"
+          style="font-size: medium"
         />
-        <q-btn
-          v-show="!chatlinkEdit"
-          v-on:click="chatlinkEdit = !chatlinkEdit"
-          label="Edit"
-          dense
-          outline
-          rounded
-          no-caps
-          color="primary"
-          class="text-center text-caption"
-          style="width: 4rem"
-        />
-      </div>
+        <div align="right">
+          <q-btn
+            v-show="chatlinkEdit"
+            label="Save"
+            dense
+            unelevated
+            rounded
+            no-caps
+            color="primary"
+            class="text-center text-caption"
+            style="width: 4rem"
+            type="submit"
+          />
+          <q-btn
+            v-show="!chatlinkEdit"
+            v-on:click="chatlinkEdit = !chatlinkEdit"
+            label="Edit"
+            dense
+            outline
+            rounded
+            no-caps
+            color="primary"
+            class="text-center text-caption"
+            style="width: 4rem"
+          />
+        </div>
       </q-form>
     </div>
 
@@ -122,41 +127,114 @@
         </div>
       </div>
       <q-form @submit="maplinkSave(currentUser)">
-      <q-input
-        type="url"
-        :disable="!maplinkEdit"
-        v-model="inputAccount.mapLink"
-        dense
-        class="q-mb-xs"
-        style="font-size: medium"
-      />
-      <div align="right">
-        <q-btn
-          v-show="maplinkEdit"
-          label="Save"
+        <q-input
+          type="url"
+          :disable="!maplinkEdit"
+          v-model="inputAccount.mapLink"
           dense
-          unelevated
-          rounded
-          no-caps
-          color="primary"
-          class="text-center text-caption"
-          style="width: 4rem"
-          type="submit"
+          class="q-mb-xs"
+          style="font-size: medium"
         />
-        <q-btn
-          v-show="!maplinkEdit"
-          v-on:click="maplinkEdit = !maplinkEdit"
-          label="Edit"
-          dense
-          outline
-          rounded
-          no-caps
-          color="primary"
-          class="text-center text-caption"
-          style="width: 4rem"
-        />
-      </div>
+        <div align="right">
+          <q-btn
+            v-show="maplinkEdit"
+            label="Save"
+            dense
+            unelevated
+            rounded
+            no-caps
+            color="primary"
+            class="text-center text-caption"
+            style="width: 4rem"
+            type="submit"
+          />
+          <q-btn
+            v-show="!maplinkEdit"
+            v-on:click="maplinkEdit = !maplinkEdit"
+            label="Edit"
+            dense
+            outline
+            rounded
+            no-caps
+            color="primary"
+            class="text-center text-caption"
+            style="width: 4rem"
+          />
+        </div>
       </q-form>
+
+      <!-- Pending Applications -->
+
+      <div class="q-mt-lg">
+        <div class="q-ma-xs">
+          <q-item-label
+            class="defaultfont-semibold text-grey-5"
+            style="font-size: small"
+          >
+            Pending Applications
+          </q-item-label>
+          <div class="row">
+            <div class="col">
+              <q-list>
+                <q-item
+                  clickable
+                  dense
+                  class="q-pt-md q-my-sm row items-center"
+                  style="height: 3rem"
+                >
+                  <q-item-section class="q-pb-md" avatar>
+                    <q-avatar size="xl">
+                      <img
+                        class="avatar q-pt-none q-mt-none"
+                        src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+                      />
+                    </q-avatar>
+                  </q-item-section>
+                  <div>
+                    <q-item-section>
+                      <q-item-label
+                        class="defaultfont-semibold"
+                        style="font-size: small"
+                      >
+                        FirstName LastName
+                      </q-item-label>
+                      <q-item-label lines="1" style="font-size: small">
+                        <p>@user</p>
+                      </q-item-label>
+                    </q-item-section>
+                  </div>
+                </q-item>
+              </q-list>
+            </div>
+            <div class="col-3">
+              <q-btn
+                :ripple="false"
+                unelevated
+                rounded
+                dense
+                no-caps
+                outline
+                class="text-#BE282D q-mb-sm"
+                style="height: 1.5rem; width: 5rem; font-size: smaller"
+                color="primary"
+                label="pending"
+              />
+              <q-btn
+                :ripple="false"
+                unelevated
+                rounded
+                dense
+                no-caps
+                outline
+                class="text-#BE282D"
+                style="height: 1.5rem; width: 5rem; font-size: smaller"
+                color="primary"
+                label="decline"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </q-page>
 </template>
@@ -185,17 +263,17 @@ export default class LandlordAccount extends Vue {
 
   async mounted() {
     await this.authUser();
-    this.inputAccount = {...this.currentUser}
+    this.inputAccount = { ...this.currentUser };
   }
 
   inputAccount: any = {
     chatLink: "",
     mapLink: "",
-  }
+  };
 
- async chatlinkSave(val: AUser) {
+  async chatlinkSave(val: AUser) {
     await this.editAccount(this.inputAccount);
-    this.inputAccount = {...val}
+    this.inputAccount = { ...val };
     this.$q
       .dialog({
         title: "Confirm Edit",
@@ -209,9 +287,9 @@ export default class LandlordAccount extends Vue {
         window.location.reload();
       });
   }
- async maplinkSave(val: AUser) {
-   await this.editAccount(this.inputAccount);
-   this.inputAccount = {...val}
+  async maplinkSave(val: AUser) {
+    await this.editAccount(this.inputAccount);
+    this.inputAccount = { ...val };
     this.$q
       .dialog({
         title: "Confirm Edit",
