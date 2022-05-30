@@ -54,22 +54,22 @@ export interface ApplicationDto {
     'status': string;
     /**
      * 
-     * @type {number}
+     * @type {UserDto}
      * @memberof ApplicationDto
      */
-    'studentID': number;
+    'student'?: UserDto;
     /**
      * 
-     * @type {number}
+     * @type {UserDto}
      * @memberof ApplicationDto
      */
-    'landlordID': number;
+    'landlord'?: UserDto;
     /**
      * 
-     * @type {number}
+     * @type {PostDto}
      * @memberof ApplicationDto
      */
-    'postID': number;
+    'post'?: PostDto;
 }
 /**
  * 

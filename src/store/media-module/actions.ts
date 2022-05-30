@@ -21,7 +21,7 @@ const actions: ActionTree<MediaStateInterface, StateInterface> = {
 
   async getAllMediById(context, id: number) {
     const res = await mediaService.getPicture(id);
-    // // const photos = res.map((i) => i.id);
+    // const photos = res.map((i) => i.id);
     // context.commit("getAllPhotos", photos);
   },
 };
