@@ -39,7 +39,7 @@
           />
         </template>
         <q-carousel-slide
-          v-for="(photo, index) in allPhotos"
+          v-for="(photo, index) in data"
           :key="index"
           :name="photo"
           :img-src="`http://localhost:3000/media/${photo.id}`"
@@ -113,6 +113,9 @@
         {{ post.description }}
       </div>
     </div>
+     <div v-if="currentUser.type == 'student'" class="column flex flex-center text-primary defaultfont">
+      <q-btn  class="q-mt-xl" rounded color="primary" icon="check" label="Apply" @click="addApplication()" />
+    </div>
 
     <q-page-sticky position="top-left" :offset="[18, 18]">
       <q-btn
@@ -151,7 +154,8 @@
 </template>
 
 <script lang="ts">
-import { PostDto, UserDto } from "src/services/rest-api";
+import { ApplicationDto, MediaDto, PostDto, UserDto } from "src/services/rest-api";
+import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapState } from "vuex";
 
@@ -160,24 +164,40 @@ import { mapActions, mapState } from "vuex";
     ...mapState("post", ["newPost"]),
     ...mapState("account", ["allAccount", "newUser"]),
     ...mapState("media", ["allPhotos"]),
+    ...mapState("auth", ["currentUser"]),
   },
   methods: {
     ...mapActions("post", ["getPostById"]),
     ...mapActions("account", ["getAllUser", "getUserById"]),
     ...mapActions("media", ["getAllMedia"]),
+    ...mapActions("auth", ["authUser"]),
+    ...mapActions('application', ['createApplication']),
   },
 })
 export default class Post extends Vue {
+  createApplication!: (payload: any) => Promise<void>;
   getUserById!: (id: any) => Promise<void>;
   getPostById!: (id: any) => Promise<void>;
   getAllMedia!: () => Promise<void>;
+  authUser!: () => Promise<void>;
+
+  currentUser!: AUser;
   newPost!: any;
   newUser!: any;
   allPhotos!: any[];
+  data: any = []
 
   slide = 1;
   fullscreen = false;
   isStudent = true;
+  loading = false
+
+  application: any = {
+    status: "",
+    studentID: 0,
+    landlordID: 0,
+    postID: 0
+  };
 
   user: UserDto = {
     fName: "",
@@ -220,15 +240,27 @@ export default class Post extends Vue {
 
   async created() {
     await this.getAllMedia();
-    console.log('This is here')
-    console.log(this.allPhotos);
+    console.log(this.allPhotos )
+    console.log(this.allPhotos)
+    console.log(this.post.id + "Post ID here")
+    this.data = this.allPhotos.filter((i) => this.post.id === i.allPhotos?.postPhoto.id )
+      .map((a: any) => {
+        return {
+          id: 1,
+        };
+      });
+    console.log(this.data);
+    // await this.getAllMedia();
+    // console.log('This is here')
+    // console.log(this.allPhotos);
   }
 
   async mounted() {
+    await this.authUser();
     const postId = this.$route.params.id;
     await this.getPostById(postId);
     this.post = this.newPost;
-    console.log(this.post);
+    console.log(this.post.id + "Post ID is here 2");
     await this.getUserById(this.post.userID);
     this.user = this.newUser;
   }
@@ -237,6 +269,46 @@ export default class Post extends Vue {
     console.log(post);
     const postID = post.userID;
     await this.$router.push(`/profile/${postID}`);
+  }
+
+  async addApplication() {
+    this.application = {
+      status: "pending",
+      studentID: this.currentUser.id,
+      landlordID: this.post?.user?.id,
+      postID: this.post.id
+    };
+     try {
+      this.loading = true;
+      if(this.currentUser.type == 'student'){
+        await this.createApplication({
+        ...this.application,
+        studentID: this.currentUser.id
+      });
+      this.$q.notify({
+        type: 'positive',
+        message: 'Successfully Applied!',
+        caption: 'Employer will contact you soon.'
+      });
+      this.loading = false;}
+      else{
+       this.$q.notify({
+        type: 'negative',
+        message: 'Only Student can Apply!',
+      });
+      }
+    } catch (error) {
+      await this.$router.replace('/login');
+      this.loading = false;
+    }
+        // this.$q.notify({
+        //   type: 'positive',
+        //   caption: 'Click ',
+        //   position: 'bottom',
+        //   color: "secondary",
+        //   textColor: "primary",
+        //   classes: "defaultfont",
+        // });
   }
 }
 </script>
