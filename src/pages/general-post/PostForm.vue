@@ -168,6 +168,10 @@ export default class PostForm extends Vue {
   model = "";
   firstImageAttachement: File[] | File = [];
 
+  inputPostImage: any ={
+    postPhotoID: 0
+  }
+
   inputPost: any = {
     description: ``,
     fee: "",
