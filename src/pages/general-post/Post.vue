@@ -302,8 +302,12 @@ export default class Post extends Vue {
         });
       }
     } catch (error) {
-      await this.$router.replace("/login");
-      this.loading = false;
+      this.$q.notify({
+        textColor: 'secondary',
+        color: 'primary',
+          type: "negative",
+          message: "Already Applied!",
+        });
     }
     // this.$q.notify({
     //   type: 'positive',
