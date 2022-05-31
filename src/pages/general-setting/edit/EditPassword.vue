@@ -40,20 +40,16 @@
         v-model="password.oldPassword"
         label="Current password"
         stack-label
-        :type="showPwd ? 'password' : 'text'"
+        :type="showPwd1 ? 'password' : 'text'"
         style="font-size: medium"
         lazy-rules
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) ||
-                        'Input your old password',
-                    ]"
+        :rules="[(val) => (val && val.length > 0) || 'Input your old password']"
       >
         <template v-slot:append>
           <q-icon
-            :name="showPwd ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
+            :name="showPwd1 ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
             class="cursor-pointer"
-            @click="showPwd = !showPwd"
+            @click="showPwd1 = !showPwd1"
           />
         </template>
       </q-input>
@@ -66,11 +62,7 @@
         class="q-mt-lg"
         style="font-size: medium"
         lazy-rules
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) ||
-                        'Input your new password',
-                    ]"
+        :rules="[(val) => (val && val.length > 0) || 'Input your new password']"
       >
         <template v-slot:append>
           <q-icon
@@ -89,11 +81,9 @@
         class="q-mt-lg"
         style="font-size: medium"
         lazy-rules
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) ||
-                        'Input your confirm password',
-                    ]"
+        :rules="[
+          (val) => (val && val.length > 0) || 'Input your confirm password',
+        ]"
       >
         <template v-slot:append>
           <q-icon
@@ -108,6 +98,8 @@
 </template>
 
 <script lang="ts">
+import router from "src/router";
+import { mbalingApiService } from "src/services/mbaling-api.service";
 import { ChangePasswordDto } from "src/services/rest-api";
 import { ref } from "vue";
 import { Options, Vue } from "vue-class-component";
@@ -118,9 +110,7 @@ import { mapActions } from "vuex";
     ...mapActions("auth", ["changePassword"]),
   },
 })
-
 export default class EditHousing extends Vue {
-
   changePassword!: (changePassword: ChangePasswordDto) => Promise<void>;
   password: ChangePasswordDto = {
     oldPassword: "",
@@ -128,42 +118,47 @@ export default class EditHousing extends Vue {
   };
 
   confirmpassword = "";
-
-  text = ref("");
   showPwd = true;
+  showPwd1 = true;
 
-async onSubmit() {
-  this.$q
+  async onSubmit() {
+    this.$q
       .dialog({
-          title: "Confirm Edit",
-          message: "Are you sure you want to publish the changes?",
-          cancel: true,
-          persistent: true,
-          class: "defaultfont",
-    })
+        title: "Confirm Edit",
+        message: "Are you sure you want to publish the changes?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
       .onOk(async () => {
-
-    try {
-      if (this.password.newPassword != this.confirmpassword) {
-        this.$q.notify({
-          type: "negative",
-          message: "Passwords not match!",
-        });
-        return;
-      }
-      await this.changePassword(this.password);
-      this.$q.notify({
-        type: "positive",
-        message: "Change password successfully",
+        try {
+          if (this.password.newPassword != this.confirmpassword) {
+            this.$q.notify({
+              type: "negative",
+              message: "Passwords not match!",
+            });
+            return;
+          }
+          await mbalingApiService.changePassword(this.password);
+          this.$q.notify({
+            type: "positive",
+            message: "Change password successfully",
+          });
+          // const result = await mbalingApiService.logoutUser();
+          // if (result.status == 201) {
+          //   await this.$router.replace('/')
+          //   this.$q.notify({
+          //     type: 'warning',
+          //     message: 'You have been logged out',
+          //   })
+          // }
+        } catch (error: any) {
+          this.$q.notify({
+            type: "negative",
+            message: 'Invalid current password',
+          });
+        }
       });
-      window.location.reload();
-    } catch (error: any) {
-      this.$q.notify({
-        type: "negative",
-        message: error.message,
-      });
-    }
-    });
   }
 
   onClear() {
@@ -173,8 +168,6 @@ async onSubmit() {
       newPassword: "",
     };
   }
-
-
 
   // confirmEdit() {
   //   this.$q.dialog({

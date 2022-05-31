@@ -27,7 +27,7 @@ const actions: ActionTree<IAuthState, StateInterface> = {
   },
 
   async changePassword(context, changePassword: ChangePasswordDto) {
-    await mbalingApiService.changeMyPass(changePassword);
+    await mbalingApiService.changePassword(changePassword);
   },
 };
 
