@@ -14,6 +14,12 @@ const actions: ActionTree<MediaStateInterface, StateInterface> = {
     context.commit("getMedia", result);
   },
 
+  async updateMedia(context, payload: any): Promise<any> {
+    await mediaService.update(payload.id, payload);
+    console.log('edit media here ')
+    await context.dispatch('updateMedia');
+  },
+
   async getAllMedia(context): Promise<any> {
     const res = await mediaService.getAll();
     context.commit("getAllPhotos", res);

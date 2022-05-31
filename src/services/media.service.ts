@@ -12,6 +12,10 @@ class MediaService extends DefaultApi {
     const response = await mbalingApiService.uploadMedia(file);
     return response.data;
   }
+  async update(id: number, payload: any) {
+    const response = await mbalingApiService.updateMedia(id, payload);
+    return response.data;
+  }
 
   async getAll(): Promise<MediaDto[]> {
     const response = await mbalingApiService.getAllMedia();

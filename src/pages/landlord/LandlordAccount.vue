@@ -105,8 +105,13 @@ import { mapActions, mapState } from "vuex";
   },
 })
 export default class LandlordAccount extends Vue {
+  getAllApplication!: () => Promise<void>
+  applications!: any[];
   currentUser!: any;
+  data: any = []
   tab = "link";
+
+
 }
 </script>
 <style>

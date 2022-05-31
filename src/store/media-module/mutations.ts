@@ -5,6 +5,9 @@ const mutation: MutationTree<MediaStateInterface> = {
   addMedia(state, result) {
     state.allMedia.push(result.data);
   },
+  updateMedia(state, payload) {
+    state.createMedia = payload;
+  },
   getMedia(state, result) {
     state.allMedia = [];
     state.allMedia = result;

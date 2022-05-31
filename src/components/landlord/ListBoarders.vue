@@ -4,7 +4,10 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
+import { mapActions, mapState } from "vuex";
 
-export default class ListBoarders extends Vue {}
+export default class ListBoarders extends Vue {
+
+}
 </script>
