@@ -141,10 +141,16 @@ export interface MediaDto {
     'filename'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof MediaDto
+     */
+    'postPhotoID'?: string | null;
+    /**
+     * 
      * @type {PostDto}
      * @memberof MediaDto
      */
-    'postPhoto'?: PostDto;
+    'postPhoto'?: PostDto | null;
 }
 /**
  * 
@@ -1376,6 +1382,49 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Update Media by id
+         * @param {number} id 
+         * @param {any} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMedia: async (id: number, file?: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateMedia', 'id', id)
+            const localVarPath = `/media/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update post by id
          * @param {number} id 
          * @param {PostDto} postDto 
@@ -1795,6 +1844,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update Media by id
+         * @param {number} id 
+         * @param {any} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateMedia(id: number, file?: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MediaDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMedia(id, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Update post by id
          * @param {number} id 
          * @param {PostDto} postDto 
@@ -2093,6 +2154,17 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         updateHousingname(id: number, housingDto: HousingDto, options?: any): AxiosPromise<HousingDto> {
             return localVarFp.updateHousingname(id, housingDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update Media by id
+         * @param {number} id 
+         * @param {any} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMedia(id: number, file?: any, options?: any): AxiosPromise<MediaDto> {
+            return localVarFp.updateMedia(id, file, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2442,6 +2514,19 @@ export class DefaultApi extends BaseAPI {
      */
     public updateHousingname(id: number, housingDto: HousingDto, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).updateHousingname(id, housingDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update Media by id
+     * @param {number} id 
+     * @param {any} [file] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public updateMedia(id: number, file?: any, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).updateMedia(id, file, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

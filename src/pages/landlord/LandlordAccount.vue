@@ -88,17 +88,30 @@
 </template>
 
 <script lang="ts">
+import { UserDto } from "src/services/rest-api";
+import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 @Options({
+  methods: {
+    ...mapActions("auth", ["authUser"]),
+    ...mapActions("account", ["editAccount", "getAllUser"]),
+    ...mapActions('application', ['getAllApplication', 'updateApplication']),
+  },
   computed: {
     ...mapState("auth", ["currentUser"]),
+    ...mapState('application', ['applications']),
   },
 })
 export default class LandlordAccount extends Vue {
+  getAllApplication!: () => Promise<void>
+  applications!: any[];
   currentUser!: any;
+  data: any = []
   tab = "link";
+
+
 }
 </script>
 <style>
