@@ -48,7 +48,7 @@
               clickable
               dense
               class="q-pt-md q-my-sm row items-center"
-              style="height: 3rem"
+              style="height: 3rem;"
             >
               <q-item-section class="q-pb-md" avatar>
                 <q-avatar size="lg">
@@ -58,7 +58,9 @@
                   />
                 </q-avatar>
               </q-item-section>
-              <div>
+              <!--  -->
+              <!-- <template v-if="choice">
+              <div class="col">
                 <q-item-section>
                   <q-item-label
                     class="defaultfont-semibold"
@@ -71,6 +73,57 @@
                   </q-item-label>
                 </q-item-section>
               </div>
+              <div class="col-3 q-gutter-xs" style="height: 3rem">
+                <q-icon size="2rem" name="check"/>
+                <q-icon size="2rem" name="check"/>
+              </div>
+              </template> -->
+              <!--  -->
+              <!-- <template v-else>
+              <div class="col">
+                <q-item-section>
+                  <q-item-label
+                    class="defaultfont-semibold"
+                    style="font-size: medium"
+                  >
+                    FirstName LastName
+                  </q-item-label>
+                  <q-item-label lines="1" style="font-size: small">
+                    <p>@user</p>
+                  </q-item-label>
+                </q-item-section>
+              </div>
+              <div class="col-3">
+                <q-icon class="float-right" size="1rem" name="person" @click="choiceMenu()"/>
+              </div>
+              </template> -->
+              <!--  -->
+              <template v-if="choice">
+              <div style="height: 3rem">
+                <q-icon class="q-ml-lg" size="2rem" name="check"/> Decline
+                <q-icon class="q-ml-lg" size="2rem" name="check"/> Accept
+                <q-icon class="q-mt-md q-mr-md absolute-right" size="1rem" name="person" @click="choiceClose()"/>
+              </div>
+              </template>
+              <!--  -->
+              <template v-else>
+              <div class="col">
+                <q-item-section>
+                  <q-item-label
+                    class="defaultfont-semibold"
+                    style="font-size: medium"
+                  >
+                    FirstName LastName
+                  </q-item-label>
+                  <q-item-label lines="1" style="font-size: small">
+                    <p>@user</p>
+                  </q-item-label>
+                </q-item-section>
+              </div>
+              <div class="col-3">
+                <q-icon class="q-mt-md q-mr-md absolute-right" size="1rem" name="person" @click="choiceMenu()"/>
+              </div>
+              </template>
             </q-item>
           </q-list>
         </div>
@@ -223,6 +276,19 @@ export default class ListOfBoarders extends Vue {
   async mounted() {
     await this.authUser();
   }
+
+  // Options
+  choice = false;
+
+  async choiceMenu(){
+    this.choice = true;
+    console.log("Option HERE")
+  }
+
+  async choiceClose(){
+    this.choice = false;
+  }
+
 
   // Add Non Student Account
   inputStudent: any = {

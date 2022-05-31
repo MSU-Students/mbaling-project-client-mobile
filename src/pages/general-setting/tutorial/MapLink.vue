@@ -22,42 +22,80 @@
     </template>
   </page-header>
 
-  <div class="q-pb-lg flex flex-center defaultfont" style="font-size: 25px">
-    Setting up your Map Link
-  </div>
+  <q-page class="q-px-lg q-pb-xl defaultfont bg-secondary">
+    <div class="q-pt-lg" style="font-size: medium">
+      <b style="font-size: x-large">1.</b>
+      Launch the <b>Google Maps</b> app on your phone with your official Google
+      account.
+      <div align="center" class="q-mt-sm">
+        <q-img src="~src\assets\maplink\maplink-01.jpg" class="image" />
+      </div>
+    </div>
 
-  <q-page class="q-px-md q-pb-xl defaultfont">
-    <p>
-      Step 1: Open your “Maps or Google map” from your android phone, make sure
-      your google account is logged in, if not then please do login your account.
-    </p>
-    <q-img src="~src\assets\Map-Link\maplink-01.jpg" class="q-mb-md rounded-borders border" />
+    <div class="q-pt-lg" style="font-size: medium">
+      <b style="font-size: x-large">2.</b>
+      Search/locate your housing firm in the map (long-press on the location).
+      <div align="center" class="q-mt-sm">
+        <q-img src="~src\assets\maplink\maplink-02.jpg" class="image" />
+      </div>
+    </div>
 
-    <p>
-      Step 2: Click on GPS icon from right corner to find your location. Make
-      sure your “GPS or location” is turn on or else this icon won’t appear,
-      you’ll have to find your location manually.
-    </p>
-    <q-img src="~src\assets\Map-Link\maplink-02.jpg" class="q-mb-md rounded-borders border" />
+    <div class="q-pt-lg" style="font-size: medium">
+      <b style="font-size: x-large">3.</b>
+      Tap on the share button.
+      <div align="center" class="q-mt-sm">
+        <q-img src="~src\assets\maplink\maplink-03.jpg" class="image" />
+      </div>
+    </div>
 
-    <p>
-      Step 3: Now long press on your location to set your “Dropped pin or mark
-      location”.
-    </p>
-    <q-img src="~src\assets\Map-Link\maplink-03.jpg" class="q-mb-md rounded-borders border" />
-    <p>
-      Step 4: Upon setting-up your location an option menu will appear from bottom.
-      Now find and click the “Share” option.
-    </p>
-    <q-img src="~src\assets\Map-Link\maplink-04.jpg" class="q-mb-md rounded-borders border" />
-    <p>Step 5: Now click on “Copy to clipboard”.</p>
-    <q-img src="~src\assets\Map-Link\maplink-05.jpg" class="q-mb-md rounded-borders border" />
-    <p>
-      Step 6: Visit your profile from “mbaling” apps and paste your link onto
-      the map link and save it. Make sure to remove the word “Dropped pin” from
-      the beginning of your link before you save it.
-    </p>
-    <q-img src="~src\assets\Map-Link\maplink-06.jpg" class="q-mb-md rounded-borders border" />
+    <div class="q-pt-lg" style="font-size: medium">
+      <b style="font-size: x-large">4.</b>
+      Tap on <b>Copy to clipboard</b>.
+      <div align="center" class="q-mt-sm">
+        <q-img src="~src\assets\maplink\maplink-04.jpg" class="image" />
+      </div>
+    </div>
+
+    <div class="q-pt-lg" style="font-size: medium">
+      <b style="font-size: x-large">5.</b>
+      Go to any note app in your phone.
+      <div align="center" class="q-mt-sm">
+        <q-img src="~src\assets\maplink\maplink-05.jpg" class="image" />
+      </div>
+    </div>
+
+    <div class="q-pt-lg" style="font-size: medium">
+      <b style="font-size: x-large">6.</b>
+      Paste your Google Maps link.
+      <div align="center" class="q-mt-sm">
+        <q-img src="~src\assets\maplink\maplink-06.jpg" class="image" />
+      </div>
+    </div>
+
+    <div class="q-pt-lg" style="font-size: medium">
+      <b style="font-size: x-large">7.</b>
+      Select and copy only the URL among the texts.
+      <div align="center" class="q-mt-sm">
+        <q-img src="~src\assets\maplink\maplink-07.jpg" class="image" />
+      </div>
+    </div>
+
+    <div class="q-pt-lg" style="font-size: medium">
+      <b style="font-size: x-large">8.</b>
+      Go to your mBALING account page and tap on the edit button in the
+      <b>Set chat link</b> section.
+      <div align="center" class="q-mt-sm">
+        <q-img src="~src\assets\maplink\maplink-08.jpg" class="image" />
+      </div>
+    </div>
+
+    <div class="q-pt-lg" style="font-size: medium">
+      <b style="font-size: x-large">9.</b>
+      Paste your map location link and tap save.
+      <div align="center" class="q-mt-sm">
+        <q-img src="~src\assets\maplink\maplink-09.jpg" class="image" />
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -67,9 +105,8 @@ import { Vue } from "vue-class-component";
 export default class ChatLink extends Vue {}
 </script>
 <style>
-.border {
-  width: 100%;
-  height: 100%;
-  border: 2px solid rgb(190, 40, 45) !important;
+.image {
+  max-width: 90%;
+  box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
 </style>
