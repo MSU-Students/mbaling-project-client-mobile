@@ -3,10 +3,6 @@ import { MediaDto } from "./rest-api";
 import { DefaultApi } from "./rest-api/api";
 
 class MediaService extends DefaultApi {
-  async getPicture(id: number): Promise<MediaDto> {
-    const response = await mbalingApiService.getMedia(id);
-    return response.data;
-  }
 
   async uploadPicture(payload: any): Promise<MediaDto> {
     const { media, postPhotoId } = payload;

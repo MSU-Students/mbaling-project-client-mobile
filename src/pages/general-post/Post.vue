@@ -263,7 +263,7 @@ export default class Post extends Vue {
     await this.getAllMedia();
     console.log(this.$route.params.id, this.allPhotos);
     this.data = this.allPhotos.filter(
-      (i) => this.$route.params.id === i.postPhoto
+      (i) => this.$route.params.id === i.postPhotoID
     );
     console.log(this.data);
   }

@@ -9,10 +9,6 @@ const actions: ActionTree<MediaStateInterface, StateInterface> = {
     context.commit("addMedia", result);
     return result;
   },
-  async getMedia(context, id: number): Promise<any> {
-    const result = await mediaService.getMedia(id);
-    context.commit("getMedia", result);
-  },
 
   async updateMedia(context, payload: any): Promise<any> {
     await mediaService.update(payload.id, payload);
@@ -25,11 +21,11 @@ const actions: ActionTree<MediaStateInterface, StateInterface> = {
     context.commit("getAllPhotos", res);
   },
 
-  async getAllMediById(context, id: number) {
-    const res = await mediaService.getPicture(id);
-    // const photos = res.map((i) => i.id);
-    // context.commit("getAllPhotos", photos);
-  },
+  // async getAllMediById(context, id: number) {
+  //   const res = await mediaService.getPicture(id);
+  //   // const photos = res.map((i) => i.id);
+  //   // context.commit("getAllPhotos", photos);
+  // },
 };
 
 export default actions;
