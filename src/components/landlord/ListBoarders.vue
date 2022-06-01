@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { ApplicationDto } from "src/services/rest-api";
+import { ApplicationDto, NonAccountDto } from "src/services/rest-api";
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapGetters, mapState } from "vuex";
 
@@ -49,20 +49,32 @@ import { mapActions, mapGetters, mapState } from "vuex";
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
     ...mapActions("application", ["getAllApplication", "updateApplication"]),
+    ...mapActions("nonaccount", ["createNonAccount"])
+
   },
   computed: {
+    ...mapState("nonaccount", ["allNonAccount"]),
     ...mapState("auth", ["currentUser"]),
     ...mapState("application", ["applications"]),
     ...mapGetters("application", ["getAcceptedAccount"]),
   },
 })
 export default class ListBoarders extends Vue {
+  createNonAccount!: (payload: any) => Promise<void>;
   updateApplication!: (payload: any) => Promise<void>;
   getAllApplication!: () => Promise<void>;
   applications!: ApplicationDto[];
   getAcceptedAccount!: ApplicationDto[];
   currentUser!: any;
   data: any = [];
+
+  nonAccount: any={
+    fName: "",
+    lName: "",
+    degree: "",
+    department: "",
+    college: ""
+  }
 
   columns = [
     {
