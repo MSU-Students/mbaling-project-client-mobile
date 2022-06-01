@@ -67,7 +67,7 @@
         icon="bi-clipboard-plus"
         style="max-width: 2rem"
       >
-        <q-badge floating color="primary"> 2 </q-badge>
+        <q-badge floating color="primary"> {{this.data.length}} </q-badge>
       </q-tab>
     </q-tabs>
 
@@ -88,10 +88,10 @@
 </template>
 
 <script lang="ts">
-import { UserDto } from "src/services/rest-api";
+import { ApplicationDto, UserDto } from "src/services/rest-api";
 import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 @Options({
   methods: {
@@ -102,15 +102,23 @@ import { mapActions, mapState } from "vuex";
   computed: {
     ...mapState("auth", ["currentUser"]),
     ...mapState('application', ['applications']),
+    ...mapGetters("application", ["getPendingAccount"]),
   },
 })
 export default class LandlordAccount extends Vue {
   getAllApplication!: () => Promise<void>
+  getPendingAccount!: ApplicationDto[];
   applications!: any[];
   currentUser!: any;
   data: any = []
   tab = "link";
 
+async mounted() {
+    await this.getAllApplication();
+    this.data = this.getPendingAccount
+      .filter((i) =>i.landlord?.id == this.currentUser.id)
+    console.log(this.data);
+  }
 
 }
 </script>
