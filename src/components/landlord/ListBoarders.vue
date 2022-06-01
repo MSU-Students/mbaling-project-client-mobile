@@ -11,10 +11,126 @@
       rounded
       no-caps
       color="primary"
-      class=" text-caption defaultfont"
-      style="width: 8rem"
+      class="text-caption defaultfont"
+      style="width: 10rem"
+      @click="showAddAccount()"
     />
   </div>
+
+  <q-dialog v-model="dialog" persistent>
+      <q-card>
+        <q-form @submit="addStudent()" greedy>
+          <div class="column">
+            <div class="col flex flex-center q-mt-md" style="width: 20rem">
+              <span class="defaultfont-bold" style="font-size: large">
+                Add non-student Account
+              </span>
+            </div>
+            <div class="col q-gutter-y-sm q-my-md flex flex-center">
+              <q-input
+                dense
+                filled
+                v-model="nonAccount.fName"
+                placeholder="Firstname"
+                style="width: 18rem; font-size: small"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'Please Input your FirstName',
+                ]"
+                hide-bottom-space
+              />
+
+              <q-input
+                dense
+                filled
+                v-model="nonAccount.lName"
+                placeholder="Lastname"
+                style="width: 18rem; font-size: small"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'Please Input your LastName',
+                ]"
+                hide-bottom-space
+              />
+
+              <q-input
+                dense
+                filled
+                v-model="nonAccount.college"
+                placeholder="College"
+                style="width: 18rem; font-size: small"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'Please Input your LastName',
+                ]"
+                hide-bottom-space
+              />
+
+              <q-input
+                dense
+                filled
+                v-model="nonAccount.department"
+                placeholder="Department"
+                style="width: 18rem; font-size: small"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'Please Input your LastName',
+                ]"
+                hide-bottom-space
+              />
+
+              <q-input
+                dense
+                filled
+                v-model="nonAccount.degree"
+                placeholder="Degree"
+                style="width: 18rem; font-size: small"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'Please Input your LastName',
+                ]"
+                hide-bottom-space
+              />
+            </div>
+            <div class="col">
+              <div class="flex flex-center">
+                <q-btn
+                  :ripple="false"
+                  unelevated
+                  rounded
+                  dense
+                  no-caps
+                  outline
+                  class="text-#BE282D q-ma-md"
+                  style="height: 1.5rem; width: 6rem; font-size: small"
+                  color="primary"
+                  label="cancel"
+                  v-close-popup
+                />
+                <q-btn
+                  :ripple="false"
+                  unelevated
+                  rounded
+                  dense
+                  no-caps
+                  class="text-white q-ma-md"
+                  style="height: 1.5rem; width: 6rem; font-size: small"
+                  color="primary"
+                  label="create"
+                  type="submit"
+                />
+              </div>
+            </div>
+          </div>
+        </q-form>
+      </q-card>
+  </q-dialog>
+
   <q-table
 
     flat
@@ -67,6 +183,17 @@ export default class ListBoarders extends Vue {
   getAcceptedAccount!: ApplicationDto[];
   currentUser!: any;
   data: any = [];
+
+  // add non account
+  dialog = false;
+
+  async showAddAccount(){
+    this.dialog = true;
+  }
+
+  async addStudent(){
+
+  }
 
   nonAccount: any={
     fName: "",
