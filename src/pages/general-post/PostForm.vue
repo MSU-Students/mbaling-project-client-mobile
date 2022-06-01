@@ -133,7 +133,6 @@
 </template>
 
 <script lang="ts">
-import { QFile } from "quasar";
 import { MediaDto, PostDto } from "src/services/rest-api";
 import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
@@ -145,14 +144,15 @@ import { mapState, mapActions } from "vuex";
     ...mapState("auth", ["currentUser"]),
   },
   methods: {
-    ...mapActions("post", ["addPost"]),
+    ...mapActions("post", ["addPost","editPost"]),
     ...mapActions("auth", ["authUser"]),
     ...mapActions("media", ["uploadMedia"]),
   },
 })
 export default class PostForm extends Vue {
-  uploadMedia!: (payload: File) => Promise<MediaDto>;
-  addPost!: (payload: PostDto) => Promise<void>;
+  editPost!: (payload: any) => Promise<void>;
+  uploadMedia!: (payload: any) => Promise<MediaDto>;
+  addPost!: (payload: any) => Promise<PostDto>;
   authUser!: () => Promise<void>;
 
   currentUser!: AUser;
@@ -168,49 +168,46 @@ export default class PostForm extends Vue {
   model = "";
   firstImageAttachement: File[] | File = [];
 
-  inputPostImage: any ={
-    postPhotoID: 0
-  }
 
   inputPost: any = {
-    description: ``,
+    id: 0,
+    description: "",
     fee: "",
-    Negotiable: false,
     prvCR: false,
     prvKitchen: false,
-    photos: "https://cdn.quasar.dev/img/quasar.jpg",
+    photos: "",
     title: "",
     date: 0,
     housingAddress: "",
     prfphoto: 0,
     url: 0,
-    landlordID: 0,
-    contactNo: "",
+    userID: 0
   };
 
   async resetModel() {
     this.inputPost = {
-      description: ``,
-      fee: "",
-      prvCR: false,
-      prvKitchen: false,
-      photos: "",
-      title: "",
-      date: 0,
-      housingAddress: "",
-      prfphoto: "",
-      url: 0,
-      landlordID: 0,
+      id: 0,
+    description: "",
+    fee: "",
+    prvCR: false,
+    prvKitchen: false,
+    photos: "",
+    title: "",
+    date: 0,
+    housingAddress: "",
+    prfphoto: 0,
+    url: 0,
+    userID: 0
     };
   }
 
   async createPost() {
-    const media = await this.uploadMedia(this.firstImageAttachement as File);
-    await this.addPost({
-      ...this.inputPost,
-      userID: this.currentUser.id,
-      url: media.id,
-    });
+    const addpost = await this.addPost({...this.inputPost, userID: this.currentUser.id})
+    console.log(addpost)
+    const media = await this.uploadMedia(this.firstImageAttachement as File );
+    console.log(media.id)
+    const editpost = await this.editPost({...addpost, url:media.id});
+    console.log(editpost)
     this.addnewPost = false;
           this.$q.notify({
           type: 'positive',

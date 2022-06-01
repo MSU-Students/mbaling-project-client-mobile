@@ -8,12 +8,14 @@ const actions: ActionTree<PostStateInterface, StateInterface> = {
   async addPost(context, payload: any): Promise<any> {
     const result = await postService.create(payload);
     context.commit("setNewPost", result);
+    return result
     await context.dispatch("getAllUser");
   },
 
   async editPost(context, payload: any): Promise<any> {
     const result = await postService.update(payload.id, payload);
     context.commit("updatePost", result);
+    return result
     await context.dispatch("getAllUser");
   },
 
