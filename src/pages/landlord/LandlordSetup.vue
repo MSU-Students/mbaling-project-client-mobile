@@ -266,6 +266,7 @@ export default class LoginForm extends Vue {
     console.log("Mounted here");
     console.log(this.authUser);
     await this.authUser();
+    this.inputAccount = {...this.currentUser}
   }
   // Nahed Code HAHAHA
 
