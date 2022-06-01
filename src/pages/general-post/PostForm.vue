@@ -194,7 +194,6 @@
 </template>
 
 <script lang="ts">
-import { QFile } from "quasar";
 import { MediaDto, PostDto } from "src/services/rest-api";
 import { UserDto } from "src/services/rest-api";
 import { AUser } from "src/store/auth/state";
@@ -207,7 +206,7 @@ import { mapState, mapActions } from "vuex";
     ...mapState("auth", ["currentUser"]),
   },
   methods: {
-    ...mapActions("post", ["addPost"]),
+    ...mapActions("post", ["addPost","editPost"]),
     ...mapActions("auth", ["authUser"]),
     ...mapActions("media", ["uploadMedia"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
@@ -258,23 +257,20 @@ export default class PostForm extends Vue {
   }
   // ------------------------
 
-  inputPostImage: any ={
-    postPhotoID: 0
-  }
 
   inputPost: any = {
-    description: ``,
+    id: 0,
+    description: "",
     fee: "",
-    Negotiable: false,
     prvCR: false,
     prvKitchen: false,
-    photos: "https://cdn.quasar.dev/img/quasar.jpg",
+    photos: "",
     title: "",
     date: 0,
     housingAddress: "",
     prfphoto: 0,
     url: 0,
-    landlordID: 0,
+    userID: 0
   };
 
   inputNumber: any = {
@@ -283,17 +279,18 @@ export default class PostForm extends Vue {
 
   async resetModel() {
     this.inputPost = {
-      description: ``,
-      fee: "",
-      prvCR: false,
-      prvKitchen: false,
-      photos: "",
-      title: "",
-      date: 0,
-      housingAddress: "",
-      prfphoto: "",
-      url: 0,
-      landlordID: 0,
+      id: 0,
+    description: "",
+    fee: "",
+    prvCR: false,
+    prvKitchen: false,
+    photos: "",
+    title: "",
+    date: 0,
+    housingAddress: "",
+    prfphoto: 0,
+    url: 0,
+    userID: 0
     };
   }
 

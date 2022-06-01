@@ -1,26 +1,41 @@
 <template>
-  <div class="text-h6">List of Applicants</div>
+  <div class="text-h6" align="right">
+    <span class="defaultfont float-left" style="font-size: medium">
+      List of Boarders
+    </span>
+    <q-btn
+      icon="add"
+      label="Insert Boarders"
+      dense
+      unelevated
+      rounded
+      no-caps
+      color="primary"
+      class=" text-caption defaultfont"
+      style="width: 8rem"
+    />
+  </div>
   <q-table
-  flat
-  hide-bottom
+
+    flat
+    hide-bottom
     :columns="columns"
-    :rows="getAcceptedAccount"
-    row-key="status"
-  >
-  <template v-slot:body-cell-action="props">
-          <q-td :props="props">
-             <q-btn
-                color="red-5"
-                icon="delete"
-                size="sm"
-                class="q-ml-sm"
-                flat
-                round
-                dense
-                @click="deleteAcceptedStudent(props.row)"
-              />
-          </q-td>
-        </template>
+    :rows="data"
+    row-key="status">
+      <template v-slot:body-cell-action="props">
+        <q-td :props="props">
+          <q-btn
+            color="red-5"
+            icon="delete"
+            size="sm"
+            class="q-ml-sm"
+            flat
+            round
+            dense
+            @click="deleteAcceptedStudent(props.row)"
+          />
+        </q-td>
+      </template>
   </q-table>
 </template>
 
@@ -42,7 +57,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
   },
 })
 export default class ListBoarders extends Vue {
-updateApplication!: (payload: any) => Promise<void>;
+  updateApplication!: (payload: any) => Promise<void>;
   getAllApplication!: () => Promise<void>;
   applications!: ApplicationDto[];
   getAcceptedAccount!: ApplicationDto[];
@@ -50,13 +65,12 @@ updateApplication!: (payload: any) => Promise<void>;
   data: any = [];
 
   columns = [
-     {
+    {
       name: "name",
       label: "Name",
       align: "left",
       field: (row: ApplicationDto) =>
         row.student?.fName + " " + row.student?.lName,
-
     },
     {
       name: "action",
@@ -65,12 +79,14 @@ updateApplication!: (payload: any) => Promise<void>;
       align: "left",
       field: "action",
     },
-
   ];
 
   async mounted() {
     await this.getAllApplication();
-    console.log(this.getAcceptedAccount);
+    this.data = this.getAcceptedAccount.filter(
+      (i) => i.landlord?.id == this.currentUser.id
+    );
+    console.log(this.data);
   }
 
   async deleteAcceptedStudent(id: any) {

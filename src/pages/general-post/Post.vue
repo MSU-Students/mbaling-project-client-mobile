@@ -263,7 +263,7 @@ export default class Post extends Vue {
     await this.getAllMedia();
     console.log(this.$route.params.id, this.allPhotos);
     this.data = this.allPhotos.filter(
-      (i) => this.$route.params.id === i.postPhotoID
+      (i) => this.$route.params.id === i.postPhoto
     );
     console.log(this.data);
   }
@@ -299,9 +299,11 @@ export default class Post extends Vue {
           student: this.currentUser.id,
         });
         this.$q.notify({
+          textColor: 'primary',
+          color: 'secondary',
           type: "positive",
           message: "Successfully Applied!",
-          caption: "Employer will contact you soon.",
+          caption: "Landlord will contact you soon.",
         });
         this.loading = false;
       } else {

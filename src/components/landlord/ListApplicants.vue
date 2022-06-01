@@ -3,7 +3,7 @@
   <q-table
     hide-bottom
     :columns="columns"
-    :rows="getPendingAccount"
+    :rows="data"
     row-key="status"
   >
     <template #body-cell-status="props">
@@ -85,7 +85,9 @@ export default class ListApplicants extends Vue {
 
   async mounted() {
     await this.getAllApplication();
-    console.log(this.getPendingAccount);
+    this.data = this.getPendingAccount
+      .filter((i) =>i.landlord?.id == this.currentUser.id)
+    console.log(this.data);
   }
 
   async ApproveApplicant(id: any) {
