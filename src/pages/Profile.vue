@@ -26,7 +26,10 @@
     </div>
     <q-separator color="primary" size="0.1rem" class="q-my-sm" />
   </q-header>
-
+  <div class="q-ml-md defaultfont-bold">
+    Boraders:
+    <span class="defaultfont-light">{{this.data.length}}</span>
+  </div>
   <q-page class="defaultfont bg-secondary text-black">
     <div class="q-pt-sm q-px-sm q-pb-md defaultfont">
       <div class="q-ml-sm defaultfont-semibold text-body1">POSTS</div>
@@ -108,25 +111,32 @@
 </template>
 
 <script lang="ts">
-import { PostDto, UserDto } from "src/services/rest-api";
+import { ApplicationDto, PostDto, UserDto } from "src/services/rest-api";
 import { UserInterface } from "src/store/user/state";
 import { Options, Vue } from "vue-class-component";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 @Options({
   computed: {
     ...mapState("post", ["posts"]),
     ...mapState("account", ["allAccount", "newUser"]),
+    ...mapState("application", ["applications"]),
+    ...mapGetters("application", ["getAcceptedAccount"]),
   },
   methods: {
     ...mapActions("account", ["getAllUser", "getUserById"]),
     ...mapActions("post", ["getAllPost"]),
+    ...mapActions("application", ["getAllApplication", "updateApplication"]),
   },
 })
 export default class Profile extends Vue {
   getUserById!: (id: any) => Promise<void>;
   getAllPost!: () => Promise<void>;
   getAllUser!: () => Promise<void>;
+  getAllApplication!: () => Promise<void>;
+
+  data: any = [];
+  getAcceptedAccount!: ApplicationDto[];
   newUser!: any;
   posts!: PostDto[];
   allAccount!: UserInterface[];
@@ -162,6 +172,10 @@ export default class Profile extends Vue {
     await this.getUserById(userId);
     this.user = this.newUser;
     await this.getAllPost();
+    await this.getAllApplication()
+    this.data = this.getAcceptedAccount.filter(
+      (i) => i.landlord?.id == this.user.id
+    );
   }
   // user = {
   //   id: 202200001,
