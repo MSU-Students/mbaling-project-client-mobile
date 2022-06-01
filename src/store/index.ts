@@ -25,6 +25,9 @@ import { HousingStateInterface } from "./housing-module/state";
 import application from './application-module';
 import { ApplicationStateInterface } from './application-module/state';
 
+import nonaccount from './non-account-module';
+import { NonAccountStateInterface } from './non-account-module/state';
+
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -45,6 +48,7 @@ export interface StateInterface {
   media: MediaStateInterface;
   housing: HousingStateInterface;
   application: ApplicationStateInterface
+  nonaccount: NonAccountStateInterface
 }
 
 // provide typings for `this.$store`
@@ -67,7 +71,8 @@ export default store(function (/* { ssrContext } */) {
       auth,
       media,
       housing,
-      application
+      application,
+      nonaccount
 
 
     },
