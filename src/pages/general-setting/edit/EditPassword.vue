@@ -40,6 +40,7 @@
         v-model="password.oldPassword"
         label="Current password"
         stack-label
+        dense
         :type="showPwd1 ? 'password' : 'text'"
         style="font-size: medium"
         lazy-rules
@@ -58,6 +59,7 @@
         v-model="password.newPassword"
         label="New password"
         stack-label
+        dense
         :type="showPwd ? 'password' : 'text'"
         class="q-mt-lg"
         style="font-size: medium"
@@ -77,6 +79,7 @@
         v-model="confirmpassword"
         label="Confrim new password"
         stack-label
+        dense
         :type="showPwd ? 'password' : 'text'"
         class="q-mt-lg"
         style="font-size: medium"
@@ -144,14 +147,7 @@ export default class EditHousing extends Vue {
             type: "positive",
             message: "Change password successfully",
           });
-          // const result = await mbalingApiService.logoutUser();
-          // if (result.status == 201) {
-          //   await this.$router.replace('/')
-          //   this.$q.notify({
-          //     type: 'warning',
-          //     message: 'You have been logged out',
-          //   })
-          // }
+          this.$router.go(-1)
         } catch (error: any) {
           this.$q.notify({
             type: "negative",

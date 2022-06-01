@@ -1,4 +1,5 @@
 <template>
+<q-form @submit="onSaveEditPost()" greedy>
   <q-page class="defaultfont text-black">
     <div class="bg-black">
       <q-img
@@ -41,6 +42,7 @@
 
 <div class="q-mt-sm q-px-xl">
         <q-file
+          disable
           outlined
           label="Upload Image"
           accept=".jpg, image/*"
@@ -56,6 +58,9 @@
         placeholder="Title"
         input-class="text-center"
         style="font-size: medium"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || 'Please Input Title']"
+         hide-bottom-space
       />
       <q-input
         v-model="post.fee"
@@ -64,6 +69,9 @@
         input-class="text-center"
         class="q-mt-xs q-px-xl"
         style="font-size: medium"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || 'Please Input Fee']"
+         hide-bottom-space
       />
 
       <div class="q-px-md q-mt-md row items-center">
@@ -91,10 +99,13 @@
         placeholder="Description"
         class="q-mt-md q-pb-lg"
         style="font-size: small"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || 'Please Input Description']"
+         hide-bottom-space
       />
 
       <q-input
-        v-model="post.contactNo"
+        v-model="inputNumber.contact"
         dense
         type="tel"
         mask="#### - ### - ####"
@@ -102,6 +113,9 @@
         input-class="text-left"
         class="q-mt-xs q-px-xs"
         style="font-size: medium"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || 'Please Input Contact']"
+         hide-bottom-space
       />
     </div>
 
@@ -130,14 +144,16 @@
         no-caps
         color="primary"
         style="height: 3rem; width: 5rem"
-        @click="onSaveEditPost()"
+        type="submit"
       />
     </div>
   </q-footer>
+  </q-form>
 </template>
 
 <script lang="ts">
-import { PostDto } from "src/services/rest-api";
+import { PostDto, UserDto } from "src/services/rest-api";
+import { AUser } from "src/store/auth/state";
 import { ref } from "vue";
 import { Options, Vue } from "vue-class-component";
 import { mapState, mapActions } from "vuex";
@@ -146,16 +162,23 @@ import Post from "./Post.vue";
 @Options({
   computed: {
     ...mapState("post", ["newPost"]),
+    ...mapState("auth", ["currentUser"]),
   },
   methods: {
     ...mapActions("post", ["getPostById", "editPost"]),
+    ...mapActions("account", ["editAccount", "getAllUser"]),
+    ...mapActions("auth", ["authUser"]),
   },
 })
 
 export default class PostEdit extends Vue {
   editPost!: (payload: PostDto) => Promise<void>;
+  editAccount!: (payload: UserDto) => Promise<void>;
   getPostById!: (id: any) => Promise<void>;
+  authUser!: () => Promise<void>;
   newPost!: any;
+
+  currentUser!: AUser;
 
  pkBox = false;
   pcBox = false;
@@ -179,16 +202,24 @@ export default class PostEdit extends Vue {
     userID: 0,
   };
 
+  inputNumber: any = {
+    contact: "",
+  }
+
   async mounted() {
     const postId = this.$route.params.id;
     await this.getPostById(postId);
     this.post = {...this.newPost};
     console.log(this.post);
+    await this.authUser();
+    this.inputNumber = {...this.currentUser}
   }
 
   async onSaveEditPost(){
     console.log("Yeahh!!")
     await this.editPost(this.post);
+    await this.editAccount(this.inputNumber)
+    this.$router.go(-1)
     this.$q.notify({
           position: 'bottom',
           color: "secondary",

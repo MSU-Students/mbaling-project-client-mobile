@@ -1,13 +1,14 @@
 <template>
+<q-form @submit="createPost()" greedy>
   <q-page class="defaultfont text-black">
-    <div class="bg-black" style="height: 20rem">
+    <!-- <div class="bg-black" style="height: 20rem">
       <div
         class="bg-grey-4 row items-center justify-evenly"
         style="height: 100%; border-radius: 2rem 2rem 0 0"
       >
         <q-icon name="bi-image" size="10rem" color="grey" />
       </div>
-    </div>
+    </div> -->
 
     <!-- <div align="right" class="q-px-md q-py-sm row items-center">
       <div class="col">
@@ -34,16 +35,63 @@
         </Transition>
       </div>
     </div> -->
-
-<div class="q-mt-sm q-px-xl">
+    <div class="q-mt-xl" style="height: 15rem;">
+      <div class="flex flex-center q-mb-sm">
         <q-file
           outlined
-          label="Upload Image"
+          label="Upload Image 1"
           accept=".jpg, image/*"
-          v-model="firstImageAttachement"
+          v-model="ImageAttachement1"
+          style="width: 20rem"
         >
         </q-file>
       </div>
+      <div v-if="image2" class="flex flex-center q-mb-sm">
+        <q-file
+          outlined
+          label="Upload Image 2"
+          accept=".jpg, image/*"
+          v-model="ImageAttachement2"
+          style="width: 20rem"
+        >
+        </q-file>
+      </div>
+      <div v-if="image3" class="flex flex-center q-mb-sm">
+        <q-file
+          outlined
+          label="Upload Image 3"
+          accept=".jpg, image/*"
+          v-model="ImageAttachement3"
+          style="width: 20rem;"
+        >
+        </q-file>
+      </div>
+      <div class="flex flex-center" v-if="addButton2">
+        <q-btn
+        outline
+        unelevated
+        dense
+        style="width: 20rem; height: 3rem; font-size:;"
+        color="grey-6"
+        @click="addPicture2()"
+        >
+        <q-icon size="2rem" name="add" />
+        </q-btn>
+      </div>
+      <div class="flex flex-center" v-if="addButton3">
+        <q-btn
+        outline
+        unelevated
+        dense
+        style="width: 20rem; height: 3rem; font-size:;"
+        color="grey-6"
+        @click="addPicture3()"
+        >
+        <q-icon size="2rem" name="add" />
+        </q-btn>
+      </div>
+
+    </div>
     <div class="q-mt-sm q-px-md">
       <q-input
         v-model="inputPost.title"
@@ -52,6 +100,9 @@
         placeholder="Title"
         input-class="text-center"
         style="font-size: medium"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || 'Please Input Title']"
+         hide-bottom-space
       />
       <q-input
         v-model="inputPost.fee"
@@ -60,6 +111,9 @@
         input-class="text-center"
         class="q-mt-xs q-px-xl"
         style="font-size: medium"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || 'Please Input Fee']"
+         hide-bottom-space
       />
 
       <div class="q-px-md q-mt-md row items-center">
@@ -87,10 +141,13 @@
         placeholder="Description"
         class="q-mt-md q-pb-lg"
         style="font-size: small"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || 'Please Input Description']"
+         hide-bottom-space
       />
 
       <q-input
-        v-model="inputPost.contactNo"
+        v-model="inputNumber.contact"
         dense
         type="tel"
         mask="#### - ### - ####"
@@ -98,6 +155,9 @@
         input-class="text-left"
         class="q-mt-xs q-px-xs"
         style="font-size: medium"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || 'Please Input contact']"
+         hide-bottom-space
       />
     </div>
 
@@ -126,15 +186,17 @@
         no-caps
         color="primary"
         style="height: 3rem; width: 5rem"
-        @click="createPost()"
+        type="submit"
       />
     </div>
   </q-footer>
+  </q-form>
 </template>
 
 <script lang="ts">
 import { QFile } from "quasar";
 import { MediaDto, PostDto } from "src/services/rest-api";
+import { UserDto } from "src/services/rest-api";
 import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
 import { mapState, mapActions } from "vuex";
@@ -148,17 +210,20 @@ import { mapState, mapActions } from "vuex";
     ...mapActions("post", ["addPost"]),
     ...mapActions("auth", ["authUser"]),
     ...mapActions("media", ["uploadMedia"]),
+    ...mapActions("account", ["editAccount", "getAllUser"]),
   },
 })
 export default class PostForm extends Vue {
   uploadMedia!: (payload: File) => Promise<MediaDto>;
   addPost!: (payload: PostDto) => Promise<void>;
+  editAccount!: (payload: UserDto) => Promise<void>;
   authUser!: () => Promise<void>;
 
   currentUser!: AUser;
 
   async mounted() {
     await this.authUser();
+    this.inputNumber = {...this.currentUser}
   }
 
   pkBox = false;
@@ -166,7 +231,32 @@ export default class PostForm extends Vue {
   showClearBtn = false;
   addnewPost = false;
   model = "";
-  firstImageAttachement: File[] | File = [];
+  // ImageAttachement1: File[] | File = [];
+  ImageAttachement1: File = new File ([],'');
+  ImageAttachement2: File = new File ([],'');
+  ImageAttachement3: File = new File ([],'');
+
+
+// adding Pictures TAE! a code HAHA
+  image2 = false;
+  image3 = false;
+  addButton2 = true;
+  addButton3 = false;
+
+  async addPicture2(){
+    this.image2 = true;
+    this.addButton3 = true;
+    if (this.image2 = true){
+        this.addButton2 = false;
+    }
+  }
+  async addPicture3(){
+    this.image3 = true;
+    if (this.image3 = true){
+        this.addButton3 = false;
+    }
+  }
+  // ------------------------
 
   inputPostImage: any ={
     postPhotoID: 0
@@ -185,8 +275,11 @@ export default class PostForm extends Vue {
     prfphoto: 0,
     url: 0,
     landlordID: 0,
-    contactNo: "",
   };
+
+  inputNumber: any = {
+    contact: "",
+  }
 
   async resetModel() {
     this.inputPost = {
@@ -205,12 +298,24 @@ export default class PostForm extends Vue {
   }
 
   async createPost() {
-    const media = await this.uploadMedia(this.firstImageAttachement as File);
+    const media = await this.uploadMedia(this.ImageAttachement1 as File);
+    await this.editAccount(this.inputNumber)
     await this.addPost({
       ...this.inputPost,
       userID: this.currentUser.id,
       url: media.id,
     });
+  if (this.ImageAttachement2.size > 0) {
+        await this.uploadMedia(this.ImageAttachement2 as File);
+      } else if (this.ImageAttachement2.size <= 0) {
+      }
+  if (this.ImageAttachement3.size > 0) {
+        await this.uploadMedia(this.ImageAttachement3 as File);
+      } else if (this.ImageAttachement3.size <= 0) {
+      }
+
+
+    this.$router.go(-1)
     this.addnewPost = false;
           this.$q.notify({
           type: 'positive',

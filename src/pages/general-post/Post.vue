@@ -91,40 +91,49 @@
       <div align="center" class="q-py-xs" style="font-size: medium">
         {{ post.fee }} PHP monthly
       </div>
-      <div class="q-pa-md" style="font-size: medium">
-        <div>
-          <q-icon
-            :name="
-              post.prvKitchen ? 'bi-check-square-fill' : 'bi-x-square-fill'
-            "
-            size="xs"
-          />
-          Private Kitchen
+      <div class="row">
+        <div class="col">
+          <div class="q-pa-md" style="font-size: medium">
+            <div>
+              <q-icon
+                :name="
+                  post.prvKitchen ? 'bi-check-square-fill' : 'bi-x-square-fill'
+                "
+                size="xs"
+              />
+              Private Kitchen
+            </div>
+            <div>
+              <q-icon
+                :name="post.prvCR ? 'bi-check-square-fill' : 'bi-x-square-fill'"
+                size="xs"
+              />
+              Private CR
+            </div>
+          </div>
         </div>
-        <div>
-          <q-icon
-            :name="post.prvCR ? 'bi-check-square-fill' : 'bi-x-square-fill'"
-            size="xs"
-          />
-          Private CR
+        <div class="col">
+          <div
+            v-if="currentUser.type == 'student'"
+            class="q-mr-sm float-right text-primary defaultfont"
+          >
+            <q-btn
+              class="q-mt-lg"
+              rounded
+              color="primary"
+              icon="check"
+              label="Apply"
+              @click="addApplication()"
+            />
+          </div>
         </div>
       </div>
       <div class="q-pb-md description-content">
         {{ post.description }}
       </div>
-    </div>
-    <div
-      v-if="currentUser.type == 'student'"
-      class="column flex flex-center text-primary defaultfont"
-    >
-      <q-btn
-        class="q-mt-xl"
-        rounded
-        color="primary"
-        icon="check"
-        label="Apply"
-        @click="addApplication()"
-      />
+      <div class="q-ma-md q-ml-sm absolute-bottom">
+        {{ user.contact }}
+      </div>
     </div>
 
     <q-page-sticky position="top-left" :offset="[18, 18]">
@@ -303,11 +312,11 @@ export default class Post extends Vue {
       }
     } catch (error) {
       this.$q.notify({
-        textColor: 'secondary',
-        color: 'primary',
-          type: "negative",
-          message: "Already Applied!",
-        });
+        textColor: "secondary",
+        color: "primary",
+        type: "negative",
+        message: "Already Applied!",
+      });
     }
     // this.$q.notify({
     //   type: 'positive',
