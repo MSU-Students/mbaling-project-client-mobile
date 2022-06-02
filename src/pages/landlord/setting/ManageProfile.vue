@@ -140,7 +140,7 @@
     <div align="center" class="q-pa-md">
       <q-avatar size="8rem" class="bg-primary">
         <q-img v-if="currentUser.prfphoto"
-          :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
+          :src="`http://localhost:3000/prfmedia/${currentUser.prfphoto}`"
           class="avatar"
         />
         <q-img v-if="!currentUser.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
@@ -204,7 +204,7 @@
 </template>
 
 <script lang="ts">
-import { UserDto, MediaDto } from "src/services/rest-api";
+import { UserDto, MediaDto, PrfMediaDto } from "src/services/rest-api";
 import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapState } from "vuex";
@@ -213,7 +213,7 @@ import { mapActions, mapState } from "vuex";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("media", ["uploadMedia"]),
+    ...mapActions("prfmedia", ["uploadMedia"]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
@@ -221,7 +221,7 @@ import { mapActions, mapState } from "vuex";
 })
 export default class LandlordManageProfile extends Vue {
   editAccount!: (payload: UserDto) => Promise<void>;
-  uploadMedia!: (payload: File) => Promise<MediaDto>;
+  uploadMedia!: (payload: File) => Promise<PrfMediaDto>;
   authUser!: () => Promise<void>;
   currentUser!: any;
 
@@ -267,8 +267,9 @@ export default class LandlordManageProfile extends Vue {
     })
         .onOk(async () => {
          if (this.imageAttachement.size > 0) {
-        this.loading = true;
+        console.log("1 Upload Image")
         const media = await this.uploadMedia(this.imageAttachement as File);
+        console.log("2 Upload Image")
         await this.editAccount({ ...this.inputAccount, prfphoto: media.id });
       } else if (this.imageAttachement.size <= 0) {
         await this.editAccount({ ...this.inputAccount });

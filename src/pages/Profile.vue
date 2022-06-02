@@ -2,7 +2,7 @@
   <q-header class="q-px-md q-pt-xl defaultfont bg-secondary">
     <div align="center" class="text-black">
       <q-avatar size="10rem" class="bg-primary">
-        <q-img v-if="user.prfphoto" class="avatar" :src="`http://localhost:3000/media/${user.prfphoto}`" />
+        <q-img v-if="user.prfphoto" class="avatar" :src="`http://localhost:3000/prfmedia/${user.prfphoto}`" />
         <q-img v-if="!user.prfphoto" class="avatar" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
       </q-avatar>
       <div

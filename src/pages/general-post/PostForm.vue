@@ -1,7 +1,7 @@
 <template>
-<q-form @submit="createPost()" greedy>
-  <q-page class="defaultfont text-black">
-    <!-- <div class="bg-black" style="height: 20rem">
+  <q-form @submit="createPost()" greedy>
+    <q-page class="defaultfont text-black">
+      <!-- <div class="bg-black" style="height: 20rem">
       <div
         class="bg-grey-4 row items-center justify-evenly"
         style="height: 100%; border-radius: 2rem 2rem 0 0"
@@ -10,7 +10,7 @@
       </div>
     </div> -->
 
-    <!-- <div align="right" class="q-px-md q-py-sm row items-center">
+      <!-- <div align="right" class="q-px-md q-py-sm row items-center">
       <div class="col">
         <q-btn
           v-on:click="showClearBtn = !showClearBtn"
@@ -35,161 +35,162 @@
         </Transition>
       </div>
     </div> -->
-    <div class="q-mt-xl" style="height: 15rem;">
-      <div class="flex flex-center q-mb-sm">
-        <q-file
-          outlined
-          label="Upload Image 1"
-          accept=".jpg, image/*"
-          v-model="ImageAttachement1"
-          style="width: 20rem"
-        >
-        </q-file>
-      </div>
-      <div v-if="image2" class="flex flex-center q-mb-sm">
-        <q-file
-          outlined
-          label="Upload Image 2"
-          accept=".jpg, image/*"
-          v-model="ImageAttachement2"
-          style="width: 20rem"
-        >
-        </q-file>
-      </div>
-      <div v-if="image3" class="flex flex-center q-mb-sm">
-        <q-file
-          outlined
-          label="Upload Image 3"
-          accept=".jpg, image/*"
-          v-model="ImageAttachement3"
-          style="width: 20rem;"
-        >
-        </q-file>
-      </div>
-      <div class="flex flex-center" v-if="addButton2">
-        <q-btn
-        outline
-        unelevated
-        dense
-        style="width: 20rem; height: 3rem; font-size:;"
-        color="grey-6"
-        @click="addPicture2()"
-        >
-        <q-icon size="2rem" name="add" />
-        </q-btn>
-      </div>
-      <div class="flex flex-center" v-if="addButton3">
-        <q-btn
-        outline
-        unelevated
-        dense
-        style="width: 20rem; height: 3rem; font-size:;"
-        color="grey-6"
-        @click="addPicture3()"
-        >
-        <q-icon size="2rem" name="add" />
-        </q-btn>
-      </div>
-
-    </div>
-    <div class="q-mt-sm q-px-md">
-      <q-input
-        v-model="inputPost.title"
-        autogrow
-        dense
-        placeholder="Title"
-        input-class="text-center"
-        style="font-size: medium"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please Input Title']"
-         hide-bottom-space
-      />
-      <q-input
-        v-model="inputPost.fee"
-        dense
-        placeholder="Monthly Fee"
-        input-class="text-center"
-        class="q-mt-xs q-px-xl"
-        style="font-size: medium"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please Input Fee']"
-         hide-bottom-space
-      />
-
-      <div class="q-px-md q-mt-md row items-center">
-        <div align="center" class="col">
-          <q-checkbox
-            label="Private Kitchen"
-            v-model="inputPost.prvCR"
-            dense
-            color="primary"
-          />
+      <div class="q-mt-xl" style="height: 15rem">
+        <div class="flex flex-center q-mb-sm">
+          <q-file
+            outlined
+            label="Upload Image 1"
+            accept=".jpg, image/*"
+            v-model="ImageAttachement1"
+            style="width: 20rem"
+          >
+          </q-file>
         </div>
-        <div align="center" class="col">
-          <q-checkbox
-            label="Private CR"
-            v-model="inputPost.prvKitchen"
+        <div v-if="image2" class="flex flex-center q-mb-sm">
+          <q-file
+            outlined
+            label="Upload Image 2"
+            accept=".jpg, image/*"
+            v-model="ImageAttachement2"
+            style="width: 20rem"
+          >
+          </q-file>
+        </div>
+        <div v-if="image3" class="flex flex-center q-mb-sm">
+          <q-file
+            outlined
+            label="Upload Image 3"
+            accept=".jpg, image/*"
+            v-model="ImageAttachement3"
+            style="width: 20rem"
+          >
+          </q-file>
+        </div>
+        <div class="flex flex-center" v-if="addButton2">
+          <q-btn
+            outline
+            unelevated
             dense
-            color="primary"
-          />
+            style="width: 20rem; height: 3rem; font-size: "
+            color="grey-6"
+            @click="addPicture2()"
+          >
+            <q-icon size="2rem" name="add" />
+          </q-btn>
+        </div>
+        <div class="flex flex-center" v-if="addButton3">
+          <q-btn
+            outline
+            unelevated
+            dense
+            style="width: 20rem; height: 3rem; font-size: "
+            color="grey-6"
+            @click="addPicture3()"
+          >
+            <q-icon size="2rem" name="add" />
+          </q-btn>
         </div>
       </div>
+      <div class="q-mt-sm q-px-md">
+        <q-input
+          v-model="inputPost.title"
+          autogrow
+          dense
+          placeholder="Title"
+          input-class="text-center"
+          style="font-size: medium"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Please Input Title']"
+          hide-bottom-space
+        />
+        <q-input
+          v-model="inputPost.fee"
+          dense
+          placeholder="Monthly Fee"
+          input-class="text-center"
+          class="q-mt-xs q-px-xl"
+          style="font-size: medium"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Please Input Fee']"
+          hide-bottom-space
+        />
 
-      <q-input
-        v-model="inputPost.description"
-        type="textarea"
-        placeholder="Description"
-        class="q-mt-md q-pb-lg"
-        style="font-size: small"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please Input Description']"
-         hide-bottom-space
-      />
+        <div class="q-px-md q-mt-md row items-center">
+          <div align="center" class="col">
+            <q-checkbox
+              label="Private Kitchen"
+              v-model="inputPost.prvCR"
+              dense
+              color="primary"
+            />
+          </div>
+          <div align="center" class="col">
+            <q-checkbox
+              label="Private CR"
+              v-model="inputPost.prvKitchen"
+              dense
+              color="primary"
+            />
+          </div>
+        </div>
 
-      <q-input
-        v-model="inputNumber.contact"
-        dense
-        type="tel"
-        mask="#### - ### - ####"
-        placeholder="Contact No."
-        input-class="text-left"
-        class="q-mt-xs q-px-xs"
-        style="font-size: medium"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please Input contact']"
-         hide-bottom-space
-      />
-    </div>
+        <q-input
+          v-model="inputPost.description"
+          type="textarea"
+          placeholder="Description"
+          class="q-mt-md q-pb-lg"
+          style="font-size: small"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please Input Description',
+          ]"
+          hide-bottom-space
+        />
 
-    <q-page-sticky position="top-left" :offset="[18, 18]">
-      <q-btn
-        icon="bi-arrow-left-short"
-        unelevated
-        round
-        color="black"
-        style="opacity: 0.5"
-        @click="$router.go(-1)"
-      />
-    </q-page-sticky>
-  </q-page>
+        <q-input
+          v-model="inputNumber.contact"
+          dense
+          type="tel"
+          mask="#### - ### - ####"
+          placeholder="Contact No."
+          input-class="text-left"
+          class="q-mt-xs q-px-xs"
+          style="font-size: medium"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Please Input contact']"
+          hide-bottom-space
+        />
+      </div>
 
-  <q-footer
-    bordered
-    class="q-px-md defaultfont bg-white row items-center"
-    style="height: 4rem"
-  >
-    <div align="right" class="col">
-      <q-btn
-        label="Post"
-        unelevated
-        rounded
-        no-caps
-        color="primary"
-        style="height: 3rem; width: 5rem"
-        type="submit"
-      />
-    </div>
-  </q-footer>
+      <q-page-sticky position="top-left" :offset="[18, 18]">
+        <q-btn
+          icon="bi-arrow-left-short"
+          unelevated
+          round
+          color="black"
+          style="opacity: 0.5"
+          @click="$router.go(-1)"
+        />
+      </q-page-sticky>
+    </q-page>
+
+    <q-footer
+      bordered
+      class="q-px-md defaultfont bg-white row items-center"
+      style="height: 4rem"
+    >
+      <div align="right" class="col">
+        <q-btn
+          label="Post"
+          unelevated
+          rounded
+          no-caps
+          color="primary"
+          style="height: 3rem; width: 5rem"
+          type="submit"
+        />
+      </div>
+    </q-footer>
   </q-form>
 </template>
 
@@ -206,23 +207,24 @@ import { mapState, mapActions } from "vuex";
     ...mapState("auth", ["currentUser"]),
   },
   methods: {
-    ...mapActions("post", ["addPost","editPost"]),
+    ...mapActions("post", ["addPost", "editPost"]),
     ...mapActions("auth", ["authUser"]),
     ...mapActions("media", ["uploadMedia"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
   },
 })
 export default class PostForm extends Vue {
-  uploadMedia!: (payload: File) => Promise<MediaDto>;
-  addPost!: (payload: PostDto) => Promise<void>;
+  uploadMedia!: (payload: any) => Promise<MediaDto>;
+  addPost!: (payload: PostDto) => Promise<PostDto>;
   editAccount!: (payload: UserDto) => Promise<void>;
+  editPost!: (payload: any) => Promise<void>;
   authUser!: () => Promise<void>;
 
   currentUser!: AUser;
 
   async mounted() {
     await this.authUser();
-    this.inputNumber = {...this.currentUser}
+    this.inputNumber = { ...this.currentUser };
   }
 
   pkBox = false;
@@ -231,32 +233,30 @@ export default class PostForm extends Vue {
   addnewPost = false;
   model = "";
   // ImageAttachement1: File[] | File = [];
-  ImageAttachement1: File = new File ([],'');
-  ImageAttachement2: File = new File ([],'');
-  ImageAttachement3: File = new File ([],'');
+  ImageAttachement1: File = new File([], "");
+  ImageAttachement2: File = new File([], "");
+  ImageAttachement3: File = new File([], "");
 
-
-// adding Pictures TAE! a code HAHA
+  // adding Pictures TAE! a code HAHA
   image2 = false;
   image3 = false;
   addButton2 = true;
   addButton3 = false;
 
-  async addPicture2(){
+  async addPicture2() {
     this.image2 = true;
     this.addButton3 = true;
-    if (this.image2 = true){
-        this.addButton2 = false;
+    if ((this.image2 = true)) {
+      this.addButton2 = false;
     }
   }
-  async addPicture3(){
+  async addPicture3() {
     this.image3 = true;
-    if (this.image3 = true){
-        this.addButton3 = false;
+    if ((this.image3 = true)) {
+      this.addButton3 = false;
     }
   }
   // ------------------------
-
 
   inputPost: any = {
     id: 0,
@@ -270,58 +270,68 @@ export default class PostForm extends Vue {
     housingAddress: "",
     prfphoto: 0,
     url: 0,
-    userID: 0
+    userID: 0,
   };
 
   inputNumber: any = {
     contact: "",
-  }
+  };
 
   async resetModel() {
     this.inputPost = {
       id: 0,
-    description: "",
-    fee: "",
-    prvCR: false,
-    prvKitchen: false,
-    photos: "",
-    title: "",
-    date: 0,
-    housingAddress: "",
-    prfphoto: 0,
-    url: 0,
-    userID: 0
+      description: "",
+      fee: "",
+      prvCR: false,
+      prvKitchen: false,
+      photos: "",
+      title: "",
+      date: 0,
+      housingAddress: "",
+      prfphoto: 0,
+      url: 0,
+      userID: 0,
     };
   }
 
   async createPost() {
-    const media = await this.uploadMedia(this.ImageAttachement1 as File);
-    await this.editAccount(this.inputNumber)
-    await this.addPost({
+    const post = await this.addPost({
       ...this.inputPost,
       userID: this.currentUser.id,
-      url: media.id,
     });
-  if (this.ImageAttachement2.size > 0) {
-        await this.uploadMedia(this.ImageAttachement2 as File);
-      } else if (this.ImageAttachement2.size <= 0) {
-      }
-  if (this.ImageAttachement3.size > 0) {
-        await this.uploadMedia(this.ImageAttachement3 as File);
-      } else if (this.ImageAttachement3.size <= 0) {
-      }
+    const media = await this.uploadMedia({
+      media: this.ImageAttachement1,
+      postPhotoId: post.id,
+    });
+    await this.editPost({id: post.id, url: media.id})
+    await this.uploadMedia({
+      media: this.ImageAttachement2,
+      postPhotoId: post.id,
+    });
+    await this.uploadMedia({
+      media: this.ImageAttachement3,
+      postPhotoId: post.id,
+    });
+    // await this.editAccount(this.inputNumber);
+    // if (this.ImageAttachement2.size > 0) {
+    //   await this.uploadMedia(this.ImageAttachement2 as File);
+    // } else if (this.ImageAttachement2.size <= 0) {
+    // }
+    // if (this.ImageAttachement3.size > 0) {
+    //   await this.uploadMedia(this.ImageAttachement3 as File);
+    // } else if (this.ImageAttachement3.size <= 0) {
+    // }
 
-
-    this.$router.go(-1)
+    this.$router.go(-1);
     this.addnewPost = false;
-          this.$q.notify({
-          type: 'positive',
-          caption: 'Successfully Added ',
-          position: 'bottom',
-          color: "secondary",
-          textColor: "primary",
-          classes: "defaultfont",
-        });
+    this.$q.notify({
+      type: "positive",
+      caption: "Successfully Added ",
+      position: "bottom",
+      color: "secondary",
+      textColor: "primary",
+      classes: "defaultfont",
+    });
   }
 
   alert() {
@@ -331,7 +341,6 @@ export default class PostForm extends Vue {
     });
   }
 }
-
 </script>
 
 <style>

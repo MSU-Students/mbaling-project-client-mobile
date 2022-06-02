@@ -51,8 +51,7 @@
       <q-item class="row items-center">
         <q-item-section avatar>
           <q-avatar size="xl" class="bg-primary">
-            <q-img v-if="user.prfphoto" :src="`http://localhost:3000/media/${user.prfphoto}`" />
-            <q-img v-if="!user.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+            <q-img :src="`http://localhost:3000/prfmedia/${user.prfphoto}`" />
           </q-avatar>
         </q-item-section>
 
@@ -259,7 +258,7 @@ export default class Post extends Vue {
     await this.getAllMedia();
     console.log(this.$route.params.id, this.allPhotos);
     this.data = this.allPhotos.filter(
-      (i) => this.$route.params.id === i.postPhoto
+      (i) => this.$route.params.id === i.postPhotoID
     );
     console.log(this.data);
   }

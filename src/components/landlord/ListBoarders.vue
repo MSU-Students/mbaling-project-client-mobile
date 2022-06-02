@@ -1,6 +1,6 @@
 <template>
   <div class="text-h6" align="right">
-    <span class="defaultfont float-left" style="font-size: medium">
+    <span class="defaultfont-bold float-left" style="font-size: medium">
       List of Boarders
     </span>
     <q-btn
@@ -19,8 +19,8 @@
 
   <q-dialog v-model="dialog" persistent>
       <q-card>
-        <q-form @submit="addStudent()" greedy>
-          <div class="column">
+        <q-form @submit="addNonAccount()" greedy>
+          <div class="defaultfont column">
             <div class="col flex flex-center q-mt-md" style="width: 20rem">
               <span class="defaultfont-bold" style="font-size: large">
                 Add non-student Account
@@ -30,7 +30,7 @@
               <q-input
                 dense
                 filled
-                v-model="nonAccount.fName"
+                v-model="inputAccount.fName"
                 placeholder="Firstname"
                 style="width: 18rem; font-size: small"
                 lazy-rules
@@ -44,7 +44,7 @@
               <q-input
                 dense
                 filled
-                v-model="nonAccount.lName"
+                v-model="inputAccount.lName"
                 placeholder="Lastname"
                 style="width: 18rem; font-size: small"
                 lazy-rules
@@ -58,7 +58,7 @@
               <q-input
                 dense
                 filled
-                v-model="nonAccount.college"
+                v-model="inputAccount.college"
                 placeholder="College"
                 style="width: 18rem; font-size: small"
                 lazy-rules
@@ -72,7 +72,7 @@
               <q-input
                 dense
                 filled
-                v-model="nonAccount.department"
+                v-model="inputAccount.department"
                 placeholder="Department"
                 style="width: 18rem; font-size: small"
                 lazy-rules
@@ -86,7 +86,7 @@
               <q-input
                 dense
                 filled
-                v-model="nonAccount.degree"
+                v-model="inputAccount.degree"
                 placeholder="Degree"
                 style="width: 18rem; font-size: small"
                 lazy-rules
@@ -132,11 +132,40 @@
   </q-dialog>
 
   <q-table
-
+    dense
     flat
     hide-bottom
     :columns="columns"
     :rows="data"
+    row-key="status">
+      <template v-slot:body-cell-action="props">
+        <q-td :props="props">
+          <q-btn
+            color="red-5"
+            icon="delete"
+            size="sm"
+            class="q-ml-sm"
+            flat
+            round
+            dense
+            @click="deleteAcceptedStudent(props.row)"
+          />
+        </q-td>
+      </template>
+  </q-table>
+
+  <div class="text-h6">
+    <span class="defaultfont-bold" style="font-size: medium">
+      Non-Account
+    </span>
+  </div>
+
+  <q-table
+  dense
+    flat
+    hide-bottom
+    :columns="nonAccountColumns"
+    :rows="nonAccountdata"
     row-key="status">
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
@@ -165,7 +194,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
     ...mapActions("application", ["getAllApplication", "updateApplication"]),
-    ...mapActions("nonaccount", ["createNonAccount"])
+    ...mapActions("nonaccount", ["createNonAccount", "getAllNonAccount"])
 
   },
   computed: {
@@ -179,23 +208,23 @@ export default class ListBoarders extends Vue {
   createNonAccount!: (payload: any) => Promise<void>;
   updateApplication!: (payload: any) => Promise<void>;
   getAllApplication!: () => Promise<void>;
+  getAllNonAccount!: () => Promise<void>;
+  allNonAccount!: NonAccountDto[]
   applications!: ApplicationDto[];
   getAcceptedAccount!: ApplicationDto[];
   currentUser!: any;
   data: any = [];
+  nonAccountdata: any = [];
 
   // add non account
   dialog = false;
+  addNewAccount= false
 
   async showAddAccount(){
     this.dialog = true;
   }
 
-  async addStudent(){
-
-  }
-
-  nonAccount: any={
+  inputAccount: any={
     fName: "",
     lName: "",
     degree: "",
@@ -220,12 +249,52 @@ export default class ListBoarders extends Vue {
     },
   ];
 
+  nonAccountColumns =[
+    {
+      name: "fName",
+      label: "Name",
+      align: "left",
+      field:(row: NonAccountDto) =>
+        row.fName + " " + row.lName,
+    },
+  ]
+
   async mounted() {
+    await this.getAllNonAccount();
+    this.nonAccountdata = this.allNonAccount.filter(
+      (i) => i.landlord?.id == this.currentUser.id
+    );
     await this.getAllApplication();
     this.data = this.getAcceptedAccount.filter(
       (i) => i.landlord?.id == this.currentUser.id
     );
     console.log(this.data);
+  }
+
+  async addNonAccount(){
+    try {
+   await this.createNonAccount({...this.inputAccount, landlord: this.currentUser.id});
+    this.addNewAccount = false;
+     this.$q.notify({
+          position: 'bottom',
+          color: "secondary",
+          textColor: "primary",
+          type: 'positive',
+          classes: "defaultfont",
+          message: 'Student Created',
+        });
+        window.location.reload();
+        } catch (error) {
+          this.$q.notify({
+          position: 'bottom',
+          color: "primary",
+          textColor: "secondary",
+          type: 'negative',
+          classes: "defaultfont",
+          message: 'Username is already exist!',
+        });
+        }
+
   }
 
   async deleteAcceptedStudent(id: any) {

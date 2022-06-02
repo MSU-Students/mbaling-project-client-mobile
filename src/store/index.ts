@@ -18,6 +18,9 @@ import { IAuthState } from './auth/state';
 import media from './media-module';
 import { MediaStateInterface } from './media-module/state';
 
+import prfmedia from './prfmedia-module';
+import { PrfMediaStateInterface } from './prfmedia-module/state';
+
 import housing from './housing-module'
 import { HousingStateInterface } from "./housing-module/state";
 
@@ -47,8 +50,9 @@ export interface StateInterface {
   auth: IAuthState;
   media: MediaStateInterface;
   housing: HousingStateInterface;
-  application: ApplicationStateInterface
-  nonaccount: NonAccountStateInterface
+  application: ApplicationStateInterface;
+  nonaccount: NonAccountStateInterface;
+  prfmedia: PrfMediaStateInterface;
 }
 
 // provide typings for `this.$store`
@@ -72,7 +76,8 @@ export default store(function (/* { ssrContext } */) {
       media,
       housing,
       application,
-      nonaccount
+      nonaccount,
+      prfmedia,
 
 
     },
