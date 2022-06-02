@@ -59,7 +59,6 @@
     :rows="getPendingAccount"
     row-key="status"
     flat
-    separator="none"
   >
     <template #body-cell-status="props">
       <q-td :props="props">
@@ -132,6 +131,13 @@ columns = [
       align: "left",
       field: (row: ApplicationDto) =>
         row.student?.fName + " " + row.student?.lName,
+    },
+    {
+      name: "name",
+      label: "Housing",
+      align: "left",
+      field: (row: ApplicationDto) =>
+        row.landlord?.housingunit
     },
     {
       name: "status",

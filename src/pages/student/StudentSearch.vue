@@ -41,7 +41,7 @@
               >
                 <!-- <q-img :src="`http://localhost:3000/media/${result.prfphoto}`"> -->
                 <q-img v-if="result.prfphoto" class="avatar q-pt-none q-mt-none"
-                  :src="`http://localhost:3000/media/${result.prfphoto}`"
+                  :src="`http://localhost:3000/prfmedia/${result.prfphoto}`"
                   @click="redirectUser(result)"
                 />
                 <img v-if="!result.prfphoto" class="avatar q-pt-none q-mt-none"
