@@ -32,12 +32,12 @@
       <div class="q-ml-sm defaultfont-semibold text-body1">USERS</div>
       <div class="q-px-xs">
         <q-scroll-area :visible="false" style="height: 5.5rem; max-width: 100%">
-          <div class="q-pt-xs q-gutter-sm row items-start no-wrap">
+          <div class="q-pt-xs row items-start no-wrap">
             <div v-for="(result, index) in searchResultUser" :key="index">
               <div v-if="result.type == 'landlord'">
               <q-avatar
                 size="4rem"
-                class="bg-primary"
+                class="bg-primary q-mx-xs"
               >
                 <!-- <q-img :src="`http://localhost:3000/media/${result.prfphoto}`"> -->
                 <q-img v-if="result.prfphoto" class="avatar q-pt-none q-mt-none"

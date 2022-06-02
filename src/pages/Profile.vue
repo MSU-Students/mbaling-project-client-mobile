@@ -82,6 +82,7 @@
           :href="`${user.chatLink}`"
           target="_blank"
           style="text-decoration: none"
+          @click="alert()"
         >
           <q-icon size="1.4rem" color="black" class="q-pl-sm bi bi-chat-fill">
           </q-icon>
@@ -177,67 +178,9 @@ export default class Profile extends Vue {
       (i) => i.landlord?.id == this.user.id
     );
   }
-  // user = {
-  //   id: 202200001,
-  //   username: "zinboarding",
-  //   password: "password",
-  //   isStudent: false,
-
-  //   firstname: "Azshara",
-  //   middlename: "Queldorei",
-  //   lastname: "Highborne",
-  //   prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-
-  //   degree: "",
-  //   department: "",
-  //   college: "",
-  //   yearAdmitted: 0,
-
-  //   addressLine1: "1205 5th Street",
-  //   addressLine2: "Dimaluna I",
-  //   addressLine3: "Marawi City",
-  //   addressLine4: "Lanao del Sur",
-  //   housingAddress: "Zin-Azshari Boarding House",
-
-  //   birthdate: "1999-08-31",
-  //   gender: "Female",
-  //   contact: "09531409858",
-  //   email: "azshara.highborne@gmail.com",
-  // };
-  //   posts = [
-  //     {
-  //       id: 135413523,
-  //       title:
-  //         "Free boarding room @ Zin-Azshari Boarding House 5th street MSU-Marawi",
-  //       fee: "1200",
-  //       description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-  // Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-  //       prvKitchen: false,
-  //       prvCR: false,
-  //       photos: [
-  //         {
-  //           id: 1,
-  //           url: "https://cdn.quasar.dev/img/parallax1.jpg",
-  //         },
-  //         {
-  //           id: 2,
-  //           url: "https://cdn.quasar.dev/img/mountains.jpg",
-  //         },
-  //         {
-  //           id: 3,
-  //           url: "https://cdn.quasar.dev/img/quasar.jpg",
-  //         },
-  //       ],
-  //       date: 1631096539262,
-
-  //       housingAddress: "Zin-Azshari Boarding House",
-  //       username: "zinboarding",
-  //       prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-  //     },
-  //   ];
 
   alert() {
+    if(this.user.chatLink == "")
     this.$q.dialog({
       message: "This feature is not available yet.",
       class: "defaultfont",

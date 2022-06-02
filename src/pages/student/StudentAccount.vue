@@ -58,6 +58,8 @@
     :columns="columns"
     :rows="getPendingAccount"
     row-key="status"
+    flat
+    separator="none"
   >
     <template #body-cell-status="props">
       <q-td :props="props">

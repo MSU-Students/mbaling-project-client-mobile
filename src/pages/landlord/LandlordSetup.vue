@@ -268,19 +268,7 @@ export default class LoginForm extends Vue {
     await this.authUser();
     this.inputAccount = {...this.currentUser}
   }
-  // Nahed Code HAHAHA
 
-  editLandlordInfo = false;
-
-  async onEditLandlord(){
-    this.editLandlordInfo = true;
-  }
-
-  async onSaveLandlord(){
-    this.editLandlordInfo = false;
-  }
-
-  //
   updateAccount = false;
 
   next = false;
@@ -291,7 +279,6 @@ export default class LoginForm extends Vue {
   haddExInput2 = "Dimaluna";
   haddExInput3 = "MSU, Marawi City";
   haddExInput4 = "Lanao del Sur";
-
 
   inputAccount: any = {
     address1: "",
@@ -306,46 +293,28 @@ export default class LoginForm extends Vue {
     userID: 0
   }
 
-  // resetModel() {
-  //   this.inputAccount = {
-  //     prfphoto: 0,
-  //     fName: "",
-  //     lName: "",
-  //     type: "",
-  //     status: "",
-  //     username: "",
-  //     password: "",
-  //     birthdate: "",
-  //     degree: "",
-  //     department: "",
-  //     college: "",
-  //     contact: "",
-  //     gender: "",
-  //     year: "",
-  //     address1: "",
-  //     address2: "",
-  //     address3: "",
-  //     address4: "",
-  //     housingunit: "",
-  //   };
-  // }
   async hNameSave() {
     await this.editAccount(this.currentUser);
     this.next = !this.next;
   }
-  // async hNameSaved(){
-  //   await this.editAccount(this.currentUser);
-  //   await this.$router.replace("/landlord/home");
-  // }
-  async hAddSaved() {
-    console.log('HERE')
-    const addhousing = await this.addHousing({...this.inputHousing, name: this.inputAccount.housingunit, userID: this.currentUser.id,})
-    console.log(addhousing)
-    console.log(addhousing.name)
-    console.log(addhousing.userID)
-    console.log(addhousing.id)
 
-    await this.editAccount({
+  async hAddSaved() {
+    this.$q
+        .dialog({
+          title: "Confirm Edit",
+          message: "Are you sure you want to publish the changes?",
+          cancel: true,
+          persistent: true,
+          class: "defaultfont",
+    })
+    .onOk( async () => {
+      const addhousing =
+      await this.addHousing({
+      ...this.inputHousing,
+      name: this.inputAccount.housingunit,
+      userID: this.currentUser.id,
+      })
+      this.editAccount({
       ...this.currentUser,
       id: this.currentUser.id,
       address1: this.inputAccount.address1,
@@ -355,13 +324,13 @@ export default class LoginForm extends Vue {
       housingunit: this.inputAccount.housingunit,
       housingID: addhousing.id
     });
-
     this.updateAccount = false;
     this.$q.notify({
       type: "positive",
       message: "Successfully Added.",
     })
     await this.$router.replace("/landlord/home");
+    })
   }
 }
 </script>

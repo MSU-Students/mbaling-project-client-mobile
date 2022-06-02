@@ -51,7 +51,8 @@
       <q-item class="row items-center">
         <q-item-section avatar>
           <q-avatar size="xl" class="bg-primary">
-            <q-img :src="`http://localhost:3000/media/${user.prfphoto}`" />
+            <q-img v-if="user.prfphoto" :src="`http://localhost:3000/media/${user.prfphoto}`" />
+            <q-img v-if="!user.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
           </q-avatar>
         </q-item-section>
 
@@ -91,8 +92,6 @@
       <div align="center" class="q-py-xs" style="font-size: medium">
         {{ post.fee }} PHP monthly
       </div>
-      <div class="row">
-        <div class="col">
           <div class="q-pa-md" style="font-size: medium">
             <div>
               <q-icon
@@ -111,23 +110,7 @@
               Private CR
             </div>
           </div>
-        </div>
-        <div class="col">
-          <div
-            v-if="currentUser.type == 'student'"
-            class="q-mr-sm float-right text-primary defaultfont"
-          >
-            <q-btn
-              class="q-mt-lg"
-              rounded
-              color="primary"
-              icon="check"
-              label="Apply"
-              @click="addApplication()"
-            />
-          </div>
-        </div>
-      </div>
+
       <div class="q-pb-md description-content">
         {{ post.description }}
       </div>
@@ -164,7 +147,20 @@
           </q-icon>
         </a>
       </div>
-      <div align="center" class="col-6"></div>
+
+          <div
+            v-if="currentUser.type == 'student'"
+            class="flex flex-center text-primary defaultfont"
+          >
+            <q-btn
+              rounded
+              color="primary"
+              icon="check"
+              label="Apply"
+              @click="addApplication()"
+            />
+          </div>
+
       <div align="right" class="col">
         <post-options />
       </div>
