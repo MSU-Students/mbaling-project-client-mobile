@@ -123,6 +123,7 @@
                   color="primary"
                   label="create"
                   type="submit"
+                  v-close-popup
                 />
               </div>
             </div>
@@ -162,6 +163,7 @@
 
   <q-table
   dense
+  :rows-per-page-options="[0]"
     flat
     hide-bottom
     :columns="nonAccountColumns"
@@ -194,7 +196,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
     ...mapActions("application", ["getAllApplication", "updateApplication"]),
-    ...mapActions("nonaccount", ["createNonAccount", "getAllNonAccount"])
+    ...mapActions("nonaccount", ["createNonAccount", "getAllNonAccount", "deleteNonAccount"])
 
   },
   computed: {
@@ -205,6 +207,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
   },
 })
 export default class ListBoarders extends Vue {
+  deleteNonAccount!: (id: NonAccountDto) => Promise<void>;
   createNonAccount!: (payload: any) => Promise<void>;
   updateApplication!: (payload: any) => Promise<void>;
   getAllApplication!: () => Promise<void>;
@@ -257,6 +260,13 @@ export default class ListBoarders extends Vue {
       field:(row: NonAccountDto) =>
         row.fName + " " + row.lName,
     },
+    {
+      name: "action",
+      required: true,
+      label: "  ",
+      align: "left",
+      field: "action",
+    },
   ]
 
   async mounted() {
@@ -275,6 +285,10 @@ export default class ListBoarders extends Vue {
     try {
    await this.createNonAccount({...this.inputAccount, landlord: this.currentUser.id});
     this.addNewAccount = false;
+    await this.getAllNonAccount();
+    this.nonAccountdata = this.allNonAccount.filter(
+      (i) => i.landlord?.id == this.currentUser.id
+    );
      this.$q.notify({
           position: 'bottom',
           color: "secondary",
@@ -283,7 +297,6 @@ export default class ListBoarders extends Vue {
           classes: "defaultfont",
           message: 'Student Created',
         });
-        window.location.reload();
         } catch (error) {
           this.$q.notify({
           position: 'bottom',
@@ -297,9 +310,34 @@ export default class ListBoarders extends Vue {
 
   }
 
-  async deleteAcceptedStudent(id: any) {
-    console.log("Delete here");
-  }
+  async deleteAcceptedStudent(val: any) {
+      this.$q
+        .dialog({
+          title: "Confirm Edit",
+          message: "Are you sure you want to publish the changes?",
+          cancel: true,
+          persistent: true,
+          class: "defaultfont",
+    })
+        .onOk(async () => {
+      await this.deleteNonAccount(val.id as any);
+      await this.getAllNonAccount();
+    this.nonAccountdata = this.allNonAccount.filter(
+      (i) => i.landlord?.id == this.currentUser.id
+    );
+      this.$q.notify({
+        type: "positive",
+        caption: "Successfully Deleted ",
+        message: "Successfully",
+        position: "bottom",
+        color: "secondary",
+        textColor: "primary",
+        classes: "defaultfont",
+      });
+      console.log("delete Here");
+    }
+  )}
+
 
   disapproveApplicant(id: any) {
     console.log("DisApprove here");

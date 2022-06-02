@@ -12,7 +12,7 @@ const mutation: MutationTree<PostStateInterface> = {
     state.posts.push(payload);
   },
 
-  getAllUser(state, payload) {
+  getAllPost(state, payload) {
     state.posts = [];
     state.posts.push(...payload);
   },
