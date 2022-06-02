@@ -145,6 +145,8 @@ export default class EditHousing extends Vue {
           await mbalingApiService.changePassword(this.password);
           this.$q.notify({
             type: "positive",
+            color: "secondary",
+            textColor: "primary",
             message: "Change password successfully",
           });
           this.$router.go(-1)

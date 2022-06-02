@@ -217,7 +217,13 @@ export default class EditAddress extends Vue {
         .onOk(() => {
           this.editAccount(this.inputAccount);
           this.editStudentAddress = false;
-          window.location.reload();
+          // window.location.reload();
+          this.$q.notify({
+            type: "positive",
+            color: "secondary",
+            textColor: "primary",
+            message: "Successfully change",
+          });
       });
     }
 

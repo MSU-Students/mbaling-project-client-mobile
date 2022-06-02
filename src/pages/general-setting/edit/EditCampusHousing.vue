@@ -197,7 +197,13 @@ export default class EditCampusHousing extends Vue {
         .onOk(() => {
           this.editAccount(this.inputAccount);
           this.editStudentCampusHousing = false;
-          window.location.reload();
+          // window.location.reload();
+          this.$q.notify({
+            type: "positive",
+            color: "secondary",
+            textColor: "primary",
+            message: "Successfully change",
+          });
       });
   }
 

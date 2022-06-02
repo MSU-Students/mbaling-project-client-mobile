@@ -327,6 +327,8 @@ export default class LoginForm extends Vue {
     this.updateAccount = false;
     this.$q.notify({
       type: "positive",
+      color: "secondary",
+      textColor: "primary",
       message: "Successfully Added.",
     })
     await this.$router.replace("/landlord/home");

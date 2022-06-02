@@ -165,12 +165,18 @@ export default class EditHousing extends Vue {
                         name: this.inputAccount.housingunit,
                         userID: this.currentUser.id,})
           this.editAccount({
-      ...this.currentUser,
-      id: this.currentUser.id,
-      housingunit: this.inputAccount.housingunit
+                        ...this.currentUser,
+                        id: this.currentUser.id,
+                        housingunit: this.inputAccount.housingunit
     });
           this.editLandlordHousing = false;
-          window.location.reload();
+          // window.location.reload();
+          this.$q.notify({
+            type: "positive",
+            color: "secondary",
+            textColor: "primary",
+            message: "Successfully change",
+          });
       });
     }
 

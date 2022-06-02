@@ -26,7 +26,7 @@ const actions: ActionTree<PostStateInterface, StateInterface> = {
 
   async getAllPost(context): Promise<any> {
     const res = await postService.getAll();
-    context.commit("getAllUser", res);
+    context.commit("getAllPost", res);
   },
 
   async getProfile(context): Promise<any> {

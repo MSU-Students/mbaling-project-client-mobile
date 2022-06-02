@@ -163,9 +163,10 @@ export default class EditUsermane extends Vue {
         .onOk(() => {
           this.editAccount(this.inputAccount);
           this.editStudentUserName = false;
-          this.$router.go(-1)
           this.$q.notify({
             type: "positive",
+            color: "secondary",
+            textColor: "primary",
             message: "Successfully change",
           });
       });
