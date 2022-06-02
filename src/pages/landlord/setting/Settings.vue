@@ -86,14 +86,6 @@
     </div>
 
     <div class="q-mt-lg q-mb-sm text-grey-7">Actions</div>
-    <div @click="$router.push('/settings/ListOfBoarders')">
-      <settings-menu class="q-py-xs">
-        <template #title>List of Boarders</template>
-        <template #icon>
-          <q-icon name="bi-arrow-right-short" size="md" color="black" />
-        </template>
-      </settings-menu>
-    </div>
     <div @click="$router.replace('/')">
       <settings-menu class="q-py-xs">
         <template #title>Log out</template>

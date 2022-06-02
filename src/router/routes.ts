@@ -134,11 +134,6 @@ const routes: RouteRecordRaw[] = [
         component: () => import("pages/general-setting/About.vue"),
       },
       {
-        path: "ListOfBoarders",
-        component: () => import("pages/general-setting/edit/ListOfBoarders.vue"),
-
-      },
-      {
         path: "edit+username",
         component: () => import("pages/general-setting/edit/EditUsername.vue"),
       },

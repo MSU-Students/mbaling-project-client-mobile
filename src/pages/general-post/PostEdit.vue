@@ -2,16 +2,50 @@
 <q-form @submit="onSaveEditPost()" greedy>
   <q-page class="defaultfont text-black">
     <div class="bg-black">
-      <q-img
-      v-if="post.url"
-      :src="`http://localhost:3000/media/${post.url}`"/>
-      <div
-        v-if="!post.url"
-        class="bg-grey-4 row items-center justify-evenly"
-        style="height: 100%; border-radius: 2rem 2rem 0 0"
+      <!-- <q-img :src="`http://localhost:3000/media/${post.url}`" /> -->
+      <q-carousel
+        v-model="slide"
+        navigation
+        arrows
+        animated
+        infinite
+        swipeable
+        transition-prev="slide-right"
+        transition-next="slide-left"
+        height="20rem"
+        autoplay="2"
+        class="bg-primary"
+        style="border-radius: 2rem 2rem 0 0"
       >
-        <q-icon name="bi-image" size="10rem" color="grey" />
-      </div>
+        <template v-slot:navigation-icon="{ active, onClick }">
+          <q-btn
+            v-if="active"
+            icon="bi-circle-fill"
+            flat
+            round
+            dense
+            size="0.4rem"
+            color="primary"
+            @click="onClick"
+          />
+          <q-btn
+            v-else
+            icon="bi-circle"
+            flat
+            round
+            dense
+            size="0.4rem"
+            color="white"
+            @click="onClick"
+          />
+        </template>
+        <q-carousel-slide
+          v-for="(photo, index) in data"
+          :key="index"
+          :name="photo"
+          :img-src="`http://localhost:3000/media/${photo.id}`"
+        />
+      </q-carousel>
     </div>
 
     <!-- <div align="right" class="q-px-md q-py-sm row items-center">
@@ -40,7 +74,7 @@
       </div>
     </div> -->
 
-<div class="q-mt-sm q-px-xl">
+<!-- <div class="q-mt-sm q-px-xl">
         <q-file
           disable
           outlined
@@ -49,7 +83,7 @@
           v-model="imageAttachement"
         >
         </q-file>
-      </div>
+      </div> -->
     <div class="q-mt-sm q-px-md">
       <q-input
         v-model="post.title"
@@ -163,11 +197,13 @@ import Post from "./Post.vue";
   computed: {
     ...mapState("post", ["newPost"]),
     ...mapState("auth", ["currentUser"]),
+    ...mapState("media", ["allPhotos"]),
   },
   methods: {
     ...mapActions("post", ["getPostById", "editPost"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
     ...mapActions("auth", ["authUser"]),
+    ...mapActions("media", ["getAllMedia"]),
   },
 })
 
@@ -176,9 +212,13 @@ export default class PostEdit extends Vue {
   editAccount!: (payload: UserDto) => Promise<void>;
   getPostById!: (id: any) => Promise<void>;
   authUser!: () => Promise<void>;
+  getAllMedia!: () => Promise<void>;
   newPost!: any;
-
+  allPhotos!: any[];
+  data: any = [];
   currentUser!: AUser;
+
+  slide = 1;
 
  pkBox = false;
   pcBox = false;
@@ -213,6 +253,15 @@ export default class PostEdit extends Vue {
     console.log(this.post);
     await this.authUser();
     this.inputNumber = {...this.currentUser}
+  }
+
+  async created() {
+    await this.getAllMedia();
+    console.log(this.$route.params.id, this.allPhotos);
+    this.data = this.allPhotos.filter(
+      (i) => this.$route.params.id === i.postPhotoID
+    );
+    console.log(this.data);
   }
 
   async onSaveEditPost(){

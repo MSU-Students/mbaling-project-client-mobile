@@ -43,16 +43,22 @@
             accept=".jpg, image/*"
             v-model="ImageAttachement1"
             style="width: 20rem"
+            lazy-rules
+            :rules="[(val) => (val.size > 0) || 'Please Input Title']"
+             hide-bottom-space
           >
           </q-file>
         </div>
-        <div v-if="image2" class="flex flex-center q-mb-sm">
+        <div class="flex flex-center q-mb-sm">
           <q-file
             outlined
             label="Upload Image 2"
             accept=".jpg, image/*"
             v-model="ImageAttachement2"
             style="width: 20rem"
+            lazy-rules
+            :rules="[(val) => (val.size > 0) || 'Please Input Title']"
+             hide-bottom-space
           >
           </q-file>
         </div>
@@ -63,6 +69,9 @@
             accept=".jpg, image/*"
             v-model="ImageAttachement3"
             style="width: 20rem"
+            lazy-rules
+            :rules="[(val) => (val.size > 0) || 'Please Input Title']"
+             hide-bottom-space
           >
           </q-file>
         </div>
@@ -302,17 +311,23 @@ export default class PostForm extends Vue {
     const media = await this.uploadMedia({
       media: this.ImageAttachement1,
       postPhotoId: post.id,
+
     });
+    await this.editAccount(this.inputNumber);
+    if (this.ImageAttachement2.size > 0){
     await this.editPost({id: post.id, url: media.id})
     await this.uploadMedia({
       media: this.ImageAttachement2,
       postPhotoId: post.id,
     });
+    }
+    if (this.ImageAttachement3.size > 0){
     await this.uploadMedia({
       media: this.ImageAttachement3,
       postPhotoId: post.id,
     });
-    // await this.editAccount(this.inputNumber);
+    }
+
     // if (this.ImageAttachement2.size > 0) {
     //   await this.uploadMedia(this.ImageAttachement2 as File);
     // } else if (this.ImageAttachement2.size <= 0) {
