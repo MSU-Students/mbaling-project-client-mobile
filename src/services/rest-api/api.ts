@@ -64,12 +64,6 @@ export interface ApplicationDto {
      * @memberof ApplicationDto
      */
     'landlord'?: UserDto;
-    /**
-     * 
-     * @type {PostDto}
-     * @memberof ApplicationDto
-     */
-    'post'?: PostDto;
 }
 /**
  * 
@@ -150,7 +144,7 @@ export interface MediaDto {
      * @type {PostDto}
      * @memberof MediaDto
      */
-    'postPhoto'?: PostDto | null;
+    'postPhoto'?: PostDto;
 }
 /**
  * 
