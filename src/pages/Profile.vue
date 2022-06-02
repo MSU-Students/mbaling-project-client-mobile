@@ -201,12 +201,12 @@ export default class Profile extends Vue {
   alert() {
     if(this.user.chatLink == "")
     this.$q.dialog({
-      message: "This feature is not available yet.",
+      message: "The User Landlord doesn't have a Chat Link.",
       class: "defaultfont",
     });
     if(this.user.mapLink == "")
     this.$q.dialog({
-      message: "This feature is not available yet.",
+      message: "The User Landlord doesn't have a Map Link.",
       class: "defaultfont",
     });
   }
