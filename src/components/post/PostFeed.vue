@@ -26,7 +26,7 @@
         <div class="col-9">
           <q-item-label lines="1" class="defaultfont-semibold">
             <q-avatar size="sm" class="bg-primary">
-              <q-img :src="`http://localhost:3000/media/${post.user?.prfphoto}`" />
+              <q-img :src="`http://localhost:3000/prfmedia/${post.user?.prfphoto}`" />
             </q-avatar>
             <span class="q-ml-sm" style="font-size: small">
               {{ post.user?.housingunit }}

@@ -25,7 +25,7 @@
   <q-page class="defaultfont">
     <div align="center" class="q-pa-md">
       <q-avatar size="6rem" class="bg-primary">
-         <q-img v-if="currentUser.prfphoto" :src="`http://localhost:3000/media/${currentUser.prfphoto}`" class="avatar" />
+         <q-img v-if="currentUser.prfphoto" :src="`http://localhost:3000/prfmedia/${currentUser.prfphoto}`" class="avatar" />
          <q-img v-if="!currentUser.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
       </q-avatar>
       <div class="q-mt-sm defaultfont-semibold text-body1">

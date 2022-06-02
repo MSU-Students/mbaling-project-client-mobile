@@ -217,6 +217,7 @@ export default class PostForm extends Vue {
   uploadMedia!: (payload: any) => Promise<MediaDto>;
   addPost!: (payload: PostDto) => Promise<PostDto>;
   editAccount!: (payload: UserDto) => Promise<void>;
+  editPost!: (payload: any) => Promise<void>;
   authUser!: () => Promise<void>;
 
   currentUser!: AUser;
@@ -298,10 +299,11 @@ export default class PostForm extends Vue {
       ...this.inputPost,
       userID: this.currentUser.id,
     });
-    await this.uploadMedia({
+    const media = await this.uploadMedia({
       media: this.ImageAttachement1,
       postPhotoId: post.id,
     });
+    await this.editPost({id: post.id, url: media.id})
     await this.uploadMedia({
       media: this.ImageAttachement2,
       postPhotoId: post.id,

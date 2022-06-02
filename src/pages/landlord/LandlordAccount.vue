@@ -14,7 +14,7 @@
       <q-avatar size="10rem" class="bg-primary">
         <q-img
           v-if="currentUser.prfphoto"
-          :src="`http://localhost:3000/media/${currentUser.prfphoto}`"
+          :src="`http://localhost:3000/prfmedia/${currentUser.prfphoto}`"
           class="avatar"
         />
         <q-img

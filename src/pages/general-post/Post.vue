@@ -51,7 +51,7 @@
       <q-item class="row items-center">
         <q-item-section avatar>
           <q-avatar size="xl" class="bg-primary">
-            <q-img :src="`http://localhost:3000/media/${user.prfphoto}`" />
+            <q-img :src="`http://localhost:3000/prfmedia/${user.prfphoto}`" />
           </q-avatar>
         </q-item-section>
 
