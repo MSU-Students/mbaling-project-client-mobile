@@ -7,7 +7,7 @@ import { PostStateInterface } from "./state";
 const actions: ActionTree<PostStateInterface, StateInterface> = {
   async addPost(context, payload: any): Promise<any> {
     const result = await postService.create(payload);
-    context.commit("setNewPost", result);
+    context.commit("setPost", result);
     return result
     await context.dispatch("getAllUser");
   },
@@ -15,8 +15,8 @@ const actions: ActionTree<PostStateInterface, StateInterface> = {
   async editPost(context, payload: any): Promise<any> {
     const result = await postService.update(payload.id, payload);
     context.commit("updatePost", result);
+    await context.dispatch("getAllPost");
     return result
-    await context.dispatch("getAllUser");
   },
 
   async deletePost(context, user_id: number): Promise<any> {
