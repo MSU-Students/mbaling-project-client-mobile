@@ -119,6 +119,7 @@
           input-class="text-center"
           class="q-mt-xs q-px-xl"
           style="font-size: medium"
+          type="number"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please Input Fee']"
           hide-bottom-space

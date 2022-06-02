@@ -5,6 +5,7 @@
     :columns="columns"
     :rows="data"
     row-key="status"
+    flat
   >
     <template #body-cell-status="props">
       <q-td :props="props">
