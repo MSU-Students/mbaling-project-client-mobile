@@ -78,15 +78,24 @@
   >
     <div class="row items-center" style="height: 4rem">
       <div align="left" class="col-8">
-        <a
-          :href="`${user.chatLink}`"
-          target="_blank"
-          style="text-decoration: none"
-          @click="alert()"
-        >
-          <q-icon size="1.4rem" color="black" class="q-pl-sm bi bi-chat-fill">
-          </q-icon>
-        </a>
+        <div v-if="!(user.chatLink)">
+          <a
+            @click="alert()"
+          >
+            <q-icon size="1.4rem" color="black" class="q-pl-sm bi bi-chat-fill">
+            </q-icon>
+          </a>
+        </div>
+        <div v-else>
+            <a
+            :href="`${user.chatLink}`"
+            target="_blank"
+            style="text-decoration: none"
+          >
+            <q-icon size="1.4rem" color="black" class="q-pl-sm bi bi-chat-fill">
+            </q-icon>
+          </a>
+        </div>
       </div>
       <div align="right" class="col">
         <!-- <q-btn
@@ -98,6 +107,15 @@
           size="md"
           @click="alert()"
         /> -->
+        <div v-if="!(user.mapLink)">
+          <a
+          @click="alert()"
+          >
+          <q-icon size="1.4rem" color="black" class="q-pr-sm bi-geo-alt-fill">
+          </q-icon>
+          </a>
+        </div>
+        <div v-else>
         <a
           :href="`${user.mapLink}`"
           target="_blank"
@@ -106,6 +124,7 @@
           <q-icon size="1.4rem" color="black" class="q-pr-sm bi-geo-alt-fill">
           </q-icon>
         </a>
+        </div>
       </div>
     </div>
   </q-footer>
@@ -181,6 +200,11 @@ export default class Profile extends Vue {
 
   alert() {
     if(this.user.chatLink == "")
+    this.$q.dialog({
+      message: "This feature is not available yet.",
+      class: "defaultfont",
+    });
+    if(this.user.mapLink == "")
     this.$q.dialog({
       message: "This feature is not available yet.",
       class: "defaultfont",
