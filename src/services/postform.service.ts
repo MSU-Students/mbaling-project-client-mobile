@@ -21,7 +21,12 @@ class PostService extends DefaultApi {
 
   async delete(id: number) {
     const response = await mbalingApiService.deletePost(id);
-    return response.data;
+    if(response.status === 200){
+      return response.data
+    }else{
+      []
+    }
+    // return response.data;
   }
 
   async getOnePostById(id: number) {

@@ -76,7 +76,7 @@ import { MediaInterface } from "src/store/media-module/state";
   },
 })
 export default class PostPageComponent extends Vue {
-  deletePost! : (id: any) => Promise<void>
+  deletePost! : (id: PostDto) => Promise<void>
   getAllPost! : () => Promise<void>
   authUser! : () => Promise<void>
   posts!: PostDto[];
@@ -102,6 +102,7 @@ export default class PostPageComponent extends Vue {
   }
 
   async delPost(val: any){
+    console.log(val)
     this.$q
         .dialog({
           title: "Confirm Delete",
@@ -110,8 +111,10 @@ export default class PostPageComponent extends Vue {
           persistent: true,
           class: "defaultfont",
     })
-        .onOk( () => {
-           this.deletePost(val);
+        .onOk(async () => {
+          console.log(val + "second val here")
+          await this.deletePost(val);
+          console.log(val ="third val here")
          this.$q.notify({
           type: 'positive',
           caption: 'Successfully Deleted ',
@@ -121,7 +124,6 @@ export default class PostPageComponent extends Vue {
           textColor: "primary",
           classes: "defaultfont",
         });
-          window.location.reload();
       });
 
   }
