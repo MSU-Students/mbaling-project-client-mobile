@@ -26,7 +26,8 @@
         <div class="col-9">
           <q-item-label lines="1" class="defaultfont-semibold">
             <q-avatar size="sm" class="bg-primary">
-              <q-img :src="`http://localhost:3000/prfmedia/${post.user?.prfphoto}`" />
+              <q-img v-if="post.user?.prfphoto" :src="`http://localhost:3000/prfmedia/${post.user?.prfphoto}`" />
+              <q-img v-if="!post.user?.prfphoto" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
             </q-avatar>
             <span class="q-ml-sm" style="font-size: small">
               {{ post.user?.housingunit }}

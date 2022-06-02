@@ -1,58 +1,56 @@
 <template>
-
   <div class="q-px-sm defaultfont">
     <div v-for="post in posts" :key="post" class="q-mb-sm q-pa-xs">
       <div>
         <div v-if="post.userID == currentUser.id">
-        <q-img
-          :src="`http://localhost:3000/media/${post.url}`"
-          fit="cover"
-          class="bg-primary"
-          style="width: 100%; height: 16rem; border-radius: 0.5rem"
-          @click="redirectPost(post)"
-        >
-          <div class="absolute-bottom text-left">
-            <q-item-label lines="2" style="font-size: medium">
-              {{ post.title }}
-            </q-item-label>
+          <q-img
+            :src="`http://localhost:3000/media/${post.url}`"
+            fit="cover"
+            class="bg-primary"
+            style="width: 100%; height: 16rem; border-radius: 0.5rem"
+            @click="redirectPost(post)"
+          >
+            <div class="absolute-bottom text-left">
+              <q-item-label lines="2" style="font-size: medium">
+                {{ post.title }}
+              </q-item-label>
+            </div>
+          </q-img>
+
+          <div class="q-my-xs q-px-xs row items-center">
+            <div class="col">
+              <span class="defaultfont-light text-bold" style="font-size: small">
+                Posted on {{ post.date }}
+              </span>
+            </div>
+            <div align="right" class="col-6">
+              <q-btn
+                label="Edit"
+                unelevated
+                rounded
+                no-caps
+                color="primary"
+                class="text-center text-caption"
+                style="width: 4rem"
+                @click="redirect(post)"
+              />
+              <q-btn
+                label="Trash"
+                unelevated
+                rounded
+                outline
+                no-caps
+                color="primary"
+                class="q-ml-sm text-center text-caption"
+                style="width: 4rem"
+                @click="delPost(post.id)"
+              />
+            </div>
           </div>
-        </q-img>
-
-
-      <div class="q-my-xs q-px-xs row items-center">
-        <div class="col">
-          <span class="defaultfont-light text-bold" style="font-size: small">
-            Posted on {{ post.date }}
-          </span>
-        </div>
-        <div align="right" class="col-6">
-          <q-btn
-            label="Edit"
-            unelevated
-            rounded
-            no-caps
-            color="primary"
-            class="text-center text-caption"
-            style="width: 4rem"
-            @click="redirect(post)"
-          />
-          <q-btn
-            label="Trash"
-            unelevated
-            rounded
-            outline
-            no-caps
-            color="primary"
-            class="q-ml-sm text-center text-caption"
-            style="width: 4rem"
-            @click="delPost(post.id)"
-          />
         </div>
       </div>
-      </div>
-      </div>
-</div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -67,26 +65,25 @@ import { MediaInterface } from "src/store/media-module/state";
   computed: {
     ...mapState("post", ["posts"]),
     ...mapState("media", ["allMedia"]),
-    ...mapState('auth', ['currentUser']),
+    ...mapState("auth", ["currentUser"]),
   },
   methods: {
-    ...mapActions('post', ['getAllPost', 'deletePost']),
-    ...mapActions('media', ['getAllMedia']),
-    ...mapActions('auth', ['authUser']),
+    ...mapActions("post", ["getAllPost", "deletePost"]),
+    ...mapActions("media", ["getAllMedia"]),
+    ...mapActions("auth", ["authUser"]),
   },
 })
 export default class PostPageComponent extends Vue {
-  deletePost! : (id: PostDto) => Promise<void>
-  getAllPost! : () => Promise<void>
-  authUser! : () => Promise<void>
+  deletePost!: (id: PostDto) => Promise<void>;
+  getAllPost!: () => Promise<void>;
+  authUser!: () => Promise<void>;
   posts!: PostDto[];
   allMedia!: MediaInterface[];
-  currentUser!: AUser
-
+  currentUser!: AUser;
 
   async mounted() {
     await this.getAllPost();
-    await this.authUser()
+    await this.authUser();
   }
 
   async redirectPost(post: any) {
@@ -101,31 +98,30 @@ export default class PostPageComponent extends Vue {
     await this.$router.push(`/post/edit/${postID}`);
   }
 
-  async delPost(val: any){
-    console.log(val)
+  async delPost(val: any) {
+    console.log(val);
     this.$q
-        .dialog({
-          title: "Confirm Delete",
-          message: "Are you sure you want to delete this post?",
-          cancel: true,
-          persistent: true,
-          class: "defaultfont",
-    })
-        .onOk(async () => {
-          console.log(val + "second val here")
-          await this.deletePost(val);
-          console.log(val ="third val here")
-         this.$q.notify({
-          type: 'positive',
-          caption: 'Successfully Deleted ',
-          message: 'Successfully',
-          position: 'bottom',
+      .dialog({
+        title: "Confirm Delete",
+        message: "Are you sure you want to delete this post?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+      .onOk(async () => {
+        console.log(val + "second val here");
+        await this.deletePost(val);
+        console.log((val = "third val here"));
+        this.$q.notify({
+          type: "positive",
+          caption: "Successfully Deleted ",
+          message: "Successfully",
+          position: "bottom",
           color: "secondary",
           textColor: "primary",
           classes: "defaultfont",
         });
       });
-
   }
 
   confirmDelete() {
@@ -137,6 +133,5 @@ export default class PostPageComponent extends Vue {
       class: "defaultfont",
     });
   }
-
 }
 </script>

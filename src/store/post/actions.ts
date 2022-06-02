@@ -20,11 +20,9 @@ const actions: ActionTree<PostStateInterface, StateInterface> = {
   },
 
   async deletePost(context, id: number): Promise<any> {
-    console.log('postDelete action ', id)
     const result = await postService.delete(id);
     context.commit("deletePost", result);
-    console.log('postDelete result ')
-    console.log(result)
+    await context.dispatch("getAllPost");
     return result
   },
 
