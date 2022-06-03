@@ -1,23 +1,82 @@
 <template>
-  <div class="text-h6" align="right">
-    <span class="defaultfont-bold float-left" style="font-size: medium">
-      List of Boarders
-    </span>
-    <q-btn
-      icon="add"
-      label="Insert Boarders"
-      dense
-      unelevated
-      rounded
-      no-caps
-      color="primary"
-      class="text-caption defaultfont"
-      style="width: 10rem"
-      @click="showAddAccount()"
-    />
+<!--  -->
+  <div>
+    <q-list>
+      <div class="row flex flex-center">
+        <div class="col">
+      <div class="q-my-md defaultfont text-grey-6" style="font-size: x-small">
+        List of Boarders:
+      </div>
+      </div>
+      <div class="col-2">
+        <div class="defaultfont" style="font-size: small">
+          2/20
+        </div>
+      </div>
+      </div>
+      <div class="row" v-for="pending in getAcceptedAccount" :key="pending">
+        <div class="col-2">
+          <q-avatar size="3rem">
+            <q-img class="avatar" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+          </q-avatar>
+          </div>
+        <div class="col q-mt-xs defaultfont" style="font-size: medium">
+            {{pending.student?.fName}} {{pending.student?.lName}}
+            <div class="q-ma-none" style="font-size: x-small">
+              @user
+            </div>
+        </div>
+        <div class="col-2 flex flex-center">
+            <q-icon size="1rem" color="primary" class="bi-trash" />
+        </div>
+      </div>
+    </q-list>
   </div>
 
-  <q-dialog v-model="dialog" persistent>
+  <div>
+    <q-list>
+      <div class="row flex flex-center">
+        <div class="col">
+      <div class="q-my-md defaultfont text-grey-6" style="font-size: x-small">
+        List of Boarders (Non-Account):
+        </div>
+        </div>
+        <div class="col">
+        <q-btn
+          icon="add"
+          label="Insert Boarders"
+          dense
+          unelevated
+          rounded
+          no-caps
+          color="primary"
+          class="text-caption defaultfont float-right"
+          style="width: 10rem"
+          @click="showAddAccount()"
+        />
+        </div>
+      </div>
+      <div class="row q-my-xs" v-for="nonAccount in allNonAccount" :key="nonAccount">
+        <div class="col-2">
+          <q-avatar size="3rem">
+            <q-img class="avatar" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+          </q-avatar>
+          </div>
+        <div class="col q-mt-xs defaultfont" style="font-size: medium">
+            {{nonAccount.fName}} {{nonAccount.lName}}
+            <div class="q-ma-none" style="font-size: x-small">
+              {{nonAccount.degree}}
+            </div>
+        </div>
+        <div class="col-2 flex flex-center">
+            <q-icon size="1rem" color="primary" class="bi-trash" @click="deleteAcceptedNonStudent(nonAccount)" />
+        </div>
+      </div>
+    </q-list>
+  </div>
+<!--  -->
+
+<q-dialog v-model="dialog" persistent>
       <q-card>
         <q-form @submit="addNonAccount()" greedy>
           <div class="defaultfont column">
@@ -132,58 +191,6 @@
       </q-card>
   </q-dialog>
 
-  <q-table
-    dense
-    flat
-    hide-bottom
-    :columns="columns"
-    :rows="data"
-    row-key="status">
-      <template v-slot:body-cell-action="props">
-        <q-td :props="props">
-          <q-btn
-            color="red-5"
-            icon="delete"
-            size="sm"
-            class="q-ml-sm"
-            flat
-            round
-            dense
-            @click="deleteAcceptedStudent(props.row)"
-          />
-        </q-td>
-      </template>
-  </q-table>
-
-  <div class="text-h6">
-    <span class="defaultfont-bold" style="font-size: medium">
-      Non-Account
-    </span>
-  </div>
-
-  <q-table
-  dense
-  :rows-per-page-options="[0]"
-    flat
-    hide-bottom
-    :columns="nonAccountColumns"
-    :rows="nonAccountdata"
-    row-key="status">
-      <template v-slot:body-cell-action="props">
-        <q-td :props="props">
-          <q-btn
-            color="red-5"
-            icon="delete"
-            size="sm"
-            class="q-ml-sm"
-            flat
-            round
-            dense
-            @click="deleteAcceptedNonStudent(props.row)"
-          />
-        </q-td>
-      </template>
-  </q-table>
 </template>
 
 <script lang="ts">

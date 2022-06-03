@@ -1,44 +1,37 @@
 <template>
-  <div class="text-h6">List of Applicants</div>
-  <q-table
-    hide-bottom
-    :columns="columns"
-    :rows="data"
-    row-key="status"
-    flat
-  >
-    <template #body-cell-status="props">
-      <q-td :props="props">
-        <q-btn
-          rounded
-          :text-color="colorManipulation(props.row.status)"
-          color="white"
-          :label="labelManipulation(props.row.status)"
-        >
-          <q-menu anchor="center middle" self="center middle">
-            <q-list class="text-center" style="min-width: 50px">
-              <q-item
-                class="text-green"
-                clickable
-                @click="ApproveApplicant(props.row.id)"
-                v-close-popup
-              >
-                <q-item-section>Approve</q-item-section>
-              </q-item>
-              <q-item
-                class="text-red"
-                clickable
-                @click="disapproveApplicant(props.row.id)"
-                v-close-popup
-              >
-                <q-item-section>Disapprove</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
-      </q-td>
-    </template>
-  </q-table>
+  <!--  -->
+<div class="q-mb-md defaultfont text-grey-6" style="font-size: small">
+List of Applicants:
+</div>
+  <div>
+    <q-list v-for="pending in getPendingAccount" :key="pending">
+      <q-card class="q-ma-sm" style="height: 7rem">
+        <div class="row">
+          <div class="col-3">
+      <q-avatar size="5rem">
+        <q-img src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+      </q-avatar>
+          </div>
+          <div class="col q-mt-sm defaultfont-bold" style="font-size: large;">
+              {{pending.student?.fName}} {{pending.student?.lName}}
+              <div class="defaultfont text-grey-6" style="font-size: small;">
+                is requesting you to join your boarder
+              </div>
+              <div v-if="(pending.status == 'pending')" class="q-mt-sm q-ml-xs ">
+                <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated text-color="secondary" label="accept" rounded dense style="width: 7rem" @click="ApproveApplicant(pending.id)"/>
+                <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated label="cancel" rounded outline dense style="width: 7rem" />
+              </div>
+
+              <!-- <div v-if="(pending.status != 'pending')" class="q-mt-sm q-ml-xs ">
+                <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated label="appcepted" rounded outline dense style="width: 15rem" />
+              </div> -->
+          </div>
+        </div>
+      </q-card>
+    </q-list>
+  </div>
+
+  <!--  -->
 </template>
 
 <script lang="ts">
