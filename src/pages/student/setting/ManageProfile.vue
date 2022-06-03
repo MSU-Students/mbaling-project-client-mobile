@@ -42,7 +42,7 @@
     <div align="center" class="q-pa-md">
       <q-avatar size="8rem" class="bg-primary">
         <q-img v-if="inputAccount.prfphoto"
-          :src="`http://localhost:3000/media/${inputAccount.prfphoto}`"
+          :src="`http://localhost:3000/prfmedia/${inputAccount.prfphoto}`"
           class="avatar"
         />
         <img v-if="!inputAccount.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
