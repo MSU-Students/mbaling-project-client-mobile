@@ -15,7 +15,7 @@
           <div class="defaultfont" style="font-size: small">2/20</div>
         </div>
       </div>
-      <div class="row" v-for="pending in getAcceptedAccount" :key="pending">
+      <div class="row q-my-xs" v-for="pending in getAcceptedAccount" :key="pending">
         <template v-if="currentUser.id == pending.landlord?.id">
           <div class="col-2">
             <q-avatar size="3rem">
