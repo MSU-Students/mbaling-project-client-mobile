@@ -77,10 +77,10 @@
     style="height: 4rem"
   >
     <div class="row items-center" style="height: 4rem">
-      <div align="left" class="col-8">
+      <div align="left" class="col-8 defaultfont">
         <div v-if="!(user.chatLink)">
           <a
-            @click="alert()"
+            @click="alertchatLink()"
           >
             <q-icon size="1.4rem" color="black" class="q-pl-sm bi bi-chat-fill">
             </q-icon>
@@ -109,7 +109,7 @@
         /> -->
         <div v-if="!(user.mapLink)">
           <a
-          @click="alert()"
+          @click="alertmapLink()"
           >
           <q-icon size="1.4rem" color="black" class="q-pr-sm bi-geo-alt-fill">
           </q-icon>
@@ -198,13 +198,16 @@ export default class Profile extends Vue {
     );
   }
 
-  alert() {
+  alertchatLink() {
     if(this.user.chatLink == "")
     this.$q.dialog({
       message: "The User Landlord doesn't have a Chat Link.",
       class: "defaultfont",
     });
-    if(this.user.mapLink == "")
+  }
+
+  alertmapLink(){
+      if(this.user.mapLink == "")
     this.$q.dialog({
       message: "The User Landlord doesn't have a Map Link.",
       class: "defaultfont",

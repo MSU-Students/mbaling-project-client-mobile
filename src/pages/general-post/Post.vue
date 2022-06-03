@@ -137,15 +137,25 @@
     style="height: 4rem"
   >
     <div class="row items-center" style="height: 4rem">
-      <div align="left" class="col">
-        <a
-          :href="`${user.chatLink}`"
-          target="_blank"
-          style="text-decoration: none"
-        >
-          <q-icon size="1.4rem" color="black" class="q-pl-sm bi bi-chat-fill">
-          </q-icon>
-        </a>
+      <div align="left" class="col defaultfont">
+        <div v-if="!(user.chatLink)">
+          <a
+            @click="alert()"
+          >
+            <q-icon size="1.4rem" color="black" class="q-pl-sm bi bi-chat-fill">
+            </q-icon>
+          </a>
+        </div>
+        <div v-else>
+            <a
+            :href="`${user.chatLink}`"
+            target="_blank"
+            style="text-decoration: none"
+          >
+            <q-icon size="1.4rem" color="black" class="q-pl-sm bi bi-chat-fill">
+            </q-icon>
+          </a>
+        </div>
       </div>
 
           <div
@@ -324,6 +334,13 @@ export default class Post extends Vue {
     //   textColor: "primary",
     //   classes: "defaultfont",
     // });
+  }
+  alert() {
+    if(this.user.chatLink == "")
+    this.$q.dialog({
+      message: "The User Landlord doesn't have a Chat Link.",
+      class: "defaultfont",
+    });
   }
 }
 </script>

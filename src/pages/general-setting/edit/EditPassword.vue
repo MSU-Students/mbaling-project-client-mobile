@@ -1,4 +1,5 @@
 <template>
+<div v-if="editPassword">
   <page-header style="height: 4rem">
     <template #slot-left>
       <q-btn
@@ -98,6 +99,57 @@
       </q-input>
     </div>
   </q-page>
+  </div>
+
+  <!--  -->
+<div v-else>
+  <page-header style="height: 4rem">
+    <template #slot-left>
+      <q-btn
+        icon="bi-chevron-left"
+        dense
+        flat
+        :ripple="false"
+        size="sm"
+        color="black"
+        class="q-ml-md"
+        @click="$router.go(-1)"
+      />
+    </template>
+    <template #slot-middle>
+      <div
+        class="defaultfont-light text-bold text-black"
+        style="font-size: medium"
+      >
+        Password
+      </div>
+    </template>
+    <template #slot-right>
+      <q-btn
+        label="edit"
+        unelevated
+        rounded
+        no-caps
+        color="primary"
+        class="q-mr-md defaultfont"
+        style="height: 3rem"
+        @click="oneditPassword()"
+      />
+    </template>
+  </page-header>
+
+  <q-page class="q-px-md q-pb-xl defaultfont">
+    <div class="q-pt-md">
+      <q-input
+        disable
+        stack-label
+        label="Password"
+      >
+      </q-input>
+    </div>
+  </q-page>
+  </div>
+  <!--  -->
 </template>
 
 <script lang="ts">
@@ -124,6 +176,13 @@ export default class EditHousing extends Vue {
   showPwd = true;
   showPwd1 = true;
 
+  // edit Password
+  editPassword = false;
+
+  async oneditPassword() {
+    this.editPassword = true;
+  }
+
   async onSubmit() {
     this.$q
       .dialog({
@@ -134,6 +193,7 @@ export default class EditHousing extends Vue {
         class: "defaultfont",
       })
       .onOk(async () => {
+        this.editPassword = false;
         try {
           if (this.password.newPassword != this.confirmpassword) {
             this.$q.notify({
