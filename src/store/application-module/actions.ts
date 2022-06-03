@@ -27,6 +27,7 @@ const actions: ActionTree<ApplicationStateInterface, StateInterface> = {
   async deleteApplication(context, id: number): Promise<any> {
     const res = await applicationService.delete(id);
     context.commit('deleteApplication', res);
+    context.dispatch('getAllApplication');
   },
 };
 

@@ -234,7 +234,7 @@
 </template>
 
 <script lang="ts">
-import { MediaDto, UserDto } from "src/services/rest-api";
+import { MediaDto, PrfMediaDto, UserDto } from "src/services/rest-api";
 import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapState } from "vuex";
@@ -244,7 +244,7 @@ import { ref, Ref } from "vue";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("media", ["uploadMedia"]),
+    ...mapActions("prfmedia", ["uploadMedia"]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
@@ -252,7 +252,7 @@ import { ref, Ref } from "vue";
 })
 export default class StudentManageProfile extends Vue {
   editAccount!: (payload: UserDto) => Promise<void>;
-  uploadMedia!: (payload: File) => Promise<MediaDto>;
+  uploadMedia!: (payload: File) => Promise<PrfMediaDto>;
   authUser!: () => Promise<void>;
   currentUser!: any;
 
@@ -295,9 +295,10 @@ editStudentProfile = false;
           class: "defaultfont",
     })
         .onOk(async () => {
-          if (this.imageAttachement.size > 0) {
-        this.loading = true;
+         if (this.imageAttachement.size > 0) {
+        console.log("1 Upload Image")
         const media = await this.uploadMedia(this.imageAttachement as File);
+        console.log("2 Upload Image")
         await this.editAccount({ ...this.inputAccount, prfphoto: media.id });
       } else if (this.imageAttachement.size <= 0) {
         await this.editAccount({ ...this.inputAccount });

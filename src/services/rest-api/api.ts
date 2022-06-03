@@ -48,6 +48,12 @@ export interface AccessTokenDto {
 export interface ApplicationDto {
     /**
      * 
+     * @type {number}
+     * @memberof ApplicationDto
+     */
+    'id'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof ApplicationDto
      */
