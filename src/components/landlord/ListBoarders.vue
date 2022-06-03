@@ -1,34 +1,42 @@
 <template>
-<!--  -->
+  <!--  -->
   <div>
     <q-list>
       <div class="row flex flex-center">
         <div class="col">
-      <div class="q-my-md defaultfont text-grey-6" style="font-size: x-small">
-        List of Boarders:
-      </div>
-      </div>
-      <div class="col-2">
-        <div class="defaultfont" style="font-size: small">
-          2/20
+          <div
+            class="q-my-md defaultfont text-grey-6"
+            style="font-size: x-small"
+          >
+            List of Boarders:
+          </div>
         </div>
-      </div>
+        <div class="col-2">
+          <div class="defaultfont" style="font-size: small">2/20</div>
+        </div>
       </div>
       <div class="row" v-for="pending in getAcceptedAccount" :key="pending">
-        <div class="col-2">
-          <q-avatar size="3rem">
-            <q-img class="avatar" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
-          </q-avatar>
+        <template v-if="currentUser.id == pending.landlord?.id">
+          <div class="col-2">
+            <q-avatar size="3rem">
+              <q-img v-if="pending.student?.prfphoto"
+                class="avatar"
+                :src="`http://localhost:3000/prfmedia/${pending.student?.prfphoto}`"
+              />
+              <q-img v-else
+                class="avatar"
+                src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+              />
+            </q-avatar>
           </div>
-        <div class="col q-mt-xs defaultfont" style="font-size: medium">
-            {{pending.student?.fName}} {{pending.student?.lName}}
-            <div class="q-ma-none" style="font-size: x-small">
-              @user
-            </div>
-        </div>
-        <div class="col-2 flex flex-center">
-            <q-icon size="1rem" color="primary" class="bi-trash" />
-        </div>
+          <div class="col q-mt-xs defaultfont" style="font-size: medium">
+            {{ pending.student?.fName }} {{ pending.student?.lName }}
+            <div class="q-ma-none" style="font-size: x-small">@{{pending.student?.username}}</div>
+          </div>
+          <div class="col-2 flex flex-center">
+            <q-icon size="1rem" color="primary" class="bi-trash" @click="deleteAcceptedStudent(pending.id)" />
+          </div>
+        </template>
       </div>
     </q-list>
   </div>
@@ -37,160 +45,176 @@
     <q-list>
       <div class="row flex flex-center">
         <div class="col">
-      <div class="q-my-md defaultfont text-grey-6" style="font-size: x-small">
-        List of Boarders (Non-Account):
-        </div>
+          <div
+            class="q-my-md defaultfont text-grey-6"
+            style="font-size: x-small"
+          >
+            List of Boarders (Non-Account):
+          </div>
         </div>
         <div class="col">
-        <q-btn
-          icon="add"
-          label="Insert Boarders"
-          dense
-          unelevated
-          rounded
-          no-caps
-          color="primary"
-          class="text-caption defaultfont float-right"
-          style="width: 10rem"
-          @click="showAddAccount()"
-        />
+          <q-btn
+            icon="add"
+            label="Insert Boarders"
+            dense
+            unelevated
+            rounded
+            no-caps
+            color="primary"
+            class="text-caption defaultfont float-right"
+            style="width: 10rem"
+            @click="showAddAccount()"
+          />
         </div>
       </div>
-      <div class="row q-my-xs" v-for="nonAccount in allNonAccount" :key="nonAccount">
+      <div
+        class="row q-my-xs"
+        v-for="nonAccount in allNonAccount"
+        :key="nonAccount"
+      >
+      <template v-if="currentUser.id == nonAccount.landlord?.id">
         <div class="col-2">
           <q-avatar size="3rem">
-            <q-img class="avatar" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+            <q-img
+              class="avatar"
+              src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+            />
           </q-avatar>
-          </div>
+        </div>
         <div class="col q-mt-xs defaultfont" style="font-size: medium">
-            {{nonAccount.fName}} {{nonAccount.lName}}
-            <div class="q-ma-none" style="font-size: x-small">
-              {{nonAccount.degree}}
-            </div>
+          {{ nonAccount.fName }} {{ nonAccount.lName }}
+          <div class="q-ma-none" style="font-size: x-small">
+            {{ nonAccount.degree }}
+          </div>
         </div>
         <div class="col-2 flex flex-center">
-            <q-icon size="1rem" color="primary" class="bi-trash" @click="deleteAcceptedNonStudent(nonAccount)" />
+          <q-icon
+            size="1rem"
+            color="primary"
+            class="bi-trash"
+            @click="deleteAcceptedNonStudent(nonAccount)"
+          />
         </div>
+        </template>
       </div>
     </q-list>
   </div>
-<!--  -->
+  <!--  -->
 
-<q-dialog v-model="dialog" persistent>
-      <q-card>
-        <q-form @submit="addNonAccount()" greedy>
-          <div class="defaultfont column">
-            <div class="col flex flex-center q-mt-md" style="width: 20rem">
-              <span class="defaultfont-bold" style="font-size: large">
-                Add non-student Account
-              </span>
-            </div>
-            <div class="col q-gutter-y-sm q-my-md flex flex-center">
-              <q-input
-                dense
-                filled
-                v-model="inputAccount.fName"
-                placeholder="Firstname"
-                style="width: 18rem; font-size: small"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.length > 0) || 'Please Input your FirstName',
-                ]"
-                hide-bottom-space
-              />
+  <q-dialog v-model="dialog" persistent>
+    <q-card>
+      <q-form @submit="addNonAccount()" greedy>
+        <div class="defaultfont column">
+          <div class="col flex flex-center q-mt-md" style="width: 20rem">
+            <span class="defaultfont-bold" style="font-size: large">
+              Add non-student Account
+            </span>
+          </div>
+          <div class="col q-gutter-y-sm q-my-md flex flex-center">
+            <q-input
+              dense
+              filled
+              v-model="inputAccount.fName"
+              placeholder="Firstname"
+              style="width: 18rem; font-size: small"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'Please Input your FirstName',
+              ]"
+              hide-bottom-space
+            />
 
-              <q-input
-                dense
-                filled
-                v-model="inputAccount.lName"
-                placeholder="Lastname"
-                style="width: 18rem; font-size: small"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.length > 0) || 'Please Input your LastName',
-                ]"
-                hide-bottom-space
-              />
+            <q-input
+              dense
+              filled
+              v-model="inputAccount.lName"
+              placeholder="Lastname"
+              style="width: 18rem; font-size: small"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'Please Input your LastName',
+              ]"
+              hide-bottom-space
+            />
 
-              <q-input
-                dense
-                filled
-                v-model="inputAccount.college"
-                placeholder="College"
-                style="width: 18rem; font-size: small"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.length > 0) || 'Please Input your LastName',
-                ]"
-                hide-bottom-space
-              />
+            <q-input
+              dense
+              filled
+              v-model="inputAccount.college"
+              placeholder="College"
+              style="width: 18rem; font-size: small"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'Please Input your LastName',
+              ]"
+              hide-bottom-space
+            />
 
-              <q-input
-                dense
-                filled
-                v-model="inputAccount.department"
-                placeholder="Department"
-                style="width: 18rem; font-size: small"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.length > 0) || 'Please Input your LastName',
-                ]"
-                hide-bottom-space
-              />
+            <q-input
+              dense
+              filled
+              v-model="inputAccount.department"
+              placeholder="Department"
+              style="width: 18rem; font-size: small"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'Please Input your LastName',
+              ]"
+              hide-bottom-space
+            />
 
-              <q-input
+            <q-input
+              dense
+              filled
+              v-model="inputAccount.degree"
+              placeholder="Degree"
+              style="width: 18rem; font-size: small"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'Please Input your LastName',
+              ]"
+              hide-bottom-space
+            />
+          </div>
+          <div class="col">
+            <div class="flex flex-center">
+              <q-btn
+                :ripple="false"
+                unelevated
+                rounded
                 dense
-                filled
-                v-model="inputAccount.degree"
-                placeholder="Degree"
-                style="width: 18rem; font-size: small"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.length > 0) || 'Please Input your LastName',
-                ]"
-                hide-bottom-space
+                no-caps
+                outline
+                class="text-#BE282D q-ma-md"
+                style="height: 1.5rem; width: 6rem; font-size: small"
+                color="primary"
+                label="cancel"
+                v-close-popup
               />
-            </div>
-            <div class="col">
-              <div class="flex flex-center">
-                <q-btn
-                  :ripple="false"
-                  unelevated
-                  rounded
-                  dense
-                  no-caps
-                  outline
-                  class="text-#BE282D q-ma-md"
-                  style="height: 1.5rem; width: 6rem; font-size: small"
-                  color="primary"
-                  label="cancel"
-                  v-close-popup
-                />
-                <q-btn
-                  :ripple="false"
-                  unelevated
-                  rounded
-                  dense
-                  no-caps
-                  class="text-white q-ma-md"
-                  style="height: 1.5rem; width: 6rem; font-size: small"
-                  color="primary"
-                  label="create"
-                  type="submit"
-                  v-close-popup
-                />
-              </div>
+              <q-btn
+                :ripple="false"
+                unelevated
+                rounded
+                dense
+                no-caps
+                class="text-white q-ma-md"
+                style="height: 1.5rem; width: 6rem; font-size: small"
+                color="primary"
+                label="create"
+                type="submit"
+                v-close-popup
+              />
             </div>
           </div>
-        </q-form>
-      </q-card>
+        </div>
+      </q-form>
+    </q-card>
   </q-dialog>
-
 </template>
 
 <script lang="ts">
@@ -202,9 +226,16 @@ import { mapActions, mapGetters, mapState } from "vuex";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("application", ["getAllApplication", "updateApplication", "deleteApplication"]),
-    ...mapActions("nonaccount", ["createNonAccount", "getAllNonAccount", "deleteNonAccount"])
-
+    ...mapActions("application", [
+      "getAllApplication",
+      "updateApplication",
+      "deleteApplication",
+    ]),
+    ...mapActions("nonaccount", [
+      "createNonAccount",
+      "getAllNonAccount",
+      "deleteNonAccount",
+    ]),
   },
   computed: {
     ...mapState("nonaccount", ["allNonAccount"]),
@@ -220,7 +251,7 @@ export default class ListBoarders extends Vue {
   updateApplication!: (payload: any) => Promise<void>;
   getAllApplication!: () => Promise<void>;
   getAllNonAccount!: () => Promise<void>;
-  allNonAccount!: NonAccountDto[]
+  allNonAccount!: NonAccountDto[];
   applications!: ApplicationDto[];
   getAcceptedAccount!: ApplicationDto[];
   currentUser!: any;
@@ -229,19 +260,19 @@ export default class ListBoarders extends Vue {
 
   // add non account
   dialog = false;
-  addNewAccount= false
+  addNewAccount = false;
 
-  async showAddAccount(){
+  async showAddAccount() {
     this.dialog = true;
   }
 
-  inputAccount: any={
+  inputAccount: any = {
     fName: "",
     lName: "",
     degree: "",
     department: "",
-    college: ""
-  }
+    college: "",
+  };
 
   columns = [
     {
@@ -260,13 +291,12 @@ export default class ListBoarders extends Vue {
     },
   ];
 
-  nonAccountColumns =[
+  nonAccountColumns = [
     {
       name: "fName",
       label: "Name",
       align: "left",
-      field:(row: NonAccountDto) =>
-        row.fName + " " + row.lName,
+      field: (row: NonAccountDto) => row.fName + " " + row.lName,
     },
     {
       name: "action",
@@ -275,7 +305,7 @@ export default class ListBoarders extends Vue {
       align: "left",
       field: "action",
     },
-  ]
+  ];
 
   async mounted() {
     await this.getAllNonAccount();
@@ -289,94 +319,106 @@ export default class ListBoarders extends Vue {
     console.log(this.data);
   }
 
-  async addNonAccount(){
+  async addNonAccount() {
     try {
-   await this.createNonAccount({...this.inputAccount, landlord: this.currentUser.id});
-    this.addNewAccount = false;
-    await this.getAllNonAccount();
-    this.nonAccountdata = this.allNonAccount.filter(
-      (i) => i.landlord?.id == this.currentUser.id
-    );
-     this.$q.notify({
-          position: 'bottom',
+      await this.createNonAccount({
+        ...this.inputAccount,
+        landlord: this.currentUser.id,
+      });
+      this.addNewAccount = false;
+      await this.getAllNonAccount();
+      this.nonAccountdata = this.allNonAccount.filter(
+        (i) => i.landlord?.id == this.currentUser.id
+      );
+      await this.resetModel();
+      this.$q.notify({
+        position: "bottom",
+        color: "secondary",
+        textColor: "primary",
+        type: "positive",
+        classes: "defaultfont",
+        message: "Student Created",
+      });
+    } catch (error) {
+      this.$q.notify({
+        position: "bottom",
+        color: "primary",
+        textColor: "secondary",
+        type: "negative",
+        classes: "defaultfont",
+        message: "Username is already exist!",
+      });
+    }
+  }
+  // deleteAcceptedStudent
+  async deleteAcceptedStudent(val: any) {
+    this.$q
+      .dialog({
+        title: "Confirm Edit",
+        message: "Are you sure you want to delete?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+      .onOk(async () => {
+        await this.deleteApplication(val);
+        await this.getAllApplication();
+        this.data = this.getAcceptedAccount.filter(
+          (i) => i.landlord?.id == this.currentUser.id
+        );
+        this.$q.notify({
+          type: "positive",
+          caption: "Successfully Deleted ",
+          message: "Successfully",
+          position: "bottom",
           color: "secondary",
           textColor: "primary",
-          type: 'positive',
           classes: "defaultfont",
-          message: 'Student Created',
         });
-        } catch (error) {
-          this.$q.notify({
-          position: 'bottom',
-          color: "primary",
-          textColor: "secondary",
-          type: 'negative',
-          classes: "defaultfont",
-          message: 'Username is already exist!',
-        });
-        }
-
-  }
-// deleteAcceptedStudent
-async deleteAcceptedStudent(val: any) {
-      this.$q
-        .dialog({
-          title: "Confirm Edit",
-          message: "Are you sure you want to publish the changes?",
-          cancel: true,
-          persistent: true,
-          class: "defaultfont",
-    })
-        .onOk(async () => {
-      await this.deleteApplication(val.id as any);
-      await this.getAllApplication();
-    this.data = this.getAcceptedAccount.filter(
-      (i) => i.landlord?.id == this.currentUser.id
-    );
-      this.$q.notify({
-        type: "positive",
-        caption: "Successfully Deleted ",
-        message: "Successfully",
-        position: "bottom",
-        color: "secondary",
-        textColor: "primary",
-        classes: "defaultfont",
+        console.log("delete Here");
       });
-      console.log("delete Here");
-    }
-  )}
+  }
 
   async deleteAcceptedNonStudent(val: any) {
-      this.$q
-        .dialog({
-          title: "Confirm Edit",
-          message: "Are you sure you want to publish the changes?",
-          cancel: true,
-          persistent: true,
-          class: "defaultfont",
-    })
-        .onOk(async () => {
-      await this.deleteNonAccount(val.id as any);
-      await this.getAllNonAccount();
-    this.nonAccountdata = this.allNonAccount.filter(
-      (i) => i.landlord?.id == this.currentUser.id
-    );
-      this.$q.notify({
-        type: "positive",
-        caption: "Successfully Deleted ",
-        message: "Successfully",
-        position: "bottom",
-        color: "secondary",
-        textColor: "primary",
-        classes: "defaultfont",
+    this.$q
+      .dialog({
+        title: "Confirm Edit",
+        message: "Are you sure you want to publish the changes?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+      .onOk(async () => {
+        await this.deleteNonAccount(val.id as any);
+        await this.getAllNonAccount();
+        this.nonAccountdata = this.allNonAccount.filter(
+          (i) => i.landlord?.id == this.currentUser.id
+        );
+        this.$q.notify({
+          type: "positive",
+          caption: "Successfully Deleted ",
+          message: "Successfully",
+          position: "bottom",
+          color: "secondary",
+          textColor: "primary",
+          classes: "defaultfont",
+        });
+        console.log("delete Here");
       });
-      console.log("delete Here");
-    }
-  )}
-
+  }
 
   disapproveApplicant(id: any) {
     console.log("DisApprove here");
+  }
+
+  async resetModel() {
+    this.inputAccount = {
+    fName: "",
+    lName: "",
+    degree: "",
+    department: "",
+    college: "",
+    };
   }
 
   colorManipulation(status: string) {

@@ -12,8 +12,16 @@
 
     <div align="center" class="q-px-md q-pb-xs text-black">
       <q-avatar size="10rem" class="bg-primary">
-        <q-img v-if="currentUser.prfphoto" :src="`http://localhost:3000/media/${currentUser.prfphoto}`" class="avatar" />
-        <q-img v-if="!currentUser.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+        <q-img
+          v-if="currentUser.prfphoto"
+          :src="`http://localhost:3000/prfmedia/${currentUser.prfphoto}`"
+          class="avatar"
+        />
+        <q-img
+          v-if="!currentUser.prfphoto"
+          class="avatar q-pt-none q-mt-none"
+          src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+        />
       </q-avatar>
       <div
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
@@ -53,62 +61,112 @@
         </div>
       </div>
     </div>
-<!--  -->
-  <div>
-    <q-list v-for="pending in getPendingAccount" :key="pending">
-      <q-card v-if="(pending.status == 'pending' && currentUser.id == pending.student?.id)" class="q-ma-sm" style="height: 7rem">
-        <div class="row">
-          <div class="col-3">
-      <q-avatar size="5rem">
-        <q-img src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
-      </q-avatar>
-          </div>
-          <div class="col q-mt-sm defaultfont-bold" style="font-size: large;">
-              {{pending.student?.fName}} {{pending.student?.lName}}
-              <div class="defaultfont text-grey-6" style="font-size: small;">
-                Your request is pending
+    <!--  -->
+    <div>
+      <q-list v-for="pending in applications" :key="pending">
+        <q-card
+          v-if="
+            pending.status == 'pending' && currentUser.id == pending.student?.id
+          "
+          class="q-ma-sm"
+          style="height: 7rem"
+        >
+          <div class="row">
+            <div class="col-3 flex flex-center">
+              <q-avatar size="5rem">
+                <q-img
+                  v-if="pending.student?.prfphoto"
+                  class="avatar"
+                  :src="`http://localhost:3000/prfmedia/${pending.landlord?.prfphoto}`"
+                />
+                <q-img
+                  v-else
+                  class="avatar"
+                  src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+                />
+              </q-avatar>
+            </div>
+            <div class="col q-mt-sm defaultfont-bold" style="font-size: large">
+              {{ pending.landlord?.housing?.name }}
+              <div class="defaultfont text-grey-6" style="font-size: small">
+                Your request is pending • • •
               </div>
-              <div class="q-mt-sm q-ml-xs ">
+              <div class="q-mt-sm q-ml-xs">
                 <!-- <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated text-color="secondary" disable label="pending" rounded dense style="width: 7rem" /> -->
                 <!-- <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated label="cancel" rounded outline dense style="width: 15rem" /> -->
               </div>
 
-              <div class="q-mt-sm q-ml-xs ">
-                <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated label="appcepted" rounded outline dense style="width: 15rem" />
+              <div class="q-mt-sm q-ml-xs">
+                <q-btn
+                  class="q-mx-xs"
+                  color="primary"
+                  ripple="false"
+                  unelevated
+                  label="Cancel"
+                  rounded
+                  dense
+                  style="width: 15rem"
+                  @click="disapproveApplicant(pending.id)"
+                />
               </div>
+            </div>
           </div>
-        </div>
-      </q-card>
+        </q-card>
 
-      <!--  -->
+        <!--  -->
 
-      <q-card v-if="(pending.status == 'accepted' && currentUser.id == pending.student?.id)" class="q-ma-sm" style="height: 7rem">
-        <div class="row">
-          <div class="col-3">
-      <q-avatar size="5rem">
-        <q-img src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
-      </q-avatar>
-          </div>
-          <div class="col q-mt-sm defaultfont-bold" style="font-size: large;">
-              {{pending.student?.fName}} {{pending.student?.lName}}
-              <div class="defaultfont text-grey-6" style="font-size: small;">
-                Your request is pending
+        <q-card
+          v-if="
+            pending.status == 'accepted' &&
+            currentUser.id == pending.student?.id
+          "
+          class="q-ma-sm"
+          style="height: 7rem"
+        >
+          <div class="row">
+            <div class="col-3 flex flex-center">
+              <q-avatar size="5rem">
+                <q-img
+                  v-if="pending.student?.prfphoto"
+                  class="avatar"
+                  :src="`http://localhost:3000/prfmedia/${pending.landlord?.prfphoto}`"
+                />
+                <q-img
+                  v-else
+                  class="avatar"
+                  src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+                />
+              </q-avatar>
+            </div>
+            <div class="col q-mt-sm defaultfont-bold" style="font-size: large">
+              {{ pending.landlord?.housingunit }}
+              <div class="defaultfont text-grey-6" style="font-size: small">
+                Your request is Accepted
               </div>
-              <div class="q-mt-sm q-ml-xs ">
+              <div class="q-mt-sm q-ml-xs">
                 <!-- <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated text-color="secondary" disable label="pending" rounded dense style="width: 7rem" /> -->
                 <!-- <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated label="cancel" rounded outline dense style="width: 15rem" /> -->
               </div>
 
-              <div class="q-mt-sm q-ml-xs ">
-                <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated label="appcepted" rounded outline dense style="width: 15rem" />
+              <div class="q-mt-sm q-ml-xs">
+                <q-btn
+                  class="q-mx-xs"
+                  color="primary"
+                  ripple="false"
+                  unelevated
+                  label="accepted"
+                  rounded
+                  outline
+                  dense
+                  style="width: 15rem"
+                />
               </div>
+            </div>
           </div>
-        </div>
-      </q-card>
-
-    </q-list>
-  </div>
-<!--  -->
+        </q-card>
+      </q-list>
+    </div>
+    <!--  -->
   </q-page>
 </template>
 
@@ -122,7 +180,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("application", ["getAllApplication", "updateApplication"])
+    ...mapActions("application", ["getAllApplication", "updateApplication", "deleteApplication"]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
@@ -131,6 +189,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
   },
 })
 export default class StudentAccount extends Vue {
+  deleteApplication!: (payload: any) => Promise<void>;
   updateApplication!: (payload: any) => Promise<void>;
   getAllApplication!: () => Promise<void>;
   applications!: ApplicationDto[];
@@ -140,8 +199,7 @@ export default class StudentAccount extends Vue {
 
   data: any = [];
 
-columns = [
-
+  columns = [
     {
       name: "name",
       label: "Name",
@@ -153,8 +211,7 @@ columns = [
       name: "name",
       label: "Housing",
       align: "left",
-      field: (row: ApplicationDto) =>
-        row.landlord?.housingunit
+      field: (row: ApplicationDto) => row.landlord?.housingunit,
     },
     {
       name: "status",
@@ -173,12 +230,32 @@ columns = [
     console.log("Approve here");
     await this.updateApplication({
       id,
-      status: 'accepted',
+      status: "accepted",
     });
   }
 
-  disapproveApplicant(id: any) {
-    console.log("DisApprove here");
+  async disapproveApplicant(id: any) {
+   this.$q
+      .dialog({
+        title: "Confirm Edit",
+        message: "Are you sure you want to delete?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+      .onOk(async () => {
+        await this.deleteApplication(id);
+        this.$q.notify({
+          type: "positive",
+          caption: "Successfully Deleted ",
+          message: "Successfully",
+          position: "bottom",
+          color: "secondary",
+          textColor: "primary",
+          classes: "defaultfont",
+        });
+        console.log("delete Here");
+      });
   }
 
   colorManipulation(status: string) {
