@@ -251,10 +251,10 @@ export interface PostDto {
     'title': string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof PostDto
      */
-    'date': number;
+    'date': string;
     /**
      * 
      * @type {string}
@@ -479,7 +479,7 @@ export interface UserDto {
      * @type {HousingDto}
      * @memberof UserDto
      */
-    'housing'?: HousingDto;
+    'housing': HousingDto;
 }
 
 /**

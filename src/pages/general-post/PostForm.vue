@@ -205,11 +205,15 @@
 </template>
 
 <script lang="ts">
+import { date } from "quasar";
 import { MediaDto, PostDto } from "src/services/rest-api";
 import { UserDto } from "src/services/rest-api";
 import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
 import { mapState, mapActions } from "vuex";
+
+const timeStamp = Date.now();
+const curentDate = date.formatDate(timeStamp, 'YYYY-MM-DD:HH:mm');
 
 @Options({
   computed: {
@@ -230,7 +234,7 @@ export default class PostForm extends Vue {
   editPost!: (payload: any) => Promise<void>;
   authUser!: () => Promise<void>;
 
-  currentUser!: AUser;
+  currentUser!: UserDto;
 
   async mounted() {
     await this.authUser();
@@ -276,9 +280,8 @@ export default class PostForm extends Vue {
     prvKitchen: false,
     photos: "",
     title: "",
-    date: 0,
+    date: curentDate,
     housingAddress: "",
-    prfphoto: 0,
     url: 0,
     userID: 0,
   };
@@ -305,6 +308,21 @@ export default class PostForm extends Vue {
   }
 
   async createPost() {
+    console.log()
+    if(this.currentUser.chatLink == ""){
+      this.$q
+        .dialog({
+          title: "Need Messenger Link",
+          message: "Please put your messenger link on your account",
+          cancel: true,
+          persistent: true,
+          class: "defaultfont",
+    }).onOk(async() => {
+      await this.$router.replace("/landlord/account");
+      });
+
+    }
+    else{
     const post = await this.addPost({
       ...this.inputPost,
       userID: this.currentUser.id,
@@ -328,6 +346,18 @@ export default class PostForm extends Vue {
       postPhotoId: post.id,
     });
     }
+    this.$router.go(-1);
+    this.addnewPost = false;
+    this.$q.notify({
+      type: "positive",
+      caption: "Successfully Added ",
+      position: "bottom",
+      color: "secondary",
+      textColor: "primary",
+      classes: "defaultfont",
+    })
+    }
+
 
     // if (this.ImageAttachement2.size > 0) {
     //   await this.uploadMedia(this.ImageAttachement2 as File);
@@ -338,16 +368,7 @@ export default class PostForm extends Vue {
     // } else if (this.ImageAttachement3.size <= 0) {
     // }
 
-    this.$router.go(-1);
-    this.addnewPost = false;
-    this.$q.notify({
-      type: "positive",
-      caption: "Successfully Added ",
-      position: "bottom",
-      color: "secondary",
-      textColor: "primary",
-      classes: "defaultfont",
-    });
+    ;
   }
 
   alert() {
