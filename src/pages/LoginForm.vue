@@ -56,6 +56,7 @@
 </template>
 
 <script lang="ts">
+import { UserDto } from "src/services/rest-api";
 import { AUser } from "src/store/auth/state";
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapState } from "vuex";
@@ -70,7 +71,7 @@ import { mapActions, mapState } from "vuex";
 })
 export default class LoginForm extends Vue {
   login!: (auth: { userName: string; password: string }) => Promise<AUser>;
-  currentUser!: AUser;
+  currentUser!: any;
 
   username = "";
   password = "";
@@ -100,7 +101,7 @@ export default class LoginForm extends Vue {
         });
       } else if (this.currentUser.type == "landlord") {
         this.$q.loading.hide();
-        if (this.currentUser.housingunit == "") {
+        if (this.currentUser.housing?.id == null) {
           await this.$router.replace("/housing+setup");
         } else {
           await this.$router.replace("/landlord/home");

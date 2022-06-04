@@ -39,7 +39,7 @@
       <div class="q-pt-md">
         <q-form @submit="searchAction()">
           <q-input
-            v-model="inputAccount.housingunit"
+            v-model="inputAccount.housing.name"
             clearable
             placeholder="Search for Housing"
             style="font-size: medium"
@@ -102,29 +102,15 @@
           Campus housing
         </div>
       </template>
-      <template #slot-right>
-        <q-btn
-          label="edit"
-          unelevated
-          rounded
-          no-caps
-          outline
-          color="primary"
-          class="q-mr-md defaultfont"
-          style="height: 3rem"
-          @click="onEditStudent(currentUser)"
-        />
-      </template>
     </page-header>
 
     <q-page class="q-px-md q-pb-xl defaultfont">
       <div class="q-pt-md">
         <q-input
-          v-model="currentUser.housingunit"
+          :placeholder="`${currentUser.housing?.name}`"
           type="search"
           readonly
           disable
-          placeholder="Search"
           style="font-size: medium"
         />
       </div>

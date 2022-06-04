@@ -152,8 +152,8 @@ export default class StudentSearch extends Vue {
 
   searchAction() {
     const resultUsers = this.allAccount.filter(
-      (user) =>
-        user.housingunit.toLowerCase().includes(this.search.toLowerCase()) ||
+      (user: any) =>
+        user.housing?.name.toLowerCase().includes(this.search.toLowerCase()) ||
         user.username.toLowerCase().includes(this.search.toLowerCase())
     );
     const resultPosts = this.posts.filter((post) =>

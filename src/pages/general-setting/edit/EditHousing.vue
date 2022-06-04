@@ -38,7 +38,7 @@
   <q-page class="q-px-md q-pb-xl defaultfont">
     <div class="q-pt-md">
       <q-input
-        v-model="inputAccount.housingunit"
+        v-model="inputAccount.housing.name"
         label="Housing name"
         stack-label
         type="text"
@@ -90,7 +90,7 @@
   <q-page class="q-px-md q-pb-xl defaultfont">
     <div class="q-pt-md">
       <q-input
-        v-model="currentUser.housingunit"
+        :placeholder="`${currentUser.housing?.name}`"
         label="Housing name"
         stack-label
         readonly
@@ -128,13 +128,15 @@ export default class EditHousing extends Vue {
   authUser!: () => Promise<void>;
   currentUser!: any;
 
+  data!: any
   async mounted() {
     await this.authUser();
+    this.data = this.currentUser?.housing?.name
+    console.log(this.data)
   }
 
   inputHousing: any = {
     name: "",
-    userID: 0
   }
 
   inputAccount: any = {
@@ -145,8 +147,10 @@ export default class EditHousing extends Vue {
   editLandlordHousing = false;
 
     async onEditLandlord(val: any) {
+      console.log(val)
       this.editLandlordHousing = true;
       this.inputAccount = {...val}
+      console.log(this.inputAccount.housing?.name)
     }
 
     async onSaveLandlord() {
@@ -159,16 +163,16 @@ export default class EditHousing extends Vue {
           class: "defaultfont",
     })
         .onOk(() => {
-          console.log('CurrentUser ID: ' + this.currentUser.housingID)
+          console.log('CurrentUser ID: ' + this.currentUser.housing?.id)
           this.editHousingName({...this.inputHousing,
-                        id: this.currentUser.housingID,
-                        name: this.inputAccount.housingunit,
-                        userID: this.currentUser.id,})
-          this.editAccount({
-                        ...this.currentUser,
-                        id: this.currentUser.id,
-                        housingunit: this.inputAccount.housingunit
-    });
+                        id: this.currentUser.housing?.id,
+                        name: this.inputAccount.housing.name,
+                        user: this.currentUser.id})
+    //       this.editAccount({
+    //                     ...this.currentUser,
+    //                     id: this.currentUser.id,
+    //                     housingunit: this.inputAccount.housingunit
+    // });
           this.editLandlordHousing = false;
           // window.location.reload();
           this.$q.notify({

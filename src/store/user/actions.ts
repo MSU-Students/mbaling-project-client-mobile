@@ -13,6 +13,7 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 
   async editAccount(context, payload: any): Promise<any> {
     await userService.update(payload.id, payload);
+    console.log(payload);
     console.log("edit here 2");
     await context.dispatch("getAllUser");
     await this.dispatch("auth/authUser");

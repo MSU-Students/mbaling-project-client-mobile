@@ -110,10 +110,10 @@ export interface HousingDto {
     'name': string;
     /**
      * 
-     * @type {number}
+     * @type {UserDto}
      * @memberof HousingDto
      */
-    'userID': number;
+    'user'?: UserDto | null;
 }
 /**
  * 
@@ -261,12 +261,6 @@ export interface PostDto {
      * @memberof PostDto
      */
     'housingAddress': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PostDto
-     */
-    'prfphoto': number;
     /**
      * 
      * @type {number}
@@ -458,12 +452,6 @@ export interface UserDto {
     'address4': string;
     /**
      * 
-     * @type {string}
-     * @memberof UserDto
-     */
-    'housingunit': string;
-    /**
-     * 
      * @type {number}
      * @memberof UserDto
      */
@@ -480,12 +468,6 @@ export interface UserDto {
      * @memberof UserDto
      */
     'mapLink': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserDto
-     */
-    'housingID': number;
     /**
      * 
      * @type {string}

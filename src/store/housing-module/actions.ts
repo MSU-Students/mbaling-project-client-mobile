@@ -18,7 +18,7 @@ const actions: ActionTree<HousingStateInterface, StateInterface> = {
   async editHousingName(context, payload: any): Promise<any> {
     await housingService.update(payload.id, payload);
     console.log('edit housing here 2')
-    await context.dispatch('updateHousing');
+    context.commit('updateHousing');
   },
 
   async getHousingById(context, id: number) {

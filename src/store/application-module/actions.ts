@@ -12,6 +12,7 @@ const actions: ActionTree<ApplicationStateInterface, StateInterface> = {
   async getOneApplication(context, id: number): Promise<any> {
     const res = await applicationService.getOne(id);
     context.commit('getOneApplication', res);
+    return res
   },
 
   async createApplication(context, payload: any): Promise<any> {

@@ -62,7 +62,7 @@
             class="defaultfont-semibold"
             style="font-size: medium"
           >
-            {{ post.user?.housingunit }}
+            {{ post.user?.housing?.name }}
           </q-item-label>
           <q-item-label lines="1" style="font-size: small">
             @{{ post.user?.username }}
@@ -244,11 +244,9 @@ export default class Post extends Vue {
     address2: "",
     address3: "",
     address4: "",
-    housingunit: "",
     prfphoto: 0,
     chatLink: "",
     mapLink: "",
-    housingID: 0,
   };
 
   post: PostDto = {
@@ -260,7 +258,6 @@ export default class Post extends Vue {
     title: "",
     date: 0,
     housingAddress: "",
-    prfphoto: 0,
     url: 0,
     userID: 0,
   };

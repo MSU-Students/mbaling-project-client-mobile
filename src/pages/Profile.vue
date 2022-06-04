@@ -9,7 +9,7 @@
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
         style="font-size: large"
       >
-        {{ user.housingunit }}
+        {{ user.housing?.name }}
       </div>
       <div
         class="q-px-lg defaultfont-light text-primary text-bold"
@@ -180,11 +180,9 @@ export default class Profile extends Vue {
     address2: "",
     address3: "",
     address4: "",
-    housingunit: "",
     prfphoto: 0,
     chatLink: "",
     mapLink: "",
-    housingID: 0,
   };
 
   async mounted() {
