@@ -38,7 +38,7 @@
   <q-page class="q-px-md q-pb-xl defaultfont">
     <div class="q-pt-md">
       <q-input
-        v-model="inputAccount.housing.name"
+        v-model="inputAccount"
         label="Housing name"
         stack-label
         type="text"
@@ -138,7 +138,6 @@ export default class EditHousing extends Vue {
   inputHousing: any = {
     name: "",
   }
-
   inputAccount: any = {
     housingunit:  ""
   };
@@ -149,7 +148,8 @@ export default class EditHousing extends Vue {
     async onEditLandlord(val: any) {
       console.log(val)
       this.editLandlordHousing = true;
-      this.inputAccount = {...val}
+      this.data = {...this.currentUser}
+      this.inputAccount = this.data.housing?.name
       console.log(this.inputAccount.housing?.name)
     }
 
@@ -166,7 +166,7 @@ export default class EditHousing extends Vue {
           console.log('CurrentUser ID: ' + this.currentUser.housing?.id)
           this.editHousingName({...this.inputHousing,
                         id: this.currentUser.housing?.id,
-                        name: this.inputAccount.housing.name})
+                        name: this.inputAccount})
     //       this.editAccount({
     //                     ...this.currentUser,
     //                     id: this.currentUser.id,

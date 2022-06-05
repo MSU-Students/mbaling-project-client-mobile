@@ -20,6 +20,7 @@ const actions: ActionTree<HousingStateInterface, StateInterface> = {
     await housingService.update(payload.id, payload);
     console.log('edit housing here 2')
     context.commit('updateHousing');
+    this.dispatch('auth/authUser')
   },
 
   async getHousingById(context, id: number) {
