@@ -78,12 +78,12 @@
             <div class="col-3 flex flex-center">
               <q-avatar size="5rem">
                 <q-img
-                  v-if="pending.student?.prfphoto"
+                  v-if="pending.landlord?.prfphoto"
                   class=""
                   :src="`http://localhost:3000/prfmedia/${pending.landlord?.prfphoto}`"
                 />
                 <q-img
-                  v-else
+                  v-if="!pending.landlord?.prfphoto"
                   class=""
                   src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
                 />
@@ -130,12 +130,12 @@
             <div class="col-3 flex flex-center">
               <q-avatar size="5rem">
                 <q-img
-                  v-if="pending.student?.prfphoto"
+                  v-if="pending.landlord?.prfphoto"
                   class=""
                   :src="`http://localhost:3000/prfmedia/${pending.landlord?.prfphoto}`"
                 />
                 <q-img
-                  v-else
+                  v-if="!pending.landlord?.prfphoto"
                   class=""
                   src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
                 />
