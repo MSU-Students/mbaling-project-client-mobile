@@ -339,7 +339,7 @@ export default class ListBoarders extends Vue {
       );
       // await this.resetModel();
       this.$q.notify({
-        position: "bottom",
+        position: "top",
         color: "secondary",
         textColor: "primary",
         type: "positive",
@@ -348,7 +348,7 @@ export default class ListBoarders extends Vue {
       });
     } catch (error) {
       this.$q.notify({
-        position: "bottom",
+        position: "top",
         color: "primary",
         textColor: "secondary",
         type: "negative",
@@ -383,9 +383,9 @@ export default class ListBoarders extends Vue {
         );
         this.$q.notify({
           type: "positive",
-          caption: "Successfully Deleted ",
-          message: "Successfully",
-          position: "bottom",
+          caption: "",
+          message: "Successfully Deleted",
+          position: "top",
           color: "secondary",
           textColor: "primary",
           classes: "defaultfont",
@@ -411,9 +411,9 @@ export default class ListBoarders extends Vue {
         );
         this.$q.notify({
           type: "positive",
-          caption: "Successfully Deleted ",
-          message: "Successfully",
-          position: "bottom",
+          caption: "",
+          message: "Successfully Deleted",
+          position: "top",
           color: "secondary",
           textColor: "primary",
           classes: "defaultfont",

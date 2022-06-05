@@ -241,7 +241,7 @@ export default class StudentAccount extends Vue {
    this.$q
       .dialog({
         title: "Confirm Edit",
-        message: "Are you sure you want to delete?",
+        message: "Are you sure you want to cancel your request?",
         cancel: true,
         persistent: true,
         class: "defaultfont",
@@ -250,9 +250,9 @@ export default class StudentAccount extends Vue {
         await this.deleteApplication(id);
         this.$q.notify({
           type: "positive",
-          caption: "Successfully Deleted ",
-          message: "Successfully",
-          position: "bottom",
+          caption: "You can now Apply again ",
+          message: "Successfully Deleted",
+          position: "top",
           color: "secondary",
           textColor: "primary",
           classes: "defaultfont",

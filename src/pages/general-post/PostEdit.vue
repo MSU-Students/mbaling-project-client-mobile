@@ -270,7 +270,7 @@ export default class PostEdit extends Vue {
     await this.editAccount(this.inputNumber)
     this.$router.go(-1)
     this.$q.notify({
-          position: 'bottom',
+          position: 'top',
           color: "secondary",
           textColor: "primary",
           type: 'positive',

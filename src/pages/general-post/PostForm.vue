@@ -352,7 +352,7 @@ export default class PostForm extends Vue {
     this.$q.notify({
       type: "positive",
       caption: "Successfully Added ",
-      position: "bottom",
+      position: "top",
       color: "secondary",
       textColor: "primary",
       classes: "defaultfont",
