@@ -256,10 +256,10 @@ export default class Post extends Vue {
     prvKitchen: false,
     photos: "",
     title: "",
-    date: 0,
     housingAddress: "",
     url: 0,
     userID: 0,
+    date: ""
   };
 
   async created() {

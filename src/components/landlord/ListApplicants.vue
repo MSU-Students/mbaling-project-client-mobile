@@ -71,7 +71,11 @@ import { mapActions, mapGetters, mapState } from "vuex";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("application", ["getAllApplication", "updateApplication", "deleteApplication", "getOneApplication"]),
+    ...mapActions("application",
+                ["getAllApplication",
+                "updateApplication",
+                "deleteApplication",
+                "getOneApplication"]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),

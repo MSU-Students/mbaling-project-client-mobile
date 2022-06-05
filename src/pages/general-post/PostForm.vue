@@ -214,6 +214,7 @@ import { mapState, mapActions } from "vuex";
 
 const timeStamp = Date.now();
 const curentDate = date.formatDate(timeStamp, 'YYYY-MM-DD:HH:mm');
+const curentDate2 = date.formatDate(timeStamp, 'MMMM DD -- hh:mm');
 
 @Options({
   computed: {
@@ -280,7 +281,7 @@ export default class PostForm extends Vue {
     prvKitchen: false,
     photos: "",
     title: "",
-    date: curentDate,
+    date: curentDate2,
     housingAddress: "",
     url: 0,
     userID: 0,

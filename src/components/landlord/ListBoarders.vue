@@ -15,15 +15,21 @@
           <div class="defaultfont" style="font-size: small">2/20</div>
         </div>
       </div>
-      <div class="row q-my-xs" v-for="pending in getAcceptedAccount" :key="pending">
+      <div
+        class="row q-my-xs"
+        v-for="pending in getAcceptedAccount"
+        :key="pending"
+      >
         <template v-if="currentUser.id == pending.landlord?.id">
           <div class="col-2">
             <q-avatar size="3rem">
-              <q-img v-if="pending.student?.prfphoto"
+              <q-img
+                v-if="pending.student?.prfphoto"
                 class="avatar"
                 :src="`http://localhost:3000/prfmedia/${pending.student?.prfphoto}`"
               />
-              <q-img v-else
+              <q-img
+                v-else
                 class="avatar"
                 src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
               />
@@ -31,10 +37,17 @@
           </div>
           <div class="col q-mt-xs defaultfont" style="font-size: medium">
             {{ pending.student?.fName }} {{ pending.student?.lName }}
-            <div class="q-ma-none" style="font-size: x-small">@{{pending.student?.username}}</div>
+            <div class="q-ma-none" style="font-size: x-small">
+              @{{ pending.student?.username }}
+            </div>
           </div>
           <div class="col-2 flex flex-center">
-            <q-icon size="1rem" color="primary" class="bi-trash" @click="deleteAcceptedStudent(pending.id)" />
+            <q-icon
+              size="1rem"
+              color="primary"
+              class="bi-trash"
+              @click="deleteAcceptedStudent(pending.id)"
+            />
           </div>
         </template>
       </div>
@@ -72,29 +85,29 @@
         v-for="nonAccount in allNonAccount"
         :key="nonAccount"
       >
-      <template v-if="currentUser.id == nonAccount.landlord?.id">
-        <div class="col-2">
-          <q-avatar size="3rem">
-            <q-img
-              class="avatar"
-              src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
-            />
-          </q-avatar>
-        </div>
-        <div class="col q-mt-xs defaultfont" style="font-size: medium">
-          {{ nonAccount.fName }} {{ nonAccount.lName }}
-          <div class="q-ma-none" style="font-size: x-small">
-            {{ nonAccount.degree }}
+        <template v-if="currentUser.id == nonAccount.landlord?.id">
+          <div class="col-2">
+            <q-avatar size="3rem">
+              <q-img
+                class="avatar"
+                src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+              />
+            </q-avatar>
           </div>
-        </div>
-        <div class="col-2 flex flex-center">
-          <q-icon
-            size="1rem"
-            color="primary"
-            class="bi-trash"
-            @click="deleteAcceptedNonStudent(nonAccount)"
-          />
-        </div>
+          <div class="col q-mt-xs defaultfont" style="font-size: medium">
+            {{ nonAccount.fName }} {{ nonAccount.lName }}
+            <div class="q-ma-none" style="font-size: x-small">
+              {{ nonAccount.degree }}
+            </div>
+          </div>
+          <div class="col-2 flex flex-center">
+            <q-icon
+              size="1rem"
+              color="primary"
+              class="bi-trash"
+              @click="deleteAcceptedNonStudent(nonAccount)"
+            />
+          </div>
         </template>
       </div>
     </q-list>
@@ -114,7 +127,7 @@
             <q-input
               dense
               filled
-              v-model="inputAccount.fName"
+              v-model="inputNonAccount.fName"
               placeholder="Firstname"
               style="width: 18rem; font-size: small"
               lazy-rules
@@ -128,7 +141,7 @@
             <q-input
               dense
               filled
-              v-model="inputAccount.lName"
+              v-model="inputNonAccount.lName"
               placeholder="Lastname"
               style="width: 18rem; font-size: small"
               lazy-rules
@@ -142,7 +155,7 @@
             <q-input
               dense
               filled
-              v-model="inputAccount.college"
+              v-model="inputNonAccount.college"
               placeholder="College"
               style="width: 18rem; font-size: small"
               lazy-rules
@@ -156,7 +169,7 @@
             <q-input
               dense
               filled
-              v-model="inputAccount.department"
+              v-model="inputNonAccount.department"
               placeholder="Department"
               style="width: 18rem; font-size: small"
               lazy-rules
@@ -170,7 +183,7 @@
             <q-input
               dense
               filled
-              v-model="inputAccount.degree"
+              v-model="inputNonAccount.degree"
               placeholder="Degree"
               style="width: 18rem; font-size: small"
               lazy-rules
@@ -218,7 +231,7 @@
 </template>
 
 <script lang="ts">
-import { ApplicationDto, NonAccountDto } from "src/services/rest-api";
+import { ApplicationDto, NonAccountDto, UserDto } from "src/services/rest-api";
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapGetters, mapState } from "vuex";
 
@@ -230,6 +243,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
       "getAllApplication",
       "updateApplication",
       "deleteApplication",
+      "getOneApplication",
     ]),
     ...mapActions("nonaccount", [
       "createNonAccount",
@@ -245,6 +259,8 @@ import { mapActions, mapGetters, mapState } from "vuex";
   },
 })
 export default class ListBoarders extends Vue {
+  getOneApplication!: (payload: ApplicationDto) => Promise<ApplicationDto>;
+  editAccount!: (payload: UserDto) => Promise<void>;
   deleteNonAccount!: (id: NonAccountDto) => Promise<void>;
   deleteApplication!: (id: ApplicationDto) => Promise<void>;
   createNonAccount!: (payload: any) => Promise<void>;
@@ -266,13 +282,14 @@ export default class ListBoarders extends Vue {
     this.dialog = true;
   }
 
-  inputAccount: any = {
+  inputNonAccount: any = {
     fName: "",
     lName: "",
     degree: "",
     department: "",
     college: "",
   };
+  inputAccount: any = {};
 
   columns = [
     {
@@ -322,7 +339,7 @@ export default class ListBoarders extends Vue {
   async addNonAccount() {
     try {
       await this.createNonAccount({
-        ...this.inputAccount,
+        ...this.inputNonAccount,
         landlord: this.currentUser.id,
       });
       this.addNewAccount = false;
@@ -361,6 +378,14 @@ export default class ListBoarders extends Vue {
         class: "defaultfont",
       })
       .onOk(async () => {
+        const edit = await this.getOneApplication(val);
+        console.log(edit.student?.id);
+        await this.editAccount({
+          ...this.inputAccount,
+          id: edit.student?.id,
+          housing: null,
+        });
+
         await this.deleteApplication(val);
         await this.getAllApplication();
         this.data = this.getAcceptedAccount.filter(
@@ -412,12 +437,12 @@ export default class ListBoarders extends Vue {
   }
 
   async resetModel() {
-    this.inputAccount = {
-    fName: "",
-    lName: "",
-    degree: "",
-    department: "",
-    college: "",
+    this.inputNonAccount = {
+      fName: "",
+      lName: "",
+      degree: "",
+      department: "",
+      college: "",
     };
   }
 

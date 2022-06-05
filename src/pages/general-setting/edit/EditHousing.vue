@@ -166,8 +166,7 @@ export default class EditHousing extends Vue {
           console.log('CurrentUser ID: ' + this.currentUser.housing?.id)
           this.editHousingName({...this.inputHousing,
                         id: this.currentUser.housing?.id,
-                        name: this.inputAccount.housing.name,
-                        user: this.currentUser.id})
+                        name: this.inputAccount.housing.name})
     //       this.editAccount({
     //                     ...this.currentUser,
     //                     id: this.currentUser.id,
