@@ -27,7 +27,7 @@
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
         style="font-size: large"
       >
-        {{ currentUser.housingunit }}
+        {{ currentUser.housing?.name }}
       </div>
       <div class="q-px-md" style="font-size: small">
         <p style="line-height: 1rem">
@@ -109,12 +109,13 @@ export default class LandlordAccount extends Vue {
   getAllApplication!: () => Promise<void>
   getPendingAccount!: ApplicationDto[];
   applications!: any[];
-  currentUser!: any;
+  currentUser!: UserDto;
   data: any = []
   tab = "link";
 
 async mounted() {
     await this.getAllApplication();
+    console.log(this.currentUser)
     this.data = this.getPendingAccount
       .filter((i) =>i.landlord?.id == this.currentUser.id)
     console.log(this.data);

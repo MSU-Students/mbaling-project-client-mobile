@@ -142,7 +142,7 @@
               </q-avatar>
             </div>
             <div class="col q-mt-sm defaultfont-bold" style="font-size: large">
-              {{ pending.landlord?.housingunit }}
+              {{ pending.landlord?.housing?.name }}
               <div class="defaultfont text-grey-6" style="font-size: small">
                 Your request is Accepted
               </div>
@@ -214,7 +214,7 @@ export default class StudentAccount extends Vue {
       name: "name",
       label: "Housing",
       align: "left",
-      field: (row: ApplicationDto) => row.landlord?.housingunit,
+      field: (row: ApplicationDto) => row.landlord?.housing?.name,
     },
     {
       name: "status",

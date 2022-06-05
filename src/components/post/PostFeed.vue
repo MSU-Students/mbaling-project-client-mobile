@@ -30,7 +30,7 @@
               <q-img v-if="!post.user?.prfphoto" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
             </q-avatar>
             <span class="q-ml-sm" style="font-size: small">
-              {{ post.user?.housingunit }}
+              {{ post.user?.housing?.name }}
             </span>
           </q-item-label>
         </div>

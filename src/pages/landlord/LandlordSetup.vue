@@ -285,7 +285,6 @@ export default class LoginForm extends Vue {
     address2: "",
     address3: "",
     address4: "",
-    housingunit: "",
   };
 
   inputHousing: any={
@@ -314,6 +313,7 @@ export default class LoginForm extends Vue {
       name: this.inputAccount.housingunit,
       userID: this.currentUser.id,
       })
+      console.log(addhousing.id)
       this.editAccount({
       ...this.currentUser,
       id: this.currentUser.id,
@@ -321,8 +321,7 @@ export default class LoginForm extends Vue {
       address2: this.inputAccount.address2,
       address3: this.inputAccount.address3,
       address4: this.inputAccount.address4,
-      housingunit: this.inputAccount.housingunit,
-      housingID: addhousing.id
+      housing: addhousing
     });
     this.updateAccount = false;
     this.$q.notify({

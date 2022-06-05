@@ -71,7 +71,11 @@ import { mapActions, mapGetters, mapState } from "vuex";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("application", ["getAllApplication", "updateApplication", "deleteApplication"]),
+    ...mapActions("application",
+                ["getAllApplication",
+                "updateApplication",
+                "deleteApplication",
+                "getOneApplication"]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
@@ -80,13 +84,16 @@ import { mapActions, mapGetters, mapState } from "vuex";
   },
 })
 export default class ListApplicants extends Vue {
+  getOneApplication!:(payload: ApplicationDto) => Promise<ApplicationDto>;
+  editAccount!: (payload: UserDto) => Promise<void>;
   deleteApplication!: (payload: any) => Promise<void>;
-  updateApplication!: (payload: any) => Promise<void>;
+  updateApplication!: (payload: any) => Promise<ApplicationDto>;
   getAllApplication!: () => Promise<void>;
   applications!: ApplicationDto[];
   getPendingAccount!: ApplicationDto[];
-  currentUser!: any;
+  currentUser!: UserDto;
   data: any = [];
+  update: any;
 
   columns = [
     {
@@ -104,6 +111,8 @@ export default class ListApplicants extends Vue {
       field: "status",
     },
   ];
+  inputAccount: any = {
+  };
 
   async mounted() {
     await this.getAllApplication();
@@ -113,12 +122,21 @@ export default class ListApplicants extends Vue {
     console.log(this.data);
   }
 
-  async ApproveApplicant(id: any) {
+  async ApproveApplicant(val: any) {
+    console.log('val is here ' +val)
+    console.log(this.currentUser.housing?.name)
+    console.log(this.currentUser.housing?.id)
     console.log("Approve here");
+
+    const edit = await this.getOneApplication(val)
+    console.log(edit.student?.id)
+
     await this.updateApplication({
-      id,
+      id: val,
       status: "accepted",
     });
+    await this.editAccount({...this.inputAccount, id: edit.student?.id, housing: this.currentUser.housing});
+
   }
 
   async disapproveApplicant(id: any) {
