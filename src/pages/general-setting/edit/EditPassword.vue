@@ -176,10 +176,19 @@ export default class EditHousing extends Vue {
   showPwd = true;
   showPwd1 = true;
 
+  async resetModel(){
+    this.password = {
+      oldPassword: "",
+      newPassword: "",
+    }
+    this.confirmpassword = ""
+  }
+
   // edit Password
   editPassword = false;
 
   async oneditPassword() {
+    this.resetModel();
     this.editPassword = true;
   }
 

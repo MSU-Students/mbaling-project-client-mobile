@@ -63,6 +63,9 @@
     </div>
     <!--  -->
     <div>
+      <div class="q-mb-md q-ml-md defaultfont text-grey-6" style="font-size: small">
+       Application status:
+      </div>
       <q-list v-for="pending in applications" :key="pending">
         <q-card
           v-if="
@@ -76,12 +79,12 @@
               <q-avatar size="5rem">
                 <q-img
                   v-if="pending.student?.prfphoto"
-                  class="avatar"
+                  class=""
                   :src="`http://localhost:3000/prfmedia/${pending.landlord?.prfphoto}`"
                 />
                 <q-img
                   v-else
-                  class="avatar"
+                  class=""
                   src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
                 />
               </q-avatar>
@@ -128,12 +131,12 @@
               <q-avatar size="5rem">
                 <q-img
                   v-if="pending.student?.prfphoto"
-                  class="avatar"
+                  class=""
                   :src="`http://localhost:3000/prfmedia/${pending.landlord?.prfphoto}`"
                 />
                 <q-img
                   v-else
-                  class="avatar"
+                  class=""
                   src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
                 />
               </q-avatar>

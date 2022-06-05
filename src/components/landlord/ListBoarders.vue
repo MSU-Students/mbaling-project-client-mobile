@@ -12,7 +12,9 @@
           </div>
         </div>
         <div class="col-2">
-          <div class="defaultfont" style="font-size: small">2/20</div>
+          <div class="defaultfont" style="font-size: small">
+            {{this.data.length + this.nonAccountdata.length}}
+          </div>
         </div>
       </div>
       <div class="row q-my-xs" v-for="pending in getAcceptedAccount" :key="pending">
@@ -31,7 +33,7 @@
           </div>
           <div class="col q-mt-xs defaultfont" style="font-size: medium">
             {{ pending.student?.fName }} {{ pending.student?.lName }}
-            <div class="q-ma-none" style="font-size: x-small">@{{pending.student?.username}}</div>
+            <div class="q-ma-none" style="font-size: x-small">{{pending.student?.degree}}</div>
           </div>
           <div class="col-2 flex flex-center">
             <q-icon size="1rem" color="primary" class="bi-trash" @click="deleteAcceptedStudent(pending.id)" />
@@ -81,11 +83,16 @@
             />
           </q-avatar>
         </div>
-        <div class="col q-mt-xs defaultfont" style="font-size: medium">
+        <div class="col">
+        <div v-if="(nonAccount.degree != '')" class="q-mt-xs defaultfont" style="font-size: medium">
           {{ nonAccount.fName }} {{ nonAccount.lName }}
           <div class="q-ma-none" style="font-size: x-small">
             {{ nonAccount.degree }}
           </div>
+        </div>
+        <div v-if="(nonAccount.degree == '')" class="q-mt-sm defaultfont float-left" style="font-size: medium">
+          {{ nonAccount.fName }} {{ nonAccount.lName }}
+        </div>
         </div>
         <div class="col-2 flex flex-center">
           <q-icon
@@ -145,12 +152,7 @@
               v-model="inputAccount.college"
               placeholder="College"
               style="width: 18rem; font-size: small"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  (val && val.length > 0) || 'Please Input your LastName',
-              ]"
-              hide-bottom-space
+
             />
 
             <q-input
@@ -159,12 +161,7 @@
               v-model="inputAccount.department"
               placeholder="Department"
               style="width: 18rem; font-size: small"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  (val && val.length > 0) || 'Please Input your LastName',
-              ]"
-              hide-bottom-space
+
             />
 
             <q-input
@@ -173,12 +170,7 @@
               v-model="inputAccount.degree"
               placeholder="Degree"
               style="width: 18rem; font-size: small"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  (val && val.length > 0) || 'Please Input your LastName',
-              ]"
-              hide-bottom-space
+
             />
           </div>
           <div class="col">
@@ -193,7 +185,8 @@
                 class="text-#BE282D q-ma-md"
                 style="height: 1.5rem; width: 6rem; font-size: small"
                 color="primary"
-                label="cancel"
+                label="close"
+                @click="resetModel()"
                 v-close-popup
               />
               <q-btn
@@ -207,7 +200,6 @@
                 color="primary"
                 label="create"
                 type="submit"
-                v-close-popup
               />
             </div>
           </div>
@@ -330,7 +322,7 @@ export default class ListBoarders extends Vue {
       this.nonAccountdata = this.allNonAccount.filter(
         (i) => i.landlord?.id == this.currentUser.id
       );
-      await this.resetModel();
+      // await this.resetModel();
       this.$q.notify({
         position: "bottom",
         color: "secondary",
@@ -442,3 +434,5 @@ export default class ListBoarders extends Vue {
   }
 }
 </script>
+<style>
+</style>

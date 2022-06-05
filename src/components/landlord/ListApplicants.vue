@@ -13,7 +13,7 @@
                 :src="`http://localhost:3000/prfmedia/${pending.student?.prfphoto}`"
               />
                <q-img v-else
-                class="avatar"
+                class=""
                 src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
               />
             </q-avatar>

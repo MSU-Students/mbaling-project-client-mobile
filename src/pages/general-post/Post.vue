@@ -96,7 +96,7 @@
             <div>
               <q-icon
                 :name="
-                  post.prvKitchen ? 'bi-check-square-fill' : 'bi-x-square-fill'
+                  post.prvCR ? 'bi-check-square-fill' : 'bi-x-square-fill'
                 "
                 size="xs"
               />
@@ -104,7 +104,7 @@
             </div>
             <div>
               <q-icon
-                :name="post.prvCR ? 'bi-check-square-fill' : 'bi-x-square-fill'"
+                :name="post.prvKitchen ? 'bi-check-square-fill' : 'bi-x-square-fill'"
                 size="xs"
               />
               Private CR
@@ -114,7 +114,7 @@
       <div class="q-pb-md description-content">
         {{ post.description }}
       </div>
-      <div class="q-ma-md q-ml-sm absolute-bottom">
+      <div class="q-ma-md q-ml-sm">
         {{ user.contact }}
       </div>
     </div>
@@ -305,6 +305,7 @@ export default class Post extends Vue {
           student: this.currentUser.id,
         });
         this.$q.notify({
+          position: 'top',
           textColor: 'primary',
           color: 'secondary',
           type: "positive",
@@ -320,6 +321,7 @@ export default class Post extends Vue {
       }
     } catch (error) {
       this.$q.notify({
+        position: "top",
         textColor: "secondary",
         color: "primary",
         type: "negative",
