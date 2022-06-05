@@ -63,6 +63,9 @@
     </div>
     <!--  -->
     <div>
+      <div class="q-mb-md q-ml-md defaultfont text-grey-6" style="font-size: small">
+       Application status:
+      </div>
       <q-list v-for="pending in applications" :key="pending">
         <q-card
           v-if="
@@ -76,12 +79,12 @@
               <q-avatar size="5rem">
                 <q-img
                   v-if="pending.student?.prfphoto"
-                  class="avatar"
+                  class=""
                   :src="`http://localhost:3000/prfmedia/${pending.landlord?.prfphoto}`"
                 />
                 <q-img
                   v-else
-                  class="avatar"
+                  class=""
                   src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
                 />
               </q-avatar>
@@ -128,12 +131,12 @@
               <q-avatar size="5rem">
                 <q-img
                   v-if="pending.student?.prfphoto"
-                  class="avatar"
+                  class=""
                   :src="`http://localhost:3000/prfmedia/${pending.landlord?.prfphoto}`"
                 />
                 <q-img
                   v-else
-                  class="avatar"
+                  class=""
                   src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
                 />
               </q-avatar>
@@ -238,7 +241,7 @@ export default class StudentAccount extends Vue {
    this.$q
       .dialog({
         title: "Confirm Edit",
-        message: "Are you sure you want to delete?",
+        message: "Are you sure you want to cancel your request?",
         cancel: true,
         persistent: true,
         class: "defaultfont",
@@ -247,9 +250,9 @@ export default class StudentAccount extends Vue {
         await this.deleteApplication(id);
         this.$q.notify({
           type: "positive",
-          caption: "Successfully Deleted ",
-          message: "Successfully",
-          position: "bottom",
+          caption: "You can now Apply again ",
+          message: "Successfully Deleted",
+          position: "top",
           color: "secondary",
           textColor: "primary",
           classes: "defaultfont",

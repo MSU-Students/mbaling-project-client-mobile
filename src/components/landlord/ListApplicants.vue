@@ -13,14 +13,14 @@
                 :src="`http://localhost:3000/prfmedia/${pending.student?.prfphoto}`"
               />
                <q-img v-else
-                class="avatar"
+                class=""
                 src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
               />
             </q-avatar>
           </div>
-          <div class="col q-mt-sm defaultfont-bold" style="font-size: large">
+          <div class="col q-mt-sm q-ml-xs defaultfont-bold" style="font-size: large">
             {{ pending.student?.fName }} {{ pending.student?.lName }}
-            <div class="defaultfont text-grey-6" style="font-size: small">
+            <div class="q-ml-xs defaultfont text-grey-6" style="font-size: small">
               is requesting you to join your boarder
             </div>
             <div v-if="pending.status == 'pending'" class="q-mt-sm q-ml-xs">

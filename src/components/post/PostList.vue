@@ -116,7 +116,7 @@ export default class PostPageComponent extends Vue {
           type: "positive",
           caption: "Successfully Deleted ",
           message: "Successfully",
-          position: "bottom",
+          position: "top",
           color: "secondary",
           textColor: "primary",
           classes: "defaultfont",
