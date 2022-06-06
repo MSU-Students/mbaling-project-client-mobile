@@ -197,7 +197,6 @@
                 style="height: 1.5rem; width: 6rem; font-size: small"
                 color="primary"
                 label="close"
-                @click="resetModel()"
                 v-close-popup
               />
               <q-btn
@@ -211,6 +210,7 @@
                 color="primary"
                 label="create"
                 type="submit"
+                v-close-popup
               />
             </div>
           </div>
@@ -269,6 +269,7 @@ export default class ListBoarders extends Vue {
   addNewAccount = false;
 
   async showAddAccount() {
+    this.resetModel()
     this.dialog = true;
   }
 
