@@ -6,6 +6,7 @@
       class="q-pa-xs"
       style="width: 50%"
     >
+    <template v-if="post.visibility == true">
       <div>
         <q-img
           :src="`http://localhost:3000/media/${post.url}`"
@@ -23,7 +24,7 @@
       </div>
 
       <div class="q-my-xs q-px-xs row items-center">
-        <div class="col-9">
+        <div>
           <q-item-label lines="1" class="defaultfont-semibold">
             <q-avatar size="sm" class="bg-primary">
               <q-img v-if="post.user?.prfphoto" :src="`http://localhost:3000/prfmedia/${post.user?.prfphoto}`" />
@@ -38,14 +39,15 @@
           <post-options />
         </div>
       </div>
+      </template>
     </div>
-  </div>
+    </div>
 </template>
 
 <script lang="ts">
 import { Vue, Options } from "vue-class-component";
 import { PostInterface } from "src/store/post/state";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import { AUser } from "src/store/auth/state";
 import {
   MediaInterface,
@@ -59,6 +61,7 @@ import { PostDto, UserDto } from "src/services/rest-api";
     ...mapState("media", ["allMedia"]),
     ...mapState("auth", ["currentUser"]),
     ...mapState("account", ["allAccount", "newUser"]),
+    // ...mapGetters("post", ["visiblePost"]),
   },
   methods: {
     ...mapActions("account", ["getAllUser", "getUserById"]),
@@ -74,6 +77,8 @@ export default class PostFeedComponent extends Vue {
   posts!: PostDto[];
   allMedia!: MediaInterface[];
   currentUser!: AUser;
+  // visiblePost! : PostDto[];
+  data: any =[]
 
   async mounted() {
     console.log('HELLO')

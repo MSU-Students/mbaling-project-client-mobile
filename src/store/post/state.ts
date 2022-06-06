@@ -1,17 +1,14 @@
 export interface PostInterface {
-    id?: number
-    description: string,
-    fee: string,
-    negotiable: boolean,
-    prvCR: boolean,
-    prvKitchen: boolean,
-    photos: string,
-    title: string,
-    username: string,
-    date: number,
-    housingAddress: string,
-    prfphoto: number
-    url: string
+  id?: number;
+  title: string;
+  fee: string;
+  description: string;
+  prvKitchen: boolean;
+  prvCR: boolean;
+  photos: string;
+  visibility: boolean;
+  housingAddress: string;
+  url: number
 }
 
 export interface PostStateInterface {

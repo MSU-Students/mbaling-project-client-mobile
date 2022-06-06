@@ -51,8 +51,14 @@
       <q-item class="row items-center">
         <q-item-section avatar>
           <q-avatar size="xl" class="bg-primary">
-            <q-img v-if="user.prfphoto" :src="`http://localhost:3000/prfmedia/${user.prfphoto}`" />
-            <q-img v-if="!user.prfphoto" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+            <q-img
+              v-if="user.prfphoto"
+              :src="`http://localhost:3000/prfmedia/${user.prfphoto}`"
+            />
+            <q-img
+              v-if="!user.prfphoto"
+              src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+            />
           </q-avatar>
         </q-item-section>
 
@@ -92,30 +98,30 @@
       <div align="center" class="q-py-xs" style="font-size: medium">
         {{ post.fee }} PHP monthly
       </div>
-          <div class="q-pa-md" style="font-size: medium">
-            <div>
-              <q-icon
-                :name="
-                  post.prvCR ? 'bi-check-square-fill' : 'bi-x-square-fill'
-                "
-                size="xs"
-              />
-              Private Kitchen
-            </div>
-            <div>
-              <q-icon
-                :name="post.prvKitchen ? 'bi-check-square-fill' : 'bi-x-square-fill'"
-                size="xs"
-              />
-              Private CR
-            </div>
-          </div>
+      <div align="center" class="text-bold" style="font-size: medium">
+        {{ user.contact }}
+      </div>
+      <div class="q-pa-md" style="font-size: medium">
+        <div>
+          <q-icon
+            :name="post.prvCR ? 'bi-check-square-fill' : 'bi-x-square-fill'"
+            size="xs"
+          />
+          Private Kitchen
+        </div>
+        <div>
+          <q-icon
+            :name="
+              post.prvKitchen ? 'bi-check-square-fill' : 'bi-x-square-fill'
+            "
+            size="xs"
+          />
+          Private CR
+        </div>
+      </div>
 
       <div class="q-pb-md description-content">
         {{ post.description }}
-      </div>
-      <div class="q-ma-md q-ml-sm">
-        {{ user.contact }}
       </div>
     </div>
 
@@ -138,16 +144,14 @@
   >
     <div class="row items-center" style="height: 4rem">
       <div align="left" class="col defaultfont">
-        <div v-if="!(user.chatLink)">
-          <a
-            @click="alert()"
-          >
+        <div v-if="!user.chatLink">
+          <a @click="alert()">
             <q-icon size="1.4rem" color="black" class="q-pl-sm bi bi-chat-fill">
             </q-icon>
           </a>
         </div>
         <div v-else>
-            <a
+          <a
             :href="`${user.chatLink}`"
             target="_blank"
             style="text-decoration: none"
@@ -158,18 +162,17 @@
         </div>
       </div>
 
-          <div
-            v-if="currentUser.type == 'student'"
-            class="flex flex-center text-primary defaultfont"
-          >
-            <q-btn
-              rounded
-              color="primary"
-              icon="check"
-              label="Apply"
-              @click="addApplication()"
-            />
-          </div>
+      <div v-if="currentUser.type == 'student'" align="center">
+        <q-btn
+          label="Apply"
+          unelevated
+          rounded
+          no-caps
+          color="primary"
+          style="height: 3rem"
+          @click="addApplication()"
+        />
+      </div>
 
       <div align="right" class="col">
         <post-options />
@@ -259,7 +262,7 @@ export default class Post extends Vue {
     housingAddress: "",
     url: 0,
     userID: 0,
-    date: ""
+    visibility: true
   };
 
   async created() {
@@ -302,27 +305,25 @@ export default class Post extends Vue {
           student: this.currentUser.id,
         });
         this.$q.notify({
-          position: 'top',
-          textColor: 'primary',
-          color: 'secondary',
+          position: "top",
+          textColor: "primary",
+          color: "secondary",
           type: "positive",
-          message: "Successfully Applied!",
-          caption: "Landlord will contact you soon.",
+          icon: "bi-check-circle-fill",
+          message: "Application sent.",
+          classes: "defaultfont",
         });
         this.loading = false;
-      } else {
-        this.$q.notify({
-          type: "negative",
-          message: "Only Student can Apply!",
-        });
       }
     } catch (error) {
       this.$q.notify({
-        position: "top",
-        textColor: "secondary",
-        color: "primary",
         type: "negative",
-        message: "Already Applied!",
+        icon: "bi-exclamation-triangle-fill",
+        color: "primary",
+        textColor: "secondary",
+        position: "top",
+        message: "You have pending application.",
+        classes: "defaultfont",
       });
     }
     // this.$q.notify({
@@ -335,11 +336,11 @@ export default class Post extends Vue {
     // });
   }
   alert() {
-    if(this.user.chatLink == "")
-    this.$q.dialog({
-      message: "The User Landlord doesn't have a Chat Link.",
-      class: "defaultfont",
-    });
+    if (this.user.chatLink == "")
+      this.$q.dialog({
+        message: "This user does not have a Messenger.",
+        class: "defaultfont",
+      });
   }
 }
 </script>

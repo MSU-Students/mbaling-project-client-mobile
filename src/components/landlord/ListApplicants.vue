@@ -1,65 +1,60 @@
 <template>
   <!--  -->
-  <div class="q-mb-md defaultfont text-grey-6" style="font-size: small">
-    List of Applicants:
+  <div class="defaultfont-semibold text-grey-8" style="font-size: medium">
+    Pending applications
   </div>
-  <div>
+  <div class="q-mt-md">
     <q-list v-for="pending in getPendingAccount" :key="pending">
-      <q-card class="q-ma-sm" style="height: 7rem">
-        <div class="row">
-          <div  class="col-3 flex flex-center">
-            <q-avatar size="5rem">
-              <q-img v-if="pending.student?.prfphoto"
-                :src="`http://localhost:3000/prfmedia/${pending.student?.prfphoto}`"
-              />
-               <q-img v-else
-                class=""
-                src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
-              />
-            </q-avatar>
-          </div>
-          <div class="col q-mt-sm q-ml-xs defaultfont-bold" style="font-size: large">
-            {{ pending.student?.fName }} {{ pending.student?.lName }}
-            <div class="q-ml-xs defaultfont text-grey-6" style="font-size: small">
-              is requesting you to join your boarder
-            </div>
-            <div v-if="pending.status == 'pending'" class="q-mt-sm q-ml-xs">
-              <q-btn
-                class="q-mx-xs"
-                color="primary"
-                ripple="false"
-                unelevated
-                text-color="secondary"
-                label="accept"
-                rounded
-                dense
-                style="width: 7rem"
-                @click="ApproveApplicant(pending.id)"
-              />
-              <q-btn
-                class="q-mx-xs"
-                color="primary"
-                ripple="false"
-                unelevated
-                label="cancel"
-                rounded
-                outline
-                dense
-                style="width: 7rem"
-                @click="disapproveApplicant(pending.id)"
-              />
-            </div>
-
-            <!-- <div v-if="(pending.status != 'pending')" class="q-mt-sm q-ml-xs ">
-                <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated label="appcepted" rounded outline dense style="width: 15rem" />
-              </div> -->
-          </div>
+      <q-card class="q-pa-md row items-center">
+        <div class="q-ml-sm col-2">
+          <q-avatar size="xl" class="bg-primary">
+            <q-img
+              v-if="pending.student?.prfphoto"
+              :src="`http://localhost:3000/prfmedia/${pending.student?.prfphoto}`"
+            />
+            <q-img
+              v-else
+              class=""
+              src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+            />
+          </q-avatar>
+        </div>
+        <div class="col">
+          <q-item-section class="defaultfont">
+            <q-item-label
+              lines="1"
+              class="defaultfont-semibold"
+              style="font-size: medium"
+            >
+              {{ pending.student?.fName }} {{ pending.student?.lName }}
+            </q-item-label>
+            <q-item-label lines="1" style="font-size: smaller">
+              @{{ pending.student?.username }}
+            </q-item-label>
+          </q-item-section>
+        </div>
+        <div align="right" class="col-5">
+          <q-btn
+            label="Accept"
+            unelevated
+            rounded
+            no-caps
+            color="primary"
+            style="height: 2.5rem"
+            @click="ApproveApplicant(pending.id)"
+          />
+          <q-btn
+            flat
+            round
+            color="primary"
+            icon="bi-x-circle"
+            @click="disapproveApplicant(pending.id)"
+          />
         </div>
       </q-card>
+      <q-separator size="0.5rem" class="bg-secondary" />
     </q-list>
   </div>
-
-  <!--  -->
 </template>
 
 <script lang="ts">
@@ -71,20 +66,21 @@ import { mapActions, mapGetters, mapState } from "vuex";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("application",
-                ["getAllApplication",
-                "updateApplication",
-                "deleteApplication",
-                "getOneApplication"]),
+    ...mapActions("application", [
+      "getAllApplication",
+      "updateApplication",
+      "deleteApplication",
+      "getOneApplication",
+    ]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
     ...mapState("application", ["applications"]),
-    ...mapGetters("application", ["getPendingAccount","getFirst", ]),
+    ...mapGetters("application", ["getPendingAccount", "getFirst"]),
   },
 })
 export default class ListApplicants extends Vue {
-  getOneApplication!:(payload: ApplicationDto) => Promise<ApplicationDto>;
+  getOneApplication!: (payload: ApplicationDto) => Promise<ApplicationDto>;
   editAccount!: (payload: UserDto) => Promise<void>;
   deleteApplication!: (payload: any) => Promise<void>;
   updateApplication!: (payload: any) => Promise<ApplicationDto>;
@@ -111,8 +107,7 @@ export default class ListApplicants extends Vue {
       field: "status",
     },
   ];
-  inputAccount: any = {
-  };
+  inputAccount: any = {};
 
   async mounted() {
     await this.getAllApplication();
@@ -123,25 +118,28 @@ export default class ListApplicants extends Vue {
   }
 
   async ApproveApplicant(val: any) {
-    console.log('val is here ' +val)
-    console.log(this.currentUser.housing?.name)
-    console.log(this.currentUser.housing?.id)
+    console.log("val is here " + val);
+    console.log(this.currentUser.housing?.name);
+    console.log(this.currentUser.housing?.id);
     console.log("Approve here");
 
-    const edit = await this.getOneApplication(val)
-    console.log(edit.student?.id)
+    const edit = await this.getOneApplication(val);
+    console.log(edit.student?.id);
 
     await this.updateApplication({
       id: val,
       status: "accepted",
     });
-    await this.editAccount({...this.inputAccount, id: edit.student?.id, housing: this.currentUser.housing});
-
+    await this.editAccount({
+      ...this.inputAccount,
+      id: edit.student?.id,
+      housing: this.currentUser.housing,
+    });
   }
 
   async disapproveApplicant(id: any) {
     console.log("DisApprove here");
-    await this.deleteApplication(id)
+    await this.deleteApplication(id);
   }
 
   colorManipulation(status: string) {

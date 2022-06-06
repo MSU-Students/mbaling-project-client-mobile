@@ -251,10 +251,10 @@ export interface PostDto {
     'title': string;
     /**
      *
-     * @type {string}
+     * @type {boolean}
      * @memberof PostDto
      */
-    'date': string;
+    'visibility': boolean;
     /**
      *
      * @type {string}

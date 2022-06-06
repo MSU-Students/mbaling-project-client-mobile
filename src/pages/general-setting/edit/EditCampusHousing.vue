@@ -107,7 +107,7 @@
     <q-page class="q-px-md q-pb-xl defaultfont">
       <div class="q-pt-md">
         <q-input
-          :placeholder="`${currentUser.housing?.name}`"
+          :placeholder="`${currentUser.housing?.name || 'Apply for housing'}`"
           type="search"
           readonly
           disable

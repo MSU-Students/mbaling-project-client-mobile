@@ -1,205 +1,213 @@
 <template>
-<div v-if="editLandlordProfile">
-  <page-header style="height: 4rem">
-    <template #slot-left>
-      <q-btn
-        icon="bi-chevron-left"
-        dense
-        flat
-        :ripple="false"
-        size="sm"
-        color="black"
-        class="q-ml-md"
-        @click="$router.go(-1)"
-      />
-    </template>
-    <template #slot-middle>
-      <div
-        class="defaultfont-light text-bold text-black"
-        style="font-size: medium"
-      >
-        Edit profile
-      </div>
-    </template>
-    <template #slot-right>
-      <q-btn
-        label="Save"
-        unelevated
-        rounded
-        no-caps
-        color="primary"
-        class="q-mr-md defaultfont"
-        style="height: 3rem"
-        @click="onSaveLandlord()"
-      />
-    </template>
-  </page-header>
-
-  <div class="q-px-md defaultfont">
-    <div align="center" class="q-pa-md">
-      <q-avatar size="8rem" class="bg-primary">
-        <q-img v-if="inputAccount.prfphoto"
-          :src="`http://localhost:3000/prfmedia/${inputAccount.prfphoto}`"
-          class="avatar"
+  <div v-if="editLandlordProfile">
+    <page-header style="height: 4rem">
+      <template #slot-left>
+        <q-btn
+          icon="bi-chevron-left"
+          dense
+          flat
+          :ripple="false"
+          size="sm"
+          color="black"
+          class="q-ml-md"
+          @click="$router.go(-1)"
         />
-        <q-img v-if="!inputAccount.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
-      </q-avatar>
-      <div class="q-mt-sm q-px-xl">
-        <q-file
-          outlined
-          label="Upload Image"
-          accept=".jpg, image/*"
-          v-model="imageAttachement"
+      </template>
+      <template #slot-middle>
+        <div
+          class="defaultfont-light text-bold text-black"
+          style="font-size: medium"
         >
-        </q-file>
+          Edit profile
+        </div>
+      </template>
+      <template #slot-right>
+        <q-btn
+          label="Save"
+          unelevated
+          rounded
+          no-caps
+          color="primary"
+          class="q-mr-md defaultfont"
+          style="height: 3rem; width: 4rem"
+          @click="onSaveLandlord()"
+        />
+      </template>
+    </page-header>
+
+    <div class="q-px-md defaultfont">
+      <div align="center" class="q-pa-md">
+        <q-avatar size="8rem" class="bg-primary">
+          <q-img
+            v-if="inputAccount.prfphoto"
+            :src="`http://localhost:3000/prfmedia/${inputAccount.prfphoto}`"
+            class="avatar"
+          />
+          <q-img
+            v-if="!inputAccount.prfphoto"
+            class="avatar q-pt-none q-mt-none"
+            src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+          />
+        </q-avatar>
+        <div class="q-mt-sm q-px-xl">
+          <q-file
+            outlined
+            label="Upload Image"
+            accept=".jpg, image/*"
+            v-model="imageAttachement"
+          >
+          </q-file>
+        </div>
+      </div>
+
+      <div class="q-px-sm q-pb-xl">
+        <q-input
+          v-model="inputAccount.fName"
+          label="First name"
+          stack-label
+          class="q-mt-lg"
+          style="font-size: medium"
+        />
+        <q-input
+          v-model="inputAccount.mName"
+          label="Middle name"
+          stack-label
+          class="q-mt-lg"
+          style="font-size: medium"
+        />
+        <q-input
+          v-model="inputAccount.lName"
+          label="Last name"
+          stack-label
+          class="q-mt-lg"
+          style="font-size: medium"
+        />
+        <q-select
+          v-model="inputAccount.gender"
+          :options="genderOptions"
+          label="Gender"
+          stack-label
+          class="q-mt-lg"
+          style="font-size: medium"
+        />
+        <q-input
+          v-model="inputAccount.birthdate"
+          label="Date of birth"
+          stack-label
+          type="date"
+          class="q-mt-lg"
+          style="font-size: medium"
+        />
       </div>
     </div>
-
-    <div class="q-px-sm q-pb-xl">
-      <q-input
-        v-model="inputAccount.fName"
-        label="First name"
-        stack-label
-        class="q-mt-lg"
-        style="font-size: medium"
-      />
-      <q-input
-        v-model="inputAccount.mName"
-        label="Middle name"
-        stack-label
-        class="q-mt-lg"
-        style="font-size: medium"
-      />
-      <q-input
-        v-model="inputAccount.lName"
-        label="Last name"
-        stack-label
-        class="q-mt-lg"
-        style="font-size: medium"
-      />
-      <q-select
-        v-model="inputAccount.gender"
-        :options="genderOptions"
-        label="Gender"
-        stack-label
-        class="q-mt-lg"
-        style="font-size: medium"
-      />
-      <q-input
-        v-model="inputAccount.birthdate"
-        label="Date of birth"
-        stack-label
-        type="date"
-        class="q-mt-lg"
-        style="font-size: medium"
-      />
-    </div>
   </div>
-  </div>
-
-  <!--  -->
 
   <div v-else>
-  <page-header style="height: 4rem">
-    <template #slot-left>
-      <q-btn
-        icon="bi-chevron-left"
-        dense
-        flat
-        :ripple="false"
-        size="sm"
-        color="black"
-        class="q-ml-md"
-        @click="$router.go(-1)"
-      />
-    </template>
-    <template #slot-middle>
-      <div
-        class="defaultfont-light text-bold text-black"
-        style="font-size: medium"
-      >
-        Edit profile
-      </div>
-    </template>
-    <template #slot-right>
-      <q-btn
-        label="edit"
-        unelevated
-        rounded
-        no-caps
-        outline
-        color="primary"
-        class="q-mr-md defaultfont"
-        style="height: 3rem"
-        @click="onEditLandlord(currentUser)"
-      />
-    </template>
-  </page-header>
-
-  <div class="q-px-md defaultfont">
-    <div align="center" class="q-pa-md">
-      <q-avatar size="8rem" class="bg-primary">
-        <q-img v-if="currentUser.prfphoto"
-          :src="`http://localhost:3000/prfmedia/${currentUser.prfphoto}`"
-          class="avatar"
+    <page-header style="height: 4rem">
+      <template #slot-left>
+        <q-btn
+          icon="bi-chevron-left"
+          dense
+          flat
+          :ripple="false"
+          size="sm"
+          color="black"
+          class="q-ml-md"
+          @click="$router.go(-1)"
         />
-        <q-img v-if="!currentUser.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
-      </q-avatar>
-      <div class="q-mt-md q-px-xl" style="font-size: x-large;">
-        @{{ currentUser.username }}
+      </template>
+      <template #slot-middle>
+        <div
+          class="defaultfont-light text-bold text-black"
+          style="font-size: medium"
+        >
+          Edit profile
+        </div>
+      </template>
+      <template #slot-right>
+        <q-btn
+          label="Edit"
+          unelevated
+          rounded
+          no-caps
+          outline
+          color="primary"
+          class="q-mr-md defaultfont"
+          style="height: 3rem; width: 4rem"
+          @click="onEditLandlord(currentUser)"
+        />
+      </template>
+    </page-header>
+
+    <div class="q-px-md defaultfont">
+      <div align="center" class="q-pa-md">
+        <q-avatar size="8rem" class="bg-primary">
+          <q-img
+            v-if="currentUser.prfphoto"
+            :src="`http://localhost:3000/prfmedia/${currentUser.prfphoto}`"
+            class="avatar"
+          />
+          <q-img
+            v-if="!currentUser.prfphoto"
+            class="avatar q-pt-none q-mt-none"
+            src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+          />
+        </q-avatar>
+        <div class="q-mt-md q-px-xl" style="font-size: x-large">
+          @{{ currentUser.username }}
+        </div>
+      </div>
+
+      <div class="q-px-sm q-pb-xl">
+        <q-input
+          v-model="currentUser.fName"
+          label="First name"
+          stack-label
+          readonly
+          disable
+          class="q-mt-lg"
+          style="font-size: medium"
+        />
+        <q-input
+          v-model="currentUser.mName"
+          label="Middle name"
+          stack-label
+          readonly
+          disable
+          class="q-mt-lg"
+          style="font-size: medium"
+        />
+        <q-input
+          v-model="currentUser.lName"
+          label="Last name"
+          stack-label
+          readonly
+          disable
+          class="q-mt-lg"
+          style="font-size: medium"
+        />
+        <q-select
+          v-model="currentUser.gender"
+          :options="genderOptions"
+          label="Gender"
+          stack-label
+          readonly
+          disable
+          class="q-mt-lg"
+          style="font-size: medium"
+        />
+        <q-input
+          v-model="currentUser.birthdate"
+          label="Date of birth"
+          stack-label
+          readonly
+          disable
+          type="date"
+          class="q-mt-lg"
+          style="font-size: medium"
+        />
       </div>
     </div>
-
-    <div class="q-px-sm q-pb-xl">
-      <q-input
-        v-model="currentUser.fName"
-        label="First name"
-        stack-label
-        readonly
-        disable
-        class="q-mt-lg"
-        style="font-size: medium"
-      />
-      <q-input
-        v-model="currentUser.mName"
-        label="Middle name"
-        stack-label
-        readonly
-        disable
-        class="q-mt-lg"
-        style="font-size: medium"
-      />
-      <q-input
-        v-model="currentUser.lName"
-        label="Last name"
-        stack-label
-        readonly
-        disable
-        class="q-mt-lg"
-        style="font-size: medium"
-      />
-      <q-select
-        v-model="currentUser.gender"
-        :options="genderOptions"
-        label="Gender"
-        stack-label
-        readonly
-        disable
-        class="q-mt-lg"
-        style="font-size: medium"
-      />
-      <q-input
-        v-model="currentUser.birthdate"
-        label="Date of birth"
-        stack-label
-        readonly
-        disable
-        type="date"
-        class="q-mt-lg"
-        style="font-size: medium"
-      />
-    </div>
-  </div>
   </div>
 </template>
 
@@ -251,12 +259,11 @@ export default class LandlordManageProfile extends Vue {
 
   async onEditLandlord(val: AUser) {
     this.editLandlordProfile = true;
-    this.inputAccount = {...val}
+    this.inputAccount = { ...val };
   }
 
   async onSaveLandlord() {
     try {
-
       this.$q
         .dialog({
           title: "Confirm Edit",
@@ -264,22 +271,25 @@ export default class LandlordManageProfile extends Vue {
           cancel: true,
           persistent: true,
           class: "defaultfont",
-    })
+        })
         .onOk(async () => {
-         if (this.imageAttachement.size > 0) {
-        console.log("1 Upload Image")
-        const media = await this.uploadMedia(this.imageAttachement as File);
-        console.log("2 Upload Image")
-        await this.editAccount({ ...this.inputAccount, prfphoto: media.id });
-      } else if (this.imageAttachement.size <= 0) {
-        await this.editAccount({ ...this.inputAccount });
-      }
+          if (this.imageAttachement.size > 0) {
+            console.log("1 Upload Image");
+            const media = await this.uploadMedia(this.imageAttachement as File);
+            console.log("2 Upload Image");
+            await this.editAccount({
+              ...this.inputAccount,
+              prfphoto: media.id,
+            });
+          } else if (this.imageAttachement.size <= 0) {
+            await this.editAccount({ ...this.inputAccount });
+          }
           window.location.reload();
-      });
+        });
     } catch (error) {
       this.$q.notify({
         type: "negative",
-        message: "Unsuccessfully Update",
+        message: "Update unsuccessful.",
       });
     }
 
