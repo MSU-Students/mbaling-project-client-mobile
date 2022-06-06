@@ -28,7 +28,7 @@
   </q-header>
   <div class="q-ml-md defaultfont-bold">
     Boraders:
-    <span class="defaultfont-light">{{this.data.length}}</span>
+    <span class="defaultfont-light">{{this.data.length + this.nonAccountdata.length}}</span>
   </div>
   <q-page class="defaultfont bg-secondary text-black">
     <div class="q-pt-sm q-px-sm q-pb-md defaultfont">
@@ -131,7 +131,7 @@
 </template>
 
 <script lang="ts">
-import { ApplicationDto, PostDto, UserDto } from "src/services/rest-api";
+import { ApplicationDto, NonAccountDto, PostDto, UserDto } from "src/services/rest-api";
 import { UserInterface } from "src/store/user/state";
 import { Options, Vue } from "vue-class-component";
 import { mapState, mapActions, mapGetters } from "vuex";
@@ -141,12 +141,15 @@ import { mapState, mapActions, mapGetters } from "vuex";
     ...mapState("post", ["posts"]),
     ...mapState("account", ["allAccount", "newUser"]),
     ...mapState("application", ["applications"]),
+    ...mapState("nonaccount", ["allNonAccount"]),
+    ...mapState("auth", ["currentUser"]),
     ...mapGetters("application", ["getAcceptedAccount"]),
   },
   methods: {
     ...mapActions("account", ["getAllUser", "getUserById"]),
     ...mapActions("post", ["getAllPost"]),
     ...mapActions("application", ["getAllApplication", "updateApplication"]),
+    ...mapActions("nonaccount", ["getAllNonAccount",]),
   },
 })
 export default class Profile extends Vue {
@@ -154,12 +157,16 @@ export default class Profile extends Vue {
   getAllPost!: () => Promise<void>;
   getAllUser!: () => Promise<void>;
   getAllApplication!: () => Promise<void>;
+  getAllNonAccount!: () => Promise<void>;
 
+  allNonAccount!: NonAccountDto[];
   data: any = [];
   getAcceptedAccount!: ApplicationDto[];
   newUser!: any;
   posts!: PostDto[];
   allAccount!: UserInterface[];
+  currentUser!: any
+  nonAccountdata: any = [];
   isStudent = true;
 
   user: UserDto = {
@@ -192,6 +199,11 @@ export default class Profile extends Vue {
     await this.getAllPost();
     await this.getAllApplication()
     this.data = this.getAcceptedAccount.filter(
+      (i) => i.landlord?.id == this.user.id
+    );
+    console.log(this.user.id)
+    await this.getAllNonAccount();
+    this.nonAccountdata = this.allNonAccount.filter(
       (i) => i.landlord?.id == this.user.id
     );
   }
