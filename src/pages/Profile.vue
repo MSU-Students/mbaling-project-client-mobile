@@ -34,12 +34,12 @@
     </div>
     <q-separator color="primary" size="0.1rem" class="q-my-sm" />
   </q-header>
-  <div class="q-ml-md defaultfont-bold">
+  <!-- <div class="q-ml-md defaultfont-bold">
     Boraders:
     <span class="defaultfont-light">{{
       this.data.length + this.nonAccountdata.length
     }}</span>
-  </div>
+  </div> -->
   <q-page class="defaultfont bg-secondary text-black">
     <div class="q-pt-sm q-px-sm q-pb-md defaultfont">
       <div class="q-ml-sm defaultfont-semibold text-body1">POSTS</div>
