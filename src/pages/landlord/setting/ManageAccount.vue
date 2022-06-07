@@ -25,8 +25,15 @@
   <q-page class="defaultfont">
     <div align="center" class="q-pa-md">
       <q-avatar size="6rem" class="bg-primary">
-        <q-img v-if="currentUser.prfphoto" :src="`http://localhost:3000/prfmedia/${currentUser.prfphoto}`" class="avatar" />
-        <img v-if="!currentUser.prfphoto" class="avatar q-pt-none q-mt-none" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+        <q-img
+          v-if="currentUser.prfphoto"
+          :src="`http://localhost:3000/prfmedia/${currentUser.prfphoto}`"
+        />
+        <img
+          v-if="!currentUser.prfphoto"
+          class="avatar q-pt-none q-mt-none"
+          src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+        />
       </q-avatar>
       <div class="q-mt-sm defaultfont-semibold text-body1">
         @{{ currentUser.username }}
@@ -116,7 +123,6 @@ import { mapActions, mapState } from "vuex";
     ...mapState("auth", ["currentUser"]),
   },
 })
-
 export default class LandlordManageAccount extends Vue {
   authUser!: () => Promise<void>;
   currentUser!: AUser;
@@ -124,42 +130,9 @@ export default class LandlordManageAccount extends Vue {
   async mounted() {
     await this.authUser();
   }
-  // activeUser = {
-  //   id: 202200001,
-  //   username: "zinboarding",
-  //   password: "password",
-  //   isStudent: false,
-
-  //   firstname: "Azshara",
-  //   middlename: "Queldorei",
-  //   lastname: "Highborne",
-  //   prfphoto: "https://cdn.quasar.dev/img/avatar2.jpg",
-
-  //   degree: "",
-  //   department: "",
-  //   college: "",
-  //   yearAdmitted: 0,
-
-  //   addressLine1: "1205 5th Street",
-  //   addressLine2: "Dimaluna I",
-  //   addressLine3: "Marawi City",
-  //   addressLine4: "Lanao del Sur",
-  //   housingAddress: "Zin-Azshari Boarding House",
-
-  //   birthdate: "1999-08-31",
-  //   gender: "Female",
-  //   contact: "09531409858",
-  //   email: "azshara.highborne@gmail.com",
-  // };
 }
 </script>
 
 <style>
-.avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50% !important;
-  border: 2px solid rgb(190, 40, 45) !important;
-}
 </style>
 

@@ -42,7 +42,7 @@
             label="Upload image 1"
             accept=".jpg, image/*"
             v-model="ImageAttachement1"
-            style="width: 20rem"
+            sstyle="width: 20rem"
             class="q-mb-sm"
             lazy-rules
             :rules="[(val) => val.size > 0 || 'Image is required']"
@@ -59,8 +59,23 @@
             :rules="[(val) => val.size > 0 || 'Image is required']"
             hide-bottom-space
           />
+
+          <div align="center">
+            <q-btn
+              v-if="addButton"
+              round
+              dense
+              flat
+              size="lg"
+              color="grey-5"
+              icon="bi-plus-circle"
+              @click="addPicture()"
+              class="flex flex-center"
+            />
+          </div>
+
           <q-file
-            v-if="image3"
+            v-if="addImage"
             outlined
             label="Upload image 3"
             accept=".jpg, image/*"
@@ -71,28 +86,6 @@
             :rules="[(val) => val.size > 0 || 'Image is required']"
             hide-bottom-space
           />
-          <q-btn
-            v-if="addButton2"
-            outline
-            unelevated
-            dense
-            style="width: 20rem; height: 3rem; font-size: "
-            color="grey"
-            @click="addPicture2()"
-          >
-            <q-icon size="2rem" name="bi-plus" />
-          </q-btn>
-          <q-btn
-            v-if="addButton3"
-            outline
-            unelevated
-            dense
-            style="width: 20rem; height: 3rem; font-size: "
-            color="grey-6"
-            @click="addPicture3()"
-          >
-            <q-icon size="2rem" name="bi-plus" />
-          </q-btn>
         </div>
       </div>
       <div class="q-mt-sm q-px-md">
@@ -249,23 +242,11 @@ export default class PostForm extends Vue {
   ImageAttachement3: File = new File([], "");
 
   // adding Pictures TAE! a code HAHA
-  image2 = false;
-  image3 = false;
-  addButton2 = true;
-  addButton3 = false;
-
-  async addPicture2() {
-    this.image2 = true;
-    this.addButton3 = true;
-    if ((this.image2 = true)) {
-      this.addButton2 = false;
-    }
-  }
-  async addPicture3() {
-    this.image3 = true;
-    if ((this.image3 = true)) {
-      this.addButton3 = false;
-    }
+  addImage = false;
+  addButton = true;
+  async addPicture() {
+    this.addImage = true;
+    this.addButton = false;
   }
   // ------------------------
 
@@ -280,7 +261,7 @@ export default class PostForm extends Vue {
     housingAddress: "",
     url: 0,
     userID: 0,
-    visibility: true
+    visibility: "true",
   };
 
   inputNumber: any = {
@@ -296,7 +277,7 @@ export default class PostForm extends Vue {
       prvKitchen: false,
       photos: "",
       title: "",
-      visibility: true,
+      visibility: "true",
       housingAddress: "",
       url: 0,
       userID: 0,

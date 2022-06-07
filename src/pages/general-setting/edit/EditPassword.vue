@@ -1,5 +1,4 @@
 <template>
-<div v-if="editPassword">
   <page-header style="height: 4rem">
     <template #slot-left>
       <q-btn
@@ -23,25 +22,49 @@
     </template>
     <template #slot-right>
       <q-btn
+        v-if="!editButton"
+        label="Edit"
+        unelevated
+        rounded
+        no-caps
+        outline
+        color="primary"
+        class="q-mr-md defaultfont"
+        style="height: 3rem; width: 4rem"
+        @click="onEdit()"
+      />
+      <q-btn
+        v-else
         label="Save"
         unelevated
         rounded
         no-caps
         color="primary"
         class="q-mr-md defaultfont"
-        style="height: 3rem"
-        @click="onSubmit()"
+        style="height: 3rem; width: 4rem"
+        @click="onSave()"
       />
     </template>
   </page-header>
 
-  <q-page class="q-px-md q-pb-xl defaultfont">
+  <q-page v-if="!editButton" class="q-px-md q-pb-xl defaultfont bg-secondary">
+    <div class="q-pt-md">
+      <q-input
+        label="Current password"
+        stack-label
+        disable
+        type="password"
+        style="font-size: medium"
+      />
+    </div>
+  </q-page>
+
+  <q-page v-else class="q-px-md q-pb-xl defaultfont bg-secondary">
     <div class="q-pt-md">
       <q-input
         v-model="password.oldPassword"
         label="Current password"
         stack-label
-        dense
         :type="showPwd1 ? 'password' : 'text'"
         style="font-size: medium"
         lazy-rules
@@ -60,8 +83,7 @@
         v-model="password.newPassword"
         label="New password"
         stack-label
-        dense
-        :type="showPwd ? 'password' : 'text'"
+        :type="showPwd2 ? 'password' : 'text'"
         class="q-mt-lg"
         style="font-size: medium"
         lazy-rules
@@ -69,9 +91,9 @@
       >
         <template v-slot:append>
           <q-icon
-            :name="showPwd ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
+            :name="showPwd2 ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
             class="cursor-pointer"
-            @click="showPwd = !showPwd"
+            @click="showPwd2 = !showPwd2"
           />
         </template>
       </q-input>
@@ -80,8 +102,7 @@
         v-model="confirmpassword"
         label="Confrim new password"
         stack-label
-        dense
-        :type="showPwd ? 'password' : 'text'"
+        :type="showPwd2 ? 'password' : 'text'"
         class="q-mt-lg"
         style="font-size: medium"
         lazy-rules
@@ -91,72 +112,19 @@
       >
         <template v-slot:append>
           <q-icon
-            :name="showPwd ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
+            :name="showPwd2 ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
             class="cursor-pointer"
-            @click="showPwd = !showPwd"
+            @click="showPwd2 = !showPwd2"
           />
         </template>
       </q-input>
     </div>
   </q-page>
-  </div>
-
-  <!--  -->
-<div v-else>
-  <page-header style="height: 4rem">
-    <template #slot-left>
-      <q-btn
-        icon="bi-chevron-left"
-        dense
-        flat
-        :ripple="false"
-        size="sm"
-        color="black"
-        class="q-ml-md"
-        @click="$router.go(-1)"
-      />
-    </template>
-    <template #slot-middle>
-      <div
-        class="defaultfont-light text-bold text-black"
-        style="font-size: medium"
-      >
-        Password
-      </div>
-    </template>
-    <template #slot-right>
-      <q-btn
-        label="edit"
-        unelevated
-        rounded
-        no-caps
-        color="primary"
-        class="q-mr-md defaultfont"
-        style="height: 3rem"
-        @click="oneditPassword()"
-      />
-    </template>
-  </page-header>
-
-  <q-page class="q-px-md q-pb-xl defaultfont">
-    <div class="q-pt-md">
-      <q-input
-        disable
-        stack-label
-        label="Password"
-      >
-      </q-input>
-    </div>
-  </q-page>
-  </div>
-  <!--  -->
 </template>
 
 <script lang="ts">
-import router from "src/router";
 import { mbalingApiService } from "src/services/mbaling-api.service";
 import { ChangePasswordDto } from "src/services/rest-api";
-import { ref } from "vue";
 import { Options, Vue } from "vue-class-component";
 import { mapActions } from "vuex";
 
@@ -173,26 +141,25 @@ export default class EditHousing extends Vue {
   };
 
   confirmpassword = "";
-  showPwd = true;
   showPwd1 = true;
+  showPwd2 = true;
 
-  async resetModel(){
+  async resetModel() {
     this.password = {
       oldPassword: "",
       newPassword: "",
-    }
-    this.confirmpassword = ""
+    };
+    this.confirmpassword = "";
   }
 
-  // edit Password
-  editPassword = false;
+  editButton = false;
 
-  async oneditPassword() {
+  async onEdit() {
     this.resetModel();
-    this.editPassword = true;
+    this.editButton = true;
   }
 
-  async onSubmit() {
+  async onSave() {
     this.$q
       .dialog({
         title: "Confirm Edit",
@@ -202,27 +169,37 @@ export default class EditHousing extends Vue {
         class: "defaultfont",
       })
       .onOk(async () => {
-        this.editPassword = false;
+        this.editButton = false;
         try {
           if (this.password.newPassword != this.confirmpassword) {
             this.$q.notify({
               type: "negative",
-              message: "Passwords not match!",
+              icon: "bi-exclamation-triangle-fill",
+              position: "top",
+              color: "secondary",
+              textColor: "primary",
+              message: "Passwords do not match.",
             });
             return;
           }
           await mbalingApiService.changePassword(this.password);
           this.$q.notify({
             type: "positive",
+            icon: "bi-check-circle-fill",
+            position: "top",
             color: "secondary",
             textColor: "primary",
-            message: "Change password successfully",
+            message: "Successfully edited.",
           });
-          this.$router.go(-1)
+          this.$router.go(-1);
         } catch (error: any) {
           this.$q.notify({
             type: "negative",
-            message: 'Invalid current password',
+            icon: "bi-exclamation-triangle-fill",
+            position: "top",
+            color: "secondary",
+            textColor: "primary",
+            message: "Invalid current password",
           });
         }
       });
@@ -235,15 +212,5 @@ export default class EditHousing extends Vue {
       newPassword: "",
     };
   }
-
-  // confirmEdit() {
-  //   this.$q.dialog({
-  //     title: "Confirm Edit",
-  //     message: "Are you sure you want to publish the changes?",
-  //     cancel: true,
-  //     persistent: true,
-  //     class: "defaultfont",
-  //   });
-  // }
 }
 </script>

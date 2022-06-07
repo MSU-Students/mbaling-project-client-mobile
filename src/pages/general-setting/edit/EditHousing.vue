@@ -1,5 +1,4 @@
 <template>
-<div v-if="editLandlordHousing">
   <page-header style="height: 4rem">
     <template #slot-left>
       <q-btn
@@ -23,71 +22,32 @@
     </template>
     <template #slot-right>
       <q-btn
-        label="Save"
-        unelevated
-        rounded
-        no-caps
-        color="primary"
-        class="q-mr-md defaultfont"
-        style="height: 3rem"
-        @click="onSaveLandlord()"
-      />
-    </template>
-  </page-header>
-
-  <q-page class="q-px-md q-pb-xl defaultfont">
-    <div class="q-pt-md">
-      <q-input
-        v-model="inputAccount"
-        label="Housing name"
-        stack-label
-        type="text"
-        style="font-size: medium"
-      />
-    </div>
-  </q-page>
-  </div>
-
-  <!--  -->
-
-  <div v-else>
-  <page-header style="height: 4rem">
-    <template #slot-left>
-      <q-btn
-        icon="bi-chevron-left"
-        dense
-        flat
-        :ripple="false"
-        size="sm"
-        color="black"
-        class="q-ml-md"
-        @click="$router.go(-1)"
-      />
-    </template>
-    <template #slot-middle>
-      <div
-        class="defaultfont-light text-bold text-black"
-        style="font-size: medium"
-      >
-        Housing name
-      </div>
-    </template>
-    <template #slot-right>
-      <q-btn
-        label="edit"
+        v-if="!editButton"
+        label="Edit"
         unelevated
         rounded
         no-caps
         outline
         color="primary"
         class="q-mr-md defaultfont"
-        style="height: 3rem"
-        @click="onEditLandlord(currentUser)"
+        style="height: 3rem; width: 4rem"
+        @click="onEdit(currentUser)"
+      />
+      <q-btn
+        v-else
+        label="Save"
+        unelevated
+        rounded
+        no-caps
+        color="primary"
+        class="q-mr-md defaultfont"
+        style="height: 3rem; width: 4rem"
+        @click="onSave()"
       />
     </template>
   </page-header>
 
-  <q-page class="q-px-md q-pb-xl defaultfont">
+  <q-page v-if="!editButton" class="q-px-md q-pb-xl defaultfont bg-secondary">
     <div class="q-pt-md">
       <q-input
         :placeholder="`${currentUser.housing?.name}`"
@@ -100,7 +60,18 @@
       />
     </div>
   </q-page>
-  </div>
+
+  <q-page v-else class="q-px-md q-pb-xl defaultfont bg-secondary">
+    <div class="q-pt-md">
+      <q-input
+        v-model="inputAccount"
+        label="Housing name"
+        stack-label
+        type="text"
+        style="font-size: medium"
+      />
+    </div>
+  </q-page>
 </template>
 
 <script lang="ts">
@@ -113,14 +84,18 @@ import { AUser } from "src/store/auth/state";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("housing", ["addHousing", "getAllHousing","editHousingName", "getHousingById"]),
+    ...mapActions("housing", [
+      "addHousing",
+      "getAllHousing",
+      "editHousingName",
+      "getHousingById",
+    ]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
     ...mapState("housing", ["allHousing", "newHousing"]),
   },
 })
-
 export default class EditHousing extends Vue {
   editHousingName!: (payload: HousingDto) => Promise<HousingDto>;
   editAccount!: (payload: UserDto) => Promise<void>;
@@ -128,69 +103,57 @@ export default class EditHousing extends Vue {
   authUser!: () => Promise<void>;
   currentUser!: any;
 
-  data!: any
+  data!: any;
   async mounted() {
     await this.authUser();
-    this.data = this.currentUser?.housing?.name
-    console.log(this.data)
+    this.data = this.currentUser?.housing?.name;
+    console.log(this.data);
   }
 
   inputHousing: any = {
     name: "",
-  }
+  };
   inputAccount: any = {
-    housingunit:  ""
+    housingunit: "",
   };
 
-  // Edit Housing
-  editLandlordHousing = false;
+  editButton = false;
 
-    async onEditLandlord(val: any) {
-      console.log(val)
-      this.editLandlordHousing = true;
-      this.data = {...this.currentUser}
-      this.inputAccount = this.data.housing?.name
-      console.log(this.inputAccount.housing?.name)
-    }
+  async onEdit(val: any) {
+    console.log(val);
+    this.editButton = true;
+    this.data = { ...this.currentUser };
+    this.inputAccount = this.data.housing?.name;
+    console.log(this.inputAccount.housing?.name);
+  }
 
-    async onSaveLandlord() {
-      this.$q
-        .dialog({
-          title: "Confirm Edit",
-          message: "Are you sure you want to publish the changes?",
-          cancel: true,
-          persistent: true,
-          class: "defaultfont",
-    })
-        .onOk(() => {
-          console.log('CurrentUser ID: ' + this.currentUser.housing?.id)
-          this.editHousingName({...this.inputHousing,
-                        id: this.currentUser.housing?.id,
-                        name: this.inputAccount})
-    //       this.editAccount({
-    //                     ...this.currentUser,
-    //                     id: this.currentUser.id,
-    //                     housingunit: this.inputAccount.housingunit
-    // });
-          this.editLandlordHousing = false;
-          // window.location.reload();
-          this.$q.notify({
-            type: "positive",
-            color: "secondary",
-            textColor: "primary",
-            message: "Successfully change",
-          });
+  async onSave() {
+    this.$q
+      .dialog({
+        title: "Confirm Edit",
+        message: "Are you sure you want to publish the changes?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+      .onOk(() => {
+        console.log("CurrentUser ID: " + this.currentUser.housing?.id);
+        this.editHousingName({
+          ...this.inputHousing,
+          id: this.currentUser.housing?.id,
+          name: this.inputAccount,
+        });
+        this.editButton = false;
+        // window.location.reload();
+        this.$q.notify({
+          type: "positive",
+          icon: "bi-check-circle-fill",
+          position: "top",
+          color: "secondary",
+          textColor: "primary",
+          message: "Successfully edited.",
+        });
       });
-    }
-
-  // confirmEdit() {
-  //   this.$q.dialog({
-  //     title: "Confirm Edit",
-  //     message: "Are you sure you want to publish the changes?",
-  //     cancel: true,
-  //     persistent: true,
-  //     class: "defaultfont",
-  //   });
-  // }
+  }
 }
 </script>

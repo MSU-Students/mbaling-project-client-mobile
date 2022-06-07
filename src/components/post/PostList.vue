@@ -26,7 +26,7 @@
                   round
                   :ripple="false"
                   color="black"
-                  :icon="post.visibility ? 'bi-eye-fill' : 'bi-eye-slash-fill'"
+                  :icon="post.visibility == 'true' ? 'bi-eye-fill' : 'bi-eye-slash-fill'"
                   @click="toggleVisibility(post)"
                 />
                 Toggle visibility
@@ -121,13 +121,12 @@ export default class PostPageComponent extends Vue {
   async toggleVisibility(val: any){
     console.log('toggle here')
     console.log(val.visibility)
-    console.log(val.visibility == 1 )
-    if(val.visibility == 1){
-        const editVisible = await this.editPost({...val, visibility: false});
+    if(val.visibility == 'true'){
+        const editVisible = await this.editPost({...val, visibility: 'false'});
       console.log(editVisible.id+ " hello")
     }
-    else if (val.visibility == 0 ){
-        const editVisible = await this.editPost({...val, visibility: true});
+    else if (val.visibility == 'false' ){
+        const editVisible = await this.editPost({...val, visibility: 'true'});
       console.log(editVisible.id+ " hello")
     }
 

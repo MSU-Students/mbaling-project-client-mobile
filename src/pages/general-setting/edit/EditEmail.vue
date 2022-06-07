@@ -1,106 +1,76 @@
 <template>
-  <q-form @submit="onSaveStudent()" v-if="editStudentEmail">
-    <page-header style="height: 4rem">
-      <template #slot-left>
-        <q-btn
-          icon="bi-chevron-left"
-          dense
-          flat
-          :ripple="false"
-          size="sm"
-          color="black"
-          class="q-ml-md"
-          @click="$router.go(-1)"
-        />
-      </template>
-      <template #slot-middle>
-        <div
-          class="defaultfont-light text-bold text-black"
-          style="font-size: medium"
-        >
-          E-mail
-        </div>
-      </template>
-      <template #slot-right>
-        <q-btn
-          label="Save"
-          unelevated
-          rounded
-          no-caps
-          color="primary"
-          class="q-mr-md defaultfont"
-          style="height: 3rem"
-          type="submit"
-        />
-      </template>
-    </page-header>
-
-    <q-page class="q-px-md q-pb-xl defaultfont">
-      <div class="q-pt-md">
-        <q-input
-          v-model="inputAccount.email"
-          label="E-mail"
-          stack-label
-          type="email"
-          style="font-size: medium"
-        />
+  <page-header style="height: 4rem">
+    <template #slot-left>
+      <q-btn
+        icon="bi-chevron-left"
+        dense
+        flat
+        :ripple="false"
+        size="sm"
+        color="black"
+        class="q-ml-md"
+        @click="$router.go(-1)"
+      />
+    </template>
+    <template #slot-middle>
+      <div
+        class="defaultfont-light text-bold text-black"
+        style="font-size: medium"
+      >
+        E-mail
       </div>
-    </q-page>
-  </q-form>
+    </template>
+    <template #slot-right>
+      <q-btn
+        v-if="!editButton"
+        label="Edit"
+        unelevated
+        rounded
+        no-caps
+        outline
+        color="primary"
+        class="q-mr-md defaultfont"
+        style="height: 3rem; width: 4rem"
+        @click="onEdit(currentUser)"
+      />
+      <q-btn
+        v-else
+        label="Save"
+        unelevated
+        rounded
+        no-caps
+        color="primary"
+        class="q-mr-md defaultfont"
+        style="height: 3rem; width: 4rem"
+        @click="onSave()"
+      />
+    </template>
+  </page-header>
 
-  <!--  -->
+  <q-page v-if="!editButton" class="q-px-md q-pb-xl defaultfont bg-secondary">
+    <div class="q-pt-md">
+      <q-input
+        v-model="currentUser.email"
+        label="E-mail"
+        stack-label
+        disable
+        type="email"
+        style="font-size: medium"
+      />
+    </div>
+  </q-page>
 
-  <div v-else>
-    <page-header style="height: 4rem">
-      <template #slot-left>
-        <q-btn
-          icon="bi-chevron-left"
-          dense
-          flat
-          :ripple="false"
-          size="sm"
-          color="black"
-          class="q-ml-md"
-          @click="$router.go(-1)"
-        />
-      </template>
-      <template #slot-middle>
-        <div
-          class="defaultfont-light text-bold text-black"
-          style="font-size: medium"
-        >
-          E-mail
-        </div>
-      </template>
-      <template #slot-right>
-        <q-btn
-          label="edit"
-          unelevated
-          rounded
-          no-caps
-          outline
-          color="primary"
-          class="q-mr-md defaultfont"
-          style="height: 3rem"
-          @click="onEditStudent(currentUser)"
-        />
-      </template>
-    </page-header>
-
-    <q-page class="q-px-md q-pb-xl defaultfont">
-      <div class="q-pt-md">
-        <q-input
-          v-model="currentUser.email"
-          label="E-mail"
-          stack-label
-          readonly
-          disable
-          type="email"
-          style="font-size: medium"
-        />
-      </div>
-    </q-page>
-  </div>
+  <q-page v-else class="q-px-md q-pb-xl defaultfont bg-secondary">
+    <div class="q-pt-md">
+      <q-input
+        v-model="inputAccount.email"
+        label="E-mail"
+        stack-label
+        type="email"
+        style="font-size: medium"
+      />
+    </div>
+  </q-page>
 </template>
 
 <script lang="ts">
@@ -131,15 +101,14 @@ export default class EditEmail extends Vue {
     email: "",
   };
 
-  // Edit Email
-  editStudentEmail = false;
+  editButton = false;
 
-  async onEditStudent(val: AUser) {
-    this.editStudentEmail = true;
+  async onEdit(val: AUser) {
+    this.editButton = true;
     this.inputAccount = { ...val };
   }
 
-  async onSaveStudent() {
+  async onSave() {
     this.$q
       .dialog({
         title: "Confirm Edit",
@@ -150,25 +119,17 @@ export default class EditEmail extends Vue {
       })
       .onOk(() => {
         this.editAccount(this.inputAccount);
-        this.editStudentEmail = false;
+        this.editButton = false;
         // window.location.reload()
         this.$q.notify({
           type: "positive",
+          icon: "bi-check-circle-fill",
+          position: "top",
           color: "secondary",
           textColor: "primary",
-          message: "Successfully change",
+          message: "Successfully edited.",
         });
       });
   }
-
-  // confirmEdit() {
-  //   this.$q.dialog({
-  //     title: "Confirm Edit",
-  //     message: "Are you sure you want to publish the changes?",
-  //     cancel: true,
-  //     persistent: true,
-  //     class: "defaultfont",
-  //   });
-  // }
 }
 </script>

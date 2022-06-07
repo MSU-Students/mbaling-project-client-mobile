@@ -45,12 +45,11 @@
       <div class="q-ml-sm defaultfont-semibold text-body1">POSTS</div>
       <div class="defaultfont row items-start">
         <div
-          v-for="post in posts"
-          :key="post"
+          v-for="(post, index) in visiblePost"
+          :key="index"
           class="q-pa-xs"
           style="width: 50%"
         >
-          <div v-if="post.userID === user.id">
             <q-img
               :src="`http://localhost:3000/media/${post.url}`"
               fit="cover"
@@ -63,7 +62,15 @@
                 </q-item-label>
               </div>
             </q-img>
-          </div>
+        </div>
+        <div v-if="postData.length == 0"
+        stack
+        class="flex flex-center"
+        style="width:100%; height: 20rem">
+          <q-icon color="grey-6" class="color-grey-4" name="no_photography" size="7rem" label="No post yet"/>
+              <div class="text-h6" >
+                    No post yet
+              </div>
         </div>
       </div>
     </div>
@@ -136,6 +143,7 @@
 </template>
 
 <script lang="ts">
+import { debug } from "console";
 import {
   ApplicationDto,
   NonAccountDto,
@@ -154,6 +162,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
     ...mapState("nonaccount", ["allNonAccount"]),
     ...mapState("auth", ["currentUser"]),
     ...mapGetters("application", ["getAcceptedAccount"]),
+    ...mapGetters("post", ["visiblePost"]),
   },
   methods: {
     ...mapActions("account", ["getAllUser", "getUserById"]),
@@ -177,6 +186,8 @@ export default class Profile extends Vue {
   allAccount!: UserInterface[];
   currentUser!: any;
   nonAccountdata: any = [];
+  postData: any = [];
+  visiblePost! : PostDto[];
   isStudent = true;
 
   user: UserDto = {
@@ -206,12 +217,19 @@ export default class Profile extends Vue {
     const userId = this.$route.params.id;
     await this.getUserById(userId);
     this.user = this.newUser;
+
+    console.log(this.user.id )
+
     await this.getAllPost();
+    this.visiblePost.filter(
+      (i) => i.user?.id == this.user.id)
+      console.log(this.visiblePost)
+
     await this.getAllApplication();
     this.data = this.getAcceptedAccount.filter(
       (i) => i.landlord?.id == this.user.id
     );
-    console.log(this.user.id);
+
     await this.getAllNonAccount();
     this.nonAccountdata = this.allNonAccount.filter(
       (i) => i.landlord?.id == this.user.id

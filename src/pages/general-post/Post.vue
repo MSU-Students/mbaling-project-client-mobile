@@ -262,7 +262,7 @@ export default class Post extends Vue {
     housingAddress: "",
     url: 0,
     userID: 0,
-    visibility: true
+    visibility: "true"
   };
 
   async created() {
