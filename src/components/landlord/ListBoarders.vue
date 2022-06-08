@@ -157,7 +157,60 @@
               hide-bottom-space
             />
 
-            <q-input
+            <q-select
+                        class="q-mt-xs"
+                        v-model="inputNonAccount.college"
+                        :options="College"
+                        dense
+                        filled
+                        label="College:"
+                        style="width: 18rem; font-size: small"
+                        lazy-rules
+                        :rules="[(val) => (val && val.length > 0) || 'Please Choose Your College']"
+                        hide-bottom-space
+                      />
+                      <q-select
+                        class="q-mt-xs"
+                        :v-model="
+                          inputNonAccount.college ==
+                            'College of Business Administration and Accountancy' ||
+                          'College of Information Technology' ||
+                          'King Faisal Center for Islamic, Arabic and Asian Studies'
+                            ? selectedDepartment()
+                            : selectedDepartment
+                        "
+                        v-model="inputNonAccount.department"
+                        :options="Department"
+                        dense
+                        filled
+                        label="Department:"
+                        style="width: 18rem; font-size: small"
+                        lazy-rules
+                        :rules="[(val) => (val && val.length > 0) || 'Please Choose Your Department']"
+                        hide-bottom-space
+                      />
+                      <q-select
+                        class="q-mt-xs"
+                        :v-model="
+                          inputNonAccount.college ==
+                            'College of Business Administration and Accountancy' ||
+                          'College of Information Technology' ||
+                          'King Faisal Center for Islamic, Arabic and Asian Studies'
+                            ? selectedDegree()
+                            : selectedDegree
+                        "
+                        v-model="inputNonAccount.degree"
+                        :options="Degree"
+                        dense
+                        filled
+                        label="Degree:"
+                        style="width: 18rem; font-size: small"
+                        lazy-rules
+                        :rules="[(val) => (val && val.length > 0) || 'Please Choose Your Degree']"
+                        hide-bottom-space
+                      />
+
+            <!-- <q-input
               dense
               filled
               v-model="inputNonAccount.college"
@@ -182,7 +235,7 @@
               placeholder="Degree"
               style="width: 18rem; font-size: small"
 
-            />
+            /> -->
           </div>
           <div class="col">
             <div class="flex flex-center">
@@ -210,7 +263,6 @@
                 color="primary"
                 label="create"
                 type="submit"
-                v-close-popup
               />
             </div>
           </div>
@@ -328,6 +380,7 @@ export default class ListBoarders extends Vue {
   }
 
   async addNonAccount() {
+    this.dialog = false;
     try {
       await this.createNonAccount({
         ...this.inputNonAccount,
@@ -398,8 +451,8 @@ export default class ListBoarders extends Vue {
   async deleteAcceptedNonStudent(val: any) {
     this.$q
       .dialog({
-        title: "Confirm Edit",
-        message: "Are you sure you want to publish the changes?",
+        title: "Confirm Delete",
+        message: "Are you sure you want to delete student?",
         cancel: true,
         persistent: true,
         class: "defaultfont",
@@ -435,6 +488,84 @@ export default class ListBoarders extends Vue {
       department: "",
       college: "",
     };
+  }
+
+  //Courses Choices
+  Department: any[] = [];
+  Degree: any[] = [];
+
+  College = [
+    "College of Business Administration and Accountancy",
+    "College of Information and Computing Sciences",
+    "King Faisal Center for Islamic, Arabic and Asian Studies",
+  ];
+
+  selectedDepartment() {
+    if (
+      this.inputNonAccount.college ==
+      "College of Business Administration and Accountancy"
+    ) {
+      return (this.Department = [
+        "Department of Economic",
+        "Department of Marketing",
+        "Department of Management",
+        "Department of Accounting",
+      ]);
+    } else if (
+      this.inputNonAccount.college ==
+      "College of Information and Computing Sciences"
+    ) {
+      return (this.Department = [
+        "Department of Information Sciences",
+        "Department of Computing Sciences",
+      ]);
+    } else if (
+      this.inputNonAccount.college ==
+      "King Faisal Center for Islamic, Arabic and Asian Studies"
+    ) {
+      return (this.Department = [
+        "Department of International Relations",
+        "Department of Islamic Studies",
+        "Department of Teaching Arabic",
+      ]);
+    }
+  }
+
+  selectedDegree() {
+    if (
+      this.inputNonAccount.college ==
+      "College of Business Administration and Accountancy"
+    ) {
+      return (this.Degree = [
+        "Accountancy",
+        "Business Economics",
+        "BSBA Entrepreneurial Marketing",
+        "BSBA Management",
+        "BSBA Human Resource Management",
+        "BSBA Marketing Management",
+        "BSBA Entrepreneurship",
+      ]);
+    } else if (
+      this.inputNonAccount.college ==
+      "College of Information and Computing Sciences"
+    ) {
+      return (this.Degree = [
+        "Bachelor of Science in Computer Science",
+        "Bachelor of Science in Entertaiment and Multimedia Computing",
+        "Bachelor of Science in Information System",
+        "Bachelor of Science in information Technology (Database)",
+        "Bachelor of Science in information Technology (Networking)",
+      ]);
+    } else if (
+      this.inputNonAccount.college ==
+      "King Faisal Center for Islamic, Arabic and Asian Studies"
+    ) {
+      return (this.Degree = [
+        "Bachelor of Arts in Islamic Studies (Shari'ah)",
+        "Bachelor of Science in Teaching Arabic",
+        "Bachelor of Science in International Relations",
+      ]);
+    }
   }
 
   colorManipulation(status: string) {
