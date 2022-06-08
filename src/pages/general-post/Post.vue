@@ -12,7 +12,7 @@
         transition-prev="slide-right"
         transition-next="slide-left"
         height="20rem"
-        autoplay="2"
+        autoplay
         class="bg-primary"
         style="border-radius: 2rem 2rem 0 0"
       >

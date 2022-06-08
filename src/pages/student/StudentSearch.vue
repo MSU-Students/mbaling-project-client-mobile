@@ -99,15 +99,16 @@ import { ref } from "vue";
 import { Vue, Options } from "vue-class-component";
 import { PostInterface } from "src/store/post/state";
 import { UserInterface } from "src/store/user/state";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import { AUser } from "src/store/auth/state";
-import { UserDto } from "src/services/rest-api";
+import { PostDto, UserDto } from "src/services/rest-api";
 
 @Options({
   computed: {
     ...mapState("post", ["posts"]),
     ...mapState('auth', ['currentUser']),
     ...mapState('account', ['allAccount']),
+    ...mapGetters("post", ["visiblePost"]),
   },
   methods: {
     ...mapActions('post', ['getAllPost']),
@@ -120,9 +121,10 @@ export default class StudentSearch extends Vue {
   getAllPost! : () => Promise<void>
   getAllMedia!: () => Promise<void>
   authUser! : () => Promise<void>
-  posts!: PostInterface[];
+  posts!: PostDto[];
   allAccount!: UserInterface[]
-  currentUser!: AUser
+  currentUser!: UserDto
+  visiblePost! : PostDto[];
 
 
   async mounted() {
@@ -156,7 +158,7 @@ export default class StudentSearch extends Vue {
         user.housing?.name.toLowerCase().includes(this.search.toLowerCase()) ||
         user.username.toLowerCase().includes(this.search.toLowerCase())
     );
-    const resultPosts = this.posts.filter((post) =>
+    const resultPosts = this.visiblePost.filter((post) =>
       post.title.toLowerCase().includes(this.search.toLowerCase())
     );
 

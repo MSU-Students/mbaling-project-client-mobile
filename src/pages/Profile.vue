@@ -45,7 +45,7 @@
       <div class="q-ml-sm defaultfont-semibold text-body1">POSTS</div>
       <div class="defaultfont row items-start">
         <div
-          v-for="(post, index) in visiblePost"
+          v-for="(post, index) in postData"
           :key="index"
           class="q-pa-xs"
           style="width: 50%"
@@ -221,7 +221,7 @@ export default class Profile extends Vue {
     console.log(this.user.id )
 
     await this.getAllPost();
-    this.visiblePost.filter(
+    this.postData = this.visiblePost.filter(
       (i) => i.user?.id == this.user.id)
       console.log(this.visiblePost)
 

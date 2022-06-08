@@ -81,7 +81,7 @@ export default class PostFeedComponent extends Vue {
   authUser!: () => Promise<void>;
   posts!: PostDto[];
   allMedia!: MediaInterface[];
-  currentUser!: AUser;
+  currentUser!: UserDto;
   visiblePost! : PostDto[];
   data: any = [];
 
