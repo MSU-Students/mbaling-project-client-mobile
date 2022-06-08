@@ -285,6 +285,15 @@ export default class PostForm extends Vue {
   }
 
   async createPost() {
+    this.$q
+      .dialog({
+        title: "Confirm Post",
+        message: "Are you sure you want to publish this post?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+      .onOk(async () => {
     console.log();
     if (this.currentUser.chatLink == "") {
       this.$q
@@ -332,7 +341,8 @@ export default class PostForm extends Vue {
         textColor: "primary",
         classes: "defaultfont",
       });
-    }
+      }
+    });
 
     // if (this.ImageAttachement2.size > 0) {
     //   await this.uploadMedia(this.ImageAttachement2 as File);

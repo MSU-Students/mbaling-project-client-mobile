@@ -267,6 +267,15 @@ export default class PostEdit extends Vue {
   }
 
   async onSaveEditPost() {
+    this.$q
+      .dialog({
+        title: "Confirm Edit",
+        message: "Are you sure you want to publish your changes?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+      .onOk(async () => {
     console.log("Yeahh!!");
     await this.editPost(this.post);
     await this.editAccount(this.inputNumber);
@@ -279,6 +288,7 @@ export default class PostEdit extends Vue {
       type: "positive",
       classes: "defaultfont",
       message: "Successfully edited.",
+    });
     });
   }
 
