@@ -333,6 +333,15 @@ export default class PostForm extends Vue {
       postPhotoId: post.id,
 
     });
+    this.$q
+      .dialog({
+        title: "Confirm Edit",
+        message: "Are you sure you want to publish this post?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+    .onOk(async () => {
     await this.editAccount(this.inputNumber);
     if (this.ImageAttachement2.size > 0){
     await this.editPost({id: post.id, url: media.id})
@@ -357,6 +366,7 @@ export default class PostForm extends Vue {
       textColor: "primary",
       classes: "defaultfont",
     })
+    });
     }
 
 

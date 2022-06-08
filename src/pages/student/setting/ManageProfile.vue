@@ -303,7 +303,14 @@ editStudentProfile = false;
       } else if (this.imageAttachement.size <= 0) {
         await this.editAccount({ ...this.inputAccount });
       }
-          window.location.reload();
+          // window.location.reload();
+          this.editStudentProfile = false
+          this.$q.notify({
+            type: "positive",
+            color: "secondary",
+            textColor: "primary",
+            message: "Successfully change",
+          });
       });
     } catch (error) {
       this.$q.notify({

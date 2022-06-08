@@ -47,6 +47,7 @@
               fit="cover"
               class="bg-primary"
               style="width: 100%; height: 16rem; border-radius: 0.5rem"
+              @click="redirect(post)"
             >
               <div class="absolute-bottom text-left">
                 <q-item-label lines="2" style="font-size: medium">
@@ -77,7 +78,7 @@
     style="height: 4rem"
   >
     <div class="row items-center" style="height: 4rem">
-      <div align="left" class="col-8 defaultfont">
+      <div align="left" class="col defaultfont">
         <div v-if="!(user.chatLink)">
           <a
             @click="alertchatLink()"
@@ -97,6 +98,18 @@
           </a>
         </div>
       </div>
+      <div
+            v-if="currentUser.type == 'student'"
+            class="flex flex-center text-primary defaultfont"
+          >
+            <q-btn
+              rounded
+              color="primary"
+              icon="check"
+              label="Apply"
+              @click="addApplication()"
+            />
+          </div>
       <div align="right" class="col">
         <!-- <q-btn
           icon="bi-geo-alt-fill"
@@ -147,13 +160,15 @@ import { mapState, mapActions, mapGetters } from "vuex";
   },
   methods: {
     ...mapActions("account", ["getAllUser", "getUserById"]),
-    ...mapActions("post", ["getAllPost"]),
-    ...mapActions("application", ["getAllApplication", "updateApplication"]),
+    ...mapActions("post", ["getAllPost", "getPostById"]),
+    ...mapActions("application", ["getAllApplication", "updateApplication", "createApplication"]),
     ...mapActions("nonaccount", ["getAllNonAccount",]),
   },
 })
 export default class Profile extends Vue {
+  createApplication!: (payload: any) => Promise<void>;
   getUserById!: (id: any) => Promise<void>;
+  getPostById!: (id: any) => Promise<void>;
   getAllPost!: () => Promise<void>;
   getAllUser!: () => Promise<void>;
   getAllApplication!: () => Promise<void>;
@@ -192,6 +207,13 @@ export default class Profile extends Vue {
     mapLink: "",
   };
 
+  loading = false;
+
+  application: any = {
+    status: "",
+  };
+
+
   async mounted() {
     const userId = this.$route.params.id;
     await this.getUserById(userId);
@@ -206,6 +228,73 @@ export default class Profile extends Vue {
     this.nonAccountdata = this.allNonAccount.filter(
       (i) => i.landlord?.id == this.user.id
     );
+  }
+
+  post: PostDto = {
+    description: "",
+    fee: "",
+    prvCR: false,
+    prvKitchen: false,
+    photos: "",
+    title: "",
+    housingAddress: "",
+    url: 0,
+    userID: 0,
+    date: ""
+  };
+
+  async addApplication() {
+    this.application = {
+      status: "pending",
+      student: this.currentUser.id,
+      landlord: this.post?.user?.id,
+      post: this.post.id,
+    };
+    try {
+      this.loading = true;
+      if (this.currentUser.type == "student") {
+        await this.createApplication({
+          ...this.application,
+          student: this.currentUser.id,
+        });
+        this.$q.notify({
+          position: 'top',
+          textColor: 'primary',
+          color: 'secondary',
+          type: "positive",
+          message: "Successfully Applied!",
+          caption: "Landlord will contact you soon.",
+        });
+        this.loading = false;
+      } else {
+        this.$q.notify({
+          type: "negative",
+          message: "Only Student can Apply!",
+        });
+      }
+    } catch (error) {
+      this.$q.notify({
+        position: "top",
+        textColor: "secondary",
+        color: "primary",
+        type: "negative",
+        message: "Already Applied!",
+      });
+    }
+    // this.$q.notify({
+    //   type: 'positive',
+    //   caption: 'Click ',
+    //   position: 'bottom',
+    //   color: "secondary",
+    //   textColor: "primary",
+    //   classes: "defaultfont",
+    // });
+  }
+
+  async redirect(post: any) {
+    console.log(post);
+    const postID = post.id;
+    await this.$router.push(`/post/${postID}`);
   }
 
   alertchatLink() {

@@ -40,7 +40,6 @@
       <q-input
         v-model="password.oldPassword"
         label="Current password"
-        stack-label
         dense
         :type="showPwd1 ? 'password' : 'text'"
         style="font-size: medium"
@@ -59,7 +58,6 @@
       <q-input
         v-model="password.newPassword"
         label="New password"
-        stack-label
         dense
         :type="showPwd ? 'password' : 'text'"
         class="q-mt-lg"
@@ -79,7 +77,6 @@
       <q-input
         v-model="confirmpassword"
         label="Confrim new password"
-        stack-label
         dense
         :type="showPwd ? 'password' : 'text'"
         class="q-mt-lg"
@@ -142,7 +139,6 @@
     <div class="q-pt-md">
       <q-input
         disable
-        stack-label
         label="Password"
       >
       </q-input>
