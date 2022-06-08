@@ -19,8 +19,17 @@
 
           <div class="q-my-xs q-px-xs row items-center">
             <div class="col">
-              <span class="defaultfont-light text-bold" style="font-size: small">
-                Posted on {{ post.date }}
+              <span class="text-bold" style="font-size: small">
+                <q-btn
+                  dense
+                  flat
+                  round
+                  :ripple="false"
+                  color="black"
+                  :icon="post.visibility == 'true' ? 'bi-eye-fill' : 'bi-eye-slash-fill'"
+                  @click="toggleVisibility(post)"
+                />
+                Toggle visibility
               </span>
             </div>
             <div align="right" class="col-6">
@@ -68,18 +77,26 @@ import { MediaInterface } from "src/store/media-module/state";
     ...mapState("auth", ["currentUser"]),
   },
   methods: {
+    ...mapActions("post", ["getPostById", "editPost"]),
     ...mapActions("post", ["getAllPost", "deletePost"]),
     ...mapActions("media", ["getAllMedia"]),
     ...mapActions("auth", ["authUser"]),
   },
 })
 export default class PostPageComponent extends Vue {
+  editPost!: (payload: PostDto) => Promise<PostDto>;
   deletePost!: (id: PostDto) => Promise<void>;
   getAllPost!: () => Promise<void>;
   authUser!: () => Promise<void>;
   posts!: PostDto[];
   allMedia!: MediaInterface[];
   currentUser!: AUser;
+
+  visible = true;
+
+  post: any = {
+    visibility: true,
+  };
 
   async mounted() {
     await this.getAllPost();
@@ -98,6 +115,25 @@ export default class PostPageComponent extends Vue {
     await this.$router.push(`/post/edit/${postID}`);
   }
 
+  async testingToggle(){
+    console.log('testing toggle here')
+  }
+  async toggleVisibility(val: any){
+    console.log('toggle here')
+    console.log(val.visibility)
+    if(val.visibility == 'true'){
+        const editVisible = await this.editPost({...val, visibility: 'false'});
+      console.log(editVisible.id+ " hello")
+    }
+    else if (val.visibility == 'false' ){
+        const editVisible = await this.editPost({...val, visibility: 'true'});
+      console.log(editVisible.id+ " hello")
+    }
+
+
+
+  }
+
   async delPost(val: any) {
     console.log(val);
     this.$q
@@ -114,24 +150,14 @@ export default class PostPageComponent extends Vue {
         console.log((val = "third val here"));
         this.$q.notify({
           type: "positive",
-          caption: "Successfully Deleted ",
-          message: "Successfully",
+          icon: "bi-check-circle-fill",
+          message: "Successfully deleted.",
           position: "top",
           color: "secondary",
           textColor: "primary",
           classes: "defaultfont",
         });
       });
-  }
-
-  confirmDelete() {
-    this.$q.dialog({
-      title: "Confirm Delete",
-      message: "Are you sure you want to delete this conversation?",
-      cancel: true,
-      persistent: true,
-      class: "defaultfont",
-    });
   }
 }
 </script>

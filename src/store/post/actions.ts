@@ -13,6 +13,7 @@ const actions: ActionTree<PostStateInterface, StateInterface> = {
   },
 
   async editPost(context, payload: any): Promise<any> {
+    console.log(payload)
     const result = await postService.update(payload.id, payload);
     context.commit("updatePost", result);
     await context.dispatch("getAllPost");

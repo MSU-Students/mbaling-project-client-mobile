@@ -130,7 +130,8 @@
         <q-input
           v-model="post.description"
           type="textarea"
-          placeholder="Description"
+          label="Description"
+          stack-label
           class="q-mt-md q-pb-lg"
           style="font-size: small"
           lazy-rules
@@ -142,15 +143,15 @@
 
         <q-input
           v-model="inputNumber.contact"
-          dense
+          stack-label
           type="tel"
           mask="#### - ### - ####"
-          placeholder="Contact No."
+          label="Enter your contact number here"
           input-class="text-left"
-          class="q-mt-xs q-px-xs"
+          class="q-mt-md"
           style="font-size: medium"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please Input Contact']"
+          :rules="[(val) => (val && val.length > 0) || 'Please Input contact']"
           hide-bottom-space
         />
       </div>
@@ -267,27 +268,18 @@ export default class PostEdit extends Vue {
 
   async onSaveEditPost() {
     console.log("Yeahh!!");
-    this.$q
-      .dialog({
-        title: "Confirm Edit",
-        message: "Are you sure you want to publish the changes?",
-        cancel: true,
-        persistent: true,
-        class: "defaultfont",
-      })
-      .onOk(async () => {
-        await this.editPost(this.post);
-        await this.editAccount(this.inputNumber);
-        this.$router.go(-1);
-        this.$q.notify({
-          position: "top",
-          color: "secondary",
-          textColor: "primary",
-          type: "positive",
-          classes: "defaultfont",
-          message: "Successfully Edited!",
-        });
-      });
+    await this.editPost(this.post);
+    await this.editAccount(this.inputNumber);
+    this.$router.go(-1);
+    this.$q.notify({
+      position: "top",
+      icon: "bi-check-circle-fill",
+      color: "secondary",
+      textColor: "primary",
+      type: "positive",
+      classes: "defaultfont",
+      message: "Successfully edited.",
+    });
   }
 
   //   post = {

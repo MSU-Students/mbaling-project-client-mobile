@@ -2,8 +2,16 @@
   <q-header class="q-px-md q-pt-xl defaultfont bg-secondary">
     <div align="center" class="text-black">
       <q-avatar size="10rem" class="bg-primary">
-        <q-img v-if="user.prfphoto" class="avatar" :src="`http://localhost:3000/prfmedia/${user.prfphoto}`" />
-        <q-img v-if="!user.prfphoto" class="avatar" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
+        <q-img
+          v-if="user.prfphoto"
+          class="avatar"
+          :src="`http://localhost:3000/prfmedia/${user.prfphoto}`"
+        />
+        <q-img
+          v-if="!user.prfphoto"
+          class="avatar"
+          src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+        />
       </q-avatar>
       <div
         class="q-mt-md q-px-lg defaultfont-bold text-uppercase"
@@ -26,22 +34,22 @@
     </div>
     <q-separator color="primary" size="0.1rem" class="q-my-sm" />
   </q-header>
-  <div class="q-ml-md defaultfont-bold">
+  <!-- <div class="q-ml-md defaultfont-bold">
     Boraders:
-    <span class="defaultfont-light">{{this.data.length + this.nonAccountdata.length}}</span>
-  </div>
+    <span class="defaultfont-light">{{
+      this.data.length + this.nonAccountdata.length
+    }}</span>
+  </div> -->
   <q-page class="defaultfont bg-secondary text-black">
     <div class="q-pt-sm q-px-sm q-pb-md defaultfont">
       <div class="q-ml-sm defaultfont-semibold text-body1">POSTS</div>
       <div class="defaultfont row items-start">
         <div
-          v-for="post in posts"
-          :key="post"
+          v-for="(post, index) in visiblePost"
+          :key="index"
           class="q-pa-xs"
           style="width: 50%"
         >
-          <div v-if="post.userID === user.id">
-
             <q-img
               :src="`http://localhost:3000/media/${post.url}`"
               fit="cover"
@@ -55,7 +63,15 @@
                 </q-item-label>
               </div>
             </q-img>
-          </div>
+        </div>
+        <div v-if="postData.length == 0"
+        stack
+        class="flex flex-center"
+        style="width:100%; height: 20rem">
+          <q-icon color="grey-6" class="color-grey-4" name="no_photography" size="7rem" label="No post yet"/>
+              <div class="text-h6" >
+                    No post yet
+              </div>
         </div>
       </div>
     </div>
@@ -88,7 +104,7 @@
           </a>
         </div>
         <div v-else>
-            <a
+          <a
             :href="`${user.chatLink}`"
             target="_blank"
             style="text-decoration: none"
@@ -120,23 +136,21 @@
           size="md"
           @click="alert()"
         /> -->
-        <div v-if="!(user.mapLink)">
-          <a
-          @click="alertmapLink()"
-          >
-          <q-icon size="1.4rem" color="black" class="q-pr-sm bi-geo-alt-fill">
-          </q-icon>
+        <div v-if="!user.mapLink">
+          <a @click="alertmapLink()">
+            <q-icon size="1.4rem" color="black" class="q-pr-sm bi-geo-alt-fill">
+            </q-icon>
           </a>
         </div>
         <div v-else>
-        <a
-          :href="`${user.mapLink}`"
-          target="_blank"
-          style="text-decoration: none"
-        >
-          <q-icon size="1.4rem" color="black" class="q-pr-sm bi-geo-alt-fill">
-          </q-icon>
-        </a>
+          <a
+            :href="`${user.mapLink}`"
+            target="_blank"
+            style="text-decoration: none"
+          >
+            <q-icon size="1.4rem" color="black" class="q-pr-sm bi-geo-alt-fill">
+            </q-icon>
+          </a>
         </div>
       </div>
     </div>
@@ -144,7 +158,13 @@
 </template>
 
 <script lang="ts">
-import { ApplicationDto, NonAccountDto, PostDto, UserDto } from "src/services/rest-api";
+import { debug } from "console";
+import {
+  ApplicationDto,
+  NonAccountDto,
+  PostDto,
+  UserDto,
+} from "src/services/rest-api";
 import { UserInterface } from "src/store/user/state";
 import { Options, Vue } from "vue-class-component";
 import { mapState, mapActions, mapGetters } from "vuex";
@@ -157,6 +177,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
     ...mapState("nonaccount", ["allNonAccount"]),
     ...mapState("auth", ["currentUser"]),
     ...mapGetters("application", ["getAcceptedAccount"]),
+    ...mapGetters("post", ["visiblePost"]),
   },
   methods: {
     ...mapActions("account", ["getAllUser", "getUserById"]),
@@ -180,8 +201,10 @@ export default class Profile extends Vue {
   newUser!: any;
   posts!: PostDto[];
   allAccount!: UserInterface[];
-  currentUser!: any
+  currentUser!: any;
   nonAccountdata: any = [];
+  postData: any = [];
+  visiblePost! : PostDto[];
   isStudent = true;
 
   user: UserDto = {
@@ -218,12 +241,19 @@ export default class Profile extends Vue {
     const userId = this.$route.params.id;
     await this.getUserById(userId);
     this.user = this.newUser;
+
+    console.log(this.user.id )
+
     await this.getAllPost();
-    await this.getAllApplication()
+    this.visiblePost.filter(
+      (i) => i.user?.id == this.user.id)
+      console.log(this.visiblePost)
+
+    await this.getAllApplication();
     this.data = this.getAcceptedAccount.filter(
       (i) => i.landlord?.id == this.user.id
     );
-    console.log(this.user.id)
+
     await this.getAllNonAccount();
     this.nonAccountdata = this.allNonAccount.filter(
       (i) => i.landlord?.id == this.user.id
@@ -240,7 +270,7 @@ export default class Profile extends Vue {
     housingAddress: "",
     url: 0,
     userID: 0,
-    date: ""
+    visibility: "true"
   };
 
   async addApplication() {
@@ -298,19 +328,19 @@ export default class Profile extends Vue {
   }
 
   alertchatLink() {
-    if(this.user.chatLink == "")
-    this.$q.dialog({
-      message: "The User Landlord doesn't have a Chat Link.",
-      class: "defaultfont",
-    });
+    if (this.user.chatLink == "")
+      this.$q.dialog({
+        message: "This user does not have a Messenger.",
+        class: "defaultfont",
+      });
   }
 
-  alertmapLink(){
-      if(this.user.mapLink == "")
-    this.$q.dialog({
-      message: "The User Landlord doesn't have a Map Link.",
-      class: "defaultfont",
-    });
+  alertmapLink() {
+    if (this.user.mapLink == "")
+      this.$q.dialog({
+        message: "This user does not have a Google Map.",
+        class: "defaultfont",
+      });
   }
 }
 </script>

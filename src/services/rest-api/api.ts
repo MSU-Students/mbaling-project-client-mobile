@@ -254,7 +254,7 @@ export interface PostDto {
      * @type {string}
      * @memberof PostDto
      */
-    'date': string;
+    'visibility': string;
     /**
      *
      * @type {string}

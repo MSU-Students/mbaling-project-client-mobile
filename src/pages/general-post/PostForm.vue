@@ -35,69 +35,57 @@
         </Transition>
       </div>
     </div> -->
-      <div class="q-mt-xl" style="height: 15rem">
-        <div class="flex flex-center q-mb-sm">
+      <div class="flex flex-center" style="height: 20rem">
+        <div>
           <q-file
             outlined
-            label="Upload Image 1"
+            label="Upload image 1"
             accept=".jpg, image/*"
             v-model="ImageAttachement1"
-            style="width: 20rem"
+            sstyle="width: 20rem"
+            class="q-mb-sm"
             lazy-rules
-            :rules="[(val) => (val.size > 0) || 'Please Input Title']"
-             hide-bottom-space
-          >
-          </q-file>
-        </div>
-        <div class="flex flex-center q-mb-sm">
+            :rules="[(val) => val.size > 0 || 'Image is required']"
+            hide-bottom-space
+          />
           <q-file
             outlined
-            label="Upload Image 2"
+            label="Upload image 2"
             accept=".jpg, image/*"
             v-model="ImageAttachement2"
             style="width: 20rem"
+            class="q-mb-sm"
             lazy-rules
-            :rules="[(val) => (val.size > 0) || 'Please Input Title']"
-             hide-bottom-space
-          >
-          </q-file>
-        </div>
-        <div v-if="image3" class="flex flex-center q-mb-sm">
+            :rules="[(val) => val.size > 0 || 'Image is required']"
+            hide-bottom-space
+          />
+
+          <div align="center">
+            <q-btn
+              v-if="addButton"
+              round
+              dense
+              flat
+              size="lg"
+              color="grey-5"
+              icon="bi-plus-circle"
+              @click="addPicture()"
+              class="flex flex-center"
+            />
+          </div>
+
           <q-file
+            v-if="addImage"
             outlined
-            label="Upload Image 3"
+            label="Upload image 3"
             accept=".jpg, image/*"
             v-model="ImageAttachement3"
             style="width: 20rem"
+            class="q-mb-sm"
             lazy-rules
-            :rules="[(val) => (val.size > 0) || 'Please Input Title']"
-             hide-bottom-space
-          >
-          </q-file>
-        </div>
-        <div class="flex flex-center" v-if="addButton2">
-          <q-btn
-            outline
-            unelevated
-            dense
-            style="width: 20rem; height: 3rem; font-size: "
-            color="grey-6"
-            @click="addPicture2()"
-          >
-            <q-icon size="2rem" name="add" />
-          </q-btn>
-        </div>
-        <div class="flex flex-center" v-if="addButton3">
-          <q-btn
-            outline
-            unelevated
-            dense
-            style="width: 20rem; height: 3rem; font-size: "
-            color="grey-6"
-            @click="addPicture3()"
-          >
-            <q-icon size="2rem" name="add" />
-          </q-btn>
+            :rules="[(val) => val.size > 0 || 'Image is required']"
+            hide-bottom-space
+          />
         </div>
       </div>
       <div class="q-mt-sm q-px-md">
@@ -146,8 +134,9 @@
 
         <q-input
           v-model="inputPost.description"
+          stack-label
           type="textarea"
-          placeholder="Description"
+          label="Description"
           class="q-mt-md q-pb-lg"
           style="font-size: small"
           lazy-rules
@@ -159,12 +148,12 @@
 
         <q-input
           v-model="inputNumber.contact"
-          dense
+          stack-label
           type="tel"
           mask="#### - ### - ####"
-          placeholder="Contact No."
+          label="Enter your contact number here"
           input-class="text-left"
-          class="q-mt-xs q-px-xs"
+          class="q-mt-md"
           style="font-size: medium"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please Input contact']"
@@ -213,8 +202,8 @@ import { Options, Vue } from "vue-class-component";
 import { mapState, mapActions } from "vuex";
 
 const timeStamp = Date.now();
-const curentDate = date.formatDate(timeStamp, 'YYYY-MM-DD:HH:mm');
-const curentDate2 = date.formatDate(timeStamp, 'MMMM DD -- hh:mm');
+const curentDate = date.formatDate(timeStamp, "YYYY-MM-DD:HH:mm");
+const curentDate2 = date.formatDate(timeStamp, "MMMM DD -- hh:mm");
 
 @Options({
   computed: {
@@ -253,23 +242,11 @@ export default class PostForm extends Vue {
   ImageAttachement3: File = new File([], "");
 
   // adding Pictures TAE! a code HAHA
-  image2 = false;
-  image3 = false;
-  addButton2 = true;
-  addButton3 = false;
-
-  async addPicture2() {
-    this.image2 = true;
-    this.addButton3 = true;
-    if ((this.image2 = true)) {
-      this.addButton2 = false;
-    }
-  }
-  async addPicture3() {
-    this.image3 = true;
-    if ((this.image3 = true)) {
-      this.addButton3 = false;
-    }
+  addImage = false;
+  addButton = true;
+  async addPicture() {
+    this.addImage = true;
+    this.addButton = false;
   }
   // ------------------------
 
@@ -281,10 +258,10 @@ export default class PostForm extends Vue {
     prvKitchen: false,
     photos: "",
     title: "",
-    date: curentDate2,
     housingAddress: "",
     url: 0,
     userID: 0,
+    visibility: "true",
   };
 
   inputNumber: any = {
@@ -300,75 +277,62 @@ export default class PostForm extends Vue {
       prvKitchen: false,
       photos: "",
       title: "",
-      date: 0,
+      visibility: "true",
       housingAddress: "",
-      prfphoto: 0,
       url: 0,
       userID: 0,
     };
   }
 
   async createPost() {
-    console.log()
-    if(this.currentUser.chatLink == ""){
+    console.log();
+    if (this.currentUser.chatLink == "") {
       this.$q
         .dialog({
-          title: "Need Messenger Link",
-          message: "Please put your messenger link on your account",
+          title: "Chat link",
+          message: "Please link your Messenger to your account.",
           cancel: true,
           persistent: true,
           class: "defaultfont",
-    }).onOk(async() => {
-      await this.$router.replace("/landlord/account");
+        })
+        .onOk(async () => {
+          await this.$router.replace("/landlord/account");
+        });
+    } else {
+      const post = await this.addPost({
+        ...this.inputPost,
+        userID: this.currentUser.id,
       });
-
+      const media = await this.uploadMedia({
+        media: this.ImageAttachement1,
+        postPhotoId: post.id,
+      });
+      await this.editAccount(this.inputNumber);
+      if (this.ImageAttachement2.size > 0) {
+        await this.editPost({ id: post.id, url: media.id });
+        await this.uploadMedia({
+          media: this.ImageAttachement2,
+          postPhotoId: post.id,
+        });
+      }
+      if (this.ImageAttachement3.size > 0) {
+        await this.uploadMedia({
+          media: this.ImageAttachement3,
+          postPhotoId: post.id,
+        });
+      }
+      this.$router.go(-1);
+      this.addnewPost = false;
+      this.$q.notify({
+        type: "positive",
+        icon: "bi-check-circle-fill",
+        message: "Successfully posted.",
+        position: "top",
+        color: "secondary",
+        textColor: "primary",
+        classes: "defaultfont",
+      });
     }
-    else{
-    const post = await this.addPost({
-      ...this.inputPost,
-      userID: this.currentUser.id,
-    });
-    const media = await this.uploadMedia({
-      media: this.ImageAttachement1,
-      postPhotoId: post.id,
-
-    });
-    this.$q
-      .dialog({
-        title: "Confirm Edit",
-        message: "Are you sure you want to publish this post?",
-        cancel: true,
-        persistent: true,
-        class: "defaultfont",
-      })
-    .onOk(async () => {
-    await this.editAccount(this.inputNumber);
-    if (this.ImageAttachement2.size > 0){
-    await this.editPost({id: post.id, url: media.id})
-    await this.uploadMedia({
-      media: this.ImageAttachement2,
-      postPhotoId: post.id,
-    });
-    }
-    if (this.ImageAttachement3.size > 0){
-    await this.uploadMedia({
-      media: this.ImageAttachement3,
-      postPhotoId: post.id,
-    });
-    }
-    this.$router.go(-1);
-    this.addnewPost = false;
-    this.$q.notify({
-      type: "positive",
-      caption: "Successfully Added ",
-      position: "top",
-      color: "secondary",
-      textColor: "primary",
-      classes: "defaultfont",
-    })
-    });
-    }
-
 
     // if (this.ImageAttachement2.size > 0) {
     //   await this.uploadMedia(this.ImageAttachement2 as File);
@@ -378,8 +342,6 @@ export default class PostForm extends Vue {
     //   await this.uploadMedia(this.ImageAttachement3 as File);
     // } else if (this.ImageAttachement3.size <= 0) {
     // }
-
-    ;
   }
 
   alert() {
