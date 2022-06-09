@@ -4,7 +4,7 @@
     Pending applications
   </div>
   <div class="q-mt-md">
-    <q-list v-for="pending in getPendingAccount" :key="pending">
+    <q-list v-for="pending in data" :key="pending">
       <q-card class="q-pa-md row items-center">
         <div class="q-ml-sm col-2">
           <q-avatar size="xl" class="bg-primary">
@@ -76,7 +76,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
   computed: {
     ...mapState("auth", ["currentUser"]),
     ...mapState("application", ["applications"]),
-    ...mapGetters("application", ["getPendingAccount", "getFirst"]),
+    ...mapGetters("application", ["getPendingAccount"]),
   },
 })
 export default class ListApplicants extends Vue {
@@ -91,29 +91,12 @@ export default class ListApplicants extends Vue {
   data: any = [];
   update: any;
 
-  columns = [
-    {
-      name: "name",
-      label: "Name",
-      align: "left",
-      field: (row: ApplicationDto) =>
-        row.student?.fName + " " + row.student?.lName,
-    },
-    {
-      name: "status",
-      required: true,
-      label: "Applicant Status",
-      align: "left",
-      field: "status",
-    },
-  ];
   inputAccount: any = {};
 
   async mounted() {
     await this.getAllApplication();
-    this.data = this.getPendingAccount.filter(
-      (i) => i.landlord?.id == this.currentUser.id
-    );
+    this.data = this.getPendingAccount
+      .filter((i) =>i.landlord?.id == this.currentUser.id)
     console.log(this.data);
   }
 

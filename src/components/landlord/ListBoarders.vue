@@ -1,12 +1,12 @@
 <template>
   <!--  -->
   <div>
-    <q-list>
+
       <div class="row flex flex-center">
         <div class="col">
           <div
-            class="q-my-md defaultfont text-grey-6"
-            style="font-size: x-small"
+            class="q-mt-sm defaultfont text-grey-6"
+            style="font-size: small"
           >
             List of Boarders:
           </div>
@@ -17,7 +17,50 @@
           </div>
         </div>
       </div>
-      <div
+<div>
+    <q-list v-for="pending in data" :key="pending">
+      <q-card class="q-pa-md row items-center">
+        <div class="q-ml-sm col-2">
+          <q-avatar size="xl" class="bg-primary">
+            <q-img
+              v-if="pending.student?.prfphoto"
+              :src="`http://localhost:3000/prfmedia/${pending.student?.prfphoto}`"
+            />
+            <q-img
+              v-else
+              class=""
+              src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+            />
+          </q-avatar>
+        </div>
+        <div class="col">
+          <q-item-section class="defaultfont">
+            <q-item-label
+              lines="1"
+              class="defaultfont-semibold"
+              style="font-size: medium"
+            >
+              {{ pending.student?.fName }} {{ pending.student?.lName }}
+            </q-item-label>
+            <q-item-label lines="1" style="font-size: smaller">
+              @{{ pending.student?.username }}
+            </q-item-label>
+          </q-item-section>
+        </div>
+        <div align="right" class="col-5">
+          <q-btn
+            flat
+            round
+            color="primary"
+            icon="bi-x-circle"
+            @click="deleteAcceptedStudent(pending.id)"
+          />
+        </div>
+      </q-card>
+      <q-separator size="0.5rem" class="bg-secondary" />
+    </q-list>
+  </div>
+      <!-- <div
         class="row q-my-xs"
         v-for="pending in getAcceptedAccount"
         :key="pending"
@@ -50,11 +93,70 @@
             />
           </div>
         </template>
-      </div>
+      </div> -->
+  </div>
+  <div class="row flex flex-center">
+  <div class="col">
+          <div
+            class="q-mt-md defaultfont text-grey-6"
+            style="font-size: small">
+            List of Boarders (Non-Account):
+          </div>
+        </div>
+        <div class="col-5">
+          <q-btn
+            icon="add"
+            label="Insert Boarders"
+            dense
+            unelevated
+            rounded
+            no-caps
+            color="primary"
+            class="q-mt-md text-caption defaultfont float-right"
+            style="width: 10rem"
+            @click="showAddAccount()"
+          />
+        </div>
+  </div>
+<div class="q-mt-md">
+    <q-list v-for="nonAccount in nonAccountdata" :key="nonAccount">
+      <q-card class="q-pa-md row items-center">
+        <div class="q-ml-sm col-2">
+          <q-avatar size="xl" class="bg-primary">
+            <q-img
+              class=""
+              src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
+            />
+          </q-avatar>
+        </div>
+        <div class="col">
+          <q-item-section class="defaultfont">
+            <q-item-label
+              lines="1"
+              class="defaultfont-semibold"
+              style="font-size: medium"
+            >
+              {{ nonAccount.fName }} {{ nonAccount.lName }}
+            </q-item-label>
+            <q-item-label lines="1" style="font-size: smaller">
+              {{ nonAccount.degree}}
+            </q-item-label>
+          </q-item-section>
+        </div>
+        <div align="right" class="col-5">
+          <q-btn
+            flat
+            round
+            color="primary"
+            icon="bi-x-circle"
+            @click="deleteAcceptedNonStudent(nonAccount.id)"
+          />
+        </div>
+      </q-card>
+      <q-separator size="0.5rem" class="bg-secondary" />
     </q-list>
   </div>
-
-  <div>
+  <!-- <div>
     <q-list>
       <div class="row flex flex-center">
         <div class="col">
@@ -116,7 +218,7 @@
         </template>
       </div>
     </q-list>
-  </div>
+  </div> -->
   <!--  -->
 
   <q-dialog v-model="dialog" persistent>
@@ -458,7 +560,7 @@ export default class ListBoarders extends Vue {
         class: "defaultfont",
       })
       .onOk(async () => {
-        await this.deleteNonAccount(val.id as any);
+        await this.deleteNonAccount(val);
         await this.getAllNonAccount();
         this.nonAccountdata = this.allNonAccount.filter(
           (i) => i.landlord?.id == this.currentUser.id

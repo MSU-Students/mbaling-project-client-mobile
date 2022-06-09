@@ -252,7 +252,7 @@ export default class Post extends Vue {
     mapLink: "",
   };
 
-  post: PostDto = {
+  post: any = {
     description: "",
     fee: "",
     prvCR: false,
@@ -300,10 +300,12 @@ export default class Post extends Vue {
     try {
       this.loading = true;
       if (this.currentUser.type == "student") {
-        await this.createApplication({
+        const seeApp = await this.createApplication({
           ...this.application,
           student: this.currentUser.id,
+          landlord: this.post?.user?.id,
         });
+        console.log(seeApp)
         this.$q.notify({
           position: "top",
           textColor: "primary",
