@@ -83,7 +83,7 @@
     <div class="q-pt-lg" style="font-size: medium">
       <b style="font-size: x-large">8.</b>
       Go to your mBALING account page and tap on the edit button in the
-      <b>Set chat link</b> section.
+      <b>Set map link</b> section.
       <div align="center" class="q-mt-sm">
         <q-img src="~src\assets\maplink\maplink-08.jpg" class="image" />
       </div>
