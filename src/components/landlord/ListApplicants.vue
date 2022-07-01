@@ -118,6 +118,7 @@ export default class ListApplicants extends Vue {
       id: edit.student?.id,
       housing: this.currentUser.housing,
     });
+    window.location.reload();
   }
 
   async disapproveApplicant(id: any) {

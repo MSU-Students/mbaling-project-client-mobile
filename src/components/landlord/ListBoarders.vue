@@ -1,23 +1,13 @@
 <template>
   <!--  -->
-  <div>
 
-      <div class="row flex flex-center">
-        <div class="col">
-          <div
-            class="q-mt-sm defaultfont text-grey-6"
-            style="font-size: small"
-          >
-            List of Boarders:
-          </div>
-        </div>
-        <div class="col-2">
-          <div class="defaultfont" style="font-size: small">
-            {{this.data.length + this.nonAccountdata.length}}
-          </div>
-        </div>
-      </div>
-<div>
+  <div class="defaultfont-semibold row text-grey-8" style="font-size: medium">
+    <div class="col">Boarders</div>
+    <div class="col-1">
+      {{ this.data.length + this.nonAccountdata.length }}
+    </div>
+  </div>
+  <div class="q-mt-md">
     <q-list v-for="pending in data" :key="pending">
       <q-card class="q-pa-md row items-center">
         <div class="q-ml-sm col-2">
@@ -60,7 +50,7 @@
       <q-separator size="0.5rem" class="bg-secondary" />
     </q-list>
   </div>
-      <!-- <div
+  <!-- <div
         class="row q-my-xs"
         v-for="pending in getAcceptedAccount"
         :key="pending"
@@ -94,39 +84,31 @@
           </div>
         </template>
       </div> -->
+  <div
+    class="q-mt-md defaultfont-semibold row items-center text-grey-8"
+    style="font-size: medium"
+  >
+    <div class="col">Non-Account Boarders</div>
+    <div align="right" class="defaultfont col-">
+      <q-btn
+        icon="bi-plus"
+        label="Add"
+        dense
+        unelevated
+        rounded
+        no-caps
+        color="primary"
+        style="width: 6rem"
+        @click="showAddAccount()"
+      />
+    </div>
   </div>
-  <div class="row flex flex-center">
-  <div class="col">
-          <div
-            class="q-mt-md defaultfont text-grey-6"
-            style="font-size: small">
-            List of Boarders (Non-Account):
-          </div>
-        </div>
-        <div class="col-5">
-          <q-btn
-            icon="add"
-            label="Insert Boarders"
-            dense
-            unelevated
-            rounded
-            no-caps
-            color="primary"
-            class="q-mt-md text-caption defaultfont float-right"
-            style="width: 10rem"
-            @click="showAddAccount()"
-          />
-        </div>
-  </div>
-<div class="q-mt-md">
+  <div class="q-mt-md">
     <q-list v-for="nonAccount in nonAccountdata" :key="nonAccount">
       <q-card class="q-pa-md row items-center">
         <div class="q-ml-sm col-2">
           <q-avatar size="xl" class="bg-primary">
-            <q-img
-              class=""
-              src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg"
-            />
+            <q-img class="" src="https://i.postimg.cc/FzcjmLj3/LOGO.jpg" />
           </q-avatar>
         </div>
         <div class="col">
@@ -139,11 +121,11 @@
               {{ nonAccount.fName }} {{ nonAccount.lName }}
             </q-item-label>
             <q-item-label lines="1" style="font-size: smaller">
-              {{ nonAccount.degree}}
+              {{ nonAccount.degree }}
             </q-item-label>
           </q-item-section>
         </div>
-        <div align="right" class="col-5">
+        <div align="right" class="col-2">
           <q-btn
             flat
             round
@@ -260,57 +242,65 @@
             />
 
             <q-select
-                        class="q-mt-xs"
-                        v-model="inputNonAccount.college"
-                        :options="College"
-                        dense
-                        filled
-                        label="College:"
-                        style="width: 18rem; font-size: small"
-                        lazy-rules
-                        :rules="[(val) => (val && val.length > 0) || 'Please Choose Your College']"
-                        hide-bottom-space
-                      />
-                      <q-select
-                        class="q-mt-xs"
-                        :v-model="
-                          inputNonAccount.college ==
-                            'College of Business Administration and Accountancy' ||
-                          'College of Information Technology' ||
-                          'King Faisal Center for Islamic, Arabic and Asian Studies'
-                            ? selectedDepartment()
-                            : selectedDepartment
-                        "
-                        v-model="inputNonAccount.department"
-                        :options="Department"
-                        dense
-                        filled
-                        label="Department:"
-                        style="width: 18rem; font-size: small"
-                        lazy-rules
-                        :rules="[(val) => (val && val.length > 0) || 'Please Choose Your Department']"
-                        hide-bottom-space
-                      />
-                      <q-select
-                        class="q-mt-xs"
-                        :v-model="
-                          inputNonAccount.college ==
-                            'College of Business Administration and Accountancy' ||
-                          'College of Information Technology' ||
-                          'King Faisal Center for Islamic, Arabic and Asian Studies'
-                            ? selectedDegree()
-                            : selectedDegree
-                        "
-                        v-model="inputNonAccount.degree"
-                        :options="Degree"
-                        dense
-                        filled
-                        label="Degree:"
-                        style="width: 18rem; font-size: small"
-                        lazy-rules
-                        :rules="[(val) => (val && val.length > 0) || 'Please Choose Your Degree']"
-                        hide-bottom-space
-                      />
+              class="q-mt-xs"
+              v-model="inputNonAccount.college"
+              :options="College"
+              dense
+              filled
+              label="College:"
+              style="width: 18rem; font-size: small"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'Please Choose Your College',
+              ]"
+              hide-bottom-space
+            />
+            <q-select
+              class="q-mt-xs"
+              :v-model="
+                inputNonAccount.college ==
+                  'College of Business Administration and Accountancy' ||
+                'College of Information Technology' ||
+                'King Faisal Center for Islamic, Arabic and Asian Studies'
+                  ? selectedDepartment()
+                  : selectedDepartment
+              "
+              v-model="inputNonAccount.department"
+              :options="Department"
+              dense
+              filled
+              label="Department:"
+              style="width: 18rem; font-size: small"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'Please Choose Your Department',
+              ]"
+              hide-bottom-space
+            />
+            <q-select
+              class="q-mt-xs"
+              :v-model="
+                inputNonAccount.college ==
+                  'College of Business Administration and Accountancy' ||
+                'College of Information Technology' ||
+                'King Faisal Center for Islamic, Arabic and Asian Studies'
+                  ? selectedDegree()
+                  : selectedDegree
+              "
+              v-model="inputNonAccount.degree"
+              :options="Degree"
+              dense
+              filled
+              label="Degree:"
+              style="width: 18rem; font-size: small"
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || 'Please Choose Your Degree',
+              ]"
+              hide-bottom-space
+            />
 
             <!-- <q-input
               dense
@@ -423,7 +413,7 @@ export default class ListBoarders extends Vue {
   addNewAccount = false;
 
   async showAddAccount() {
-    this.resetModel()
+    this.resetModel();
     this.dialog = true;
   }
 

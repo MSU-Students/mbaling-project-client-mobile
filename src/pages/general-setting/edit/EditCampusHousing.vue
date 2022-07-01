@@ -1,25 +1,28 @@
 <template>
   <!-- Edit ago Search Function -->
-  <div v-if="editStudentCampusHousing">
-    <page-header style="height: 4rem">
-      <template #slot-left>
-        <q-btn
-          icon="bi-chevron-left"
-          dense
-          flat
-          :ripple="false"
-          size="sm"
-          color="black"
-          class="q-ml-md"
-          @click="$router.go(-1)"
-        />
-      </template>
-      <template #slot-middle>
-        <div class="defaultfont-light text-bold text-black" style="font-size: medium">
-          Campus housing
-        </div>
-      </template>
-      <template #slot-right>
+  <!-- <div v-if="editStudentCampusHousing"> -->
+  <page-header style="height: 4rem">
+    <template #slot-left>
+      <q-btn
+        icon="bi-chevron-left"
+        dense
+        flat
+        :ripple="false"
+        size="sm"
+        color="black"
+        class="q-ml-md"
+        @click="$router.go(-1)"
+      />
+    </template>
+    <template #slot-middle>
+      <div
+        class="defaultfont-light text-bold text-black"
+        style="font-size: medium"
+      >
+        Campus housing
+      </div>
+    </template>
+    <!-- <template #slot-right>
         <q-btn
           label="Save"
           unelevated
@@ -30,12 +33,12 @@
           style="height: 3rem"
           @click="onSaveStudent()"
         />
-      </template>
-    </page-header>
+      </template> -->
+  </page-header>
 
-    <!-- Search Input -->
+  <!-- Search Input -->
 
-    <div class="q-px-md defaultfont">
+  <!-- <div class="q-px-md defaultfont">
       <div class="q-pt-md">
         <q-form @submit="searchAction()">
           <q-input
@@ -53,10 +56,10 @@
           </q-input>
         </q-form>
       </div>
-    </div>
-    <!-- DISPLAY SEARCH -->
+    </div> -->
+  <!-- DISPLAY SEARCH -->
 
-    <q-list v-for="(result, index) in searchResultUser" :key="index">
+  <!-- <q-list v-for="(result, index) in searchResultUser" :key="index">
       <q-item
         clickable
         class="q-pt-xl q-mx-lg row items-center"
@@ -78,44 +81,26 @@
           </q-item-section>
         </div>
       </q-item>
-    </q-list>
-  </div>
+    </q-list> -->
+  <!-- </div> -->
 
   <!--  -->
 
-  <div v-else>
-    <page-header style="height: 4rem">
-      <template #slot-left>
-        <q-btn
-          icon="bi-chevron-left"
-          dense
-          flat
-          :ripple="false"
-          size="sm"
-          color="black"
-          class="q-ml-md"
-          @click="$router.go(-1)"
-        />
-      </template>
-      <template #slot-middle>
-        <div class="defaultfont-light text-bold text-black" style="font-size: medium">
-          Campus housing
-        </div>
-      </template>
-    </page-header>
+  <!-- <div v-else> -->
 
-    <q-page class="q-px-md q-pb-xl defaultfont">
-      <div class="q-pt-md">
-        <q-input
-          :placeholder="`${currentUser.housing?.name || 'Apply for housing'}`"
-          type="search"
-          readonly
-          disable
-          style="font-size: medium"
-        />
-      </div>
-    </q-page>
-  </div>
+  <q-page class="q-px-md q-pb-xl defaultfont bg-secondary">
+    <div class="q-pt-md">
+      <q-input
+        :placeholder="`${currentUser.housing?.name || 'Apply to your landlord'}`"
+        label="Campus housing"
+        stack-label
+        disable
+        type="text"
+        style="font-size: medium"
+      />
+    </div>
+  </q-page>
+  <!-- </div> -->
 </template>
 
 <script lang="ts">
@@ -154,13 +139,13 @@ export default class EditCampusHousing extends Vue {
   async mounted() {
     await this.getAllHousing();
     await this.authUser();
-    this.inputAccount = {...this.currentUser}
+    this.inputAccount = { ...this.currentUser };
     console.log("Hello");
   }
 
   inputAccount: any = {
     housingunit: "",
-  }
+  };
 
   // Edit CampusHousing
   // Checkpoint
@@ -168,35 +153,35 @@ export default class EditCampusHousing extends Vue {
 
   async onEditStudent(val: AUser) {
     this.editStudentCampusHousing = true;
-    this.inputAccount = {...val}
+    this.inputAccount = { ...val };
   }
 
   async onSaveStudent() {
     this.$q
-        .dialog({
-          title: "Confirm Edit",
-          message: "Are you sure you want to publish the changes?",
-          cancel: true,
-          persistent: true,
-          class: "defaultfont",
-    })
-        .onOk(() => {
-          this.editAccount(this.inputAccount);
-          this.editStudentCampusHousing = false;
-          // window.location.reload();
-          this.$q.notify({
-            type: "positive",
-            color: "secondary",
-            textColor: "primary",
-            message: "Successfully change",
-          });
+      .dialog({
+        title: "Confirm Edit",
+        message: "Are you sure you want to publish the changes?",
+        cancel: true,
+        persistent: true,
+        class: "defaultfont",
+      })
+      .onOk(() => {
+        this.editAccount(this.inputAccount);
+        this.editStudentCampusHousing = false;
+        // window.location.reload();
+        this.$q.notify({
+          type: "positive",
+          color: "secondary",
+          textColor: "primary",
+          message: "Successfully change",
+        });
       });
   }
 
-  async housingSaveResult(res: any){
+  async housingSaveResult(res: any) {
     this.inputAccount.housingunit = res.name;
     this.search = this.inputAccount.housingunit;
-    console.log("what!" + this.search)
+    console.log("what!" + this.search);
   }
 
   // Search Funtion

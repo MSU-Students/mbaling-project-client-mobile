@@ -51,9 +51,9 @@
             Set your campus housing
           </div>
           <div class="defaultfont text-grey" style="font-size: smaller">
-            Please set your campus housing address to complete your student user
+            Please set your campus housing address to complete your user
             record. <br />
-            Go to Settings > Account settings > Campus housing.
+            Go to your Landlord's profile > click Apply.
           </div>
         </div>
         <div align="right" class="col">
@@ -62,21 +62,21 @@
       </div>
     </div>
     <!--  -->
-    <div>
-      <div class="q-mb-md q-ml-md defaultfont text-grey-6" style="font-size: small">
-       Application status:
+    <div class="q-px-lg q-py-md">
+      <div class="defaultfont-semibold text-grey-8" style="font-size: medium">
+        Applications
       </div>
-      <q-list v-for="pending in applications" :key="pending">
-        <q-card
-          v-if="
-            pending.status == 'pending' && currentUser.id == pending.student?.id
-          "
-          class="q-ma-sm"
-          style="height: 7rem"
-        >
-          <div class="row">
-            <div class="col-3 flex flex-center">
-              <q-avatar size="5rem">
+      <div class="q-mt-md">
+        <q-list v-for="pending in applications" :key="pending">
+          <q-card
+            v-if="
+              pending.status == 'pending' &&
+              currentUser.id == pending.student?.id
+            "
+            class="q-pa-md row items-center"
+          >
+            <div class="q-ml-sm col-2">
+              <q-avatar size="xl" class="bg-primary">
                 <q-img
                   v-if="pending.landlord?.prfphoto"
                   class=""
@@ -89,46 +89,57 @@
                 />
               </q-avatar>
             </div>
-            <div class="col q-mt-sm defaultfont-bold" style="font-size: large">
-              {{ pending.landlord?.housing?.name }}
-              <div class="defaultfont text-grey-6" style="font-size: small">
-                Your request is pending • • •
-              </div>
-              <div class="q-mt-sm q-ml-xs">
-                <!-- <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated text-color="secondary" disable label="pending" rounded dense style="width: 7rem" /> -->
-                <!-- <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated label="cancel" rounded outline dense style="width: 15rem" /> -->
-              </div>
-
-              <div class="q-mt-sm q-ml-xs">
-                <q-btn
-                  class="q-mx-xs"
-                  color="primary"
-                  ripple="false"
-                  unelevated
-                  label="Cancel"
-                  rounded
-                  dense
-                  style="width: 15rem"
-                  @click="disapproveApplicant(pending.id)"
-                />
-              </div>
+            <div class="col">
+              <q-item-section class="defaultfont">
+                <q-item-label
+                  lines="1"
+                  class="defaultfont-semibold"
+                  style="font-size: medium"
+                >
+                  {{ pending.landlord?.housing?.name }}
+                </q-item-label>
+                <q-item-label lines="1" style="font-size: smaller">
+                  Your request is pending...
+                </q-item-label>
+              </q-item-section>
             </div>
-          </div>
-        </q-card>
+            <div align="right" class="col-4">
+              <q-btn
+                label="Cancel"
+                unelevated
+                rounded
+                no-caps
+                color="primary"
+                style="height: 2.5rem"
+                @click="disapproveApplicant(pending.id)"
+              />
+            </div>
+            <!-- <div class="q-mt-sm q-ml-xs">
+                  <q-btn
+                    class="q-mx-xs"
+                    color="primary"
+                    ripple="false"
+                    unelevated
+                    label="Cancel"
+                    rounded
+                    dense
+                    style="width: 15rem"
 
-        <!--  -->
+                  />
+                </div> -->
+          </q-card>
 
-        <q-card
-          v-if="
-            pending.status == 'accepted' &&
-            currentUser.id == pending.student?.id
-          "
-          class="q-ma-sm"
-          style="height: 7rem"
-        >
-          <div class="row">
-            <div class="col-3 flex flex-center">
-              <q-avatar size="5rem">
+          <!--  -->
+
+          <q-card
+            v-if="
+              pending.status == 'accepted' &&
+              currentUser.id == pending.student?.id
+            "
+            class="q-pa-md row items-center"
+          >
+            <div class="q-ml-sm col-2">
+              <q-avatar size="xl" class="bg-primary">
                 <q-img
                   v-if="pending.landlord?.prfphoto"
                   class=""
@@ -141,33 +152,35 @@
                 />
               </q-avatar>
             </div>
-            <div class="col q-mt-sm defaultfont-bold" style="font-size: large">
-              {{ pending.landlord?.housing?.name }}
-              <div class="defaultfont text-grey-6" style="font-size: small">
-                Your request is Accepted
-              </div>
-              <div class="q-mt-sm q-ml-xs">
-                <!-- <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated text-color="secondary" disable label="pending" rounded dense style="width: 7rem" /> -->
-                <!-- <q-btn class="q-mx-xs" color="primary" ripple="false" unelevated label="cancel" rounded outline dense style="width: 15rem" /> -->
-              </div>
-
-              <div class="q-mt-sm q-ml-xs">
-                <q-btn
-                  class="q-mx-xs"
-                  color="primary"
-                  ripple="false"
-                  unelevated
-                  label="accepted"
-                  rounded
-                  outline
-                  dense
-                  style="width: 15rem"
-                />
-              </div>
+            <div class="col">
+              <q-item-section class="defaultfont">
+                <q-item-label
+                  lines="1"
+                  class="defaultfont-semibold"
+                  style="font-size: medium"
+                >
+                  {{ pending.landlord?.housing?.name }}
+                </q-item-label>
+                <q-item-label lines="1" style="font-size: smaller">
+                  Your request is accepted.
+                </q-item-label>
+              </q-item-section>
             </div>
-          </div>
-        </q-card>
-      </q-list>
+            <div align="right" class="col-4">
+              <q-btn
+                label="Approved"
+                unelevated
+                outline
+                rounded
+                no-caps
+                color="primary"
+                style="height: 2.5rem"
+                @click="disapproveApplicant(pending.id)"
+              />
+            </div>
+          </q-card>
+        </q-list>
+      </div>
     </div>
     <!--  -->
   </q-page>
@@ -183,7 +196,11 @@ import { mapActions, mapGetters, mapState } from "vuex";
   methods: {
     ...mapActions("auth", ["authUser"]),
     ...mapActions("account", ["editAccount", "getAllUser"]),
-    ...mapActions("application", ["getAllApplication", "updateApplication", "deleteApplication"]),
+    ...mapActions("application", [
+      "getAllApplication",
+      "updateApplication",
+      "deleteApplication",
+    ]),
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
@@ -238,7 +255,7 @@ export default class StudentAccount extends Vue {
   }
 
   async disapproveApplicant(id: any) {
-   this.$q
+    this.$q
       .dialog({
         title: "Confirm Edit",
         message: "Are you sure you want to cancel your request?",

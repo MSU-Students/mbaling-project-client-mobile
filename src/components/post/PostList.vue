@@ -44,7 +44,7 @@
                 @click="redirect(post)"
               />
               <q-btn
-                label="Trash"
+                label="Delete"
                 unelevated
                 rounded
                 outline

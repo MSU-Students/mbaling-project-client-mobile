@@ -68,7 +68,7 @@
         stack
         class="flex flex-center"
         style="width:100%; height: 20rem">
-          <q-icon color="grey-6" class="color-grey-4" name="no_photography" size="7rem" label="No post yet"/>
+          <!-- <q-icon color="grey-6" class="color-grey-4" name="no_photography" size="7rem" label="No post yet"/> -->
               <div class="text-h6" >
                     No post yet
               </div>
@@ -119,10 +119,12 @@
             class="flex flex-center text-primary defaultfont"
           >
             <q-btn
-              rounded
-              color="primary"
-              icon="check"
-              label="Apply"
+          label="Apply"
+          unelevated
+          rounded
+          no-caps
+          color="primary"
+          style="height: 3rem"
               @click="addApplication()"
             />
           </div>
